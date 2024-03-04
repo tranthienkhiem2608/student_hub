@@ -95,7 +95,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                         const LoginPage(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
-                      var begin = Offset(1.0, 0.0);
+                      var begin = const Offset(1.0, 0.0);
                       var end = Offset.zero;
                       var curve = const Interval(
                         0.3,
@@ -198,7 +198,6 @@ class _Content extends StatelessWidget {
           ),
           child: const _AnimatedText(),
         ),
-        // ... (Rest of your body code) ...
         SlideTransition(
           position:
               Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))
@@ -214,7 +213,7 @@ class _Content extends StatelessWidget {
         ),
         // Animated Buttons
         const SizedBox(
-            height: 50), // Add some space between the text and the buttons
+            height: 50),
         SlideTransition(
           position: Tween<Offset>(
                   begin: const Offset(0, -0.5), end: const Offset(0, 0))
