@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:student_hub/views/welcome_view.dart';
 import 'package:student_hub/views/login_view.dart';
+import 'package:student_hub/views/profile_input.dart';
+import 'package:student_hub/views/welcome-screen.dart';
+import 'package:student_hub/views/edit_profile.dart';
 
 void main() {
   runApp(MyApp());
