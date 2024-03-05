@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/views/chooserole_view.dart';
+import 'package:student_hub/views/signup_info_view.dart';
 import 'package:student_hub/views/welcome_view.dart';
 import 'package:student_hub/views/login_view.dart';
 import 'package:student_hub/views/profile_input.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const WelcomePage(),
+      home: const ChooseRole(),
     );
   }
 }
