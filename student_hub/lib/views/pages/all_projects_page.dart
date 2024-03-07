@@ -5,7 +5,7 @@ class AllProjectsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> entries = <String>[];// sau thay thế bằng modle của projects
+    final List<String> entries = <String>['A', 'B','C'];// sau thay thế bằng modle của projects
     final String username = "John";
     return Visibility(
       replacement: Center(
@@ -13,22 +13,27 @@ class AllProjectsPage extends StatelessWidget {
     ),
     visible: entries.isNotEmpty,
     child: Padding(
-      padding: const EdgeInsets.all(30),
+      padding: const EdgeInsets.all(10),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Divider(),
         const Padding(padding: EdgeInsets.only(bottom: 10)),
         Expanded(
           child: ListView.separated(
             itemCount: entries.length,
-            separatorBuilder: (context, index) => const Divider(),
-            itemBuilder: (context, index) => ListTile(
-              title: Text('Project ${entries[index]}'),
-              subtitle: Text('Description of project ${entries[index]}'),
-              onTap: () {
-                // Navigate to the second screen using a named route.
-                Navigator.pushNamed(context, '/project_detail');
-              },
+            itemBuilder: (context, index) => Column(
+              children: [
+                ListTile(
+                  title: Text('Project ${entries[index]}'),
+                  subtitle: Text('Description of project ${entries[index]}'),
+                  onTap: () {
+                    // Navigate to the second screen using a named route.
+                    Navigator.pushNamed(context, '/project_detail');
+                  },
+                ),
+                const Divider(),
+              ],
             ),
+            separatorBuilder: (context, index) => const SizedBox(),
           ),
         ),
       ]),
