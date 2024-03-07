@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/views/login_view.dart';
+import 'package:student_hub/views/signup_info_view.dart';
+import 'package:student_hub/views/switch_account_view.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -92,7 +94,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        const LoginPage(),
+                        SwitchAccountView(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       var begin = const Offset(1.0, 0.0);
@@ -227,9 +229,33 @@ class _Content extends StatelessWidget {
           )),
           child: FadeTransition(
             opacity: fadeAnimation,
-            child: const _AnimatedButton(
-              text: 'Company',
-            ),
+            child: Container(
+            width: 200,
+            height: 50,
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: ElevatedButton(
+              onPressed: () {
+                // Handle button press
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignUpInfo()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF13babd),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25), // Button radius
+                ),
+              ),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Icon(Icons.groups, color: Colors.black, size: 24,), // This is the icon
+                  Text('Company', style: TextStyle(color: Colors.black, fontSize: 16)),
+                ],
+              ),
+            )
+          ),
           ),
         ),
         const SizedBox(height: 10),
@@ -246,8 +272,29 @@ class _Content extends StatelessWidget {
           )),
           child: FadeTransition(
             opacity: fadeAnimation,
-            child: const _AnimatedButton(
-              text: 'Student',
+            child: Container(
+              width: 200,
+              height: 50,
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child:ElevatedButton(
+                onPressed: () {
+                  // Handle button press
+
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF13babd),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25), // Button radius
+                  ),
+                ),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(Icons.emoji_people, color: Colors.black,size: 24,), // This is the icon
+                    Text('Student', style: TextStyle(color: Colors.black, fontSize: 16)),
+                  ],
+                ),
+              )
             ),
           ),
         ),
