@@ -9,6 +9,7 @@ import 'package:student_hub/views/welcome-screen.dart';
 import 'package:student_hub/views/edit_profile.dart';
 import 'package:student_hub/views/home_view.dart';
 import 'package:student_hub/views/profile_input_student1.dart';
+import 'package:student_hub/views/profile_input_student2.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ProfileInputStudent1(),
+      home: ProfileInputStudent2(),
     );
   }
 }
