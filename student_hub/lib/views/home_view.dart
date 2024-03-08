@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:quickalert/models/quickalert_type.dart';
+import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:student_hub/view_models/nav_bottom_controller.dart';
 import 'package:student_hub/views/pages/alert_page.dart';
 import 'package:student_hub/views/pages/dashboard_page.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';
-class HomePage extends StatefulWidget{
-  const HomePage({Key? key}) : super(key: key);
+
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key, required this.showAlert}) : super(key: key);
+
+  final bool showAlert;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -51,13 +56,34 @@ class _HomePageState extends State<HomePage> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    if (widget.showAlert) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          text:
+              'Welcome to StudentHub, a marketplace to connect Student <> Real-world projects',
+          title: 'Welcome',
+          showConfirmBtn: true,
+          customAsset: 'assets/alerts/success.gif',
+          confirmBtnText: 'Next',
+        );
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const _AppBar(),
       body: PageView(
         controller: _navController.controller,
         children: _pages,
-        physics: const NeverScrollableScrollPhysics(), // Prevent swiping between pages
+        physics:
+            const NeverScrollableScrollPhysics(), // Prevent swiping between pages
       ),
       bottomNavigationBar: Container(
         color: const Color(0xFFBEEEF7),
