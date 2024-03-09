@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:student_hub/models/student_user.dart';
+import 'package:student_hub/widgets/show_project_student_widget.dart';
+
 
 class ProfileInputStudent2 extends StatefulWidget {
-  ProfileInputStudent2({Key? key}) : super(key: key);
+  const ProfileInputStudent2( {super.key});
 
   @override
   _ProfileInputStudent2State createState() => _ProfileInputStudent2State();
@@ -28,15 +31,15 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
     'Firebase',
   ];
 
-  List<String> _selectedSkills = [];
   String _searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
-    final _selectedSkills = <String>[];
+    final selectedSkills = <String>[];
     return Scaffold(
-      appBar: _AppBar(),
-      body: Center(
+      resizeToAvoidBottomInset: false,
+      appBar: const _AppBar(),
+      body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Padding(
@@ -77,7 +80,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                     textAlign: TextAlign.left,
                   ),
                   IconButton(
-                    icon: Icon(Icons.add_circle_outline),
+                    icon: const Icon(Icons.add),
                     onPressed: () {
                       // Add your logic here for handling the icon press
                     },
@@ -85,83 +88,25 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                 ],
               ),
             ),
+            const SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Skillset",
-                  style: GoogleFonts.openSans(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              width: 400,
-              height: 250,
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    TextField(
-                      decoration: InputDecoration(labelText: 'Search Skills'),
-                      onChanged: (value) =>
-                          setState(() => _searchQuery = value),
-                    ),
-                    SizedBox(height: 10),
-                    Wrap(
-                      children: skills
-                          .where((skill) => skill
-                              .toLowerCase()
-                              .contains(_searchQuery.toLowerCase()))
-                          .map(
-                            (skill) => InputChip(
-                              label: Text(skill),
-                              selected: _selectedSkills.contains(skill),
-                              onSelected: (selected) => setState(() {
-                                selected
-                                    ? _selectedSkills.add(skill)
-                                    : _selectedSkills.remove(skill);
-                              }),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                    SizedBox(height: 10),
-                    Wrap(
-                      children: _selectedSkills
-                          .map((skill) => Chip(
-                                label: Text(skill),
-                                deleteIcon: Icon(Icons.close),
-                                onDeleted: () => setState(
-                                    () => _selectedSkills.remove(skill)),
-                              ))
-                          .toList(),
+                    SizedBox(
+                      height: 500,
+                      child: ShowProjectStudentWidget(projectList: projectList),
                     ),
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  "Languages",
-                  style: GoogleFonts.openSans(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 80),
+            const SizedBox(height: 10),
             Align(
               alignment: Alignment.bottomRight,
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(10.0),
                 child: FadeTransition(
                   opacity: const AlwaysStoppedAnimation(1),
                   child: MaterialButton(
@@ -217,33 +162,6 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-Widget _customItemBuilder(BuildContext context, String item, bool isSelected) {
-  return Padding(
-      padding: const EdgeInsets.fromLTRB(5, 15, 5, 15),
-      child: Column(
-        children: [
-          Text(
-            item,
-            style: TextStyle(
-              color: isSelected ? Colors.blue : Colors.black,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-          const Divider(
-            color: Colors.black,
-            thickness: 0.2,
-          ),
-        ],
-      ));
-}
-
-Widget _customLoadingBuilder(BuildContext context, String item) {
-  return const Center(
-    child: CircularProgressIndicator(
-      color: Colors.blue,
-    ),
-  );
-}
 
 Future<List<String>> getData(String? filter) async {
   List<String> skills = [

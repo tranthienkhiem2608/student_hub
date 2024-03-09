@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: StudentProfileDragCv(),
+      home: ProfileInputStudent2(),
     );
   }
 }
