@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:student_hub/models/student_user.dart';
+import 'package:student_hub/models/user.dart';
+import 'package:student_hub/view_models/authentication_controller_route.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import 'package:student_hub/widgets/show_school_widget.dart';
 import 'package:student_hub/widgets/show_languages_widget.dart';
 
 class ProfileInputStudent1 extends StatefulWidget {
-  const ProfileInputStudent1({Key? key}) : super(key: key);
+  final User user;
+  const ProfileInputStudent1(this.user, {super.key});
 
   @override
   _ProfileInputStudent1State createState() => _ProfileInputStudent1State();
@@ -15,7 +19,8 @@ class ProfileInputStudent1 extends StatefulWidget {
 class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
   late TextfieldTagsController<String> _textfieldTagsController;
   late double _distanceToField;
-  final _selectedSkills = <String>[];
+  final List<String> _selectedSkills = [];
+  String _selectedTechStack = '';
   TextEditingController _textEditingController = TextEditingController();
 
   @override
@@ -78,8 +83,16 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
   ];
 
   List<Map<String, dynamic>> educationList = [
-    {'schoolName': 'Le Hong Phong High School', 'yearsStart': 2018, 'yearsEnd': 2021},
-    {'schoolName': 'HCM University of Sciences', 'yearsStart': 2021, 'yearsEnd':2025},
+    {
+      'schoolName': 'Le Hong Phong High School',
+      'yearsStart': 2018,
+      'yearsEnd': 2021
+    },
+    {
+      'schoolName': 'Ho Chi Minh University of Sciences',
+      'yearsStart': 2021,
+      'yearsEnd': 2025
+    },
     // Add more education items here
   ];
   @override
@@ -135,7 +148,12 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                 asyncItems: (filter) async => await getData(filter),
                 compareFn: (item, selectedItem) => item == selectedItem,
                 dropdownBuilder: (context, selectedItem) {
-                  return Text(selectedItem ?? "Select Techstack");
+                  return Text(selectedItem ?? "Select TechStack");
+                },
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedTechStack = newValue ?? '';
+                  });
                 },
                 popupProps: const PopupProps.menu(
                   isFilterOnline: true,
@@ -296,19 +314,17 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                                         child: Container(
                                           decoration: const BoxDecoration(
                                             borderRadius: BorderRadius.all(
-                                              Radius.circular(20.0),
+                                              Radius.circular(10.0),
                                             ),
                                             color: Colors.lightBlueAccent,
                                           ),
-                                          margin: const EdgeInsets.only(
-                                              right: 0.0),
+                                          margin:
+                                              const EdgeInsets.only(right: 0.0),
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 10.0,
-                                              vertical: 4.0),
+                                              horizontal: 10.0, vertical: 4.0),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               InkWell(
                                                 child: Row(
@@ -318,8 +334,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                                                     Text(
                                                       tag,
                                                       style: const TextStyle(
-                                                          color:
-                                                              Colors.black),
+                                                          color: Colors.black),
                                                     ),
                                                   ],
                                                 ),
@@ -340,8 +355,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                                                       .onTagDelete(tag);
                                                   if (_selectedSkills
                                                       .contains(tag)) {
-                                                    _selectedSkills
-                                                        .remove(tag);
+                                                    _selectedSkills.remove(tag);
                                                   }
                                                   setState(() {});
                                                 },
@@ -476,7 +490,19 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                 child: FadeTransition(
                   opacity: const AlwaysStoppedAnimation(1),
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      // Handle button press
+                      StudentUser studentUser = StudentUser(
+                        user: widget.user,
+                        techStack: _selectedTechStack,
+                        skillsList: _selectedSkills,
+                        languagesList: languages,
+                        educationList: educationList,
+                        projectsList: [],
+                      );
+                      ControllerRoute(context)
+                          .navigateToProfileInputStudent2(studentUser);
+                    },
                     height: 45,
                     color: Colors.black,
                     padding: const EdgeInsets.symmetric(
@@ -505,6 +531,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
               color: Colors.blueAccent,
@@ -558,36 +585,36 @@ Widget _customLoadingBuilder(BuildContext context, String item) {
 
 Future<List<String>> getData(String? filter) async {
   List<String> skillsTech = [
-  'Mobile App Developer',
-  'Web Developer',
-  'Software Engineer',
-  'Frontend Developer',
-  'Backend Developer',
-  'Full Stack Developer',
-  'UI/UX Designer',
-  'Data Scientist',
-  'DevOps Engineer',
-  'Cloud Architect',
-  'Database Administrator',
-  'Network Engineer',
-  'Cyber Security Analyst',
-  'Quality Assurance Engineer',
-  'AI/Machine Learning Engineer',
-  'Game Developer',
-  'Blockchain Developer',
-  'Embedded Systems Engineer',
-  'IT Project Manager',
-  'Technical Support Specialist',
-  'Systems Analyst',
-  'Business Analyst',
-  'IT Consultant',
-  'Network Administrator',
-  'IT Trainer/Educator',
-  'IT Sales Professional',
-  'IT Operations Manager',
-  'IT Director',
-  'Chief Technology Officer (CTO)',
-];
+    'Mobile App Developer',
+    'Web Developer',
+    'Software Engineer',
+    'Frontend Developer',
+    'Backend Developer',
+    'Full Stack Developer',
+    'UI/UX Designer',
+    'Data Scientist',
+    'DevOps Engineer',
+    'Cloud Architect',
+    'Database Administrator',
+    'Network Engineer',
+    'Cyber Security Analyst',
+    'Quality Assurance Engineer',
+    'AI/Machine Learning Engineer',
+    'Game Developer',
+    'Blockchain Developer',
+    'Embedded Systems Engineer',
+    'IT Project Manager',
+    'Technical Support Specialist',
+    'Systems Analyst',
+    'Business Analyst',
+    'IT Consultant',
+    'Network Administrator',
+    'IT Trainer/Educator',
+    'IT Sales Professional',
+    'IT Operations Manager',
+    'IT Director',
+    'Chief Technology Officer (CTO)',
+  ];
   await Future.delayed(const Duration(milliseconds: 200));
   if (filter!.isNotEmpty) {
     return skillsTech

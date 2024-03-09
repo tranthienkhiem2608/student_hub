@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/views/login_view.dart';
 import 'package:student_hub/views/signup_info_view.dart';
 import 'package:student_hub/views/switch_account_view.dart';
+import 'package:student_hub/view_models/authentication_controller_route.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -235,10 +236,8 @@ class _Content extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 // Handle button press
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignUpInfo()),
-                );
+                ControllerRoute(context).navigateToLoginView('Company');
+
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF13babd),
@@ -278,6 +277,7 @@ class _Content extends StatelessWidget {
               child:ElevatedButton(
                 onPressed: () {
                   // Handle button press
+                  ControllerRoute(context).navigateToLoginView('Student');
 
                 },
                 style: ElevatedButton.styleFrom(

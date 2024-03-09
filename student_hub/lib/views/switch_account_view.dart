@@ -75,7 +75,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                   account.isLogin = false;
                 }
                 companyUser.isLogin = true;
-                updateAccountName(companyUser.fullName);
+                updateAccountName(companyUser.user.fullName);
                 reloadPage();
               },
               updateAccountName,
@@ -107,7 +107,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(5, 10, 0,0),
                     child: Text(
-                        accounts.where((element) => element.isLogin == true).first.fullName,
+                        accounts.where((element) => element.isLogin == true).first.user.fullName,
                         style: const TextStyle(color: Colors.black,fontSize: 20.0,fontWeight: FontWeight.bold)
                     ),
                   ),

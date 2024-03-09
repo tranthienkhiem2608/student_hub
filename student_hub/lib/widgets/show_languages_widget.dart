@@ -22,17 +22,9 @@ class ShowLanguagesWidget extends StatelessWidget {
               ),
               SizedBox(
                 width: 200,
-                child: LinearProgressIndicator(
-                  value: languages[index]['level'] == 'Native'
-                      ? 1.0
-                      : languages[index]['level'] == 'Advanced'
-                          ? 0.75
-                          : languages[index]['level'] == 'Intermediate'
-                              ? 0.5
-                              : 0.25,
-                  //Intermediate/Basic/Advanced/Native
-                  backgroundColor: Colors.grey[200],
-                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+                child: Text(
+                  languages[index]['level'],
+                  style: const TextStyle(fontSize: 16),
                 ),
               ),
             ],

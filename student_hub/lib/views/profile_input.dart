@@ -3,8 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
+import 'package:student_hub/models/company_user.dart';
+import 'package:student_hub/models/user.dart';
+import 'package:student_hub/view_models/authentication_controller_route.dart';
+
 class ProfileInput extends StatefulWidget {
-  const ProfileInput({super.key});
+  final User user;
+  const ProfileInput(this.user, {super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -47,6 +52,10 @@ class _LoginPageState extends State<ProfileInput>
   Timer? _timer;
 
   int? _selectedValue;
+  String _companyName = '';
+  String _website = '';
+  String _description = '';
+  String _numberOfEmployees = '';
 
   @override
   void initState() {
@@ -192,14 +201,14 @@ class _LoginPageState extends State<ProfileInput>
                       ),
                       child: FadeTransition(
                         opacity: _fadeAnimation,
-                        child: Column(
+                        child: const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'How many people are in your company?',
                               style: TextStyle(fontSize: 17),
                             ),
-                            const SizedBox(height: 10),
+                            SizedBox(height: 10),
                           ],
                         ),
                       ),
@@ -231,6 +240,7 @@ class _LoginPageState extends State<ProfileInput>
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
+                                  _numberOfEmployees = 'It\'s just me';
                                 });
                               },
                             ),
@@ -261,6 +271,7 @@ class _LoginPageState extends State<ProfileInput>
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
+                                  _numberOfEmployees = '2-9 employees';
                                 });
                               },
                             ),
@@ -291,6 +302,7 @@ class _LoginPageState extends State<ProfileInput>
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
+                                  _numberOfEmployees = '10-99 employees';
                                 });
                               },
                             ),
@@ -321,6 +333,7 @@ class _LoginPageState extends State<ProfileInput>
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
+                                  _numberOfEmployees = '100-1000 employees';
                                 });
                               },
                             ),
@@ -351,6 +364,7 @@ class _LoginPageState extends State<ProfileInput>
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
+                                  _numberOfEmployees = 'More than 1000 employees';
                                 });
                               },
                             ),
@@ -377,6 +391,9 @@ class _LoginPageState extends State<ProfileInput>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      onChanged: (value) {
+                        _companyName = value;
+                      },
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
@@ -431,6 +448,9 @@ class _LoginPageState extends State<ProfileInput>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      onChanged: (value) {
+                        _website = value;
+                      },
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
@@ -485,6 +505,9 @@ class _LoginPageState extends State<ProfileInput>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      onChanged: (value) {
+                        _description = value;
+                      },
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
@@ -549,7 +572,25 @@ class _LoginPageState extends State<ProfileInput>
                       child: FadeTransition(
                         opacity: _fadeAnimation,
                         child: MaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            CompanyUser userCompany = CompanyUser(
+                              user: widget.user,
+                              companyName: _companyName ?? '',
+                              companyWebsite: _website ?? '',
+                              companyDescription: _description ?? '',
+                              numberOfEmployees: _numberOfEmployees ?? '',
+                              isLogin: false,
+                            );
+
+                            //print userCompany to cmd
+                            print(userCompany.companyName);
+                            print(userCompany.companyWebsite);
+                            print(userCompany.companyDescription);
+                            print(userCompany.numberOfEmployees);
+
+                            ControllerRoute(context)
+                                .navigateToWelcomeView(userCompany);
+                          },
                           height: 45,
                           color: Colors.black,
                           padding: const EdgeInsets.symmetric(

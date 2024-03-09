@@ -9,8 +9,12 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:student_hub/views/home_view.dart';
 
+import '../models/student_user.dart';
+
 class StudentProfileDragCv extends StatefulWidget {
-  const StudentProfileDragCv({super.key});
+  final StudentUser studentUser;
+
+  const StudentProfileDragCv(this.studentUser,{super.key});
 
   @override
   State<StudentProfileDragCv> createState() => _StudentProfileDragCvState();
@@ -192,7 +196,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          HomePage(showAlert: true), // Pass true
+                          HomePage(showAlert: true, ), // Pass true
                     ),
                   );
                 },
@@ -253,6 +257,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
               color: Colors.blueAccent,

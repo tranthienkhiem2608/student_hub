@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:student_hub/view_models/authentication_controller_route.dart';
+import 'package:student_hub/models/user.dart';
 
 class SignUpInfo extends StatefulWidget {
-  const SignUpInfo({super.key});
+  final String typeUser;
+  const SignUpInfo(this.typeUser, {super.key});
 
   @override
   State<SignUpInfo> createState() => _SignUpInfoState();
@@ -16,6 +19,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
               color: Colors.blueAccent,
@@ -29,7 +33,9 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             height: 25,
             child: Image.asset('assets/icons/user_ic.png'),
           ),
-          onPressed: () {},
+          onPressed: () {
+            ControllerRoute(context).navigateToSwitchAccountView();
+          },
         ),
       ],
     );
@@ -47,6 +53,10 @@ class _SignUpInfoState extends State<SignUpInfo>
   Timer? _timer;
 
   int? _selectedValue;
+  final ValueNotifier<String> fullNameNotifier = ValueNotifier<String>('');
+  final ValueNotifier<String> workEmailNotifier = ValueNotifier<String>('');
+  final ValueNotifier<String> passwordNotifier = ValueNotifier<String>('');
+  final ValueNotifier<bool> checkboxNotifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -113,12 +123,12 @@ class _SignUpInfoState extends State<SignUpInfo>
                   )),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Sign up as Company',
-                          style: TextStyle(
+                          'Sign up as ${widget.typeUser.toString().split('.').last}',
+                          style: const TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
                               fontWeight: FontWeight.w600),
@@ -144,6 +154,8 @@ class _SignUpInfoState extends State<SignUpInfo>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      onChanged: (value) => fullNameNotifier.value =
+                          value, // Update fullNameNotifier when text changes
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
@@ -198,6 +210,8 @@ class _SignUpInfoState extends State<SignUpInfo>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      onChanged: (value) => workEmailNotifier.value =
+                          value, // Update workEmailNotifier when text changes
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
@@ -250,6 +264,8 @@ class _SignUpInfoState extends State<SignUpInfo>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      onChanged: (value) => passwordNotifier.value =
+                          value, // Update passwordNotifier when text changes
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(
@@ -292,43 +308,25 @@ class _SignUpInfoState extends State<SignUpInfo>
                   height: 15,
                 ),
                 // i want check box left and text right with content Yes, I understand and agree to StudentHub
-                SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(0, -0.5),
-                    end: const Offset(0, 0),
-                  ).animate(
-                    CurvedAnimation(
-                      parent: _animationController,
-                      curve: const Interval(
-                        0.3, // Khởi đầu animation sau khi nút "Create account" đã xuất hiện
-                        1,
-                        curve: Curves.fastOutSlowIn,
+                Row(
+                  children: [
+                    Checkbox(
+                      value: _selectedValue == 1,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _selectedValue = value! ? 1 : 0;
+                          checkboxNotifier.value = value;
+                        });
+                      },
+                    ),
+                    const Text(
+                      'Yes, I understand and agree to StudentHub',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
                       ),
                     ),
-                  ),
-                  child: FadeTransition(
-                    opacity: _fadeAnimation,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Checkbox(
-                          value: _selectedValue == 1,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _selectedValue = value! ? 1 : 0;
-                            });
-                          },
-                        ),
-                        Text(
-                          'Yes, I understand and agree to StudentHub',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14.0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  ],
                 ),
                 const SizedBox(
                   height: 15,
@@ -357,11 +355,36 @@ class _SignUpInfoState extends State<SignUpInfo>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: MaterialButton(
-                              onPressed: () {
-                                // Xử lý khi nút được nhấn
-                              },
+                              onPressed: fullNameNotifier.value.isNotEmpty &&
+                                      workEmailNotifier.value.isNotEmpty &&
+                                      passwordNotifier.value.isNotEmpty &&
+                                      checkboxNotifier.value
+                                  ? () {
+                                      // Xử lý khi nút được nhấn
+                                      final user = User(
+                                        fullName: fullNameNotifier.value,
+                                        email: workEmailNotifier.value,
+                                        password: passwordNotifier.value,
+                                        typeUser: widget.typeUser,
+                                      );
+                                      print(user.fullName);
+                                      print(user.email);
+                                      print(user.password);
+                                      print(user.typeUser);
+                                      if (widget.typeUser == 'Role.company') {
+                                        ControllerRoute(context)
+                                            .navigateToProfileInputCompany(
+                                                user);
+                                      } else {
+                                        ControllerRoute(context)
+                                            .navigateToProfileInputStudent1(
+                                                user);
+                                      }
+                                    }
+                                  : null,
                               height: 45,
                               color: Colors.black,
+                              disabledColor: Colors.grey.shade500,
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 50),
                               shape: RoundedRectangleBorder(
@@ -383,49 +406,30 @@ class _SignUpInfoState extends State<SignUpInfo>
                   height: 30,
                 ),
                 // i want to have a text with content Looking for a project? Apply as student with Apply as student underlined and clickable
-                SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(0, -0.5),
-                    end: const Offset(0, 0),
-                  ).animate(
-                    CurvedAnimation(
-                      parent: _animationController,
-                      curve: const Interval(
-                        0.3, // Khởi đầu animation sau khi nút "Create account" đã xuất hiện và phần trên đã xuất hiện
-                        1,
-                        curve: Curves.fastOutSlowIn,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Looking for a project? ',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
                       ),
                     ),
-                  ),
-                  child: FadeTransition(
-                    opacity: _fadeAnimation,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Looking for a project? ',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14.0,
-                          ),
+                    InkWell(
+                      onTap: () {
+                        // Xử lý khi nút được nhấn
+                      },
+                      child: const Text(
+                        'Apply as student',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                          decoration: TextDecoration.underline,
                         ),
-                        InkWell(
-                          onTap: () {
-                            // Xử lý khi nút được nhấn
-                          },
-                          child: const Text(
-                            'Apply as student',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 14.0,
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),

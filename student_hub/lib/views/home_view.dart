@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:student_hub/models/company_user.dart';
+import 'package:student_hub/models/student_user.dart';
 import 'package:student_hub/view_models/nav_bottom_controller.dart';
 import 'package:student_hub/views/pages/alert_page.dart';
 import 'package:student_hub/views/pages/dashboard_page.dart';
@@ -10,7 +12,6 @@ import 'package:student_hub/views/pages/projects_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.showAlert}) : super(key: key);
-
   final bool showAlert;
 
   @override
@@ -23,6 +24,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
               color: Colors.blueAccent,

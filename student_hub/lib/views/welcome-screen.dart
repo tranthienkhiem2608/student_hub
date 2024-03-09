@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:student_hub/models/company_user.dart';
+import 'package:student_hub/view_models/authentication_controller_route.dart';
 import 'package:student_hub/views/login_view.dart';
+import 'package:student_hub/views/switch_account_view.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  const WelcomeScreen({super.key});
+  final CompanyUser companyUser;
+  const WelcomeScreen(this.companyUser, {super.key});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -48,7 +52,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       body: SafeArea(
         child: _Body(
             animationController: _animationController,
-            fadeAnimation: _fadeAnimation),
+            fadeAnimation: _fadeAnimation,
+            companyUser: widget.companyUser),
       ),
     );
   }
@@ -69,6 +74,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
               color: Colors.blueAccent,
@@ -91,7 +97,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        const LoginPage(),
+                        const SwitchAccountView(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       var begin = const Offset(1.0, 0.0);
@@ -128,11 +134,13 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 class _Body extends StatelessWidget {
   final AnimationController animationController;
   final Animation<double> fadeAnimation;
+  final CompanyUser companyUser;
 
   const _Body(
       {super.key,
-      required this.animationController,
-      required this.fadeAnimation});
+        required this.animationController,
+        required this.fadeAnimation,
+        required this.companyUser});
 
   //
 
@@ -144,7 +152,9 @@ class _Body extends StatelessWidget {
           child: SingleChildScrollView(
             child: _Content(
                 animationController: animationController,
-                fadeAnimation: fadeAnimation),
+                fadeAnimation: fadeAnimation,
+                companyUser: companyUser
+            ),
           ),
         ),
       ],
@@ -153,13 +163,15 @@ class _Body extends StatelessWidget {
 }
 
 class _Content extends StatelessWidget {
+  final CompanyUser companyUser;
   final AnimationController animationController;
   final Animation<double> fadeAnimation;
 
   const _Content(
       {super.key,
       required this.animationController,
-      required this.fadeAnimation});
+      required this.fadeAnimation,
+      required this.companyUser});
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +207,7 @@ class _Content extends StatelessWidget {
               ),
             ),
           ),
-          child: const _AnimatedText(),
+          child: _AnimatedText(companyUser: companyUser),
         ),
         // ... (Rest of your body code) ...
         SlideTransition(
@@ -227,8 +239,9 @@ class _Content extends StatelessWidget {
           )),
           child: FadeTransition(
             opacity: fadeAnimation,
-            child: const _AnimatedButton(
+            child: _AnimatedButton(
               text: 'Get started!',
+                companyUser: companyUser
             ),
           ),
         ),
@@ -252,7 +265,8 @@ class _Content extends StatelessWidget {
 }
 
 class _AnimatedText extends StatelessWidget {
-  const _AnimatedText({super.key});
+  final CompanyUser companyUser;
+  const _AnimatedText({super.key, required this.companyUser});
 
   @override
   Widget build(BuildContext context) {
@@ -261,7 +275,7 @@ class _AnimatedText extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Welcome, Group 01!",
+          "Welcome, ${companyUser.user.fullName}!",
           style: GoogleFonts.openSans(
             fontSize: 19,
             fontWeight: FontWeight.bold,
@@ -298,8 +312,9 @@ class _DescriptionText extends StatelessWidget {
 
 class _AnimatedButton extends StatelessWidget {
   final String text;
+  final CompanyUser companyUser;
 
-  const _AnimatedButton({super.key, required this.text});
+  const _AnimatedButton({super.key, required this.text, required this.companyUser });
 
   @override
   Widget build(BuildContext context) {
@@ -307,7 +322,9 @@ class _AnimatedButton extends StatelessWidget {
       width: 200, // Set the width to your desired size
       height: 50, // Set the height to your desired size
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          ControllerRoute(context).navigateToHomeScreen(companyUser);
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blueAccent,
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),

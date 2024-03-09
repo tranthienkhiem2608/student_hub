@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:student_hub/view_models/authentication_controller_route.dart';
 
 enum Role { student, company }
 
@@ -18,6 +19,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
               color: Colors.blueAccent,
@@ -312,6 +314,31 @@ class _ChooseRoleState extends State<ChooseRole>
                             child: MaterialButton(
                               onPressed: () {
                                 // Xử lý khi nút được nhấn
+                                if (_role == null) {
+                                  //show dialog
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Choose your role'),
+                                        content: const Text(
+                                            'Please choose your role'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('OK'),
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  ); // cần edit lại dialog
+                                } else {
+                                  ControllerRoute(context)
+                                      .navigateToSignupInfoView(
+                                          _role.toString());
+                                }
                               },
                               height: 45,
                               color: Colors.black,
@@ -339,46 +366,25 @@ class _ChooseRoleState extends State<ChooseRole>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0, -0.5),
-                        end: const Offset(0, 0),
-                      ).animate(
-                        CurvedAnimation(
-                          parent: _animationController,
-                          curve: const Interval(
-                            0.6,
-                            1,
-                            curve: Curves.fastOutSlowIn,
-                          ),
-                        ),
+                    const Text(
+                      'Already have an account?',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
                       ),
-                      child: FadeTransition(
-                        opacity: _fadeAnimation,
-                        child: Row(
-                          children: [
-                            Text(
-                              'Already have an account?  ',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14.0,
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                // Xử lý khi nút được nhấn
-                              },
-                              child: Text(
-                                'Log in',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.0,
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
+                    ),
+                    InkWell(
+                      onTap: () {
+                        // Xử lý khi nút được nhấn
+                        ControllerRoute(context)
+                            .navigateToLoginView(_role.toString());
+                      },
+                      child: const Text(
+                        'Log in',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ),

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:student_hub/models/student_user.dart';
+import 'package:student_hub/view_models/authentication_controller_route.dart';
 import 'package:student_hub/widgets/show_project_student_widget.dart';
 
 
 class ProfileInputStudent2 extends StatefulWidget {
-  const ProfileInputStudent2({super.key});
+  final StudentUser studentUser;
+  const ProfileInputStudent2(this.studentUser,{super.key});
 
   @override
   _ProfileInputStudent2State createState() => _ProfileInputStudent2State();
@@ -110,7 +112,9 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                 child: FadeTransition(
                   opacity: const AlwaysStoppedAnimation(1),
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      ControllerRoute(context).navigateToProfileInputStudent3(widget.studentUser);
+                    },
                     height: 45,
                     color: Colors.black,
                     padding: const EdgeInsets.symmetric(
@@ -139,6 +143,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
               color: Colors.blueAccent,

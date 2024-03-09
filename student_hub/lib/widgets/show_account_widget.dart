@@ -45,14 +45,14 @@ class _ShowAccountWidgetState extends State<ShowAccountWidget> {
             child: ListTile(
               leading: Image.asset('assets/images/avatar_default_img.png'),
               title: Text(
-                widget._companyUser[index].fullName,
+                widget._companyUser[index].user.fullName,
                 style: const TextStyle(
                   fontSize: 20,
                   color: Colors.black,
                 ),
               ),
               subtitle: Text(
-                widget._companyUser[index].typeUser,
+                widget._companyUser[index].user.typeUser,
                 style: const TextStyle(
                   fontSize: 15,
                   color: Colors.black,

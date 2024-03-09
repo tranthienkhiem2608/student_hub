@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:student_hub/view_models/authentication_controller_route.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final String typeUser;
+  const LoginPage(this.typeUser, {super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -171,6 +173,20 @@ class _LoginPageState extends State<LoginPage>
                 const SizedBox(
                   height: 40,
                 ),
+                const Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Login with StudentHub',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 SlideTransition(
                   position: Tween<Offset>(
                           begin: const Offset(0, -0.5), end: const Offset(0, 0))
@@ -276,6 +292,7 @@ class _LoginPageState extends State<LoginPage>
                     ),
                   ),
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -339,7 +356,7 @@ class _LoginPageState extends State<LoginPage>
                   ),
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 5,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
@@ -365,7 +382,9 @@ class _LoginPageState extends State<LoginPage>
                               fontWeight: FontWeight.w400),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            ControllerRoute(context).navigateToChooseRoleView();
+                          },
                           child: const Text(
                             'Sign Up',
                             style: TextStyle(
