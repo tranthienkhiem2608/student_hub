@@ -11,7 +11,6 @@ class ProfileInput extends StatefulWidget {
 }
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  
   const _AppBar({super.key});
 
   @override
@@ -92,7 +91,7 @@ class _LoginPageState extends State<ProfileInput>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const _AppBar(),
-        backgroundColor: const Color(0xFFBEEEF7),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -177,76 +176,192 @@ class _LoginPageState extends State<ProfileInput>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'How many people are in your company?',
-                      style: TextStyle(fontSize: 17),
+                    SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(0, -0.5),
+                        end: const Offset(0, 0),
+                      ).animate(
+                        CurvedAnimation(
+                          parent: _animationController,
+                          curve: const Interval(
+                            0.3, // Khởi đầu animation sau khi phần trên đã xuất hiện
+                            1,
+                            curve: Curves.fastOutSlowIn,
+                          ),
+                        ),
+                      ),
+                      child: FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'How many people are in your company?',
+                              style: TextStyle(fontSize: 17),
+                            ),
+                            const SizedBox(height: 10),
+                          ],
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 10),
                     Column(
                       children: [
-                        RadioListTile<int>(
-                          title: const Text('It\'s just me',
-                              style: TextStyle(fontSize: 14)),
-                          dense: true,
-                          value: 100,
-                          groupValue: _selectedValue,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedValue = value;
-                            });
-                          },
+                        SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(-0.5, 0),
+                            end: const Offset(0, 0),
+                          ).animate(
+                            CurvedAnimation(
+                              parent: _animationController,
+                              curve: const Interval(
+                                0.35, // Khởi đầu animation sau khi phần trên đã xuất hiện
+                                1,
+                                curve: Curves.fastOutSlowIn,
+                              ),
+                            ),
+                          ),
+                          child: FadeTransition(
+                            opacity: _fadeAnimation,
+                            child: RadioListTile<int>(
+                              title: const Text('It\'s just me',
+                                  style: TextStyle(fontSize: 14)),
+                              dense: true,
+                              value: 100,
+                              groupValue: _selectedValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedValue = value;
+                                });
+                              },
+                            ),
+                          ),
                         ),
-                        RadioListTile<int>(
-                          title: const Text('2-9 employees',
-                              style: TextStyle(fontSize: 14)),
-                          dense: true,
-                          value: 200,
-                          groupValue: _selectedValue,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedValue = value;
-                            });
-                          },
+                        SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(-0.5, 0),
+                            end: const Offset(0, 0),
+                          ).animate(
+                            CurvedAnimation(
+                              parent: _animationController,
+                              curve: const Interval(
+                                0.4, // Khởi đầu animation sau khi phần trên đã xuất hiện
+                                1,
+                                curve: Curves.fastOutSlowIn,
+                              ),
+                            ),
+                          ),
+                          child: FadeTransition(
+                            opacity: _fadeAnimation,
+                            child: RadioListTile<int>(
+                              title: const Text('2-9 employees',
+                                  style: TextStyle(fontSize: 14)),
+                              dense: true,
+                              value: 200,
+                              groupValue: _selectedValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedValue = value;
+                                });
+                              },
+                            ),
+                          ),
                         ),
-                        RadioListTile<int>(
-                          title: const Text('10-99 employees',
-                              style: TextStyle(fontSize: 14)),
-                          dense: true,
-                          value: 300,
-                          groupValue: _selectedValue,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedValue = value;
-                            });
-                          },
+                        SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(-0.5, 0),
+                            end: const Offset(0, 0),
+                          ).animate(
+                            CurvedAnimation(
+                              parent: _animationController,
+                              curve: const Interval(
+                                0.4, // Khởi đầu animation sau khi phần trên đã xuất hiện
+                                1,
+                                curve: Curves.fastOutSlowIn,
+                              ),
+                            ),
+                          ),
+                          child: FadeTransition(
+                            opacity: _fadeAnimation,
+                            child: RadioListTile<int>(
+                              title: const Text('10-99 employees',
+                                  style: TextStyle(fontSize: 14)),
+                              dense: true,
+                              value: 300,
+                              groupValue: _selectedValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedValue = value;
+                                });
+                              },
+                            ),
+                          ),
                         ),
-                        RadioListTile<int>(
-                          title: const Text('100-1000 employees',
-                              style: TextStyle(fontSize: 14)),
-                          dense: true,
-                          value: 400,
-                          groupValue: _selectedValue,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedValue = value;
-                            });
-                          },
+                        SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(-0.5, 0),
+                            end: const Offset(0, 0),
+                          ).animate(
+                            CurvedAnimation(
+                              parent: _animationController,
+                              curve: const Interval(
+                                0.45, // Khởi đầu animation sau khi phần trên đã xuất hiện
+                                1,
+                                curve: Curves.fastOutSlowIn,
+                              ),
+                            ),
+                          ),
+                          child: FadeTransition(
+                            opacity: _fadeAnimation,
+                            child: RadioListTile<int>(
+                              title: const Text('100-1000 employees',
+                                  style: TextStyle(fontSize: 14)),
+                              dense: true,
+                              value: 400,
+                              groupValue: _selectedValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedValue = value;
+                                });
+                              },
+                            ),
+                          ),
                         ),
-                        RadioListTile<int>(
-                          title: const Text('More than 1000 employees',
-                              style: TextStyle(fontSize: 14)),
-                          dense: true,
-                          value: 500,
-                          groupValue: _selectedValue,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedValue = value;
-                            });
-                          },
+                        SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(-0.5, 0),
+                            end: const Offset(0, 0),
+                          ).animate(
+                            CurvedAnimation(
+                              parent: _animationController,
+                              curve: const Interval(
+                                0.5, // Khởi đầu animation sau khi phần trên đã xuất hiện
+                                1,
+                                curve: Curves.fastOutSlowIn,
+                              ),
+                            ),
+                          ),
+                          child: FadeTransition(
+                            opacity: _fadeAnimation,
+                            child: RadioListTile<int>(
+                              title: const Text('More than 1000 employees',
+                                  style: TextStyle(fontSize: 14)),
+                              dense: true,
+                              value: 500,
+                              groupValue: _selectedValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedValue = value;
+                                });
+                              },
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ],
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
@@ -304,7 +419,7 @@ class _LoginPageState extends State<ProfileInput>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, 0.5), end: const Offset(0, 0))
+                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -356,7 +471,7 @@ class _LoginPageState extends State<ProfileInput>
                 const SizedBox(height: 20),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, 0), end: const Offset(0, 0))
+                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(
                     CurvedAnimation(
                       parent: _animationController,

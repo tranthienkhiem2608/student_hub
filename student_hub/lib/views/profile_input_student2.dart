@@ -4,6 +4,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:student_hub/models/student_user.dart';
 import 'package:student_hub/widgets/show_project_student_widget.dart';
 
+
 class ProfileInputStudent2 extends StatefulWidget {
   const ProfileInputStudent2({super.key});
 
@@ -48,7 +49,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                 child: Text(
                   "Experiences",
                   style: GoogleFonts.openSans(
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -79,7 +80,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                     textAlign: TextAlign.left,
                   ),
                   IconButton(
-                    icon: const Icon(Icons.add),
+                    icon: const Icon(Icons.add_circle_outline),
                     onPressed: () {
                       // Add your logic here for handling the icon press
                     },
@@ -87,7 +88,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                 ],
               ),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 0),
             Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: SingleChildScrollView(
@@ -160,6 +161,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
 
 Future<List<String>> getData(String? filter) async {
   List<String> skills = [

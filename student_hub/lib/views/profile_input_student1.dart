@@ -79,7 +79,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
 
   List<Map<String, dynamic>> educationList = [
     {'schoolName': 'Le Hong Phong High School', 'yearsStart': 2018, 'yearsEnd': 2021},
-    {'schoolName': 'Ho Chi Minh University of Sciences', 'yearsStart': 2021, 'yearsEnd':2025},
+    {'schoolName': 'HCM University of Sciences', 'yearsStart': 2021, 'yearsEnd':2025},
     // Add more education items here
   ];
   @override
@@ -91,13 +91,13 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 30, 20, 5),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Text(
                   "Welcome to Student Hub",
                   style: GoogleFonts.openSans(
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -255,7 +255,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                   letterCase: LetterCase.normal,
                   validator: (String tag) {
                     if (_textfieldTagsController.getTags!.contains(tag)) {
-                      return 'you already entered that';
+                      return 'You already entered that';
                     }
                     return null;
                   },
@@ -557,72 +557,42 @@ Widget _customLoadingBuilder(BuildContext context, String item) {
 }
 
 Future<List<String>> getData(String? filter) async {
-  List<String> skills = [
-    'Flutter',
-    'Dart',
-    'Java',
-    'Kotlin',
-    'Python',
-    'C++',
-    'C#',
-    'Swift',
-    'React',
-    'Angular',
-    'Vue',
-    'Node.js',
-    'Express.js',
-    'MongoDB',
-    'Firebase',
-    'SQL',
-    'NoSQL',
-    'HTML',
-    'CSS',
-    'JavaScript',
-    'TypeScript',
-    'Redux',
-    'MobX',
-    'GraphQL',
-    'REST',
-    'Docker',
-    'Kubernetes',
-    'Jenkins',
-    'Git',
-    'GitHub',
-    'GitLab',
-    'Bitbucket',
-    'Jira',
-    'Confluence',
-    'Trello',
-    'Slack',
-    'Microsoft Teams',
-    'Zoom',
-    'Google Meet',
-    'Skype',
-    'WebRTC',
-    'Agile',
-    'Scrum',
-    'Kanban',
-    'Lean',
-    'XP',
-    'Pair Programming',
-    'TDD',
-    'BDD',
-    'CI/CD',
-    'DevOps',
-    'Microservices',
-    'Serverless',
-    'TDD',
-    'BDD',
-    'CI/CD',
-    'DevOps',
-    'Microservices',
-    'Serverless',
-  ];
+  List<String> skillsTech = [
+  'Mobile App Developer',
+  'Web Developer',
+  'Software Engineer',
+  'Frontend Developer',
+  'Backend Developer',
+  'Full Stack Developer',
+  'UI/UX Designer',
+  'Data Scientist',
+  'DevOps Engineer',
+  'Cloud Architect',
+  'Database Administrator',
+  'Network Engineer',
+  'Cyber Security Analyst',
+  'Quality Assurance Engineer',
+  'AI/Machine Learning Engineer',
+  'Game Developer',
+  'Blockchain Developer',
+  'Embedded Systems Engineer',
+  'IT Project Manager',
+  'Technical Support Specialist',
+  'Systems Analyst',
+  'Business Analyst',
+  'IT Consultant',
+  'Network Administrator',
+  'IT Trainer/Educator',
+  'IT Sales Professional',
+  'IT Operations Manager',
+  'IT Director',
+  'Chief Technology Officer (CTO)',
+];
   await Future.delayed(const Duration(milliseconds: 200));
   if (filter!.isNotEmpty) {
-    return skills
+    return skillsTech
         .where((skill) => skill.toLowerCase().contains(filter.toLowerCase()))
         .toList();
   }
-  return skills;
+  return skillsTech;
 }

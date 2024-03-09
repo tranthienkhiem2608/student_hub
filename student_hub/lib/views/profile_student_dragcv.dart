@@ -97,7 +97,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                 child: Text(
                   "CV & Transcript",
                   style: GoogleFonts.openSans(
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -121,7 +121,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                 "Resume/CV(*)",
                 style: GoogleFonts.openSans(
                   fontSize: 16,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.left,
               ),
@@ -150,7 +150,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                 "Transcript(*)",
                 style: GoogleFonts.openSans(
                   fontSize: 16,
-                  fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
                 ),
                 textAlign: TextAlign.left,
               ),
@@ -207,24 +207,38 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
   }
 
   Widget buildUploadArea({required String title, required Function onTap}) {
-    //Add parameters
     return GestureDetector(
-      onTap: () => onTap(), // Call the appropriate _select...File function
+      onTap: () => onTap(),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
         child: DottedBorder(
           child: Container(
             width: double.infinity,
             height: 160,
-            child: Center(
-              child: Text(
-                title, // Use the title parameter
-                textAlign: TextAlign.center,
-                style: GoogleFonts.openSans(
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
+            child: Stack(
+              children: [
+                Center(
+                  child: Image.asset(
+                    'assets/images/upload_img.png',
+                    width: 150,
+                    height: 150,
+                    color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.8), // Mờ hình ảnh
+                    colorBlendMode: BlendMode.srcOver, // Áp dụng hiệu ứng mờ
+                  ),
                 ),
-              ),
+                Positioned.fill(
+                  child: Center(
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.openSans(
+                        fontSize: 16,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

@@ -91,7 +91,7 @@ class _LoginPageState extends State<EditProfile>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const _AppBar(),
-        backgroundColor: const Color(0xFFBEEEF7),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -186,7 +186,7 @@ class _LoginPageState extends State<EditProfile>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, 0.5), end: const Offset(0, 0))
+                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -238,7 +238,7 @@ class _LoginPageState extends State<EditProfile>
                 const SizedBox(height: 20),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, 0), end: const Offset(0, 0))
+                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(
                     CurvedAnimation(
                       parent: _animationController,
@@ -298,26 +298,50 @@ class _LoginPageState extends State<EditProfile>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'How many people are in your company?',
-                      style: TextStyle(fontSize: 17),
-                    ),
-                    const SizedBox(height: 10),
-                    Column(
-                      children: [
-                        RadioListTile<int>(
-                          title: const Text('It\'s just me',
-                              style: TextStyle(fontSize: 14)),
-                          dense: true,
-                          value: 100,
-                          groupValue: _selectedValue,
-                          onChanged: (value) {
-                            setState(() {
-                              _selectedValue = 100;
-                            });
-                          },
+                    SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(0, -0.5),
+                        end: const Offset(0, 0),
+                      ).animate(
+                        CurvedAnimation(
+                          parent: _animationController,
+                          curve: const Interval(
+                            0.3, // Start sliding in at 30% of the animation duration
+                            1, // Fully slid in at 100% of the animation duration
+                            curve: Curves.fastOutSlowIn,
+                          ),
                         ),
-                      ],
+                      ),
+                      child: FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'How many people are in your company?',
+                              style: TextStyle(fontSize: 17),
+                            ),
+                            const SizedBox(height: 10),
+                            Column(
+                              children: [
+                                RadioListTile<int>(
+                                  title: const Text('It\'s just me',
+                                      style: TextStyle(fontSize: 14)),
+                                  dense: true,
+                                  value: 100,
+                                  groupValue: _selectedValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _selectedValue = 100;
+                                    });
+                                  },
+                                ),
+                          
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -326,7 +350,7 @@ class _LoginPageState extends State<EditProfile>
                 ),
                 Row(
                   mainAxisAlignment:
-                      MainAxisAlignment.end, // Đặt nút ở phía bên phải
+                      MainAxisAlignment.center, // Đặt nút ở phía bên phải
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -339,7 +363,7 @@ class _LoginPageState extends State<EditProfile>
                             CurvedAnimation(
                               parent: _animationController,
                               curve: const Interval(
-                                0.6,
+                                0.3,
                                 1,
                                 curve: Curves.fastOutSlowIn,
                               ),
@@ -375,7 +399,7 @@ class _LoginPageState extends State<EditProfile>
                             CurvedAnimation(
                               parent: _animationController,
                               curve: const Interval(
-                                0.6,
+                                0.3,
                                 1,
                                 curve: Curves.fastOutSlowIn,
                               ),

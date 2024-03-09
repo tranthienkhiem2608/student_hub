@@ -91,14 +91,14 @@ class _SignUpInfoState extends State<SignUpInfo>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const _AppBar(),
-        backgroundColor: const Color(0xFFBEEEF7),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
                 const SizedBox(
-                  height: 0,
+                  height: 20,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
@@ -128,7 +128,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                   ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 40,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
@@ -136,7 +136,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
-                      0.3,
+                      0.1,
                       1,
                       curve: Curves.fastOutSlowIn,
                     ),
@@ -186,11 +186,11 @@ class _SignUpInfoState extends State<SignUpInfo>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, 0.5), end: const Offset(0, 0))
+                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
-                      0.3,
+                      0.2,
                       1,
                       curve: Curves.fastOutSlowIn,
                     ),
@@ -238,17 +238,15 @@ class _SignUpInfoState extends State<SignUpInfo>
                 const SizedBox(height: 20),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, 0), end: const Offset(0, 0))
-                      .animate(
-                    CurvedAnimation(
-                      parent: _animationController,
-                      curve: const Interval(
-                        0.3,
-                        1,
-                        curve: Curves.fastOutSlowIn,
-                      ),
+                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      .animate(CurvedAnimation(
+                    parent: _animationController,
+                    curve: const Interval(
+                      0.3,
+                      1,
+                      curve: Curves.fastOutSlowIn,
                     ),
-                  ),
+                  )),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
@@ -294,24 +292,43 @@ class _SignUpInfoState extends State<SignUpInfo>
                   height: 15,
                 ),
                 // i want check box left and text right with content Yes, I understand and agree to StudentHub
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _selectedValue == 1,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _selectedValue = value! ? 1 : 0;
-                        });
-                      },
-                    ),
-                    const Text(
-                      'Yes, I understand and agree to StudentHub',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
+                SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0, -0.5),
+                    end: const Offset(0, 0),
+                  ).animate(
+                    CurvedAnimation(
+                      parent: _animationController,
+                      curve: const Interval(
+                        0.3, // Khởi đầu animation sau khi nút "Create account" đã xuất hiện
+                        1,
+                        curve: Curves.fastOutSlowIn,
                       ),
                     ),
-                  ],
+                  ),
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Checkbox(
+                          value: _selectedValue == 1,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              _selectedValue = value! ? 1 : 0;
+                            });
+                          },
+                        ),
+                        Text(
+                          'Yes, I understand and agree to StudentHub',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
@@ -321,17 +338,17 @@ class _SignUpInfoState extends State<SignUpInfo>
                       MainAxisAlignment.center, // Đặt nút ở phía bên phải
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SlideTransition(
                           position: Tween<Offset>(
-                                  begin: const Offset(0, -0.5),
-                                  end: const Offset(0, 0))
-                              .animate(
+                            begin: const Offset(0, -0.5),
+                            end: const Offset(0, 0),
+                          ).animate(
                             CurvedAnimation(
                               parent: _animationController,
                               curve: const Interval(
-                                0.6,
+                                0.3,
                                 1,
                                 curve: Curves.fastOutSlowIn,
                               ),
@@ -351,14 +368,13 @@ class _SignUpInfoState extends State<SignUpInfo>
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: const Text(
-                                "Create my account",
+                                "Create account",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16.0),
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 20),
                       ],
                     ),
                   ],
@@ -367,30 +383,49 @@ class _SignUpInfoState extends State<SignUpInfo>
                   height: 30,
                 ),
                 // i want to have a text with content Looking for a project? Apply as student with Apply as student underlined and clickable
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Looking for a project? ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
+                SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0, -0.5),
+                    end: const Offset(0, 0),
+                  ).animate(
+                    CurvedAnimation(
+                      parent: _animationController,
+                      curve: const Interval(
+                        0.3, // Khởi đầu animation sau khi nút "Create account" đã xuất hiện và phần trên đã xuất hiện
+                        1,
+                        curve: Curves.fastOutSlowIn,
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        // Xử lý khi nút được nhấn
-                      },
-                      child: const Text(
-                        'Apply as student',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          decoration: TextDecoration.underline,
+                  ),
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Looking for a project? ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                          ),
                         ),
-                      ),
+                        InkWell(
+                          onTap: () {
+                            // Xử lý khi nút được nhấn
+                          },
+                          child: const Text(
+                            'Apply as student',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
