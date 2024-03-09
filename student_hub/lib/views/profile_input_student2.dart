@@ -4,9 +4,8 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:student_hub/models/student_user.dart';
 import 'package:student_hub/widgets/show_project_student_widget.dart';
 
-
 class ProfileInputStudent2 extends StatefulWidget {
-  const ProfileInputStudent2( {super.key});
+  const ProfileInputStudent2({super.key});
 
   @override
   _ProfileInputStudent2State createState() => _ProfileInputStudent2State();
@@ -161,7 +160,6 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
-
 
 Future<List<String>> getData(String? filter) async {
   List<String> skills = [

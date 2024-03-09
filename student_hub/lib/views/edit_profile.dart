@@ -298,15 +298,15 @@ class _LoginPageState extends State<EditProfile>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'How many people are in your company?',
                       style: TextStyle(fontSize: 17),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Column(
                       children: [
                         RadioListTile<int>(
-                          title: Text('It\'s just me',
+                          title: const Text('It\'s just me',
                               style: TextStyle(fontSize: 14)),
                           dense: true,
                           value: 100,
@@ -366,7 +366,7 @@ class _LoginPageState extends State<EditProfile>
                             ),
                           ),
                         ),
-                        SizedBox(width: 20),
+                        const SizedBox(width: 20),
                         SlideTransition(
                           position: Tween<Offset>(
                                   begin: const Offset(0, -0.5),

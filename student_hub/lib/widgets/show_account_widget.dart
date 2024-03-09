@@ -26,7 +26,7 @@ class _ShowAccountWidgetState extends State<ShowAccountWidget> {
       itemCount: widget._companyUser.length + 1,
       itemBuilder: (ctx, index) {
         if (index == widget._companyUser.length) {
-          return AddAccountWidget();
+          return const AddAccountWidget();
         } else {
           return InkWell(
             onTap: () {

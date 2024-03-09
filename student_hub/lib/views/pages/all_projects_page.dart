@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AllProjectsPage extends StatelessWidget {
-  const AllProjectsPage({Key? key}) : super(key: key);
+  const AllProjectsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     final List<String> entries = <String>['A', 'B','C'];// sau thay thế bằng modle của projects
-    final String username = "John";
+    const String username = "John";
     return Visibility(
-      replacement: Center(
+      replacement: const Center(
       child: Text("\t\tWelcome, $username \nYou no have jobs"),
     ),
     visible: entries.isNotEmpty,

@@ -177,15 +177,15 @@ class _LoginPageState extends State<ProfileInput>
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'How many people are in your company?',
                       style: TextStyle(fontSize: 17),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Column(
                       children: [
                         RadioListTile<int>(
-                          title: Text('It\'s just me',
+                          title: const Text('It\'s just me',
                               style: TextStyle(fontSize: 14)),
                           dense: true,
                           value: 100,
@@ -197,7 +197,7 @@ class _LoginPageState extends State<ProfileInput>
                           },
                         ),
                         RadioListTile<int>(
-                          title: Text('2-9 employees',
+                          title: const Text('2-9 employees',
                               style: TextStyle(fontSize: 14)),
                           dense: true,
                           value: 200,
@@ -209,7 +209,7 @@ class _LoginPageState extends State<ProfileInput>
                           },
                         ),
                         RadioListTile<int>(
-                          title: Text('10-99 employees',
+                          title: const Text('10-99 employees',
                               style: TextStyle(fontSize: 14)),
                           dense: true,
                           value: 300,
@@ -221,7 +221,7 @@ class _LoginPageState extends State<ProfileInput>
                           },
                         ),
                         RadioListTile<int>(
-                          title: Text('100-1000 employees',
+                          title: const Text('100-1000 employees',
                               style: TextStyle(fontSize: 14)),
                           dense: true,
                           value: 400,
@@ -233,7 +233,7 @@ class _LoginPageState extends State<ProfileInput>
                           },
                         ),
                         RadioListTile<int>(
-                          title: Text('More than 1000 employees',
+                          title: const Text('More than 1000 employees',
                               style: TextStyle(fontSize: 14)),
                           dense: true,
                           value: 500,

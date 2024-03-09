@@ -64,8 +64,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   final AnimationController animationController;
 
-  const _AppBar({Key? key, required this.animationController})
-      : super(key: key);
+  const _AppBar({super.key, required this.animationController});
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +94,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                         const LoginPage(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
-                      var begin = Offset(1.0, 0.0);
+                      var begin = const Offset(1.0, 0.0);
                       var end = Offset.zero;
                       var curve = const Interval(
                         0.3,

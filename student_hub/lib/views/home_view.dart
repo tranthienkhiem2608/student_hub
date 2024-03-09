@@ -49,10 +49,10 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 class _HomePageState extends State<HomePage> {
   final BottomNavController _navController = BottomNavController();
   final List<Widget> _pages = [
-    ProjectsPage(),
-    DashboardPage(),
-    MessagePage(),
-    AlertPage(),
+    const ProjectsPage(),
+    const DashboardPage(),
+    const MessagePage(),
+    const AlertPage(),
   ];
 
   @override

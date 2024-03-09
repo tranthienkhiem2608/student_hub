@@ -39,6 +39,8 @@ dependencies:
   iconsax: ^0.0.8
   google_nav_bar: ^5.0.6
   dropdown_search: ^5.0.6
+  textfield_tags: ^2.1.1
+  intl: ^0.19.0
   quickalert: ^1.0.2
   flutter_dropzone: ^3.0.7
   file_picker: ^6.2.0

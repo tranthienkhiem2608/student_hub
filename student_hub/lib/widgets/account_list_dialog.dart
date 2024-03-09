@@ -8,7 +8,7 @@ class AccountListDialog extends StatelessWidget {
   Function(String) updateAccountName;
   Function reloadPage;
 
-  AccountListDialog(this.accounts, this.onAccountSwitched, this.updateAccountName, this.reloadPage, {Key? key}) : super(key: key);  @override
+  AccountListDialog(this.accounts, this.onAccountSwitched, this.updateAccountName, this.reloadPage, {super.key});  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(

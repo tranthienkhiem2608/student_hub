@@ -8,6 +8,8 @@ import 'package:student_hub/widgets/account_list_dialog.dart';
 import 'package:student_hub/models/company_user.dart';
 
 class SwitchAccountView extends StatefulWidget {
+  const SwitchAccountView({super.key});
+
   @override
   _SwitchAccountViewState createState() => _SwitchAccountViewState();
 }
@@ -119,7 +121,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
+            SizedBox(
               width:100,
               height: 100,
               child: Image.asset('assets/images/avatar_default_img.png'),
