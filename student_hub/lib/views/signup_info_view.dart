@@ -419,10 +419,17 @@ class _SignUpInfoState extends State<SignUpInfo>
                     InkWell(
                       onTap: () {
                         // Xử lý khi nút được nhấn
+                        if (widget.typeUser == 'Role.company') {
+                          ControllerRoute(context)
+                              .navigateToSignupInfoView('student');
+                        } else {
+                          ControllerRoute(context)
+                              .navigateToSignupInfoView('company');
+                        }
                       },
-                      child: const Text(
-                        'Apply as student',
-                        style: TextStyle(
+                      child: Text(
+                        'Apply as ${widget.typeUser == 'Role.company' ? 'student' : 'company'}',
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 14.0,
                           decoration: TextDecoration.underline,
