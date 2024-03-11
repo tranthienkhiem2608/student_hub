@@ -421,10 +421,10 @@ class _SignUpInfoState extends State<SignUpInfo>
                         // Xử lý khi nút được nhấn
                         if (widget.typeUser == 'Role.company') {
                           ControllerRoute(context)
-                              .navigateToSignupInfoView('student');
+                              .navigateToSignupInfoView('Role.student');
                         } else {
                           ControllerRoute(context)
-                              .navigateToSignupInfoView('company');
+                              .navigateToSignupInfoView('Role.company');
                         }
                       },
                       child: Text(
