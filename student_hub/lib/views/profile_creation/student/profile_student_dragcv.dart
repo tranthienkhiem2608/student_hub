@@ -7,9 +7,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:student_hub/views/home_view.dart';
+import 'package:student_hub/views/profile_creation/student/home_view.dart';
 
-import '../models/student_user.dart';
+import '../../../models/student_user.dart';
 
 class StudentProfileDragCv extends StatefulWidget {
   final StudentUser studentUser;

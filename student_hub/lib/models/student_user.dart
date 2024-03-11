@@ -1,7 +1,7 @@
 //import model for student user
-import 'package:student_hub/models/project_student.dart';
-import 'package:student_hub/models/project_student.dart';
-import 'package:student_hub/models/user.dart';
+import '../models/project_student.dart';
+import '../models/project_student.dart';
+import '../models/user.dart';
 
 class StudentUser {
   User user;

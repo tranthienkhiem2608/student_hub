@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage>
             child: Column(
               children: [
                 const SizedBox(
-                  height: 50,
+                  height: 20,
                 ),
                 SizedBox(
                   height: 350,
@@ -378,7 +378,7 @@ class _LoginPageState extends State<LoginPage>
                           'Don\'t have an account?',
                           style: TextStyle(
                               color: Colors.grey.shade600,
-                              fontSize: 14.0,
+                              fontSize: 15.0,
                               fontWeight: FontWeight.w400),
                         ),
                         TextButton(

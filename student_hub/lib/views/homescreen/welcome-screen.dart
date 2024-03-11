@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:student_hub/views/login_view.dart';
-import 'package:student_hub/views/signup_info_view.dart';
-import 'package:student_hub/views/switch_account_view.dart';
+import 'package:student_hub/models/company_user.dart';
 import 'package:student_hub/view_models/authentication_controller_route.dart';
+import 'package:student_hub/views/auth/login_view.dart';
+import 'package:student_hub/views/auth/switch_account_view.dart';
 
-class WelcomePage extends StatefulWidget {
-  const WelcomePage({super.key});
+class WelcomeScreen extends StatefulWidget {
+  final CompanyUser companyUser;
+  const WelcomeScreen(this.companyUser, {super.key});
 
   @override
-  State<WelcomePage> createState() => _WelcomePageState();
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _WelcomePageState extends State<WelcomePage>
+class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
@@ -51,13 +52,14 @@ class _WelcomePageState extends State<WelcomePage>
       body: SafeArea(
         child: _Body(
             animationController: _animationController,
-            fadeAnimation: _fadeAnimation),
+            fadeAnimation: _fadeAnimation,
+            companyUser: widget.companyUser),
       ),
     );
   }
 
   @override
-  void didUpdateWidget(covariant WelcomePage oldWidget) {
+  void didUpdateWidget(covariant WelcomeScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
     _animationController.reset();
     _animationController.forward();
@@ -72,6 +74,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
               color: Colors.blueAccent,
@@ -131,11 +134,13 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 class _Body extends StatelessWidget {
   final AnimationController animationController;
   final Animation<double> fadeAnimation;
+  final CompanyUser companyUser;
 
   const _Body(
       {super.key,
-      required this.animationController,
-      required this.fadeAnimation});
+        required this.animationController,
+        required this.fadeAnimation,
+        required this.companyUser});
 
   //
 
@@ -147,7 +152,9 @@ class _Body extends StatelessWidget {
           child: SingleChildScrollView(
             child: _Content(
                 animationController: animationController,
-                fadeAnimation: fadeAnimation),
+                fadeAnimation: fadeAnimation,
+                companyUser: companyUser
+            ),
           ),
         ),
       ],
@@ -156,13 +163,15 @@ class _Body extends StatelessWidget {
 }
 
 class _Content extends StatelessWidget {
+  final CompanyUser companyUser;
   final AnimationController animationController;
   final Animation<double> fadeAnimation;
 
   const _Content(
       {super.key,
       required this.animationController,
-      required this.fadeAnimation});
+      required this.fadeAnimation,
+      required this.companyUser});
 
   @override
   Widget build(BuildContext context) {
@@ -198,8 +207,9 @@ class _Content extends StatelessWidget {
               ),
             ),
           ),
-          child: const _AnimatedText(),
+          child: _AnimatedText(companyUser: companyUser),
         ),
+        // ... (Rest of your body code) ...
         SlideTransition(
           position:
               Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))
@@ -215,7 +225,7 @@ class _Content extends StatelessWidget {
         ),
         // Animated Buttons
         const SizedBox(
-            height: 50),
+            height: 50), // Add some space between the text and the buttons
         SlideTransition(
           position: Tween<Offset>(
                   begin: const Offset(0, -0.5), end: const Offset(0, 0))
@@ -229,74 +239,13 @@ class _Content extends StatelessWidget {
           )),
           child: FadeTransition(
             opacity: fadeAnimation,
-            child: Container(
-            width: 200,
-            height: 50,
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Handle button press
-                ControllerRoute(context).navigateToLoginView('Company');
-
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF13babd),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25), // Button radius
-                ),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.groups, color: Colors.black, size: 24,), // This is the icon
-                  Text('Company', style: TextStyle(color: Colors.black, fontSize: 16)),
-                ],
-              ),
-            )
-          ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        SlideTransition(
-          position: Tween<Offset>(
-                  begin: const Offset(0, 0.5), end: const Offset(0, 0))
-              .animate(CurvedAnimation(
-            parent: animationController,
-            curve: const Interval(
-              0.3,
-              1,
-              curve: Curves.fastOutSlowIn,
-            ),
-          )),
-          child: FadeTransition(
-            opacity: fadeAnimation,
-            child: Container(
-              width: 200,
-              height: 50,
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child:ElevatedButton(
-                onPressed: () {
-                  // Handle button press
-                  ControllerRoute(context).navigateToLoginView('Student');
-
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF13babd),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25), // Button radius
-                  ),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(Icons.emoji_people, color: Colors.black,size: 24,), // This is the icon
-                    Text('Student', style: TextStyle(color: Colors.black, fontSize: 16)),
-                  ],
-                ),
-              )
+            child: _AnimatedButton(
+              text: 'Get started!',
+                companyUser: companyUser
             ),
           ),
         ),
+
         const SizedBox(height: 20),
         SlideTransition(
           position:
@@ -309,7 +258,6 @@ class _Content extends StatelessWidget {
               curve: Curves.fastOutSlowIn,
             ),
           )),
-          child: const _DescriptionSecondText(),
         ),
       ],
     );
@@ -317,18 +265,19 @@ class _Content extends StatelessWidget {
 }
 
 class _AnimatedText extends StatelessWidget {
-  const _AnimatedText({super.key});
+  final CompanyUser companyUser;
+  const _AnimatedText({super.key, required this.companyUser});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 30, 20, 5),
+      padding: const EdgeInsets.fromLTRB(15, 30, 20, 5),
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Build your product with high-skilled students",
+          "Welcome, ${companyUser.user.fullName}!",
           style: GoogleFonts.openSans(
-            fontSize: 14,
+            fontSize: 19,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -347,9 +296,9 @@ class _DescriptionText extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Find and onboard best-skilled student for your product. Student works to gain experience & skills from real-world projects",
+          "Let's start with your first project post!",
           style: GoogleFonts.openSans(
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.normal,
           ),
           textAlign: TextAlign.center,
@@ -359,32 +308,13 @@ class _DescriptionText extends StatelessWidget {
   }
 }
 
-class _DescriptionSecondText extends StatelessWidget {
-  const _DescriptionSecondText({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 20, 25, 5),
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: Text(
-          "StudentHub is university market place to connect high-skilled student and company on a real-world project",
-          style: GoogleFonts.openSans(
-            fontSize: 14,
-            fontWeight: FontWeight.normal,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-}
 
 class _AnimatedButton extends StatelessWidget {
   final String text;
+  final CompanyUser companyUser;
 
-  const _AnimatedButton({super.key, required this.text});
+  const _AnimatedButton({super.key, required this.text, required this.companyUser });
 
   @override
   Widget build(BuildContext context) {
@@ -392,7 +322,9 @@ class _AnimatedButton extends StatelessWidget {
       width: 200, // Set the width to your desired size
       height: 50, // Set the height to your desired size
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          ControllerRoute(context).navigateToHomeScreen(companyUser);
+        },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blueAccent,
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -417,7 +349,7 @@ class AnimationImage extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Image.asset(
-          'assets/images/welcome_img.png',
+          'assets/images/get-started_img.png',
         ),
       ),
     );
