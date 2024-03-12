@@ -5,7 +5,7 @@ class AllProjectsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> entries = <String>['A', 'B','C'];// sau thay thế bằng modle của projects
+    final List<String> entries = <String>['A', 'B','C'];// sau thay thế bằng model của projects
     const String username = "John";
     return Visibility(
       replacement: const Center(
