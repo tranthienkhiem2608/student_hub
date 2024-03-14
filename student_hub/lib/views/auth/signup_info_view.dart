@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:student_hub/view_models/authentication_controller_route.dart';
 import 'package:student_hub/models/user.dart';
+import 'package:email_validator/email_validator.dart';
 
 class SignUpInfo extends StatefulWidget {
   final String typeUser;
@@ -55,6 +56,8 @@ class _SignUpInfoState extends State<SignUpInfo>
   Timer? _timer;
 
   bool _obscurePassword = true; // Start with the password hidden
+  bool _showEmailError = false; // Flag to control error visibility
+  final TextEditingController _emailController = TextEditingController();
 
   int? _selectedValue;
   final ValueNotifier<String> fullNameNotifier = ValueNotifier<String>('');
@@ -214,11 +217,25 @@ class _SignUpInfoState extends State<SignUpInfo>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
-                      onChanged: (value) => workEmailNotifier.value =
-                          value, // Update workEmailNotifier when text changes
+                      onChanged: (value) {
+                        workEmailNotifier.value = value;
+                        setState(() {
+                          _showEmailError = false; // Reset error on change
+                        });
+                      },
+                      controller:
+                          _emailController, // Controller for email input // Update workEmailNotifier when text changes
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
+                        errorText: _showEmailError ? 'Invalid Email' : null,
+                        errorStyle: const TextStyle(color: Colors.red),
+                        focusedErrorBorder: OutlineInputBorder(
+                          // Change this
+                          borderSide:
+                              const BorderSide(color: Colors.red, width: 1.5),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         labelText: 'Work Email',
                         hintText: 'Your Work Email!',
                         hintStyle: const TextStyle(
@@ -268,6 +285,8 @@ class _SignUpInfoState extends State<SignUpInfo>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      onChanged: (value) => passwordNotifier.value =
+                          value, // Update passwordNotifier when text changes
                       obscureText:
                           _obscurePassword, // Use the visibility variable
                       cursorColor: Colors.black,
@@ -387,8 +406,18 @@ class _SignUpInfoState extends State<SignUpInfo>
                               onPressed: fullNameNotifier.value.isNotEmpty &&
                                       workEmailNotifier.value.isNotEmpty &&
                                       passwordNotifier.value.isNotEmpty &&
-                                      checkboxNotifier.value
+                                      checkboxNotifier.value &&
+                                      !EmailValidator.validate(
+                                          _emailController.text)
                                   ? () {
+                                      if (!EmailValidator.validate(
+                                          _emailController.text)) {
+                                        setState(() {
+                                          _showEmailError =
+                                              true; // Show error in TextField
+                                        });
+                                        return;
+                                      }
                                       // Xử lý khi nút được nhấn
                                       final user = User(
                                         fullName: fullNameNotifier.value,

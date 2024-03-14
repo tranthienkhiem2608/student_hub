@@ -47,6 +47,7 @@ dependencies:
   dotted_border: ^2.1.0
   bulleted_list: ^0.0.1+0.1a
   flutter_hooks: ^0.20.5
+  email_validator: ^2.1.17
 
 dev_dependencies:
   flutter_test:
