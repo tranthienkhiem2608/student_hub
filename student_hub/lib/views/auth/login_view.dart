@@ -48,6 +48,8 @@ class _LoginPageState extends State<LoginPage>
   late Animation<double> _fadeAnimation;
   Timer? _timer;
 
+  bool _obscurePassword = true; // Start with the password hidden
+
   @override
   void initState() {
     _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
@@ -255,6 +257,8 @@ class _LoginPageState extends State<LoginPage>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      obscureText:
+                          _obscurePassword, // Use the visibility variable
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
@@ -288,11 +292,22 @@ class _LoginPageState extends State<LoginPage>
                               const BorderSide(color: Colors.black, width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword ? Iconsax.eye_slash : Iconsax.eye,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword =
+                                  !_obscurePassword; // Toggle visibility
+                            });
+                          },
+                        ),
                       ),
                     ),
                   ),
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [

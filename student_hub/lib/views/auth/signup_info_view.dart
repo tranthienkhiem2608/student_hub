@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:student_hub/view_models/authentication_controller_route.dart';
 import 'package:student_hub/models/user.dart';
@@ -51,6 +53,8 @@ class _SignUpInfoState extends State<SignUpInfo>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   Timer? _timer;
+
+  bool _obscurePassword = true; // Start with the password hidden
 
   int? _selectedValue;
   final ValueNotifier<String> fullNameNotifier = ValueNotifier<String>('');
@@ -264,25 +268,24 @@ class _SignUpInfoState extends State<SignUpInfo>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
-                      onChanged: (value) => passwordNotifier.value =
-                          value, // Update passwordNotifier when text changes
+                      obscureText:
+                          _obscurePassword, // Use the visibility variable
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(
-                            0.0), // Khoảng cách giữa đường viền và nội dung
+                        contentPadding: const EdgeInsets.all(0.0),
                         labelText: 'Password',
-                        hintText: 'Password (8 or more characters)',
+                        hintText: 'Password',
+                        hintStyle: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14.0,
+                        ),
                         labelStyle: const TextStyle(
                           color: Colors.black,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
                         ),
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14.0,
-                        ),
                         prefixIcon: const Icon(
-                          Iconsax.lock,
+                          Iconsax.key,
                           color: Colors.black,
                           size: 18,
                         ),
@@ -300,6 +303,18 @@ class _SignUpInfoState extends State<SignUpInfo>
                               const BorderSide(color: Colors.black, width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword ? Iconsax.eye_slash : Iconsax.eye,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword =
+                                  !_obscurePassword; // Toggle visibility
+                            });
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -307,26 +322,40 @@ class _SignUpInfoState extends State<SignUpInfo>
                 const SizedBox(
                   height: 15,
                 ),
-                // i want check box left and text right with content Yes, I understand and agree to StudentHub
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _selectedValue == 1,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _selectedValue = value! ? 1 : 0;
-                          checkboxNotifier.value = value;
-                        });
-                      },
+                SlideTransition(
+                  position: Tween<Offset>(
+                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      .animate(CurvedAnimation(
+                    parent: _animationController,
+                    curve: const Interval(
+                      0.3,
+                      1,
+                      curve: Curves.fastOutSlowIn,
                     ),
-                    const Text(
-                      'Yes, I understand and agree to StudentHub',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                      ),
+                  )),
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: _selectedValue == 1,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              _selectedValue = value! ? 1 : 0;
+                              checkboxNotifier.value = value;
+                            });
+                          },
+                        ),
+                        const Text(
+                          'Yes, I understand and agree to StudentHub',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
@@ -405,38 +434,52 @@ class _SignUpInfoState extends State<SignUpInfo>
                 const SizedBox(
                   height: 30,
                 ),
-                // i want to have a text with content Looking for a project? Apply as student with Apply as student underlined and clickable
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Looking for a project? ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                      ),
+                SlideTransition(
+                  position: Tween<Offset>(
+                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      .animate(CurvedAnimation(
+                    parent: _animationController,
+                    curve: const Interval(
+                      0.3,
+                      1,
+                      curve: Curves.fastOutSlowIn,
                     ),
-                    InkWell(
-                      onTap: () {
-                        // Xử lý khi nút được nhấn
-                        if (widget.typeUser == 'Role.company') {
-                          ControllerRoute(context)
-                              .navigateToSignupInfoView('Role.student');
-                        } else {
-                          ControllerRoute(context)
-                              .navigateToSignupInfoView('Role.company');
-                        }
-                      },
-                      child: Text(
-                        'Apply as ${widget.typeUser == 'Role.company' ? 'student' : 'company'}',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          decoration: TextDecoration.underline,
+                  )),
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Looking for a project? ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                          ),
                         ),
-                      ),
+                        InkWell(
+                          onTap: () {
+                            // Xử lý khi nút được nhấn
+                            if (widget.typeUser == 'Role.company') {
+                              ControllerRoute(context)
+                                  .navigateToSignupInfoView('Role.student');
+                            } else {
+                              ControllerRoute(context)
+                                  .navigateToSignupInfoView('Role.company');
+                            }
+                          },
+                          child: Text(
+                            'Apply as ${widget.typeUser == 'Role.company' ? 'student' : 'company'}',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
