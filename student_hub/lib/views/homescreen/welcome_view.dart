@@ -47,7 +47,7 @@ class _WelcomePageState extends State<WelcomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _AppBar(animationController: _animationController),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: SafeArea(
         child: _Body(
             animationController: _animationController,

@@ -91,7 +91,7 @@ class _LoginPageState extends State<LoginPage>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const _AppBar(),
-        backgroundColor: const Color(0xFFBEEEF7),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
