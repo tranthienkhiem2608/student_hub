@@ -407,8 +407,10 @@ class _SignUpInfoState extends State<SignUpInfo>
                                       workEmailNotifier.value.isNotEmpty &&
                                       passwordNotifier.value.isNotEmpty &&
                                       checkboxNotifier.value &&
-                                      !EmailValidator.validate(
-                                          _emailController.text)
+                                      (_emailController.text.contains('@') ||
+                                          !EmailValidator.validate(
+                                              _emailController
+                                                  .text)) // Update this condition
                                   ? () {
                                       if (!EmailValidator.validate(
                                           _emailController.text)) {
