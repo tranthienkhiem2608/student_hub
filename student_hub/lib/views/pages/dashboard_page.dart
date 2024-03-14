@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:student_hub/views/pages/all_projects_page.dart';
 import 'package:student_hub/views/pages/archieved_page.dart';
 import 'package:student_hub/views/pages/working_page.dart';
+import 'package:student_hub/views/post_project/post_screen_1.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -16,15 +17,25 @@ class DashboardPage extends StatelessWidget {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Your Jobs', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold)),
+              const Text('Your Jobs',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)),
               ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF69cde0)),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xFF69cde0)),
                 ),
                 onPressed: () {
-                  // Handle button press
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const PostScreen1()),
+                  );
                 },
-                child: const Text('Post a Job', style: TextStyle(color: Colors.black)),
+                child: const Text('Post a Job',
+                    style: TextStyle(color: Colors.black)),
               ),
             ],
           ),
