@@ -195,7 +195,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 1,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight + 20),

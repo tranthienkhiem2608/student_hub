@@ -79,11 +79,18 @@ class ControllerRoute {
     );
   }
 
-  void navigateToHomeScreen(CompanyUser companyUser) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomePage(showAlert: false)),
-    );
+  void navigateToHomeScreen(bool? showAlert, CompanyUser? companyUser, StudentUser? studentUser) {
+    if(companyUser == null){
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage(showAlert: true, studentUser: studentUser)),
+      );
+    } else if(studentUser == null){
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage(showAlert: false, companyUser: companyUser)),
+      );
+    }
   }
 
 

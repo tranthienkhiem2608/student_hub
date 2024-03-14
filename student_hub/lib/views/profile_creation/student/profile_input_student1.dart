@@ -4,9 +4,13 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:student_hub/models/student_user.dart';
 import 'package:student_hub/models/user.dart';
 import 'package:student_hub/view_models/authentication_controller_route.dart';
+import 'package:student_hub/widgets/pop_up_education_widget.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import 'package:student_hub/widgets/show_school_widget.dart';
 import 'package:student_hub/widgets/show_languages_widget.dart';
+import 'package:student_hub/widgets/pop_up_languages_widget.dart';
+
+import '../../../widgets/pop_up_languages_edit_widget.dart';
 
 class ProfileInputStudent1 extends StatefulWidget {
   final User user;
@@ -40,6 +44,49 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
     super.dispose();
     _textfieldTagsController.dispose();
   }
+  void _addNewLanguage(String language, String level) {
+    final newLanguage = {'name': language, 'level': level};
+    setState(() {
+      languages.add(newLanguage);
+    });
+  }
+
+  void _deleteLanguage(String language) {
+    setState(() {
+      languages.removeWhere((element) => element['name'] == language);
+    });
+  }
+
+
+
+  void _addNewEducation(String schoolName, int yearsStart, int yearsEnd) {
+      setState(() {
+        final newEducation = {
+          'schoolName': schoolName,
+          'yearsStart': yearsStart,
+          'yearsEnd': yearsEnd
+        };
+        educationList.add(newEducation);
+      });
+  }
+  void _deleteEducation(String schoolName) {
+    setState(() {
+      educationList.removeWhere((element) => element['schoolName'] == schoolName);
+    });
+  }
+  void _editLanguage(List<Map<String, dynamic>> listLanguagesDelete) {
+    for(var i = 0; i < listLanguagesDelete.length; i++)
+    {
+      print(listLanguagesDelete[i]);
+      if(languages.contains(listLanguagesDelete[i]))
+      {
+        setState(() {
+          languages.removeWhere((element) => element == listLanguagesDelete[i]);
+        });
+      }
+    }
+  }
+
 
   final List<String> skills = [
     'Flutter',
@@ -77,8 +124,6 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
   ];
   List<Map<String, dynamic>> languages = [
     {'name': 'English', 'level': 'Native'},
-    {'name': 'French', 'level': 'Intermediate'},
-    {'name': 'Spanish', 'level': 'Basic'},
     // Add more languages here
   ];
 
@@ -87,11 +132,6 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
       'schoolName': 'Le Hong Phong High School',
       'yearsStart': 2018,
       'yearsEnd': 2021
-    },
-    {
-      'schoolName': 'Ho Chi Minh University of Sciences',
-      'yearsStart': 2021,
-      'yearsEnd': 2025
     },
     // Add more education items here
   ];
@@ -397,21 +437,34 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add,
-                          size: 26, color: Colors.lightBlue),
+                      onPressed: () async {
+                        final result = await showDialog<Map<String, dynamic>>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return PopUpLanguagesWidget(_addNewLanguage, languages);
+                          },
+                        );
+
+                        if (result != null) {
+                          setState(() {
+                            languages.add(result);
+                          });
+                        }
+                      },
+                      icon: const Icon(Icons.add, size: 26, color: Colors.lightBlue),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 15, 0, 5),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.edit, size: 23),
-                    ),
-                  ),
+                IconButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return PopUpLanguagesEditWidget(_deleteLanguage, languages);
+                      },
+                    );
+                  },
+                  icon: const Icon(Icons.edit, size: 23),
                 ),
               ],
             ),
@@ -455,9 +508,15 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add,
-                          size: 26, color: Colors.lightBlue),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return PopUpEducationEditWidget(_addNewEducation,_deleteEducation," ", 0, 0);
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.add, size: 26, color: Colors.lightBlue),
                     ),
                   ),
                 ),
@@ -477,7 +536,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       height: 160,
-                      child: ShowSchoolWidget(educationList: educationList),
+                      child: ShowSchoolWidget(educationList: educationList, deleteSchool: _deleteEducation, addNewEducation: _addNewEducation),
                     ),
                   ],
                 ),

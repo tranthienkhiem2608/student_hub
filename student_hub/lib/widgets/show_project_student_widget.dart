@@ -5,23 +5,23 @@ import 'package:student_hub/models/student_user.dart';
 import 'package:intl/intl.dart'; // Import the intl package
 
 class ShowProjectStudentWidget extends StatelessWidget {
-  final List<StudentUser> projectList;
+  final StudentUser userStudent;
 
-  const ShowProjectStudentWidget({Key? key, required this.projectList})
+  const ShowProjectStudentWidget({Key? key, required this.userStudent})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: projectList.length,
+      itemCount: userStudent.projectsList.length,
       itemBuilder: (ctx, index) {
         return Column(
           children: [
             ListTile(
-              title: Text(projectList[index].projectsList[index].projectName,
+              title: Text(userStudent.projectsList[index].projectName,
                   style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(
-                  '${DateFormat('dd-MM-yyyy').format(projectList[index].projectsList[index].timeStart)} - ${DateFormat('dd-MM-yyyy').format(projectList[index].projectsList[index].timeEnd)}, \nDuration: ${(projectList[index].duration.inHours / 24).round()} days'),
+                  '${DateFormat('dd-MM-yyyy').format(userStudent.projectsList[index].timeStart)} - ${DateFormat('dd-MM-yyyy').format(userStudent.projectsList[index].timeEnd)}, \nDuration: ${(userStudent.duration.inHours / 24).round()} days'),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -50,9 +50,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 5, 10, 5),
               child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(projectList[index]
-                      .projectsList[index]
-                      .projectDescription)),
+                  child: Text(userStudent.projectsList[index].projectDescription)),
             ),
             const Padding(
               padding: EdgeInsets.all(8.0),
@@ -78,7 +76,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
                   child: Wrap(
                     spacing: 6.0,
                     runSpacing: 6.0,
-                    children: projectList[index]
+                    children: userStudent
                         .projectsList[index]
                         .skillsListProject
                         .map((skill) => Chip(label: Text(skill)))

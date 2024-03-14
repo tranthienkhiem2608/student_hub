@@ -5,6 +5,9 @@ import 'package:student_hub/models/student_user.dart';
 import 'package:student_hub/view_models/authentication_controller_route.dart';
 import 'package:student_hub/widgets/show_project_student_widget.dart';
 
+import '../../../models/project_student.dart';
+import '../../../widgets/pop_up_project_widget.dart';
+
 
 class ProfileInputStudent2 extends StatefulWidget {
   final StudentUser studentUser;
@@ -32,6 +35,27 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
     'MongoDB',
     'Firebase',
   ];
+
+  void _addNewProject(String projectName, DateTime startDate, DateTime endDate, String description, List<String> skills) {
+    setState(() {
+      widget.studentUser.projectsList.add(ProjectStudent(
+        projectName: projectName,
+        timeStart: startDate,
+        timeEnd: endDate,
+        projectDescription: description,
+        skillsListProject: skills,
+      ));
+
+    });
+    // Add your logic here for handling the icon press
+  }
+
+  void _deleteProject(String projectName) {
+    setState(() {
+      widget.studentUser.projectsList.removeWhere((project) => project.projectName == projectName);
+    });
+    // Add your logic here for handling the icon press
+  }
 
   String _searchQuery = '';
 
@@ -82,10 +106,15 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                     textAlign: TextAlign.left,
                   ),
                   IconButton(
-                    icon: const Icon(Icons.add_circle_outline),
                     onPressed: () {
-                      // Add your logic here for handling the icon press
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return PopUpProjectWidget(_addNewProject,_deleteProject, '', null, null, '', const []);
+                        },
+                      );
                     },
+                    icon: const Icon(Icons.add, size: 26, color: Colors.lightBlue),
                   ),
                 ],
               ),
@@ -98,7 +127,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                   children: [
                     SizedBox(
                       height: 500,
-                      child: ShowProjectStudentWidget(projectList: projectList),
+                      child: ShowProjectStudentWidget(userStudent: widget.studentUser),
                     ),
                   ],
                 ),

@@ -57,7 +57,8 @@ class StudentUser {
   }
 }
 
-List<StudentUser> projectList = [
+
+List<StudentUser> userList = [
   StudentUser(
     user: User(
       fullName: 'John Doe',

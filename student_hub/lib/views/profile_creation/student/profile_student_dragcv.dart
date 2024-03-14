@@ -9,12 +9,13 @@ import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:student_hub/views/profile_creation/student/home_view.dart';
 
-import '../../../models/student_user.dart';
+import 'package:student_hub/models/student_user.dart';
+import 'package:student_hub/view_models/authentication_controller_route.dart';
 
 class StudentProfileDragCv extends StatefulWidget {
   final StudentUser studentUser;
 
-  const StudentProfileDragCv(this.studentUser,{super.key});
+  const StudentProfileDragCv(this.studentUser, {super.key});
 
   @override
   State<StudentProfileDragCv> createState() => _StudentProfileDragCvState();
@@ -185,20 +186,12 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                     const Color(0xFF69cde0),
                   ),
                 ),
-                onPressed: () async {
+                onPressed: () {
                   // 1. Simulate some processing (if needed)
-                  // You would perform your upload logic or other tasks here.
-                  await Future.delayed(
-                      const Duration(milliseconds: 100)); // Example delay
-
+                  // You would perform your upload logic or other tasks here.// Example delay
+                  ControllerRoute(context)
+                      .navigateToHomeScreen(true, null, widget.studentUser);
                   // 3. Navigate to HomePage
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          HomePage(showAlert: true, ), // Pass true
-                    ),
-                  );
                 },
                 child:
                     const Text('Next', style: TextStyle(color: Colors.black)),
@@ -226,7 +219,8 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                     'assets/images/upload_img.png',
                     width: 150,
                     height: 150,
-                    color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.8), // Mờ hình ảnh
+                    color: const Color.fromARGB(255, 255, 255, 255)
+                        .withOpacity(0.8), // Mờ hình ảnh
                     colorBlendMode: BlendMode.srcOver, // Áp dụng hiệu ứng mờ
                   ),
                 ),

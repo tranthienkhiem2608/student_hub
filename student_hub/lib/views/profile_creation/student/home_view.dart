@@ -11,8 +11,14 @@ import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.showAlert}) : super(key: key);
+  final StudentUser? studentUser;
+  final CompanyUser? companyUser;
   final bool showAlert;
+  const HomePage({this.showAlert = false, this.companyUser, this.studentUser, Key? key}) : super(key: key);
+
+  // void functionInitialize({bool? shoAlert, CompanyUser? userCompany, StudentUser? userStudent, Key? key}) {
+  //     if()
+  // }
 
   @override
   _HomePageState createState() => _HomePageState();
