@@ -1,15 +1,22 @@
 // show_school_widget.dart
 import 'package:flutter/material.dart';
 import 'package:student_hub/models/student_user.dart';
+import 'package:student_hub/widgets/pop_up_project_widget.dart';
 
 import 'package:intl/intl.dart'; // Import the intl package
 
 class ShowProjectStudentWidget extends StatelessWidget {
   final StudentUser userStudent;
+  final Function _deleteProject;
+  final Function _addNewProject;
 
-  const ShowProjectStudentWidget({Key? key, required this.userStudent})
-      : super(key: key);
-
+  const ShowProjectStudentWidget({
+    Key? key,
+    required this.userStudent,
+    required Function deleteProject,
+    required Function addNewProject,
+  })  : _deleteProject = deleteProject,
+        _addNewProject = addNewProject;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -32,6 +39,20 @@ class ShowProjectStudentWidget extends StatelessWidget {
                         icon: const Icon(Icons.edit, color: Colors.black),
                         onPressed: () {
                           // Handle edit button press
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return PopUpProjectWidget(
+                                _addNewProject,
+                                _deleteProject,
+                                userStudent.projectsList[index].projectName,
+                                userStudent.projectsList[index].timeStart,
+                                userStudent.projectsList[index].timeEnd,
+                                userStudent.projectsList[index].projectDescription,
+                                userStudent.projectsList[index].skillsListProject,
+                              );
+                            },
+                          );
                         },
                       ),
                       SizedBox(width: 0), // Khoảng cách giữa hai biểu tượng
@@ -39,6 +60,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
                         icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
                           // Handle delete button press
+                          _deleteProject(userStudent.projectsList[index].projectName);
                         },
                       ),
                     ],

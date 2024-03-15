@@ -23,18 +23,13 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
   late DateTime? _timeEnd = widget.timeEnd;
   late TextEditingController _projectNameController;
   late TextEditingController _projectDescriptionController;
-  final List<String> _selectedSkills = [];
+  final List<String>? _selectedSkills = [];
   TextEditingController _textEditingController = TextEditingController();
   late TextfieldTagsController<String> _textfieldTagsController;
   late double _distanceToField;
 
 
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _distanceToField = MediaQuery.of(context).size.width;
-  }
 
 
   @override
@@ -43,7 +38,15 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
     _projectNameController = TextEditingController(text: widget.projectName);
     _projectDescriptionController = TextEditingController(text: widget.projectDescription);
     _textfieldTagsController = TextfieldTagsController<String>();
+    _selectedSkills!.addAll(widget.skillsListProject);
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _distanceToField = MediaQuery.of(context).size.width;
+  }
+
 
   @override
   void dispose() {
@@ -200,7 +203,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                                 ? TextButton(
                               onPressed: () {
                                 onSelected(option);
-                                if (!_selectedSkills.contains(option)) {
+                                if (!_selectedSkills!.contains(option)) {
                                   _selectedSkills.add(option);
                                 }
                                 setState(() {});
@@ -222,7 +225,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                                         ),
                                       ),
                                       if (_selectedSkills
-                                          .contains(option))
+                                          !.contains(option))
                                         const Icon(
                                           Icons.check,
                                           color: Colors.green,
@@ -335,7 +338,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                                                 inputFieldValues
                                                     .onTagDelete(tag);
                                                 if (_selectedSkills
-                                                    .contains(tag)) {
+                                                    !.contains(tag)) {
                                                   _selectedSkills.remove(tag);
                                                 }
                                                 setState(() {});

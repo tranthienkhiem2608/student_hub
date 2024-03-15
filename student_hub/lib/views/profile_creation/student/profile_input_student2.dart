@@ -127,7 +127,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                   children: [
                     SizedBox(
                       height: 500,
-                      child: ShowProjectStudentWidget(userStudent: widget.studentUser),
+                      child: ShowProjectStudentWidget(userStudent: widget.studentUser, deleteProject: _deleteProject, addNewProject: _addNewProject),
                     ),
                   ],
                 ),
