@@ -15,7 +15,10 @@ class ProfileInputStudent2 extends StatefulWidget {
 
   @override
   _ProfileInputStudent2State createState() => _ProfileInputStudent2State();
+
 }
+
+
 
 class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
   final List<String> skills = [
@@ -35,6 +38,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
     'MongoDB',
     'Firebase',
   ];
+
 
   void _addNewProject(String projectName, DateTime startDate, DateTime endDate, String description, List<String> skills) {
     setState(() {

@@ -1,11 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
+import 'package:student_hub/widgets/show_project_company_widget.dart'; // Import the ShowProjectCompanyWidget
 
-class AllProjectsPage extends StatelessWidget {
+class AllProjectsPage extends StatefulWidget {
   const AllProjectsPage({super.key});
+  @override
+  _AllProjectsPageState createState() => _AllProjectsPageState();
+}
+class _AllProjectsPageState extends State<AllProjectsPage> with WidgetsBindingObserver {
+
+
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController()..addListener(_onPageChange);
+  }
+
+  @override
+  void dispose() {
+    _pageController.removeListener(_onPageChange);
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onPageChange() {
+    if (_pageController.page == _pageController.initialPage) {
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final List<String> entries = <String>['A', 'B','C'];// sau thay thế bằng model của projects
+    final List<String> entries = <String>['Senior frontend developer (Fintech)','Senior backend developer (Fintech)','Fresher fullstack developer'];
+    final List<DateTime> listTime = <DateTime>[DateTime.now(), DateTime.now(), DateTime.now()];
     const String username = "John";
     return Visibility(
       replacement: const Center(
@@ -20,20 +49,23 @@ class AllProjectsPage extends StatelessWidget {
         Expanded(
           child: ListView.separated(
             itemCount: entries.length,
-            itemBuilder: (context, index) => Column(
-              children: [
-                ListTile(
-                  title: Text('Project ${entries[index]}'),
-                  subtitle: Text('Description of project ${entries[index]}'),
-                  onTap: () {
-                    // Navigate to the second screen using a named route.
-                    Navigator.pushNamed(context, '/project_detail');
-                  },
-                ),
-                const Divider(),
-              ],
+            itemBuilder: (context, index)=> GestureDetector(
+              onTap: () {
+                // Handle your tap here.
+                Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HireStudentScreen()));
+
+
+                print('Item at index $index was tapped.');
+              }, child: ShowProjectCompanyWidget(
+              projectName: '${entries[index]}',
+              creationTime: listTime[index],
+              description:  ['Clear expectations about your project or deliverables', 'The skills required for your project', 'Details about your project'],
+              quantities: [0, 8, 2],
+              labels: ['Proposals', 'Messages', 'Hired'],
             ),
-            separatorBuilder: (context, index) => const SizedBox(),
+            ),
+            separatorBuilder: (context, index) => const Divider(),
           ),
         ),
       ]),
