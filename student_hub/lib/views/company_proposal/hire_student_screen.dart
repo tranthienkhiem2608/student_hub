@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/models/project_company.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/project_detail/detail_page.dart';
 import 'package:student_hub/views/pages/project_detail/hired_page.dart';
@@ -7,9 +8,9 @@ import 'package:student_hub/views/pages/project_detail/proposals_page.dart';
 
 
 class HireStudentScreen extends StatefulWidget {
+  final ProjectCompany projectCompany;
 
-  const HireStudentScreen({super.key});
-
+  const HireStudentScreen({super.key, required this.projectCompany});
   @override
   _HireStudentScreenState createState() => _HireStudentScreenState();
 
@@ -19,7 +20,7 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const DefaultTabController(
+    return DefaultTabController(
       length: 4,
       child: Scaffold(
         appBar: _AppBar(),
@@ -30,10 +31,10 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
               padding: EdgeInsets.fromLTRB(25, 5, 5, 0),
               child:Align(
                 alignment: Alignment.centerLeft,
-                child:Text("Senior frontend developer (Fintech)", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),),
+                child:Text(widget.projectCompany.projectName, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),),
               ),
             ),
-            TabBar(
+            const TabBar(
               indicatorColor: Color(0xFF69cde0),
               labelColor: Color(0xFF69cde0),
               unselectedLabelColor: Colors.black,
@@ -47,8 +48,8 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  ProposalsPage(),
-                  DetailPage(),
+                  ProposalsPage(studentRegistered: widget.projectCompany.studentRegistered,),
+                  DetailPage(projectCompany: widget.projectCompany),
                   MessagePage(),
                   HiredPage(),
                 ],

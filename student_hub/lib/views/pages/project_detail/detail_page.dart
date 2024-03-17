@@ -1,49 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../../models/project_company.dart';
+
 class DetailPage extends StatefulWidget {
-  const DetailPage(
-      {super.key,
-        required this.projectName,
-        required this.duration,
-        required this.numberOfStudents,
-        required this.description});
-  final String projectName;
-  final String duration;
-  final String numberOfStudents;
-  final String description;
+  const DetailPage({super.key, required this.projectCompany});
+  final ProjectCompany projectCompany;
 
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
-class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      title: const Text('Student Hub',
-          style: TextStyle(
-              color: Colors.blueAccent,
-              fontSize: 20,
-              fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
-      actions: <Widget>[
-        IconButton(
-          icon: SizedBox(
-            width: 25,
-            height: 25,
-            child: Image.asset('assets/icons/user_ic.png'),
-          ),
-          onPressed: () {},
-        ),
-      ],
-    );
-  }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
 
 class _DetailPageState extends State<DetailPage>
     with SingleTickerProviderStateMixin {
@@ -56,7 +22,7 @@ class _DetailPageState extends State<DetailPage>
   void _parseExpectations() {
     // Assuming your expectations are separated by newlines in the description
     setState(() {
-      expectations = widget.description.split('\n');
+      expectations = widget.projectCompany.description.split('\n');
     });
   }
 
@@ -86,41 +52,11 @@ class _DetailPageState extends State<DetailPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: const Text('Student Hub',
-            style: TextStyle(
-                color: Colors.blueAccent,
-                fontSize: 20,
-                fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFFBEEEF7),
-        actions: <Widget>[
-          IconButton(
-            icon: SizedBox(
-              width: 25,
-              height: 25,
-              child: Image.asset('assets/icons/user_ic.png'),
-            ),
-            onPressed: () {
-              // User profile action can be handled here
-            },
-          ),
-        ],
-      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Project Detail',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 30),
-            Text(
-              'Project Name: ${widget.projectName}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
             SizedBox(height: 10),
             const Divider(
               height: 12,
@@ -177,7 +113,7 @@ class _DetailPageState extends State<DetailPage>
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${widget.duration} months',
+                '${widget.projectCompany.duration} months',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -194,7 +130,7 @@ class _DetailPageState extends State<DetailPage>
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${widget.numberOfStudents} students',
+                '${widget.projectCompany.studentRequired} students',
                 style: TextStyle(fontSize: 16),
               ),
             ),
