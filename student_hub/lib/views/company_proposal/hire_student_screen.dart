@@ -6,6 +6,8 @@ import 'package:student_hub/views/pages/project_detail/hired_page.dart';
 import 'package:student_hub/views/pages/project_detail/message_page.dart';
 import 'package:student_hub/views/pages/project_detail/proposals_page.dart';
 
+import '../../models/student_registered.dart';
+
 
 class HireStudentScreen extends StatefulWidget {
   final ProjectCompany projectCompany;
@@ -17,6 +19,9 @@ class HireStudentScreen extends StatefulWidget {
 }
 
 class _HireStudentScreenState extends State<HireStudentScreen> {
+
+  List<StudentRegistered> hiredStudents = [];// để tạm thời
+
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +53,10 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  ProposalsPage(studentRegistered: widget.projectCompany.studentRegistered,),
+                  ProposalsPage(studentRegistered: widget.projectCompany.studentRegistered, hiredStudents: hiredStudents),
                   DetailPage(projectCompany: widget.projectCompany),
                   MessagePage(),
-                  HiredPage(),
+                  HiredPage(hiredStudents: hiredStudents,),
                 ],
               ),
             ),

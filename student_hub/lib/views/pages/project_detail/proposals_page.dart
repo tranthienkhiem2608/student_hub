@@ -4,10 +4,31 @@ import 'package:student_hub/models/student_registered.dart';
 
 import '../../../widgets/show_student_proposals_widget.dart';
 
-class ProposalsPage extends StatelessWidget {
+class ProposalsPage extends StatefulWidget {
   final List<StudentRegistered> studentRegistered;
-  const ProposalsPage({super.key, required this.studentRegistered});
+  List<StudentRegistered> hiredStudents;
 
+
+  ProposalsPage({super.key, required this.studentRegistered,
+    required this.hiredStudents});
+
+  @override
+  _ProposalsPageState createState() => _ProposalsPageState();
+
+
+
+
+}
+
+class _ProposalsPageState extends State<ProposalsPage> {
+
+
+  void _hireStudent(StudentRegistered student) {
+    setState(() {
+      widget.hiredStudents.add(student);
+      widget.studentRegistered.remove(student);
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final List<String> entries = <String>['Truong Le','Hung Tran','Quan Nguyen'];
@@ -20,7 +41,7 @@ class ProposalsPage extends StatelessWidget {
       replacement:  const Center(
         child: Text("\t\tYou no have jobs"),
       ),
-      visible: studentRegistered.isNotEmpty,
+      visible: widget.studentRegistered.isNotEmpty,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -28,7 +49,7 @@ class ProposalsPage extends StatelessWidget {
           const Padding(padding: EdgeInsets.only(bottom: 10)),
           Expanded(
             child:ListView.separated(
-              itemCount: studentRegistered.length,
+              itemCount: widget.studentRegistered.length,
               itemBuilder: (context, index) {
                 String yearStudent;
                 if (listTime[index] == 1) {
@@ -47,12 +68,10 @@ class ProposalsPage extends StatelessWidget {
                     print('Item at index $index was tapped.');
                   },
                   child: ShowStudentProposalsWidget(
-                    nameStudentProposals: studentRegistered[index].student.user.fullName,
+                    studentRegistered: widget.studentRegistered[index],
                     yearStudent: yearStudent,
-                    techStack: studentRegistered[index].student.techStack,
-                    levelStudent: studentRegistered[index].levelStudent,
-                    description: studentRegistered[index].introductionStudent,
-                    status: studentRegistered[index].statusStudent,
+                    hireStudent: _hireStudent,
+
                   ),
                 );
               },

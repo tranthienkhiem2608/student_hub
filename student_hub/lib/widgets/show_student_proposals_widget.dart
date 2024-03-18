@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/models/student_registered.dart';
 
 
 class ShowStudentProposalsWidget extends StatefulWidget {
-  String nameStudentProposals;
+  StudentRegistered studentRegistered;
   String yearStudent;
-  String techStack;
-  String levelStudent;
-  String description;
-  String status;
+  Function hireStudent;
+
 
   ShowStudentProposalsWidget({
-    required this.nameStudentProposals,
+    required this.studentRegistered,
     required this.yearStudent,
-    required this.techStack,
-    required this.levelStudent,
-    required this.description,
-    required this.status,
+    required this.hireStudent,
+
   });
 
   @override
@@ -23,6 +20,7 @@ class ShowStudentProposalsWidget extends StatefulWidget {
 }
 
 class _ShowStudentProposalsWidgetState extends State<ShowStudentProposalsWidget> {
+  bool isHireOfferSent = false;
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +30,12 @@ class _ShowStudentProposalsWidgetState extends State<ShowStudentProposalsWidget>
           children: [
             Image.asset('assets/images/user_img.png',
             width: 80,
-            height:80,),
+                        height:80,),
             Padding(padding: EdgeInsets.only(left: 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.nameStudentProposals),
+                Text(widget.studentRegistered.student.user.fullName,),
                 Text(widget.yearStudent),
               ],
             ),
@@ -49,8 +47,8 @@ class _ShowStudentProposalsWidgetState extends State<ShowStudentProposalsWidget>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(widget.techStack),
-              Text(widget.levelStudent),
+              Text(widget.studentRegistered.student.techStack),
+              Text(widget.studentRegistered.student.techStack),
             ],
           ),
         ),
@@ -58,7 +56,7 @@ class _ShowStudentProposalsWidgetState extends State<ShowStudentProposalsWidget>
         child:Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            widget.description,
+            widget.studentRegistered.introductionStudent,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
@@ -92,10 +90,83 @@ class _ShowStudentProposalsWidgetState extends State<ShowStudentProposalsWidget>
               width: 180,
               height: 45,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: isHireOfferSent ? null : () {
+                  if(widget.studentRegistered.statusStudent == "Send hire offer") {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Hired offer"),
+                            ],
+                          ),
+                          content: Text("Do you really want to send hired offer for student to do this project?"),
+                          actions: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    width: 120,
+                                    height: 40,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            side: BorderSide(color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Text("Cancel", style: TextStyle(color: Colors.black)),
+                                    ),
+                                  ),
+                                  SizedBox(width: 10), // Add a little space between the buttons
+                                  Container(
+                                    width: 120,
+                                    height: 40,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          isHireOfferSent = true;
+                                        });
+                                        // Handle send action here
+                                        Navigator.of(context).pop();
+                                      },
+                                      style: ButtonStyle(
+                                        backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Text("Send", style: TextStyle(color: Colors.white)),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                        );
+                      },
+                    );
+                  }
+                  else {
+                    // Handle hire action here
+                    onPressed: isHireOfferSent || widget.studentRegistered.statusStudent != "Hire"
+                        ? null : widget.hireStudent(widget.studentRegistered);
+                }
                 },
                 style: ButtonStyle(
-                  backgroundColor: widget.status == "Hire" ? MaterialStateProperty.all<Color>(Colors.greenAccent) : MaterialStateProperty.all<Color>(Color(0xFF69cde0)),
+                  backgroundColor: isHireOfferSent
+                      ?MaterialStateProperty.all<Color>(Colors.grey)
+                      :(widget.studentRegistered.statusStudent == "Hire"
+                        ? MaterialStateProperty.all<Color>(Colors.greenAccent)
+                        : MaterialStateProperty.all<Color>(Color(0xFF69cde0))),
                   padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(5)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
@@ -107,8 +178,9 @@ class _ShowStudentProposalsWidgetState extends State<ShowStudentProposalsWidget>
                   shadowColor: MaterialStateProperty.all<Color>(Colors.black),
                 ),
                 child: Text(
-                  widget.status == "Hire" ? "Hire" : "Send hired offer",
-                  style: widget.status == "Hire" ? TextStyle(color: Colors.black, fontSize: 16.0) : TextStyle(color: Colors.black, fontSize: 15.0),
+                  isHireOfferSent ? "Already sent" : (widget.studentRegistered.statusStudent == "Hire"
+                      ? "Hire" : "Send hired offer"),
+                  style: TextStyle(color: Colors.black, fontSize: 16.0),
                 ),
               ),
             ),

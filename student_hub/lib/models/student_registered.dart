@@ -7,6 +7,7 @@ class StudentRegistered{
   final String statusStudent;
   final bool isMessage;
 
+
   StudentRegistered({
     required this.student,
     required this.levelStudent,

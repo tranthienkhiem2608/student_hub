@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
     const ProjectsPage(),
     const DashboardPage(),
     const MessagePage(),
-    const AlertPage(),
+    AlertPage(),
   ];
 
   @override
