@@ -1,12 +1,12 @@
 import 'package:student_hub/models/student_user.dart';
 
 class StudentRegistered{
-  final StudentUser student;
-  final String levelStudent;
-  final String introductionStudent;
-  final String statusStudent;
-  final bool isMessage;
-
+  StudentUser student;
+  String levelStudent;
+  String introductionStudent;
+  String statusStudent;
+  bool isMessage;
+  bool isHireOfferSent; // Add this field
 
   StudentRegistered({
     required this.student,
@@ -14,6 +14,7 @@ class StudentRegistered{
     required this.introductionStudent,
     required this.statusStudent,
     required this.isMessage,
+    this.isHireOfferSent = false, // Initialize it to false
   });
 
   Map<String, dynamic> toMapStudentRegistered() {
@@ -23,6 +24,7 @@ class StudentRegistered{
       'introductionStudent': introductionStudent,
       'statusStudent': statusStudent,
       'isMessage': isMessage,
+      'isHireOfferSent': isHireOfferSent, // Add this field
     };
   }
 
@@ -33,6 +35,7 @@ class StudentRegistered{
       introductionStudent: map['introductionStudent'],
       statusStudent: map['statusStudent'],
       isMessage: map['isMessage'],
+      isHireOfferSent: map['isHireOfferSent']?? false, // Add this field
     );
   }
 

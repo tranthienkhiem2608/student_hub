@@ -90,7 +90,7 @@ class _ShowStudentProposalsWidgetState extends State<ShowStudentProposalsWidget>
               width: 180,
               height: 45,
               child: ElevatedButton(
-                onPressed: isHireOfferSent ? null : () {
+                onPressed: widget.studentRegistered.isHireOfferSent ? null : () {
                   if(widget.studentRegistered.statusStudent == "Send hire offer") {
                     showDialog(
                       context: context,
@@ -132,7 +132,7 @@ class _ShowStudentProposalsWidgetState extends State<ShowStudentProposalsWidget>
                                     child: ElevatedButton(
                                       onPressed: () {
                                         setState(() {
-                                          isHireOfferSent = true;
+                                          widget.studentRegistered.isHireOfferSent = true;
                                         });
                                         // Handle send action here
                                         Navigator.of(context).pop();
@@ -162,11 +162,11 @@ class _ShowStudentProposalsWidgetState extends State<ShowStudentProposalsWidget>
                 }
                 },
                 style: ButtonStyle(
-                  backgroundColor: isHireOfferSent
-                      ?MaterialStateProperty.all<Color>(Colors.grey)
-                      :(widget.studentRegistered.statusStudent == "Hire"
-                        ? MaterialStateProperty.all<Color>(Colors.greenAccent)
-                        : MaterialStateProperty.all<Color>(Color(0xFF69cde0))),
+                  backgroundColor: widget.studentRegistered.isHireOfferSent
+                      ? MaterialStateProperty.all<Color>(Colors.grey)
+                      : (widget.studentRegistered.statusStudent == "Hire"
+                      ? MaterialStateProperty.all<Color>(Colors.greenAccent)
+                      : MaterialStateProperty.all<Color>(Color(0xFF69cde0))),
                   padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(5)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
@@ -178,7 +178,7 @@ class _ShowStudentProposalsWidgetState extends State<ShowStudentProposalsWidget>
                   shadowColor: MaterialStateProperty.all<Color>(Colors.black),
                 ),
                 child: Text(
-                  isHireOfferSent ? "Already sent" : (widget.studentRegistered.statusStudent == "Hire"
+                  widget.studentRegistered.isHireOfferSent ? "Already sent" : (widget.studentRegistered.statusStudent == "Hire"
                       ? "Hire" : "Send hired offer"),
                   style: TextStyle(color: Colors.black, fontSize: 16.0),
                 ),
