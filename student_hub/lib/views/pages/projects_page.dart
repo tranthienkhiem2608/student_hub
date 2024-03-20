@@ -35,7 +35,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
     ProjectInfo(
       name: 'Develop a website',
       createdDate: '6 days ago',
-      role: 'Fresher fullstack developer',
+      role: 'Senior backend developer (Fintech)',
       duration: '1 to 3 months',
       students: 5,
       expectations: 'Clear expectation about your project or deliverables \n'

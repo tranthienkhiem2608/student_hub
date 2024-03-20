@@ -51,7 +51,10 @@ class DashboardPage extends StatelessWidget {
           ),
         ),
         body: const TabBarView(
-            children: [AllProjectsPage(), WorkingPage(), ArchivedPage()]),
+            children: [
+              AllProjectsPage(),
+              WorkingPage(),
+              ArchivedPage()]),
       ),
     );
   }
