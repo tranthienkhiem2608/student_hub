@@ -100,7 +100,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                   Text(
                     "Projects",
                     style: GoogleFonts.openSans(
-                      fontSize: 16,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.left,
@@ -267,3 +267,9 @@ Future<List<String>> getData(String? filter) async {
   }
   return skills;
 }
+
+
+
+
+
+

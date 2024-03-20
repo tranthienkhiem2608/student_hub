@@ -4,7 +4,6 @@ class PopUpLanguagesEditWidget extends StatefulWidget {
   final Function(String) _deleteLanguage;
   final List<Map<String, dynamic>> languages;
 
-
   PopUpLanguagesEditWidget(this._deleteLanguage, this.languages);
 
   @override
@@ -20,25 +19,41 @@ class _PopUpLanguagesEditWidgetState extends State<PopUpLanguagesEditWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Edit Language'),
-      content: Column(
-        children: widget.languages.map((language) {
-          return Row(
-            children: [
-              Text(language['name']),
-              Text(language['level']),
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  widget._deleteLanguage(language['name']);
-                  setState(() {
-                    widget.languages.remove(language);
-                  });
-                },
-              ),
-            ],
-          );
-        }).toList(),
+      title: Text(
+        'Edit Language',
+        textAlign: TextAlign.center,
+      ),
+      contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+      content: SizedBox(
+        height: 200.0,
+        child: SingleChildScrollView(
+          child: Column(
+            children: widget.languages.map((language) {
+              return Row(
+                children: [
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Text(language['name']),
+                        SizedBox(width: 5.0),
+                        Text(language['level']),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.delete),
+                    onPressed: () {
+                      widget._deleteLanguage(language['name']);
+                      setState(() {
+                        widget.languages.remove(language);
+                      });
+                    },
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
+        ),
       ),
       actions: <Widget>[
         TextButton(

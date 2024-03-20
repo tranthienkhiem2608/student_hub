@@ -31,9 +31,10 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Add Education'),
-      content: Form(
+      title: Text('Add Education', textAlign: TextAlign.center),
+      content: SizedBox(
         key: _formKey,
+        height: 200.0,
         child: Column(
           children: [
             Row(

@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:student_hub/models/project_student.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
-
 class PopUpProjectWidget extends StatefulWidget {
   final Function addProject;
   final Function deleteProject;
@@ -13,7 +12,16 @@ class PopUpProjectWidget extends StatefulWidget {
   final String projectDescription;
   final List<String> skillsListProject;
 
-  const PopUpProjectWidget(this.addProject, this.deleteProject, this.projectName, this.timeStart, this.timeEnd, this.projectDescription, this.skillsListProject, {Key? key}) : super(key: key);
+  const PopUpProjectWidget(
+      this.addProject,
+      this.deleteProject,
+      this.projectName,
+      this.timeStart,
+      this.timeEnd,
+      this.projectDescription,
+      this.skillsListProject,
+      {Key? key})
+      : super(key: key);
   @override
   _PopUpProjectWidgetState createState() => _PopUpProjectWidgetState();
 }
@@ -28,15 +36,12 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
   late TextfieldTagsController<String> _textfieldTagsController;
   late double _distanceToField;
 
-
-
-
-
   @override
   void initState() {
     super.initState();
     _projectNameController = TextEditingController(text: widget.projectName);
-    _projectDescriptionController = TextEditingController(text: widget.projectDescription);
+    _projectDescriptionController =
+        TextEditingController(text: widget.projectDescription);
     _textfieldTagsController = TextfieldTagsController<String>();
     _selectedSkills!.addAll(widget.skillsListProject);
   }
@@ -47,7 +52,6 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
     _distanceToField = MediaQuery.of(context).size.width;
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -56,10 +60,11 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
 
   void _showStartDatePicker() {
     showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
-        lastDate: DateTime.now()).then((value) {
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime.now())
+        .then((value) {
       if (value == null) {
         return;
       }
@@ -107,9 +112,13 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
   void _showEndDatePicker() {
     showDatePicker(
       context: context,
-      initialDate: _timeStart?.add(Duration(days: 1)), // start from the day after the start date
-      firstDate: _timeStart!.add(Duration(days: 1)), // the first date that can be picked is the day after the start date
-      lastDate: DateTime.now(), // the last date that can be picked is 5 years after the start date
+      initialDate: _timeStart
+          ?.add(Duration(days: 1)), // start from the day after the start date
+      firstDate: _timeStart!.add(Duration(
+          days:
+              1)), // the first date that can be picked is the day after the start date
+      lastDate: DateTime
+          .now(), // the last date that can be picked is 5 years after the start date
     ).then((value) {
       if (value == null) {
         return;
@@ -123,27 +132,32 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Add Project'),
+      title: Text(
+        'Add Project',
+        textAlign: TextAlign.center,
+      ),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-          const Align(
-          alignment: Alignment.centerLeft,
-           child: Text('Project Name', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          ),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text('Project Name',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            ),
             TextField(
               controller: _projectNameController,
               decoration: const InputDecoration(
                 hintText: 'Enter project name',
               ),
             ),
-
             SizedBox(height: 10),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  const Text('Start Date', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  const Text('Start Date',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                   Text(
                     _timeStart == null
                         ? 'No Date Chosen'
@@ -151,14 +165,17 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                     style: const TextStyle(fontSize: 16),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.calendar_month_sharp, color: Colors.blueGrey),
+                    icon: const Icon(Icons.calendar_month_sharp,
+                        color: Colors.blueGrey),
                     onPressed: _showStartDatePicker,
                   ),
                 ]),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                const Text('End Date', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                const Text('End Date',
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                 Text(
                   _timeEnd == null
                       ? 'No Date Chosen'
@@ -166,7 +183,8 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                   style: const TextStyle(fontSize: 16),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.calendar_month_sharp, color: Colors.blueGrey),
+                  icon: const Icon(Icons.calendar_month_sharp,
+                      color: Colors.blueGrey),
                   onPressed: _showEndDatePicker,
                 ),
               ],
@@ -199,42 +217,42 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                           itemBuilder: (BuildContext context, int index) {
                             final dynamic option = options.elementAt(index);
                             return option.toLowerCase().contains(
-                                _textEditingController.text.toLowerCase())
+                                    _textEditingController.text.toLowerCase())
                                 ? TextButton(
-                              onPressed: () {
-                                onSelected(option);
-                                if (!_selectedSkills!.contains(option)) {
-                                  _selectedSkills.add(option);
-                                }
-                                setState(() {});
-                              },
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 0.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        '$option',
-                                        textAlign: TextAlign.left,
-                                        style: const TextStyle(
-                                          color: Colors.black,
+                                    onPressed: () {
+                                      onSelected(option);
+                                      if (!_selectedSkills!.contains(option)) {
+                                        _selectedSkills.add(option);
+                                      }
+                                      setState(() {});
+                                    },
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 0.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '$option',
+                                              textAlign: TextAlign.left,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            if (_selectedSkills!
+                                                .contains(option))
+                                              const Icon(
+                                                Icons.check,
+                                                color: Colors.green,
+                                              ),
+                                          ],
                                         ),
                                       ),
-                                      if (_selectedSkills
-                                          !.contains(option))
-                                        const Icon(
-                                          Icons.check,
-                                          color: Colors.green,
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            )
+                                    ),
+                                  )
                                 : Container();
                           },
                         ),
@@ -271,7 +289,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                           decoration: InputDecoration(
                             border: const UnderlineInputBorder(
                               borderSide:
-                              BorderSide(color: Colors.black, width: 3.0),
+                                  BorderSide(color: Colors.black, width: 3.0),
                             ),
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -285,71 +303,71 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                                 maxWidth: _distanceToField * 0.90),
                             prefixIcon: inputFieldValues.tags.isNotEmpty
                                 ? SingleChildScrollView(
-                              controller:
-                              inputFieldValues.tagScrollController,
-                              scrollDirection: Axis.horizontal,
-                              child: Wrap(
-                                  children: inputFieldValues.tags
-                                      .map((String tag) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(
-                                          2.0), // Add padding here
+                                    controller:
+                                        inputFieldValues.tagScrollController,
+                                    scrollDirection: Axis.horizontal,
+                                    child: Wrap(
+                                        children: inputFieldValues.tags
+                                            .map((String tag) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(
+                                            2.0), // Add padding here
 
-                                      child: Container(
-                                        decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0),
-                                          ),
-                                          color: Colors.lightBlueAccent,
-                                        ),
-                                        margin:
-                                        const EdgeInsets.only(right: 0.0),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 10.0, vertical: 4.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            InkWell(
-                                              child: Row(
-                                                children: [
-                                                  const Icon(Icons
-                                                      .person), // This is the user icon
-                                                  Text(
-                                                    tag,
-                                                    style: const TextStyle(
-                                                        color: Colors.black),
-                                                  ),
-                                                ],
-                                              ),
-                                              onTap: () {
-                                                //print("$tag selected");
-                                              },
+                                        child: Container(
+                                          decoration: const BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0),
                                             ),
-                                            const SizedBox(width: 4.0),
-                                            InkWell(
-                                              child: const Icon(
-                                                Icons.cancel,
-                                                size: 14.0,
-                                                color: Color.fromARGB(
-                                                    255, 233, 233, 233),
+                                            color: Colors.lightBlueAccent,
+                                          ),
+                                          margin:
+                                              const EdgeInsets.only(right: 0.0),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10.0, vertical: 4.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              InkWell(
+                                                child: Row(
+                                                  children: [
+                                                    const Icon(Icons
+                                                        .person), // This is the user icon
+                                                    Text(
+                                                      tag,
+                                                      style: const TextStyle(
+                                                          color: Colors.black),
+                                                    ),
+                                                  ],
+                                                ),
+                                                onTap: () {
+                                                  //print("$tag selected");
+                                                },
                                               ),
-                                              onTap: () {
-                                                inputFieldValues
-                                                    .onTagDelete(tag);
-                                                if (_selectedSkills
-                                                    !.contains(tag)) {
-                                                  _selectedSkills.remove(tag);
-                                                }
-                                                setState(() {});
-                                              },
-                                            )
-                                          ],
+                                              const SizedBox(width: 4.0),
+                                              InkWell(
+                                                child: const Icon(
+                                                  Icons.cancel,
+                                                  size: 14.0,
+                                                  color: Color.fromARGB(
+                                                      255, 233, 233, 233),
+                                                ),
+                                                onTap: () {
+                                                  inputFieldValues
+                                                      .onTagDelete(tag);
+                                                  if (_selectedSkills!
+                                                      .contains(tag)) {
+                                                    _selectedSkills.remove(tag);
+                                                  }
+                                                  setState(() {});
+                                                },
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
-                                  }).toList()),
-                            )
+                                      );
+                                    }).toList()),
+                                  )
                                 : null,
                           ),
                           onChanged: inputFieldValues.onChanged,
@@ -361,11 +379,13 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                 );
               },
             ),
+            SizedBox(height: 20),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text('Project Description',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            ),
             SizedBox(height: 10),
-        const Align(
-          alignment: Alignment.centerLeft,
-          child: Text('Project Description', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        ),
             Container(
               width: 300.0,
               height: 200.0,

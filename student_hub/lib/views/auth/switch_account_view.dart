@@ -90,7 +90,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const _AppBar(),
-        backgroundColor: const Color(0xFFBEEEF7),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
     body: Column(
       children: <Widget>[
         // If there are no accounts, show AddAccountWidget, else show a dropdown list of accounts
@@ -133,7 +133,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
           child: Divider(color: Colors.black, thickness: 0.5),
         ),
         Container(
-          color: const Color(0xFFBEEEF7),
+          color: Color.fromARGB(255, 255, 255, 255),
           child: Column(
             children: <Widget>[
               Align(
