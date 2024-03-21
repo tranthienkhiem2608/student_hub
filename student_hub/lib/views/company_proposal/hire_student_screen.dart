@@ -8,20 +8,16 @@ import 'package:student_hub/views/pages/project_detail/proposals_page.dart';
 
 import '../../models/student_registered.dart';
 
-
 class HireStudentScreen extends StatefulWidget {
   final ProjectCompany projectCompany;
 
   const HireStudentScreen({super.key, required this.projectCompany});
   @override
   _HireStudentScreenState createState() => _HireStudentScreenState();
-
 }
 
 class _HireStudentScreenState extends State<HireStudentScreen> {
-
-  List<StudentRegistered> hiredStudents = [];// để tạm thời
-
+  List<StudentRegistered> hiredStudents = []; // để tạm thời
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +27,17 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
         appBar: _AppBar(),
         body: Column(
           children: <Widget>[
-
             Padding(
               padding: EdgeInsets.fromLTRB(25, 5, 5, 0),
-              child:Align(
+              child: Align(
                 alignment: Alignment.centerLeft,
-                child:Text(widget.projectCompany.projectName, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),),
+                child: Text(
+                  widget.projectCompany.projectName,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green),
+                ),
               ),
             ),
             const TabBar(
@@ -53,10 +54,15 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  ProposalsPage(studentRegistered: widget.projectCompany.studentRegistered, hiredStudents: hiredStudents),
+                  ProposalsPage(
+                      studentRegistered:
+                          widget.projectCompany.studentRegistered,
+                      hiredStudents: hiredStudents),
                   DetailPage(projectCompany: widget.projectCompany),
                   MessagePage(),
-                  HiredPage(hiredStudents: hiredStudents,),
+                  HiredPage(
+                    hiredStudents: hiredStudents,
+                  ),
                 ],
               ),
             ),
@@ -65,7 +71,6 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
       ),
     );
   }
-
 }
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
