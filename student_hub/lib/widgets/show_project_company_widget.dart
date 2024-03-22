@@ -7,6 +7,7 @@ class ShowProjectCompanyWidget extends StatefulWidget {
   final List<String> description;
   final List<int> quantities;
   final List<String> labels;
+  final bool showOptionsIcon;
 
   ShowProjectCompanyWidget({
     required this.projectName,
@@ -14,13 +15,16 @@ class ShowProjectCompanyWidget extends StatefulWidget {
     required this.description,
     required this.quantities,
     required this.labels,
+    required this.showOptionsIcon,
   });
 
   @override
-  _ShowProjectCompanyWidgetState createState() => _ShowProjectCompanyWidgetState();
+  _ShowProjectCompanyWidgetState createState() =>
+      _ShowProjectCompanyWidgetState();
 }
 
 class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
+  bool showOptionsIcon = true;
 
   String timeAgo(DateTime date) {
     final Duration diff = DateTime.now().difference(date);
@@ -42,87 +46,38 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
     }
   }
 
-void _showOptions(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-      ),
-    builder: (BuildContext context) {
-      return Wrap(
-        alignment: WrapAlignment.center,
-        children: <Widget>[
-          TextButton(
-            child: const Align(
-              alignment: Alignment.centerLeft,
-              child: Text('View proposals', style: TextStyle(color: Colors.black)),
-            ),
-            onPressed: () {
-              // Handle view proposals
-            },
-          ),
-          TextButton(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text('View messages', style: TextStyle(color: Colors.black)),
-            ),
-            onPressed: () {
-              // Handle view messages
-            },
-          ),
-          TextButton(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text('View hired', style: TextStyle(color: Colors.black)),
-            ),
-            onPressed: () {
-              // Handle view hired
-            },
-          ),
-          Divider(),
-          TextButton(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text('View job posting', style: TextStyle(color: Colors.black)),
-            ),
-            onPressed: () {
-              // Handle view job posting
-            },
-          ),
-          TextButton(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Edit posting', style: TextStyle(color: Colors.black)),
-            ),
-            onPressed: () {
-              // Handle edit posting
-            },
-          ),
-          TextButton(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Remove posting', style: TextStyle(color: Colors.black)),
-            ),
-            onPressed: () {
-              // Handle remove posting
-            },
-          ),
-          Divider(),
-          TextButton(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Start working this project', style: TextStyle(color: Colors.black)),
-            ),
-            onPressed: () {
-              // Handle start working this project
-            },
-          ),
-        ],
-      );
-    }
-  );
-}
+  void _toggleOptionsIcon() {
+    setState(() {
+      showOptionsIcon = !showOptionsIcon;
+    });
+  }
+
+  void _showOptions(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+        ),
+        builder: (BuildContext context) {
+          return Wrap(
+            alignment: WrapAlignment.center,
+            children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  // Handle view proposals
+                },
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('View proposals',
+                      style: TextStyle(color: Colors.black)),
+                ),
+              ),
+              // Add other options here
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,22 +85,25 @@ void _showOptions(BuildContext context) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ListTile(
-          title: Text(widget.projectName, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text(widget.projectName,
+              style: TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text(timeAgo(widget.creationTime)),
-          trailing: IconButton(
-            icon: Icon(Icons.more_horiz_rounded),
-            onPressed: () {
-              _showOptions(context);
-            },
-          ),
+          trailing: widget.showOptionsIcon
+              ? IconButton(
+                  icon: Icon(Icons.more_horiz_rounded),
+                  onPressed: () {
+                    _showOptions(context);
+                  },
+                )
+              : null,
         ),
-
         Padding(
           padding: const EdgeInsets.fromLTRB(15, 5, 10, 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Students are looking for', style: TextStyle(fontWeight: FontWeight.bold)),
+              Text('Students are looking for',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               ListView(
                 shrinkWrap: true,
                 children: widget.description.map((item) {
@@ -156,11 +114,11 @@ void _showOptions(BuildContext context) {
                       children: [
                         Container(
                           margin: EdgeInsets.only(top: 6),
-                          width: 8, // Độ rộng của dấu chấm
-                          height: 8, // Chiều cao của dấu chấm
+                          width: 8,
+                          height: 8,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.black, // Màu của dấu chấm
+                            color: Colors.black,
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -170,9 +128,9 @@ void _showOptions(BuildContext context) {
                   );
                 }).toList(),
               ),
-          ]),
-            ),
-
+            ],
+          ),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: widget.quantities.map((quantity) {

@@ -203,6 +203,7 @@ class _AllProjectsPageState extends State<AllProjectsPage> with WidgetsBindingOb
               description: ['Clear expectations about your project or deliverables', 'The skills required for your project', 'Details about your project'],
               quantities: [0, 8, 2],
               labels: ['Proposals', 'Messages', 'Hired'],
+              showOptionsIcon: true,
             ),
             ),
             separatorBuilder: (context, index) => const Divider(),

@@ -7,6 +7,7 @@ import 'package:student_hub/models/student_user.dart';
 import 'package:student_hub/view_models/nav_bottom_controller.dart';
 import 'package:student_hub/views/pages/alert_page.dart';
 import 'package:student_hub/views/pages/dashboard_page.dart';
+import 'package:student_hub/views/pages/dashboard_page_student.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';
 
@@ -58,7 +59,7 @@ class _HomePageState extends State<HomePage> {
   final BottomNavController _navController = BottomNavController();
   final List<Widget> _pages = [
     const ProjectsPage(),
-    const DashboardPage(),
+    const DashboardPageStudent(),
     const MessagePage(),
     AlertPage(),
   ];

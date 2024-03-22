@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/views/browse_project/submit_proposal.dart';
 import 'package:student_hub/widgets/project_list_widget.dart';
 
 class ProjectDetailPage extends StatelessWidget {
@@ -107,7 +108,6 @@ class ProjectDetailPage extends StatelessWidget {
               title: Text(
                 'Project scope:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                
               ),
               subtitle: Text(
                 '${project.duration} months',
@@ -137,10 +137,14 @@ class ProjectDetailPage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // Xử lý khi nút "Edit" được nhấn
+                    // Xử lý khi nút "Apply Now" được nhấn
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ApplyPage()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
+                    backgroundColor: Colors.black, 
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 44),
                     shape: RoundedRectangleBorder(
@@ -154,8 +158,7 @@ class ProjectDetailPage extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                     padding: const EdgeInsets.symmetric(
@@ -167,9 +170,7 @@ class ProjectDetailPage extends StatelessWidget {
                   child: const Text(
                     "Save Project",
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
-                    
                   ),
-                  
                 ),
               ],
             ),

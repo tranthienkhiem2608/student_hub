@@ -97,7 +97,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Wrap(
                     spacing: 6.0,
-                    runSpacing: 6.0,
+                    runSpacing: 6.0, 
                     children: userStudent
                         .projectsList[index]
                         .skillsListProject
