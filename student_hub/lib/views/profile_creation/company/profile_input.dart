@@ -5,7 +5,7 @@ import 'package:iconsax/iconsax.dart';
 
 import 'package:student_hub/models/company_user.dart';
 import 'package:student_hub/models/user.dart';
-import 'package:student_hub/view_models/authentication_controller_route.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 
 class ProfileInput extends StatefulWidget {
   final User user;

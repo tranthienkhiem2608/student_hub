@@ -42,7 +42,7 @@ class FavoriteProjectsPage extends StatelessWidget {
                     title: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Saved Project',
                           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                         ),

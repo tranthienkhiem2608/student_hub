@@ -1,9 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:student_hub/view_models/authentication_controller_route.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/models/user.dart';
+import 'package:email_validator/email_validator.dart';
 
 class SignUpInfo extends StatefulWidget {
   final String typeUser;
@@ -51,6 +54,10 @@ class _SignUpInfoState extends State<SignUpInfo>
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   Timer? _timer;
+
+  bool _obscurePassword = true; // Start with the password hidden
+  bool _showEmailError = false; // Flag to control error visibility
+  final TextEditingController _emailController = TextEditingController();
 
   int? _selectedValue;
   final ValueNotifier<String> fullNameNotifier = ValueNotifier<String>('');
@@ -112,7 +119,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -142,7 +149,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -177,7 +184,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                          const BorderSide(color: Colors.black, width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: const TextStyle(
@@ -186,7 +193,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                          const BorderSide(color: Colors.black, width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -198,7 +205,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -210,11 +217,25 @@ class _SignUpInfoState extends State<SignUpInfo>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
-                      onChanged: (value) => workEmailNotifier.value =
-                          value, // Update workEmailNotifier when text changes
+                      onChanged: (value) {
+                        workEmailNotifier.value = value;
+                        setState(() {
+                          _showEmailError = false; // Reset error on change
+                        });
+                      },
+                      controller:
+                      _emailController, // Controller for email input // Update workEmailNotifier when text changes
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
+                        errorText: _showEmailError ? 'Invalid Email' : null,
+                        errorStyle: const TextStyle(color: Colors.red),
+                        focusedErrorBorder: OutlineInputBorder(
+                          // Change this
+                          borderSide:
+                          const BorderSide(color: Colors.red, width: 1.5),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
                         labelText: 'Work Email',
                         hintText: 'Your Work Email!',
                         hintStyle: const TextStyle(
@@ -233,7 +254,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                          const BorderSide(color: Colors.black, width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: const TextStyle(
@@ -242,7 +263,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                          const BorderSide(color: Colors.black, width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -252,7 +273,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                 const SizedBox(height: 20),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -266,29 +287,30 @@ class _SignUpInfoState extends State<SignUpInfo>
                     child: TextField(
                       onChanged: (value) => passwordNotifier.value =
                           value, // Update passwordNotifier when text changes
+                      obscureText:
+                      _obscurePassword, // Use the visibility variable
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(
-                            0.0), // Khoảng cách giữa đường viền và nội dung
+                        contentPadding: const EdgeInsets.all(0.0),
                         labelText: 'Password',
-                        hintText: 'Password (8 or more characters)',
+                        hintText: 'Password',
+                        hintStyle: const TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14.0,
+                        ),
                         labelStyle: const TextStyle(
                           color: Colors.black,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
                         ),
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14.0,
-                        ),
                         prefixIcon: const Icon(
-                          Iconsax.lock,
+                          Iconsax.key,
                           color: Colors.black,
                           size: 18,
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                          const BorderSide(color: Colors.black, width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: const TextStyle(
@@ -297,8 +319,20 @@ class _SignUpInfoState extends State<SignUpInfo>
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                          const BorderSide(color: Colors.black, width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword ? Iconsax.eye_slash : Iconsax.eye,
+                            color: Colors.black,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword =
+                              !_obscurePassword; // Toggle visibility
+                            });
+                          },
                         ),
                       ),
                     ),
@@ -307,33 +341,47 @@ class _SignUpInfoState extends State<SignUpInfo>
                 const SizedBox(
                   height: 15,
                 ),
-                // i want check box left and text right with content Yes, I understand and agree to StudentHub
-                Row(
-                  children: [
-                    Checkbox(
-                      value: _selectedValue == 1,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _selectedValue = value! ? 1 : 0;
-                          checkboxNotifier.value = value;
-                        });
-                      },
+                SlideTransition(
+                  position: Tween<Offset>(
+                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      .animate(CurvedAnimation(
+                    parent: _animationController,
+                    curve: const Interval(
+                      0.3,
+                      1,
+                      curve: Curves.fastOutSlowIn,
                     ),
-                    const Text(
-                      'Yes, I understand and agree to StudentHub',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                      ),
+                  )),
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: Row(
+                      children: [
+                        Checkbox(
+                          value: _selectedValue == 1,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              _selectedValue = value! ? 1 : 0;
+                              checkboxNotifier.value = value;
+                            });
+                          },
+                        ),
+                        const Text(
+                          'Yes, I understand and agree to StudentHub',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
                 Row(
                   mainAxisAlignment:
-                      MainAxisAlignment.center, // Đặt nút ở phía bên phải
+                  MainAxisAlignment.center, // Đặt nút ở phía bên phải
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -356,31 +404,43 @@ class _SignUpInfoState extends State<SignUpInfo>
                             opacity: _fadeAnimation,
                             child: MaterialButton(
                               onPressed: fullNameNotifier.value.isNotEmpty &&
-                                      workEmailNotifier.value.isNotEmpty &&
-                                      passwordNotifier.value.isNotEmpty &&
-                                      checkboxNotifier.value
+                                  workEmailNotifier.value.isNotEmpty &&
+                                  passwordNotifier.value.isNotEmpty &&
+                                  checkboxNotifier.value &&
+                                  (_emailController.text.contains('@') ||
+                                      !EmailValidator.validate(
+                                          _emailController
+                                              .text)) // Update this condition
                                   ? () {
-                                      // Xử lý khi nút được nhấn
-                                      final user = User(
-                                        fullName: fullNameNotifier.value,
-                                        email: workEmailNotifier.value,
-                                        password: passwordNotifier.value,
-                                        typeUser: widget.typeUser,
-                                      );
-                                      print(user.fullName);
-                                      print(user.email);
-                                      print(user.password);
-                                      print(user.typeUser);
-                                      if (widget.typeUser == 'Role.company') {
-                                        ControllerRoute(context)
-                                            .navigateToProfileInputCompany(
-                                                user);
-                                      } else {
-                                        ControllerRoute(context)
-                                            .navigateToProfileInputStudent1(
-                                                user);
-                                      }
-                                    }
+                                if (!EmailValidator.validate(
+                                    _emailController.text)) {
+                                  setState(() {
+                                    _showEmailError =
+                                    true; // Show error in TextField
+                                  });
+                                  return;
+                                }
+                                // Xử lý khi nút được nhấn
+                                final user = User(
+                                  fullName: fullNameNotifier.value,
+                                  email: workEmailNotifier.value,
+                                  password: passwordNotifier.value,
+                                  typeUser: widget.typeUser,
+                                );
+                                print(user.fullName);
+                                print(user.email);
+                                print(user.password);
+                                print(user.typeUser);
+                                if (widget.typeUser == 'Role.company') {
+                                  ControllerRoute(context)
+                                      .navigateToProfileInputCompany(
+                                      user);
+                                } else {
+                                  ControllerRoute(context)
+                                      .navigateToProfileInputStudent1(
+                                      user);
+                                }
+                              }
                                   : null,
                               height: 45,
                               color: Colors.black,
@@ -405,38 +465,52 @@ class _SignUpInfoState extends State<SignUpInfo>
                 const SizedBox(
                   height: 30,
                 ),
-                // i want to have a text with content Looking for a project? Apply as student with Apply as student underlined and clickable
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Looking for a project? ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                      ),
+                SlideTransition(
+                  position: Tween<Offset>(
+                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      .animate(CurvedAnimation(
+                    parent: _animationController,
+                    curve: const Interval(
+                      0.3,
+                      1,
+                      curve: Curves.fastOutSlowIn,
                     ),
-                    InkWell(
-                      onTap: () {
-                        // Xử lý khi nút được nhấn
-                        if (widget.typeUser == 'Role.company') {
-                          ControllerRoute(context)
-                              .navigateToSignupInfoView('student');
-                        } else {
-                          ControllerRoute(context)
-                              .navigateToSignupInfoView('company');
-                        }
-                      },
-                      child: Text(
-                        'Apply as ${widget.typeUser == 'Role.company' ? 'student' : 'company'}',
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          decoration: TextDecoration.underline,
+                  )),
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Looking for a project? ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                          ),
                         ),
-                      ),
+                        InkWell(
+                          onTap: () {
+                            // Xử lý khi nút được nhấn
+                            if (widget.typeUser == 'Role.company') {
+                              ControllerRoute(context)
+                                  .navigateToSignupInfoView('Role.student');
+                            } else {
+                              ControllerRoute(context)
+                                  .navigateToSignupInfoView('Role.company');
+                            }
+                          },
+                          child: Text(
+                            'Apply as ${widget.typeUser == 'Role.company' ? 'student' : 'company'}',
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),

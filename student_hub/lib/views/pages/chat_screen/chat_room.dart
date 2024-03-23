@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:student_hub/app_theme.dart';
 import 'package:student_hub/models/user_chat_model.dart';
 import 'package:student_hub/views/pages/chat_widgets/composer.dart';
 import 'package:student_hub/views/pages/chat_widgets/conversation.dart';
+import 'package:student_hub/widgets/schedule_interview_dialog.dart';
 
 class ChatRoom extends StatefulWidget {
   const ChatRoom({Key? key, required this.user}) : super(key: key);
@@ -13,84 +15,140 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        centerTitle: false,
-        title: Row(
-          children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage(
-                widget.user.avatar,
-              ),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.user.name,
-                  style: MyTheme.chatSenderName,
-                ),
-                Text(
-                  'online',
-                  style: MyTheme.bodyText1.copyWith(fontSize: 18),
-                ),
-              ],
-            ),
-          ],
+
+
+  void _showOptions(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
         ),
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.videocam_outlined,
-                size: 28,
+        builder: (BuildContext context) {
+          return Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery
+                    .of(context)
+                    .viewInsets
+                    .bottom,
               ),
-              onPressed: () {}),
-          IconButton(
-              icon: Icon(
-                Icons.call,
-                size: 28,
-              ),
-              onPressed: () {})
-        ],
-        elevation: 0,
-      ),
-      backgroundColor: MyTheme.kPrimaryColor,
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+              child: Wrap(
+                alignment: WrapAlignment.center,
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(Icons.schedule_send),
+                    title: Text('Schedule an interview'),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      _showScheduleInterviewDialog(context);
+                    },
                   ),
-                ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+                  Divider(),
+                  ListTile(
+                    leading: Icon(Icons.cancel_outlined),
+                    title: Text('Cancel'),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
-                  child: Conversation(user: widget.user),
-                ),
-              ),
-            ),
-            buildChatComposer()
-          ],
-        ),
-      ),
+                ],
+              )
+          );
+        }
     );
   }
-}
+
+
+  void _showScheduleInterviewDialog(BuildContext ctx) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+        ),
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+                return const SingleChildScrollView(
+                  child: ScheduleInterviewDialog(),
+                );
+              }
+          );
+        }
+    );
+  }
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 100,
+          centerTitle: false,
+          title: Row(
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundImage: AssetImage(
+                  widget.user.avatar,
+                ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.user.name,
+                    style: MyTheme.chatSenderName,
+                  ),
+                  Text(
+                    'online',
+                    style: MyTheme.bodyText1.copyWith(fontSize: 18),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.more_horiz_rounded),
+              onPressed: () {
+                _showOptions(context);
+              },
+            ),
+          ],
+          elevation: 0,
+        ),
+        backgroundColor: MyTheme.kPrimaryColor,
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                    child: Conversation(user: widget.user),
+                  ),
+                ),
+              ),
+              buildChatComposer()
+            ],
+          ),
+        ),
+      );
+    }
+  }

@@ -5,10 +5,9 @@ import 'package:student_hub/widgets/show_account_widget.dart';
 class AccountListDialog extends StatelessWidget {
   final List<CompanyUser> accounts;
   Function(CompanyUser) onAccountSwitched;
-  Function(String) updateAccountName;
   Function reloadPage;
 
-  AccountListDialog(this.accounts, this.onAccountSwitched, this.updateAccountName, this.reloadPage, {super.key});  @override
+  AccountListDialog(this.accounts, this.onAccountSwitched, this.reloadPage, {super.key});  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(

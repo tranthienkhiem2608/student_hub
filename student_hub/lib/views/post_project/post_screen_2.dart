@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:student_hub/models/company_user.dart';
-import 'package:student_hub/view_models/authentication_controller_route.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/views/post_project/post_screen_3.dart';
 
 class PostScreen2 extends StatefulWidget {

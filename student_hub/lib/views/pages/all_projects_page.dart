@@ -82,8 +82,8 @@ class _AllProjectsPageState extends State<AllProjectsPage> with WidgetsBindingOb
                         educationList: [
                           {
                             'school': 'University of Florida',
-                            'degree': 'Bachelor of Science in Computer Science',
-                            'graduationDate': '2023-05-01',
+                            'yearsStart': 2010,
+                            'yearsEnd': 2015
                           },
                         ],
                         projectsList: [
@@ -123,8 +123,8 @@ class _AllProjectsPageState extends State<AllProjectsPage> with WidgetsBindingOb
                       educationList: [
                         {
                           'school': 'University of Florida',
-                          'degree': 'Bachelor of Science in Computer Science',
-                          'graduationDate': '2023-05-01',
+                          'yearsStart': 2020,
+                          'yearsEnd': 2024
                         },
                       ],
                       projectsList: [
@@ -164,8 +164,8 @@ class _AllProjectsPageState extends State<AllProjectsPage> with WidgetsBindingOb
                           educationList: [
                             {
                               'school': 'University of Florida',
-                              'degree': 'Bachelor of Science in Computer Science',
-                              'graduationDate': '2023-05-01',
+                              'yearsStart': 2021,
+                              'yearsEnd': 2026
                             },
                           ],
                           projectsList: [

@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 
 import 'package:flutter/material.dart';
-import 'package:student_hub/widgets/show_account_widget.dart';
+import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/widgets/add_account_widget.dart';
-import 'package:student_hub/widgets/account_list_dialog.dart';
 import 'package:student_hub/models/company_user.dart';
 
 class SwitchAccountView extends StatefulWidget {
@@ -43,49 +42,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-
-
 class _SwitchAccountViewState extends State<SwitchAccountView> {
-  // List of accounts that have logged into the app
-  String currentAccountName = '';
-  void reloadPage() {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => SwitchAccountView()),
-    );
-  }
-  void updateAccountName(String name) {
-    setState(() {
-      currentAccountName = name;
-    });
-  }
-
-  void _shhowAccountList(BuildContext ctx, List<CompanyUser> accounts) {
-    print('Show Account List');
-    showModalBottomSheet(
-        context: ctx,
-        builder: (_) {
-          return GestureDetector(
-            onTap: () {},
-            behavior: HitTestBehavior.opaque,
-            child: AccountListDialog(
-              accounts,
-              (CompanyUser companyUser) {
-                for (var account in accounts) {
-                  account.isLogin = false;
-                }
-                companyUser.isLogin = true;
-                updateAccountName(companyUser.user.fullName);
-                reloadPage();
-              },
-              updateAccountName,
-              reloadPage,
-
-            ),
-          );
-        });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +56,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
             : TextButton(
                   onPressed: () {
                     // Settings button pressed
-                    _shhowAccountList(context, accounts);
+                    AuthAccountViewModel(context).showAccountList(accounts);
                   },
               child: Row(
                 mainAxisSize: MainAxisSize.min,

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:student_hub/models/company_user.dart';
 import 'package:student_hub/models/student_user.dart';
-import 'package:student_hub/view_models/authentication_controller_route.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/views/homescreen/welcome-screen.dart';
 import 'package:student_hub/views/pages/dashboard_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';

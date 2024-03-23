@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/models/user.dart';
 import 'package:student_hub/views/pages/all_projects_page.dart';
 import 'package:student_hub/views/pages/archieved_page.dart';
 import 'package:student_hub/views/pages/working_page.dart';
 import 'package:student_hub/views/post_project/post_screen_1.dart';
 
+import '../../models/company_user.dart';
+import '../../models/student_user.dart';
+import 'all_projects_page_student.dart';
+
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
+  final StudentUser? studentUser;
+  final CompanyUser? companyUser;
+  DashboardPage(this.studentUser, this.companyUser, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +57,9 @@ class DashboardPage extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
             children: [
-              AllProjectsPage(),
+              studentUser != null ? AllProjectsPageStudent() : AllProjectsPage(),
               WorkingPage(),
               ArchivedPage()]),
       ),

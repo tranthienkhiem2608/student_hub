@@ -108,7 +108,7 @@ class _DetailPageState extends State<DetailPage>
                 height: 40, // Adjust the height for the larger icon
                 child: Icon(Icons.watch_later_outlined, size: 40),
               ),
-              title: Text(
+              title: const Text(
                 'Project scope:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
@@ -125,7 +125,7 @@ class _DetailPageState extends State<DetailPage>
                 height: 40, // Adjust the height for the larger icon
                 child: Icon(Icons.people_alt_outlined, size: 40),
               ),
-              title: Text(
+              title: const Text(
                 'Student required:',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),

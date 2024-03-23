@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
   final StudentUser? studentUser;
   final CompanyUser? companyUser;
   final bool showAlert;
+
   const HomePage({this.showAlert = false, this.companyUser, this.studentUser, Key? key}) : super(key: key);
 
   // void functionInitialize({bool? shoAlert, CompanyUser? userCompany, StudentUser? userStudent, Key? key}) {
@@ -27,6 +28,7 @@ class HomePage extends StatefulWidget {
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,18 +58,19 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late List<Widget> _pages;
   final BottomNavController _navController = BottomNavController();
-  final List<Widget> _pages = [
-    const ProjectsPage(),
-    const DashboardPageStudent(),
-    const MessagePage(),
-    AlertPage(),
-  ];
+
 
   @override
   void initState() {
     super.initState();
-
+    _pages = [
+      const ProjectsPage(),
+      DashboardPage(widget.studentUser, widget.companyUser),
+      const MessagePage(),
+      AlertPage(),
+    ];
     if (widget.showAlert) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         QuickAlert.show(

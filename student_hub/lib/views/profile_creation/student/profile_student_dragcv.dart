@@ -10,7 +10,7 @@ import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:student_hub/views/profile_creation/student/home_view.dart';
 
 import 'package:student_hub/models/student_user.dart';
-import 'package:student_hub/view_models/authentication_controller_route.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 
 class StudentProfileDragCv extends StatefulWidget {
   final StudentUser studentUser;

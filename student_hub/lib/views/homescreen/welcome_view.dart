@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/views/auth/login_view.dart';
 import 'package:student_hub/views/auth/signup_info_view.dart';
 import 'package:student_hub/views/auth/switch_account_view.dart';
-import 'package:student_hub/view_models/authentication_controller_route.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -94,7 +94,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        const SwitchAccountView(),
+                    const SwitchAccountView(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       var begin = const Offset(1.0, 0.0);
@@ -134,8 +134,8 @@ class _Body extends StatelessWidget {
 
   const _Body(
       {super.key,
-      required this.animationController,
-      required this.fadeAnimation});
+        required this.animationController,
+        required this.fadeAnimation});
 
   //
 
@@ -161,8 +161,8 @@ class _Content extends StatelessWidget {
 
   const _Content(
       {super.key,
-      required this.animationController,
-      required this.fadeAnimation});
+        required this.animationController,
+        required this.fadeAnimation});
 
   @override
   Widget build(BuildContext context) {
@@ -171,8 +171,8 @@ class _Content extends StatelessWidget {
         // Animated Image
         SlideTransition(
           position:
-              Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))
-                  .animate(
+          Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))
+              .animate(
             CurvedAnimation(
               parent: animationController,
               curve: const Interval(
@@ -187,8 +187,8 @@ class _Content extends StatelessWidget {
         // Animated Text
         SlideTransition(
           position:
-              Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))
-                  .animate(
+          Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))
+              .animate(
             CurvedAnimation(
               parent: animationController,
               curve: const Interval(
@@ -202,8 +202,8 @@ class _Content extends StatelessWidget {
         ),
         SlideTransition(
           position:
-              Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))
-                  .animate(CurvedAnimation(
+          Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))
+              .animate(CurvedAnimation(
             parent: animationController,
             curve: const Interval(
               0.3,
@@ -218,7 +218,7 @@ class _Content extends StatelessWidget {
             height: 50),
         SlideTransition(
           position: Tween<Offset>(
-                  begin: const Offset(0, -0.5), end: const Offset(0, 0))
+              begin: const Offset(0, -0.5), end: const Offset(0, 0))
               .animate(CurvedAnimation(
             parent: animationController,
             curve: const Interval(
@@ -230,36 +230,36 @@ class _Content extends StatelessWidget {
           child: FadeTransition(
             opacity: fadeAnimation,
             child: Container(
-            width: 200,
-            height: 50,
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Handle button press
-                ControllerRoute(context).navigateToLoginView('Company');
+                width: 200,
+                height: 50,
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Handle button press
+                    ControllerRoute(context).navigateToLoginView('Company');
 
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF13babd),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25), // Button radius
-                ),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Icon(Icons.groups, color: Colors.black, size: 24,), // This is the icon
-                  Text('Company', style: TextStyle(color: Colors.black, fontSize: 16)),
-                ],
-              ),
-            )
-          ),
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF13babd),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25), // Button radius
+                    ),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.groups, color: Colors.black, size: 24,), // This is the icon
+                      Text('Company', style: TextStyle(color: Colors.black, fontSize: 16)),
+                    ],
+                  ),
+                )
+            ),
           ),
         ),
         const SizedBox(height: 10),
         SlideTransition(
           position: Tween<Offset>(
-                  begin: const Offset(0, 0.5), end: const Offset(0, 0))
+              begin: const Offset(0, 0.5), end: const Offset(0, 0))
               .animate(CurvedAnimation(
             parent: animationController,
             curve: const Interval(
@@ -271,37 +271,37 @@ class _Content extends StatelessWidget {
           child: FadeTransition(
             opacity: fadeAnimation,
             child: Container(
-              width: 200,
-              height: 50,
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child:ElevatedButton(
-                onPressed: () {
-                  // Handle button press
-                  ControllerRoute(context).navigateToLoginView('Student');
+                width: 200,
+                height: 50,
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child:ElevatedButton(
+                  onPressed: () {
+                    // Handle button press
+                    ControllerRoute(context).navigateToLoginView('Student');
 
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF13babd),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25), // Button radius
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF13babd),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25), // Button radius
+                    ),
                   ),
-                ),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(Icons.emoji_people, color: Colors.black,size: 24,), // This is the icon
-                    Text('Student', style: TextStyle(color: Colors.black, fontSize: 16)),
-                  ],
-                ),
-              )
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(Icons.emoji_people, color: Colors.black,size: 24,), // This is the icon
+                      Text('Student', style: TextStyle(color: Colors.black, fontSize: 16)),
+                    ],
+                  ),
+                )
             ),
           ),
         ),
         const SizedBox(height: 20),
         SlideTransition(
           position:
-              Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))
-                  .animate(CurvedAnimation(
+          Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))
+              .animate(CurvedAnimation(
             parent: animationController,
             curve: const Interval(
               0.4,

@@ -38,6 +38,15 @@ class _SearchProjectState extends State<SearchProject> {
     filteredProjects.addAll(widget.searchResults);
   }
 
+  void navigateToProjectDetailPage(ProjectInfo project) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ProjectDetailPage(project: project),
+      ),
+    );
+  }
+
   void filterProjects() {
     setState(() {
       _previousProjectLength = projectLength;
@@ -106,7 +115,7 @@ class _SearchProjectState extends State<SearchProject> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
+                const Text(
                   'Filter by',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -120,7 +129,7 @@ class _SearchProjectState extends State<SearchProject> {
                   color: Color.fromARGB(255, 54, 52, 52),
                 ),
                 SizedBox(height: 16),
-                Text(
+                const Text(
                   'Project length:',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -208,7 +217,7 @@ class _SearchProjectState extends State<SearchProject> {
                   },
                 ),
                 SizedBox(height: 16),
-                Text(
+                const Text(
                   'Students needed:',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -216,7 +225,7 @@ class _SearchProjectState extends State<SearchProject> {
                   ),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter number of students',
                   ),
                   onChanged: (value) {
@@ -225,12 +234,10 @@ class _SearchProjectState extends State<SearchProject> {
                     });
                   },
                   // Gán giá trị từ biến lưu trữ trạng thái
-                  initialValue: _previousStudentsNeeded != null
-                      ? _previousStudentsNeeded.toString()
-                      : null,
+                  initialValue: _previousStudentsNeeded?.toString(),
                 ),
                 SizedBox(height: 16),
-                Text(
+                const Text(
                   'Proposals less than:',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -238,7 +245,7 @@ class _SearchProjectState extends State<SearchProject> {
                   ),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter maximum number of proposals',
                   ),
                   onChanged: (value) {
@@ -246,9 +253,7 @@ class _SearchProjectState extends State<SearchProject> {
                       proposalsLessThan = int.tryParse(value);
                     });
                   },
-                  initialValue: _previousProposalsLessThan != null
-                      ? _previousProposalsLessThan.toString()
-                      : null,
+                  initialValue: _previousProposalsLessThan?.toString(),
                 ),
                 SizedBox(height: 170),
                 Row(
@@ -413,13 +418,7 @@ class _SearchProjectState extends State<SearchProject> {
                             },
                           ),
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    ProjectDetailPage(project: project),
-                              ),
-                            );
+                            navigateToProjectDetailPage(project);
                           },
                         );
                       },

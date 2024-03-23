@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:student_hub/view_models/authentication_controller_route.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/models/user.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -64,6 +64,46 @@ class _SignUpInfoState extends State<SignUpInfo>
   final ValueNotifier<String> workEmailNotifier = ValueNotifier<String>('');
   final ValueNotifier<String> passwordNotifier = ValueNotifier<String>('');
   final ValueNotifier<bool> checkboxNotifier = ValueNotifier<bool>(false);
+
+  void handleSignUp() {
+    if (fullNameNotifier.value.isNotEmpty &&
+        workEmailNotifier.value.isNotEmpty &&
+        passwordNotifier.value.isNotEmpty &&
+        checkboxNotifier.value &&
+        (_emailController.text.contains('@') ||
+            !EmailValidator.validate(_emailController.text))) {
+      if (!EmailValidator.validate(_emailController.text)) {
+        setState(() {
+          _showEmailError = true; // Show error in TextField
+        });
+        return;
+      }
+      // Handle button press
+      final user = User(
+        fullName: fullNameNotifier.value,
+        email: workEmailNotifier.value,
+        password: passwordNotifier.value,
+        typeUser: widget.typeUser,
+      );
+      print(user.fullName);
+      print(user.email);
+      print(user.password);
+      print(user.typeUser);
+      if (widget.typeUser == 'Role.company') {
+        ControllerRoute(context).navigateToProfileInputCompany(user);
+      } else {
+        ControllerRoute(context).navigateToProfileInputStudent1(user);
+      }
+    }
+  }
+
+  void handleChangeTypeUser() {
+    if (widget.typeUser == 'Role.company') {
+      ControllerRoute(context).navigateToSignupInfoView('Role.student');
+    } else {
+      ControllerRoute(context).navigateToSignupInfoView('Role.company');
+    }
+  }
 
   @override
   void initState() {
@@ -406,8 +446,8 @@ class _SignUpInfoState extends State<SignUpInfo>
                               onPressed: fullNameNotifier.value.isNotEmpty &&
                                       workEmailNotifier.value.isNotEmpty &&
                                       passwordNotifier.value.isNotEmpty &&
-                                      checkboxNotifier.value && 
-                                      (_emailController.text.contains('@') || 
+                                      checkboxNotifier.value &&
+                                      (_emailController.text.contains('@') ||
                                           !EmailValidator.validate(
                                               _emailController
                                                   .text)) // Update this condition
@@ -489,16 +529,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                           ),
                         ),
                         InkWell(
-                          onTap: () {
-                            // Xử lý khi nút được nhấn
-                            if (widget.typeUser == 'Role.company') {
-                              ControllerRoute(context)
-                                  .navigateToSignupInfoView('Role.student');
-                            } else {
-                              ControllerRoute(context)
-                                  .navigateToSignupInfoView('Role.company');
-                            }
-                          },
+                          onTap: handleChangeTypeUser,
                           child: Text(
                             'Apply as ${widget.typeUser == 'Role.company' ? 'student' : 'company'}',
                             style: const TextStyle(
