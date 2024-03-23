@@ -10,6 +10,8 @@ import 'package:student_hub/views/pages/dashboard_page.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';
 
+import '../../auth/switch_account_view.dart';
+
 class HomePage extends StatefulWidget {
   final StudentUser? studentUser;
   final CompanyUser? companyUser;
@@ -46,7 +48,9 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             height: 25,
             child: Image.asset('assets/icons/user_ic.png'),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SwitchAccountView()));
+          },
         ),
       ],
     );

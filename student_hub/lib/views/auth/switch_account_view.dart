@@ -6,6 +6,8 @@ import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/widgets/add_account_widget.dart';
 import 'package:student_hub/models/company_user.dart';
 
+import '../homescreen/welcome_view.dart';
+
 class SwitchAccountView extends StatefulWidget {
   const SwitchAccountView({super.key});
 
@@ -120,6 +122,10 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                 child: TextButton.icon(
                   onPressed: () {
                     // Log out button pressed
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => WelcomePage()),
+                    );
                   },
                   icon: const Icon(Icons.logout, color: Colors.black, size: 28.0),
                   label: const Text('Log out', style: TextStyle(color: Colors.black,fontSize: 20.0,fontWeight: FontWeight.normal)),
