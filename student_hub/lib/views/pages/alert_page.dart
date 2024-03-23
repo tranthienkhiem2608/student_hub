@@ -25,7 +25,7 @@ class AlertPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'New',
-                  style: TextStyle(color: Color(0xFF0c9bab), fontSize: 25.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Color(0xFF0c9bab), fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(height: 10),
@@ -52,7 +52,7 @@ class AlertPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Today',
-                  style: TextStyle(color: Color(0xFF0c9bab), fontSize: 25.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Color(0xFF0c9bab), fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(height: 10),
@@ -79,7 +79,7 @@ class AlertPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Oldest',
-                  style: TextStyle(color: Color(0xFF0c9bab), fontSize: 25.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(color: Color(0xFF0c9bab), fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(height: 10),

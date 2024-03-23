@@ -19,7 +19,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
       title: const Text('Student Hub',
           style: TextStyle(
               color: Colors.blueAccent,
@@ -94,7 +94,27 @@ class _ChooseRoleState extends State<ChooseRole>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const _AppBar(),
+        appBar: AppBar(
+        automaticallyImplyLeading: true,
+        title: const Text('Student Hub',
+            style: TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+        backgroundColor: const Color(0xFFBEEEF7),
+        actions: <Widget>[
+          IconButton(
+            icon: SizedBox(
+              width: 25,
+              height: 25,
+              child: Image.asset('assets/icons/user_ic.png'),
+            ),
+            onPressed: () {
+              // Xử lý khi người dùng nhấn vào biểu tượng người dùng
+            },
+          ),
+        ],
+      ),
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
@@ -367,7 +387,7 @@ class _ChooseRoleState extends State<ChooseRole>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Already have an account?',
+                      'Already have an account?  ',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14.0,
@@ -382,9 +402,9 @@ class _ChooseRoleState extends State<ChooseRole>
                       child: const Text(
                         'Log in',
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.blue,
                           fontSize: 14.0,
-                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),

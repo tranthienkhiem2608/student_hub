@@ -24,25 +24,27 @@ class DashboardPage extends StatelessWidget {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text('Your Jobs',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
-              ElevatedButton(
+              Text(
+                studentUser != null ? 'Your Projects' : 'Your Jobs',
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
+              studentUser != null
+                  ? Container() // Empty container (or any other widget you want to show when the button should be hidden)
+                  : ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFF69cde0)),
+                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF69cde0)),
                 ),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const PostScreen1()),
+                    MaterialPageRoute(builder: (context) => const PostScreen1()),
                   );
                 },
-                child: const Text('Post a Job',
-                    style: TextStyle(color: Colors.black)),
+                child: const Text('Post a Job', style: TextStyle(color: Colors.black)),
               ),
             ],
           ),

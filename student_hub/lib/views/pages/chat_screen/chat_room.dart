@@ -103,7 +103,7 @@ class _ChatRoomState extends State<ChatRoom> {
                   ),
                   Text(
                     'online',
-                    style: MyTheme.bodyText1.copyWith(fontSize: 18),
+                    style: MyTheme.bodyText2.copyWith(fontSize: 16),
                   ),
                 ],
               ),
@@ -132,14 +132,12 @@ class _ChatRoomState extends State<ChatRoom> {
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+                     
                     ),
                   ),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+                      
                     ),
                     child: Conversation(user: widget.user),
                   ),

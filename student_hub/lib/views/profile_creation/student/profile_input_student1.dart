@@ -44,6 +44,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
     super.dispose();
     _textfieldTagsController.dispose();
   }
+
   void _addNewLanguage(String language, String level) {
     final newLanguage = {'name': language, 'level': level};
     setState(() {
@@ -57,36 +58,34 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
     });
   }
 
-
-
   void _addNewEducation(String schoolName, int yearsStart, int yearsEnd) {
-      setState(() {
-        final newEducation = {
-          'schoolName': schoolName,
-          'yearsStart': yearsStart,
-          'yearsEnd': yearsEnd
-        };
-        educationList.add(newEducation);
-      });
-  }
-  void _deleteEducation(String schoolName) {
     setState(() {
-      educationList.removeWhere((element) => element['schoolName'] == schoolName);
+      final newEducation = {
+        'schoolName': schoolName,
+        'yearsStart': yearsStart,
+        'yearsEnd': yearsEnd
+      };
+      educationList.add(newEducation);
     });
   }
+
+  void _deleteEducation(String schoolName) {
+    setState(() {
+      educationList
+          .removeWhere((element) => element['schoolName'] == schoolName);
+    });
+  }
+
   void _editLanguage(List<Map<String, dynamic>> listLanguagesDelete) {
-    for(var i = 0; i < listLanguagesDelete.length; i++)
-    {
+    for (var i = 0; i < listLanguagesDelete.length; i++) {
       print(listLanguagesDelete[i]);
-      if(languages.contains(listLanguagesDelete[i]))
-      {
+      if (languages.contains(listLanguagesDelete[i])) {
         setState(() {
           languages.removeWhere((element) => element == listLanguagesDelete[i]);
         });
       }
     }
   }
-
 
   final List<String> skills = [
     'Flutter',
@@ -139,7 +138,25 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const _AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        title: const Text('Student Hub',
+            style: TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+        backgroundColor: const Color(0xFFBEEEF7),
+        actions: <Widget>[
+          IconButton(
+            icon: SizedBox(
+              width: 25,
+              height: 25,
+              child: Image.asset('assets/icons/user_ic.png'),
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -441,7 +458,8 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                         final result = await showDialog<Map<String, dynamic>>(
                           context: context,
                           builder: (BuildContext context) {
-                            return PopUpLanguagesWidget(_addNewLanguage, languages);
+                            return PopUpLanguagesWidget(
+                                _addNewLanguage, languages);
                           },
                         );
 
@@ -451,7 +469,8 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                           });
                         }
                       },
-                      icon: const Icon(Icons.add, size: 26, color: Colors.lightBlue),
+                      icon: const Icon(Icons.add,
+                          size: 26, color: Colors.lightBlue),
                     ),
                   ),
                 ),
@@ -460,7 +479,8 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return PopUpLanguagesEditWidget(_deleteLanguage, languages);
+                        return PopUpLanguagesEditWidget(
+                            _deleteLanguage, languages);
                       },
                     );
                   },
@@ -512,11 +532,13 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return PopUpEducationEditWidget(_addNewEducation,_deleteEducation," ", 0, 0);
+                            return PopUpEducationEditWidget(
+                                _addNewEducation, _deleteEducation, " ", 0, 0);
                           },
                         );
                       },
-                      icon: const Icon(Icons.add, size: 26, color: Colors.lightBlue),
+                      icon: const Icon(Icons.add,
+                          size: 26, color: Colors.lightBlue),
                     ),
                   ),
                 ),
@@ -536,7 +558,10 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       height: 160,
-                      child: ShowSchoolWidget(educationList: educationList, deleteSchool: _deleteEducation, addNewEducation: _addNewEducation),
+                      child: ShowSchoolWidget(
+                          educationList: educationList,
+                          deleteSchool: _deleteEducation,
+                          addNewEducation: _addNewEducation),
                     ),
                   ],
                 ),

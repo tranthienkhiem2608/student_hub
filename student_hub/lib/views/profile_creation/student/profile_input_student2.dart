@@ -8,17 +8,13 @@ import 'package:student_hub/widgets/show_project_student_widget.dart';
 import '../../../models/project_student.dart';
 import '../../../widgets/pop_up_project_widget.dart';
 
-
 class ProfileInputStudent2 extends StatefulWidget {
   final StudentUser studentUser;
-  const ProfileInputStudent2(this.studentUser,{super.key});
+  const ProfileInputStudent2(this.studentUser, {super.key});
 
   @override
   _ProfileInputStudent2State createState() => _ProfileInputStudent2State();
-
 }
-
-
 
 class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
   final List<String> skills = [
@@ -39,8 +35,8 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
     'Firebase',
   ];
 
-
-  void _addNewProject(String projectName, DateTime startDate, DateTime endDate, String description, List<String> skills) {
+  void _addNewProject(String projectName, DateTime startDate, DateTime endDate,
+      String description, List<String> skills) {
     setState(() {
       widget.studentUser.projectsList.add(ProjectStudent(
         projectName: projectName,
@@ -49,14 +45,14 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
         projectDescription: description,
         skillsListProject: skills,
       ));
-
     });
     // Add your logic here for handling the icon press
   }
 
   void _deleteProject(String projectName) {
     setState(() {
-      widget.studentUser.projectsList.removeWhere((project) => project.projectName == projectName);
+      widget.studentUser.projectsList
+          .removeWhere((project) => project.projectName == projectName);
     });
     // Add your logic here for handling the icon press
   }
@@ -68,7 +64,25 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
     final selectedSkills = <String>[];
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const _AppBar(),
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        title: const Text('Student Hub',
+            style: TextStyle(
+                color: Colors.blueAccent,
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+        backgroundColor: const Color(0xFFBEEEF7),
+        actions: <Widget>[
+          IconButton(
+            icon: SizedBox(
+              width: 25,
+              height: 25,
+              child: Image.asset('assets/icons/user_ic.png'),
+            ),
+            onPressed: () {},
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -114,11 +128,13 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return PopUpProjectWidget(_addNewProject,_deleteProject, '', null, null, '', const []);
+                          return PopUpProjectWidget(_addNewProject,
+                              _deleteProject, '', null, null, '', const []);
                         },
                       );
                     },
-                    icon: const Icon(Icons.add, size: 26, color: Colors.lightBlue),
+                    icon: const Icon(Icons.add,
+                        size: 26, color: Colors.lightBlue),
                   ),
                 ],
               ),
@@ -131,7 +147,10 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                   children: [
                     SizedBox(
                       height: 500,
-                      child: ShowProjectStudentWidget(userStudent: widget.studentUser, deleteProject: _deleteProject, addNewProject: _addNewProject),
+                      child: ShowProjectStudentWidget(
+                          userStudent: widget.studentUser,
+                          deleteProject: _deleteProject,
+                          addNewProject: _addNewProject),
                     ),
                   ],
                 ),
@@ -146,7 +165,8 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                   opacity: const AlwaysStoppedAnimation(1),
                   child: MaterialButton(
                     onPressed: () {
-                      ControllerRoute(context).navigateToProfileInputStudent3(widget.studentUser);
+                      ControllerRoute(context)
+                          .navigateToProfileInputStudent3(widget.studentUser);
                     },
                     height: 45,
                     color: Colors.black,
@@ -199,7 +219,6 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
-
 
 Future<List<String>> getData(String? filter) async {
   List<String> skills = [
@@ -271,9 +290,3 @@ Future<List<String>> getData(String? filter) async {
   }
   return skills;
 }
-
-
-
-
-
-

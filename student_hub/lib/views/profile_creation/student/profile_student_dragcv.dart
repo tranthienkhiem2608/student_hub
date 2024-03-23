@@ -178,24 +178,31 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                 ),
               ),
             // Next Button
-            Padding(
-              padding: const EdgeInsets.fromLTRB(300, 15, 20, 5),
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color(0xFF69cde0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    // 1. Simulate some processing (if needed)
+                    // You would perform your upload logic or other tasks here.// Example delay
+                    ControllerRoute(context)
+                        .navigateToHomeScreen(true, null, widget.studentUser);
+                    // 3. Navigate to HomePage
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 35),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  child: const Text(
+                    "Next",
+                    style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
-                onPressed: () {
-                  // 1. Simulate some processing (if needed)
-                  // You would perform your upload logic or other tasks here.// Example delay
-                  ControllerRoute(context)
-                      .navigateToHomeScreen(true, null, widget.studentUser);
-                  // 3. Navigate to HomePage
-                },
-                child:
-                    const Text('Next', style: TextStyle(color: Colors.black)),
-              ),
+              ],
             ),
           ],
         ),

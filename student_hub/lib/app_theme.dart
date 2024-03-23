@@ -5,8 +5,8 @@ class MyTheme {
   MyTheme._();
   static Color kPrimaryColor = Color(0xff7C7B9B);
   static Color kPrimaryColorVariant = Color(0xff686795);
-  static Color kAccentColor = Color(0xffFCAAAB);
-  static Color kAccentColorVariant = Color(0xffF7A3A2);
+  static Color kAccentColor = Color.fromARGB(255, 170, 238, 250);
+  static Color kAccentColorVariant = Color.fromARGB(255, 170, 238, 250);
   static Color kUnreadChatBG = Color(0xffEE1D1D);
 
   static final TextStyle kAppTitle = GoogleFonts.grandHotel(fontSize: 36);
@@ -19,7 +19,7 @@ class MyTheme {
   );
 
   static final TextStyle chatSenderName = TextStyle(
-    color: Colors.white,
+    color: Color(0xff7C7B9B),
     fontSize: 24,
     fontWeight: FontWeight.bold,
     letterSpacing: 1.5,
@@ -27,6 +27,12 @@ class MyTheme {
 
   static final TextStyle bodyText1 = TextStyle(
       color: Color(0xffAEABC9),
+      fontSize: 14,
+      letterSpacing: 1.2,
+      fontWeight: FontWeight.w500);
+      
+  static final TextStyle bodyText2 = TextStyle(
+      color: Color.fromARGB(255, 127, 240, 132),
       fontSize: 14,
       letterSpacing: 1.2,
       fontWeight: FontWeight.w500);

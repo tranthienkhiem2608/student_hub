@@ -405,7 +405,7 @@ class _LoginPageState extends State<LoginPage>
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontSize: 14.0,
-                                fontWeight: FontWeight.w400),
+                                fontWeight: FontWeight.bold),
                           ),
                         )
                       ],

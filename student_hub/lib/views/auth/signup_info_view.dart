@@ -147,7 +147,25 @@ class _SignUpInfoState extends State<SignUpInfo>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const _AppBar(),
+        appBar: AppBar(
+          automaticallyImplyLeading: true,
+          title: const Text('Student Hub',
+              style: TextStyle(
+                  color: Colors.blueAccent,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+          backgroundColor: const Color(0xFFBEEEF7),
+          actions: <Widget>[
+            IconButton(
+              icon: SizedBox(
+                width: 25,
+                height: 25,
+                child: Image.asset('assets/icons/user_ic.png'),
+              ),
+              onPressed: () {},
+            ),
+          ],
+        ),
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
@@ -533,9 +551,9 @@ class _SignUpInfoState extends State<SignUpInfo>
                           child: Text(
                             'Apply as ${widget.typeUser == 'Role.company' ? 'student' : 'company'}',
                             style: const TextStyle(
-                              color: Colors.black,
+                              color: Colors.blue,
                               fontSize: 14.0,
-                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
