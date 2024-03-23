@@ -5,19 +5,20 @@ import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:student_hub/models/company_user.dart';
 import 'package:student_hub/models/student_user.dart';
 import 'package:student_hub/view_models/nav_bottom_controller.dart';
+import 'package:student_hub/views/auth/switch_account_view.dart';
 import 'package:student_hub/views/pages/alert_page.dart';
 import 'package:student_hub/views/pages/dashboard_page.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';
-
-import '../../auth/switch_account_view.dart';
 
 class HomePage extends StatefulWidget {
   final StudentUser? studentUser;
   final CompanyUser? companyUser;
   final bool showAlert;
 
-  const HomePage({this.showAlert = false, this.companyUser, this.studentUser, Key? key}) : super(key: key);
+  const HomePage(
+      {this.showAlert = false, this.companyUser, this.studentUser, Key? key})
+      : super(key: key);
 
   // void functionInitialize({bool? shoAlert, CompanyUser? userCompany, StudentUser? userStudent, Key? key}) {
   //     if()
@@ -29,7 +30,6 @@ class HomePage extends StatefulWidget {
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   const _AppBar({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Image.asset('assets/icons/user_ic.png'),
           ),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => SwitchAccountView()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SwitchAccountView()));
           },
         ),
       ],
@@ -63,7 +64,6 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 class _HomePageState extends State<HomePage> {
   late List<Widget> _pages;
   final BottomNavController _navController = BottomNavController();
-
 
   @override
   void initState() {
