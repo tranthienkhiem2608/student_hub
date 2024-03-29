@@ -46,7 +46,7 @@ class AuthAccountViewModel {
     var payload = user.toMapUser();
     // Call a method to reload the page
     try{
-      var response = await ConnectionService().post('/auth/sign-in', payload).catchError((err){});
+      var response = await ConnectionService().post('/auth/sign-in', payload);
       if(response != null){
         print("Connected to the server successfully");
         print("Connect server successful");

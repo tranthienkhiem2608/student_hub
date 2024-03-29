@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
-const String _baseUrl = 'http://localhost:4400';
+const String _baseUrl = 'http://10.0.2.2:4400';
 class ConnectionService {
 
   var client = http.Client();
