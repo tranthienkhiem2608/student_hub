@@ -65,37 +65,6 @@ class _SignUpInfoState extends State<SignUpInfo>
   final ValueNotifier<String> passwordNotifier = ValueNotifier<String>('');
   final ValueNotifier<bool> checkboxNotifier = ValueNotifier<bool>(false);
 
-  void handleSignUp() {
-    if (fullNameNotifier.value.isNotEmpty &&
-        workEmailNotifier.value.isNotEmpty &&
-        passwordNotifier.value.isNotEmpty &&
-        checkboxNotifier.value &&
-        (_emailController.text.contains('@') ||
-            !EmailValidator.validate(_emailController.text))) {
-      if (!EmailValidator.validate(_emailController.text)) {
-        setState(() {
-          _showEmailError = true; // Show error in TextField
-        });
-        return;
-      }
-      // Handle button press
-      final user = User(
-        fullName: fullNameNotifier.value,
-        email: workEmailNotifier.value,
-        password: passwordNotifier.value,
-        typeUser: widget.typeUser,
-      );
-      print(user.fullName);
-      print(user.email);
-      print(user.password);
-      print(user.typeUser);
-      if (widget.typeUser == 'Role.company') {
-        ControllerRoute(context).navigateToProfileInputCompany(user);
-      } else {
-        ControllerRoute(context).navigateToProfileInputStudent1(user);
-      }
-    }
-  }
 
   void handleChangeTypeUser() {
     if (widget.typeUser == 'Role.company') {
@@ -509,7 +478,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: const Text(
-                                "Create account",
+                                  "Create account",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16.0),
                               ),

@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/view_models/controller_route.dart';
+
+import '../../models/model/users.dart';
 
 class LoginPage extends StatefulWidget {
   final String typeUser;
@@ -49,6 +52,8 @@ class _LoginPageState extends State<LoginPage>
   Timer? _timer;
 
   bool _obscurePassword = true; // Start with the password hidden
+  final ValueNotifier<String> email = ValueNotifier<String>('');
+  final ValueNotifier<String> password = ValueNotifier<String>('');
 
   @override
   void initState() {
@@ -203,6 +208,9 @@ class _LoginPageState extends State<LoginPage>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      onChanged: (value) {
+                        email.value = value;
+                      },
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
@@ -257,6 +265,9 @@ class _LoginPageState extends State<LoginPage>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      onChanged: (value) {
+                        password.value = value;
+                      },
                       obscureText:
                           _obscurePassword, // Use the visibility variable
                       cursorColor: Colors.black,
@@ -355,7 +366,15 @@ class _LoginPageState extends State<LoginPage>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: email.value.isNotEmpty && password.value.isNotEmpty
+                          ? () {
+                              final user = User(
+                                email: email.value,
+                                password: password.value,
+                              );
+                              AuthAccountViewModel(context).loginAccount(user);
+                            }
+                          : null,
                       height: 45,
                       color: Colors.black,
                       padding: const EdgeInsets.symmetric(

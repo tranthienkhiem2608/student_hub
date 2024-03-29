@@ -39,23 +39,21 @@ class ConnectionService {
     }
   }
 
-Future<dynamic> post(String api, dynamic object) async{
-var url = Uri.parse(_baseUrl + api);
-var payload = json.encode(object);
+  Future<dynamic> post(String api, dynamic payload) async {
+    var url = Uri.parse(_baseUrl + api);
     var headers = {
-      'accept': '*/*',
       'Content-Type': 'application/json',
     };
-    var response = await http.Client().post(url, headers: headers, body: payload);
-    if (response.statusCode == 201) {
+    var body = json.encode(payload);
+    var response = await http.post(url, headers: headers, body: body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
       print("Connect server successful");
-      return response.body;
+      return json.decode(response.body);
     } else {
       print("Connect server failed");
-      //throw exception and catch it in UI
+      throw Exception('Failed to connect to server');
     }
-
-}
+  }
 
 Future<dynamic> put(String api, dynamic object) async{
 var url = Uri.parse(_baseUrl + api);
