@@ -9,7 +9,7 @@ import 'package:student_hub/models/model/experience.dart';
 
 class StudentUser{
   String id;
-  User userId;
+  User user;
   TechStack? techStack;
   List<SkillSets>? skillSet;
   List<Language>? languages;
@@ -18,18 +18,23 @@ class StudentUser{
 
   StudentUser({
     required this.id,
-    required this.userId,
+    required this.user,
      this.techStack,
      this.skillSet,
      this.languages,
      this.education,
       this.experience,
   });
+  Duration? get duration => experience?.fold(
+    Duration.zero,
+        (previousValue, element) =>
+    previousValue! + element.endDate.difference(element.startDate),
+  );
 
   Map<String, dynamic> toMapStudentUser() {
     return {
       'id': id,
-      'userId': userId.toMapUser(),
+      'userId': user.toMapUser(),
       'techStack': techStack?.toMapTechStack(),
       'skillSet': skillSet?.map((e) => e.toMapSkillSets()).toList(),
       'languages': languages?.map((e) => e.toMapLanguage()).toList(),
@@ -41,7 +46,7 @@ class StudentUser{
   factory StudentUser.fromMapStudentUser(Map<String, dynamic> map) {
     return StudentUser(
       id: map['id'],
-      userId: User.fromMapUser(map['userId']),
+      user: User.fromMapUser(map['user']),
       techStack: TechStack.fromMapTechStack(map['techStack']),
       skillSet: List<SkillSets>.from(map['skillSet'].map((e) => SkillSets.fromMapSkillSets(e))),
       languages: List<Language>.from(map['languages'].map((e) => Language.fromMapLanguage(e))),

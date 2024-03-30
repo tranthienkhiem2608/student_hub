@@ -21,4 +21,8 @@ class TechStack{
       name: map['name'],
     );
   }
+
+  static fromListString(List<String> selectedSkills) {
+    return selectedSkills.map((e) => TechStack(id: e, name: e)).toList();
+  }
 }

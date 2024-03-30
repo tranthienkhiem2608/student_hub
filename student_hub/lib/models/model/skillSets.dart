@@ -20,4 +20,8 @@ class SkillSets{
       name: map['name'],
     );
   }
+
+  static fromListString(List<String> skills) {
+    return skills.map((e) => SkillSets(id: e, name: e)).toList();
+  }
 }

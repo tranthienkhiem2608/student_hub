@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:student_hub/models/company_user.dart';
+import 'package:student_hub/models/model/company_user.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/views/auth/login_view.dart';
 import 'package:student_hub/views/auth/switch_account_view.dart';
@@ -275,7 +275,7 @@ class _AnimatedText extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Welcome, ${companyUser.user.fullName}!",
+          "Welcome, ${companyUser.user.fullname}!",
           style: GoogleFonts.openSans(
             fontSize: 19,
             fontWeight: FontWeight.bold,

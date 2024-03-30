@@ -35,4 +35,8 @@ class Education{
       endYear: map['endYear'],
     );
   }
+
+  static fromListMap(List<Map<String, dynamic>> educationList) {
+    return educationList.map((e) => Education.fromMapEducation(e)).toList();
+  }
 }

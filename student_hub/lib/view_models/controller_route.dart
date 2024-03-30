@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:student_hub/models/company_user.dart';
-import 'package:student_hub/models/student_user.dart';
-import 'package:student_hub/models/user.dart';
+import 'package:student_hub/models/model/company_user.dart';
+import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/views/auth/chooserole_view.dart';
 import 'package:student_hub/views/profile_creation/student/home_view.dart';
 import 'package:student_hub/views/profile_creation/student/profile_input_student1.dart';
@@ -12,6 +11,7 @@ import 'package:student_hub/views/auth/switch_account_view.dart';
 import 'package:student_hub/views/auth/login_view.dart';
 import 'package:student_hub/views/profile_creation/company/profile_input.dart';
 import 'package:student_hub/views/homescreen/welcome-screen.dart';
+import 'package:student_hub/models/model/users.dart';
 class ControllerRoute {
   final BuildContext context;
 

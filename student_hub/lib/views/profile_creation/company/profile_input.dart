@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-import 'package:student_hub/models/company_user.dart';
-import 'package:student_hub/models/user.dart';
+import 'package:student_hub/models/model/company_user.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 
 class ProfileInput extends StatefulWidget {
@@ -56,6 +56,7 @@ class _LoginPageState extends State<ProfileInput>
   String _website = '';
   String _description = '';
   String _numberOfEmployees = '';
+  int _size = 0;
 
   @override
   void initState() {
@@ -241,6 +242,7 @@ class _LoginPageState extends State<ProfileInput>
                                 setState(() {
                                   _selectedValue = value;
                                   _numberOfEmployees = 'It\'s just me';
+                                  _size = 0;
                                 });
                               },
                             ),
@@ -272,6 +274,7 @@ class _LoginPageState extends State<ProfileInput>
                                 setState(() {
                                   _selectedValue = value;
                                   _numberOfEmployees = '2-9 employees';
+                                  _size = 9;
                                 });
                               },
                             ),
@@ -303,6 +306,7 @@ class _LoginPageState extends State<ProfileInput>
                                 setState(() {
                                   _selectedValue = value;
                                   _numberOfEmployees = '10-99 employees';
+                                  _size = 99;
                                 });
                               },
                             ),
@@ -334,6 +338,7 @@ class _LoginPageState extends State<ProfileInput>
                                 setState(() {
                                   _selectedValue = value;
                                   _numberOfEmployees = '100-1000 employees';
+                                  _size = 1000;
                                 });
                               },
                             ),
@@ -365,6 +370,7 @@ class _LoginPageState extends State<ProfileInput>
                                 setState(() {
                                   _selectedValue = value;
                                   _numberOfEmployees = 'More than 1000 employees';
+                                  _size = 1001;
                                 });
                               },
                             ),
@@ -574,19 +580,21 @@ class _LoginPageState extends State<ProfileInput>
                         child: MaterialButton(
                           onPressed: () {
                             CompanyUser userCompany = CompanyUser(
+                              id: widget.user.fullname!,
                               user: widget.user,
                               companyName: _companyName ?? '',
-                              companyWebsite: _website ?? '',
-                              companyDescription: _description ?? '',
-                              numberOfEmployees: _numberOfEmployees ?? '',
-                              isLogin: false,
+
+                              website: _website ?? '',
+                              description: _description ?? '',
+                              size: _size ?? 0,
+                              // isLogin: false,
                             );
 
                             //print userCompany to cmd
                             print(userCompany.companyName);
-                            print(userCompany.companyWebsite);
-                            print(userCompany.companyDescription);
-                            print(userCompany.numberOfEmployees);
+                            print(userCompany.website);
+                            print(userCompany.description);
+                            print(userCompany.size);
 
                             ControllerRoute(context)
                                 .navigateToWelcomeView(userCompany);

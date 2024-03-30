@@ -32,4 +32,8 @@ class Language{
     );
   }
 
+  static fromListMap(List<Map<String, dynamic>> languages) {
+    return languages.map((e) => Language.fromMapLanguage(e)).toList();
+  }
+
 }

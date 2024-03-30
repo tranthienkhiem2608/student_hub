@@ -42,6 +42,7 @@ Future<dynamic> post(String api, dynamic payload) async {
   var url = Uri.parse(_baseUrl + api);
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String? token = prefs.getString('token');
+  print('Token: $token');
   var headers = {
     'Content-Type': 'application/json',
   };

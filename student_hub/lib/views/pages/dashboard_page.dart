@@ -5,8 +5,8 @@ import 'package:student_hub/views/pages/archieved_page.dart';
 import 'package:student_hub/views/pages/working_page.dart';
 import 'package:student_hub/views/post_project/post_screen_1.dart';
 
-import '../../models/company_user.dart';
-import '../../models/student_user.dart';
+import '../../models/model/company_user.dart';
+import '../../models/model/student_user.dart';
 import 'all_projects_page_student.dart';
 
 class DashboardPage extends StatelessWidget {

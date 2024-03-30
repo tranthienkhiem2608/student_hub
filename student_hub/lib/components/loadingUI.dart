@@ -9,7 +9,7 @@ class LoadingUI extends StatelessWidget {
       child: const Center(
         child: SpinKitThreeInOut(
           color: Colors.lightBlueAccent,
-          size: 50.0,
+          size: 30.0,
         ),
       ),
     );

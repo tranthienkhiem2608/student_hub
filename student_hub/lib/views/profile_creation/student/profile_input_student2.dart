@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:student_hub/models/student_user.dart';
+import 'package:student_hub/models/model/experience.dart';
+import 'package:student_hub/models/model/skillSets.dart';
+import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/widgets/show_project_student_widget.dart';
 
@@ -38,12 +40,15 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
   void _addNewProject(String projectName, DateTime startDate, DateTime endDate,
       String description, List<String> skills) {
     setState(() {
-      widget.studentUser.projectsList.add(ProjectStudent(
-        projectName: projectName,
-        timeStart: startDate,
-        timeEnd: endDate,
-        projectDescription: description,
-        skillsListProject: skills,
+      widget.studentUser.experience?.add(Experience(
+        id: widget.studentUser.id,
+        studentId: widget.studentUser,
+        title: projectName,
+        startDate: startDate,
+        endDate: endDate,
+        skillSet: SkillSets.fromListString(skills),
+        description: description,
+
       ));
     });
     // Add your logic here for handling the icon press
@@ -51,8 +56,8 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
 
   void _deleteProject(String projectName) {
     setState(() {
-      widget.studentUser.projectsList
-          .removeWhere((project) => project.projectName == projectName);
+      widget.studentUser.experience
+          ?.removeWhere((project) => project.title == projectName);
     });
     // Add your logic here for handling the icon press
   }

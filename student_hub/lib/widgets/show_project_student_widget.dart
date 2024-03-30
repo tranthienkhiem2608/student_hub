@@ -1,6 +1,6 @@
 // show_school_widget.dart
 import 'package:flutter/material.dart';
-import 'package:student_hub/models/student_user.dart';
+import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/widgets/pop_up_project_widget.dart';
 
 import 'package:intl/intl.dart'; // Import the intl package
@@ -20,15 +20,15 @@ class ShowProjectStudentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: userStudent.projectsList.length,
+      itemCount: userStudent.experience?.length,
       itemBuilder: (ctx, index) {
         return Column(
           children: [
             ListTile(
-              title: Text(userStudent.projectsList[index].projectName,
+              title: Text(userStudent.experience![index].title,
                   style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(
-                  '${DateFormat('dd-MM-yyyy').format(userStudent.projectsList[index].timeStart)} - ${DateFormat('dd-MM-yyyy').format(userStudent.projectsList[index].timeEnd)}, \nDuration: ${(userStudent.duration.inHours / 24).round()} days'),
+                  '${DateFormat('dd-MM-yyyy').format(userStudent.experience![index].startDate)} - ${DateFormat('dd-MM-yyyy').format(userStudent.experience![index].endDate)}, \nDuration: ${(userStudent.duration!.inHours / 24).round()} days'),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -45,11 +45,11 @@ class ShowProjectStudentWidget extends StatelessWidget {
                               return PopUpProjectWidget(
                                 _addNewProject,
                                 _deleteProject,
-                                userStudent.projectsList[index].projectName,
-                                userStudent.projectsList[index].timeStart,
-                                userStudent.projectsList[index].timeEnd,
-                                userStudent.projectsList[index].projectDescription,
-                                userStudent.projectsList[index].skillsListProject,
+                                userStudent.experience![index].title,
+                                userStudent.experience![index].startDate,
+                                userStudent.experience![index].endDate,
+                                userStudent.experience![index].description,
+                                userStudent.experience![index].skillSet.cast<String>(),
                               );
                             },
                           );
@@ -60,7 +60,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
                         icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
                           // Handle delete button press
-                          _deleteProject(userStudent.projectsList[index].projectName);
+                          _deleteProject(userStudent.experience![index].title);
                         },
                       ),
                     ],
@@ -72,7 +72,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 5, 10, 5),
               child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(userStudent.projectsList[index].projectDescription)),
+                  child: Text(userStudent.experience![index].description)),
             ),
             const Padding(
               padding: EdgeInsets.all(8.0),
@@ -99,9 +99,9 @@ class ShowProjectStudentWidget extends StatelessWidget {
                     spacing: 6.0,
                     runSpacing: 6.0, 
                     children: userStudent
-                        .projectsList[index]
-                        .skillsListProject
-                        .map((skill) => Chip(label: Text(skill)))
+                        .experience![index]
+                        .skillSet
+                        .map((skill) => Chip(label: Text(skill as String)))
                         .toList(),
                   ),
                 ),

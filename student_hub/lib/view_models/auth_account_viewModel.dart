@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/company_user.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 
 import '../components/loadingUI.dart';
 import '../models/model/users.dart';
@@ -54,11 +56,24 @@ class AuthAccountViewModel {
         print("Connected to the server successfully");
         print("Connect server successful");
         print(response);
+        var token = response['result']['token'];
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('token', token);
+        Navigator.of(context).pop();
+        if (user.role == 1) {
+          ControllerRoute(context)
+              .navigateToProfileInputCompany(
+                  user);
+        } else {
+          ControllerRoute(context)
+              .navigateToProfileInputStudent1(
+                  user);
+        }
       }else{
         print("Failed to connect to the server");
         print("Connect server failed");
       }
-      Navigator.of(context).pop();
+
 
     }catch(e){
       print(e);
@@ -77,11 +92,13 @@ class AuthAccountViewModel {
         print("Connected to the server successfully");
         print("Connect server successful");
         print(response);
+        Navigator.of(context).pop();
+        ControllerRoute(context).navigateToLoginView(user.role!);
       }else{
         print("Failed to connect to the server");
         print("Connect server failed");
       }
-      Navigator.of(context).pop();
+
     }catch(e){
       print(e);
     }

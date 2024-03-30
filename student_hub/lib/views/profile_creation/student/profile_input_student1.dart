@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:student_hub/models/student_user.dart';
-import 'package:student_hub/models/user.dart';
+import 'package:student_hub/models/model/education.dart';
+import 'package:student_hub/models/model/language.dart';
+import 'package:student_hub/models/model/student_user.dart';
+import 'package:student_hub/models/model/techStack.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/widgets/pop_up_education_widget.dart';
 import 'package:textfield_tags/textfield_tags.dart';
@@ -577,12 +580,13 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                     onPressed: () {
                       // Handle button press
                       StudentUser studentUser = StudentUser(
+                        id: widget.user.fullname!,
                         user: widget.user,
-                        techStack: _selectedTechStack,
-                        skillsList: _selectedSkills,
-                        languagesList: languages,
-                        educationList: educationList,
-                        projectsList: [],
+                        techStack: TechStack(name: _selectedTechStack,
+                            id: widget.user.fullname!),
+                        skillSet: TechStack.fromListString(_selectedSkills),
+                        languages: Language.fromListMap(languages),
+                        education: Education.fromListMap(educationList),
                       );
                       ControllerRoute(context)
                           .navigateToProfileInputStudent2(studentUser);
