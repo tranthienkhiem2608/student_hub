@@ -28,7 +28,6 @@ class ConnectionService {
     String? token = prefs.getString('token');
     var _headers = {
       'Authorization': 'Bearer $token',
-      'api_key': 'ief873fj38uf38uf83u839898989',
     };
 
     var response = await client.get(url, headers: _headers);
@@ -39,21 +38,29 @@ class ConnectionService {
     }
   }
 
-  Future<dynamic> post(String api, dynamic payload) async {
-    var url = Uri.parse(_baseUrl + api);
-    var headers = {
-      'Content-Type': 'application/json',
-    };
-    var body = json.encode(payload);
-    var response = await http.post(url, headers: headers, body: body);
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      print("Connect server successful");
-      return json.decode(response.body);
-    } else {
-      print("Connect server failed");
-      throw Exception('Failed to connect to server');
-    }
+Future<dynamic> post(String api, dynamic payload) async {
+  var url = Uri.parse(_baseUrl + api);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString('token');
+  var headers = {
+    'Content-Type': 'application/json',
+  };
+  if (token != null) {
+    headers['Authorization'] = 'Bearer $token';
   }
+  var body = json.encode(payload);
+  var response = await http.post(url, headers: headers, body: body);
+  if (response.statusCode == 200 || response.statusCode == 201) {
+    print("Connect server successful");
+    return json.decode(response.body);
+  } else if (response.statusCode == 400) {
+    print('Server returned status code 400. Error message: ${response.body}');
+    throw Exception('Bad request');
+  } else {
+    print("Connect server failed");
+    throw Exception('Failed to connect to server');
+  }
+}
 
 Future<dynamic> put(String api, dynamic object) async{
 var url = Uri.parse(_baseUrl + api);

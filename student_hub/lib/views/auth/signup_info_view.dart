@@ -4,12 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:student_hub/components/encrypt.dart';
+import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/view_models/controller_route.dart';
-import 'package:student_hub/models/user.dart';
 import 'package:email_validator/email_validator.dart';
 
 class SignUpInfo extends StatefulWidget {
-  final String typeUser;
+  final int typeUser;
   const SignUpInfo(this.typeUser, {super.key});
 
   @override
@@ -68,9 +70,9 @@ class _SignUpInfoState extends State<SignUpInfo>
 
   void handleChangeTypeUser() {
     if (widget.typeUser == 'Role.company') {
-      ControllerRoute(context).navigateToSignupInfoView('Role.student');
+      ControllerRoute(context).navigateToSignupInfoView(0);
     } else {
-      ControllerRoute(context).navigateToSignupInfoView('Role.company');
+      ControllerRoute(context).navigateToSignupInfoView(1);
     }
   }
 
@@ -161,7 +163,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Sign up as ${widget.typeUser.toString().split('.').last}',
+                          'Sign up as ${widget.typeUser == 0? 'student' : 'company'}',
                           style: const TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
@@ -449,24 +451,26 @@ class _SignUpInfoState extends State<SignUpInfo>
                                       }
                                       // Xử lý khi nút được nhấn
                                       final user = User(
-                                        fullName: fullNameNotifier.value,
+
                                         email: workEmailNotifier.value,
                                         password: passwordNotifier.value,
-                                        typeUser: widget.typeUser,
+                                        fullname: fullNameNotifier.value,
+                                        role: widget.typeUser,
                                       );
-                                      print(user.fullName);
+                                      print(user.fullname);
                                       print(user.email);
                                       print(user.password);
-                                      print(user.typeUser);
-                                      if (widget.typeUser == 'Role.company') {
-                                        ControllerRoute(context)
-                                            .navigateToProfileInputCompany(
-                                                user);
-                                      } else {
-                                        ControllerRoute(context)
-                                            .navigateToProfileInputStudent1(
-                                                user);
-                                      }
+                                      print(user.role);
+                                      // if (widget.typeUser == 'Role.company') {
+                                      //   ControllerRoute(context)
+                                      //       .navigateToProfileInputCompany(
+                                      //           user);
+                                      // } else {
+                                      //   ControllerRoute(context)
+                                      //       .navigateToProfileInputStudent1(
+                                      //           user);
+                                      // }
+                                      AuthAccountViewModel(context).signUpAccount(user);
                                     }
                                   : null,
                               height: 45,
@@ -518,7 +522,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                         InkWell(
                           onTap: handleChangeTypeUser,
                           child: Text(
-                            'Apply as ${widget.typeUser == 'Role.company' ? 'student' : 'company'}',
+                            'Apply as ${widget.typeUser == 1? 'student' : 'company'}',
                             style: const TextStyle(
                               color: Colors.blue,
                               fontSize: 14.0,

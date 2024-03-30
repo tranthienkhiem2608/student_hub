@@ -25,14 +25,14 @@ class ControllerRoute {
     );
   }
 
-  void navigateToLoginView(String typeUser) {
+  void navigateToLoginView(int typeUser) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => LoginPage(typeUser)),
     );
   }
 
-  void navigateToSignupInfoView(String typeUser) {
+  void navigateToSignupInfoView(int typeUser) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SignUpInfo(typeUser)),

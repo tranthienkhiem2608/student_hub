@@ -46,7 +46,7 @@ class AuthAccountViewModel {
     var payload = user.toMapUser();
     // Call a method to reload the page
     try{
-      var response = await ConnectionService().post('/auth/sign-in', payload);
+      var response = await ConnectionService().post('/api/auth/sign-in', payload);
       if(response != null){
         print("Connected to the server successfully");
         print("Connect server successful");
@@ -60,5 +60,25 @@ class AuthAccountViewModel {
       print(e);
     }
 
+  }
+
+  Future<void> signUpAccount(User user) async {
+    print('Sign Up Account');
+    var payload = user.toMapUser();
+    // Call a method to reload the page
+    try{
+      var response = await ConnectionService().post('/api/auth/sign-up', payload);
+      if(response != null){
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+      }else{
+        print("Failed to connect to the server");
+        print("Connect server failed");
+      }
+
+    }catch(e){
+      print(e);
+    }
   }
 }

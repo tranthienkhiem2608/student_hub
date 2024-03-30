@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:student_hub/components/encrypt.dart';
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 
 import '../../models/model/users.dart';
 
 class LoginPage extends StatefulWidget {
-  final String typeUser;
+  final int typeUser;
   const LoginPage(this.typeUser, {super.key});
 
   @override

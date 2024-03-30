@@ -236,7 +236,7 @@ class _Content extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     // Handle button press
-                    ControllerRoute(context).navigateToLoginView('Company');
+                    ControllerRoute(context).navigateToLoginView(1);//role company
 
                   },
                   style: ElevatedButton.styleFrom(
@@ -277,7 +277,7 @@ class _Content extends StatelessWidget {
                 child:ElevatedButton(
                   onPressed: () {
                     // Handle button press
-                    ControllerRoute(context).navigateToLoginView('Student');
+                    ControllerRoute(context).navigateToLoginView(0);//role student
 
                   },
                   style: ElevatedButton.styleFrom(

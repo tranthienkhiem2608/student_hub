@@ -357,7 +357,7 @@ class _ChooseRoleState extends State<ChooseRole>
                                 } else {
                                   ControllerRoute(context)
                                       .navigateToSignupInfoView(
-                                          _role.toString());
+                                          _role!.index);
                                 }
                               },
                               height: 45,
@@ -397,7 +397,7 @@ class _ChooseRoleState extends State<ChooseRole>
                       onTap: () {
                         // Xử lý khi nút được nhấn
                         ControllerRoute(context)
-                            .navigateToLoginView(_role.toString());
+                            .navigateToLoginView(_role!.index);
                       },
                       child: const Text(
                         'Log in',
