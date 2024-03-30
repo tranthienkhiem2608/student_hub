@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
+import 'dart:io' show Platform;
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
-const String _baseUrl = 'http://10.0.2.2:4400';
+final String _baseUrl = Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://10.0.2.1:4400';
 class ConnectionService {
 
   var client = http.Client();

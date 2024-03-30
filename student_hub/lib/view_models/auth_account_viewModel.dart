@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:student_hub/models/company_user.dart';
 
+import '../components/loadingUI.dart';
 import '../models/model/users.dart';
 import '../services/connection_services.dart';
 import '../views/auth/switch_account_view.dart';
@@ -41,11 +42,13 @@ class AuthAccountViewModel {
         });
   }
 
+
   Future<void> loginAccount(User user) async {
     print('Login Account');
     var payload = user.toMapUser();
     // Call a method to reload the page
     try{
+      showDialog(context: context, builder: (context) => LoadingUI());
       var response = await ConnectionService().post('/api/auth/sign-in', payload);
       if(response != null){
         print("Connected to the server successfully");
@@ -55,6 +58,7 @@ class AuthAccountViewModel {
         print("Failed to connect to the server");
         print("Connect server failed");
       }
+      Navigator.of(context).pop();
 
     }catch(e){
       print(e);
@@ -67,6 +71,7 @@ class AuthAccountViewModel {
     var payload = user.toMapUser();
     // Call a method to reload the page
     try{
+      showDialog(context: context, builder: (context) => LoadingUI());
       var response = await ConnectionService().post('/api/auth/sign-up', payload);
       if(response != null){
         print("Connected to the server successfully");
@@ -76,7 +81,7 @@ class AuthAccountViewModel {
         print("Failed to connect to the server");
         print("Connect server failed");
       }
-
+      Navigator.of(context).pop();
     }catch(e){
       print(e);
     }
