@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:student_hub/models/model/company_user.dart';
+import 'package:student_hub/models/model/student_user.dart';
 
 import '../components/loadingUI.dart';
 import '../services/connection_services.dart';
@@ -26,10 +27,9 @@ class InputProfileViewModel {
       print(e);
     }
   }
-  Future<void> inputProfileStudent(CompanyUser companyUser) async {
+  Future<void> inputProfileStudent(StudentUser studentUser) async {
     print('Input Profile Student');
-    var payload = companyUser.toMapCompanyUser();
-    // Call a method to reload the page
+    var payload = studentUser.toMapStudentUser();    // Call a method to reload the page
     try{
       showDialog(context: context, builder: (context) => LoadingUI());
       var response = await ConnectionService().post('/api/profile/student', payload);

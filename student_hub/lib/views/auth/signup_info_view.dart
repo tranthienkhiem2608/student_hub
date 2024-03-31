@@ -455,7 +455,9 @@ class _SignUpInfoState extends State<SignUpInfo>
                                         email: workEmailNotifier.value,
                                         password: passwordNotifier.value,
                                         fullname: fullNameNotifier.value,
-                                        role: widget.typeUser,
+                                        role: widget.typeUser == 0
+                                            ? [0]
+                                            : [1],
                                       );
                                       print(user.fullname);
                                       print(user.email);

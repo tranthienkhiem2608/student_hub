@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/company_user.dart';
@@ -59,15 +61,26 @@ class AuthAccountViewModel {
         var token = response['result']['token'];
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', token);
-        Navigator.of(context).pop();
-        if (user.role == 1) {
-          ControllerRoute(context)
-              .navigateToProfileInputCompany(
-                  user);
-        } else {
-          ControllerRoute(context)
-              .navigateToProfileInputStudent1(
-                  user);
+        var responseUser = await ConnectionService().get('/api/auth/me');
+        if(responseUser != null) {
+          var responseUserMap = jsonDecode(responseUser);
+          print(responseUserMap);
+          User userResponse = User.fromMapUser(responseUserMap['result']);
+          print(userResponse.id);
+          print(userResponse.fullname);
+          print(userResponse.role);
+          print(userResponse.role?[0]);
+
+          Navigator.of(context).pop();
+          int role = int.parse(userResponse.role?[0]);
+          if (userResponse.role?.length == 1){
+            if(role == 1){
+              ControllerRoute(context).navigateToProfileInputCompany(userResponse);
+            }
+            else if(userResponse.role?[0] == 0){
+              ControllerRoute(context).navigateToProfileInputStudent1(userResponse);
+            }
+          }
         }
       }else{
         print("Failed to connect to the server");
@@ -93,7 +106,7 @@ class AuthAccountViewModel {
         print("Connect server successful");
         print(response);
         Navigator.of(context).pop();
-        ControllerRoute(context).navigateToLoginView(user.role!);
+        // ControllerRoute(context).navigateToLoginView(user.)
       }else{
         print("Failed to connect to the server");
         print("Connect server failed");

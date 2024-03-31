@@ -31,17 +31,17 @@ class StudentUser{
     previousValue! + element.endDate.difference(element.startDate),
   );
 
-  Map<String, dynamic> toMapStudentUser() {
-    return {
+  Map<String, dynamic> toMapStudentUser() =>{
+
       'id': id,
       'userId': user.toMapUser(),
       'techStack': techStack?.toMapTechStack(),
-      'skillSet': skillSet?.map((e) => e.toMapSkillSets()).toList(),
+    'skillSet': skillSet?.map((e) => e.toMapSkillSets()).toList(),
       'languages': languages?.map((e) => e.toMapLanguage()).toList(),
       'education': education?.map((e) => e.toMapEducation()).toList(),
       'experience': experience?.map((e) => e.toMapExperience()).toList(),
-    };
-  }
+
+  };
 
   factory StudentUser.fromMapStudentUser(Map<String, dynamic> map) {
     return StudentUser(
