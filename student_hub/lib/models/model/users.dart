@@ -45,8 +45,8 @@ class User{
       password: map['password'],
       fullname: map['fullname'],
       role: map['roles'],
-      studentUser: StudentUser.fromMapStudentUser(map['studentUser']),
-      companyUser: CompanyUser.fromMapCompanyUser(map['companyUser']),
+      studentUser: map['studentUser'] == null ? null : StudentUser.fromMapStudentUser(map['studentUser']),
+      companyUser: map['companyUser'] == null ? null : CompanyUser.fromMapCompanyUser(map['companyUser'])
     );
   }
 
