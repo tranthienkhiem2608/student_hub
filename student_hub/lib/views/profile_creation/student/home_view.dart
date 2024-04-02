@@ -31,7 +31,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar({super.key});
+  const _AppBar();
 
   @override
   Widget build(BuildContext context) {

@@ -5,12 +5,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dotted_border/dotted_border.dart';
-import 'package:quickalert/models/quickalert_type.dart';
-import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:student_hub/views/profile_creation/student/home_view.dart';
+// import 'package:quickalert/models/quickalert_type.dart';
+// import 'package:quickalert/widgets/quickalert_dialog.dart';
+// import 'package:student_hub/views/profile_creation/student/home_view.dart';
 
 import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/view_models/controller_route.dart';
+import 'package:student_hub/view_models/input_profile_viewModel.dart';
 
 class StudentProfileDragCv extends StatefulWidget {
   final StudentUser studentUser;
@@ -185,6 +186,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                   onPressed: () {
                     // 1. Simulate some processing (if needed)
                     // You would perform your upload logic or other tasks here.// Example delay
+                    InputProfileViewModel(context).inputProfileStudent(widget.studentUser);
                     ControllerRoute(context)
                         .navigateToHomeScreen(true, null, widget.studentUser);
                     // 3. Navigate to HomePage

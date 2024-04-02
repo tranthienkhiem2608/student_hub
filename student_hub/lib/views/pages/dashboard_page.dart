@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:student_hub/models/user.dart';
 import 'package:student_hub/views/pages/all_projects_page.dart';
 import 'package:student_hub/views/pages/archieved_page.dart';
 import 'package:student_hub/views/pages/working_page.dart';

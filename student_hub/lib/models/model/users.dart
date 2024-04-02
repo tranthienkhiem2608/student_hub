@@ -1,17 +1,21 @@
 class User{
-  final String email;
-  final String password;
+  final int? id;
+  final String? email;
+  final String? password;
   final String? fullname;
-  final int? role;
+  final List<dynamic>? role;
+
 
   User({
-    required this.email,
-    required this.password,
+    this.id,
+    this.email,
+    this.password,
     this.fullname,
     this.role,
   });
 
   Map<String, dynamic> toMapUser()=> {
+      'id': id,
       'email': email,
       'password': password,
       'fullname': fullname,
@@ -27,10 +31,11 @@ class User{
     //   }
     // }
     return User(
+      id: map['id'],
       email: map['email'],
       password: map['password'],
       fullname: map['fullname'],
-      role: map['role'],
+      role: map['roles'],
     );
   }
 
