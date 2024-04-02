@@ -10,6 +10,8 @@ import 'package:student_hub/views/pages/alert_page.dart';
 import 'package:student_hub/views/pages/dashboard_page.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';
+import 'package:student_hub/views/auth/switch_account_view.dart';
+
 
 class HomePage extends StatefulWidget {
   final StudentUser? studentUser;
