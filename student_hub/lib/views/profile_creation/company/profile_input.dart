@@ -582,9 +582,7 @@ class _LoginPageState extends State<ProfileInput>
                           onPressed: () {
                             CompanyUser userCompany = CompanyUser(
                               id: widget.user.fullname!,
-                              user: widget.user,
                               companyName: _companyName ?? '',
-
                               website: _website ?? '',
                               description: _description ?? '',
                               size: _size ?? 0,
@@ -598,7 +596,7 @@ class _LoginPageState extends State<ProfileInput>
                             print(userCompany.size);
                             InputProfileViewModel(context).inputProfileCompany(userCompany);
                             ControllerRoute(context)
-                                .navigateToWelcomeView(userCompany);
+                                .navigateToWelcomeView(widget.user);
                           },
                           height: 45,
                           color: Colors.black,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Interview{
-  String id;
+  int id;
   String title;
   DateTime startDate;
   TimeOfDay startTime;

@@ -1,7 +1,7 @@
 import 'package:student_hub/models/model/student_user.dart';
 
 class Language{
-  final String id;
+  final int id;
   final StudentUser studentId;
   final String languageName;
   final String level;

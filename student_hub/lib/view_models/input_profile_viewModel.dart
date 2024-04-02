@@ -3,6 +3,7 @@ import 'package:student_hub/models/model/company_user.dart';
 import 'package:student_hub/models/model/student_user.dart';
 
 import '../components/loadingUI.dart';
+import '../models/model/users.dart';
 import '../services/connection_services.dart';
 
 class InputProfileViewModel {
@@ -27,9 +28,9 @@ class InputProfileViewModel {
       print(e);
     }
   }
-  Future<void> inputProfileStudent(StudentUser studentUser) async {
+  Future<void> inputProfileStudent(User studentUser) async {
     print('Input Profile Student');
-    var payload = studentUser.toMapStudentUser();    // Call a method to reload the page
+    var payload = studentUser.toMapUser();    // Call a method to reload the page
     try{
       showDialog(context: context, builder: (context) => LoadingUI());
       var response = await ConnectionService().post('/api/profile/student', payload);

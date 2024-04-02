@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:student_hub/models/model/company_user.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
-import 'package:student_hub/views/auth/login_view.dart';
 import 'package:student_hub/views/auth/switch_account_view.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  final CompanyUser companyUser;
+  final User companyUser;
   const WelcomeScreen(this.companyUser, {super.key});
 
   @override
@@ -134,7 +133,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 class _Body extends StatelessWidget {
   final AnimationController animationController;
   final Animation<double> fadeAnimation;
-  final CompanyUser companyUser;
+  final User companyUser;
 
   const _Body(
       {super.key,
@@ -163,7 +162,7 @@ class _Body extends StatelessWidget {
 }
 
 class _Content extends StatelessWidget {
-  final CompanyUser companyUser;
+  final User companyUser;
   final AnimationController animationController;
   final Animation<double> fadeAnimation;
 
@@ -265,7 +264,7 @@ class _Content extends StatelessWidget {
 }
 
 class _AnimatedText extends StatelessWidget {
-  final CompanyUser companyUser;
+  final User companyUser;
   const _AnimatedText({super.key, required this.companyUser});
 
   @override
@@ -275,7 +274,7 @@ class _AnimatedText extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Welcome, ${companyUser.user.fullname}!",
+          "Welcome, ${companyUser.fullname}!",
           style: GoogleFonts.openSans(
             fontSize: 19,
             fontWeight: FontWeight.bold,
@@ -312,7 +311,7 @@ class _DescriptionText extends StatelessWidget {
 
 class _AnimatedButton extends StatelessWidget {
   final String text;
-  final CompanyUser companyUser;
+  final User companyUser;
 
   const _AnimatedButton({super.key, required this.text, required this.companyUser });
 
@@ -323,7 +322,7 @@ class _AnimatedButton extends StatelessWidget {
       height: 50, // Set the height to your desired size
       child: ElevatedButton(
         onPressed: () {
-          ControllerRoute(context).navigateToHomeScreen(true,companyUser, null, );
+          ControllerRoute(context).navigateToHomeScreen(true,companyUser );
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blueAccent,

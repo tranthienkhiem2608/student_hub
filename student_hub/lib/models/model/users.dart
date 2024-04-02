@@ -1,9 +1,14 @@
+import 'package:student_hub/models/model/company_user.dart';
+import 'package:student_hub/models/model/student_user.dart';
+
 class User{
   final int? id;
   final String? email;
   final String? password;
   final String? fullname;
   final List<dynamic>? role;
+  StudentUser? studentUser;
+  CompanyUser? companyUser;
 
 
   User({
@@ -12,6 +17,8 @@ class User{
     this.password,
     this.fullname,
     this.role,
+    this.studentUser,
+    this.companyUser,
   });
 
   Map<String, dynamic> toMapUser()=> {
@@ -19,7 +26,9 @@ class User{
       'email': email,
       'password': password,
       'fullname': fullname,
-      'role': role,
+      'role': role?.last,
+      'studentUser': studentUser?.toMapStudentUser(),
+      'companyUser': companyUser?.toMapCompanyUser(),
   };
 
   factory User.fromMapUser(Map<String, dynamic> map) {
@@ -36,6 +45,8 @@ class User{
       password: map['password'],
       fullname: map['fullname'],
       role: map['roles'],
+      studentUser: StudentUser.fromMapStudentUser(map['studentUser']),
+      companyUser: CompanyUser.fromMapCompanyUser(map['companyUser']),
     );
   }
 

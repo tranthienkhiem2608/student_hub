@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/pages/all_projects_page.dart';
 import 'package:student_hub/views/pages/archieved_page.dart';
 import 'package:student_hub/views/pages/working_page.dart';
@@ -8,10 +10,19 @@ import '../../models/model/company_user.dart';
 import '../../models/model/student_user.dart';
 import 'all_projects_page_student.dart';
 
-class DashboardPage extends StatelessWidget {
-  final StudentUser? studentUser;
-  final CompanyUser? companyUser;
-  DashboardPage(this.studentUser, this.companyUser, {super.key});
+class DashboardPage extends StatefulWidget {
+  final User user;
+
+  const DashboardPage(this.user, {super.key});
+
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+
+  int? role = getPrefs().getInt('role');
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +35,14 @@ class DashboardPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                studentUser != null ? 'Your Projects' : 'Your Jobs',
+                role == 0 ? 'Your Projects' : 'Your Jobs',
                 style: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.bold
                 ),
               ),
-              studentUser != null
+              role == 0
                   ? Container() // Empty container (or any other widget you want to show when the button should be hidden)
                   : ElevatedButton(
                 style: ButtonStyle(
@@ -60,10 +71,14 @@ class DashboardPage extends StatelessWidget {
         ),
         body: TabBarView(
             children: [
-              studentUser != null ? AllProjectsPageStudent() : AllProjectsPage(),
+              role == 0 ? AllProjectsPageStudent() : AllProjectsPage(),
               WorkingPage(),
               ArchivedPage()]),
       ),
     );
   }
+}
+
+SharedPreferences getPrefs(){
+  return SharedPreferences.getInstance() as SharedPreferences;
 }

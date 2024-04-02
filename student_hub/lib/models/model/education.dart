@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:student_hub/models/model/student_user.dart';
 
 class Education{
-  final String id;
+  final int id;
   final StudentUser studentId;
   final String schoolName;
   final YearPicker startYear;

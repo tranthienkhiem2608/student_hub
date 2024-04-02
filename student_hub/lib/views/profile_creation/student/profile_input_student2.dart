@@ -3,16 +3,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:student_hub/models/model/experience.dart';
 import 'package:student_hub/models/model/skillSets.dart';
-import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/widgets/show_project_student_widget.dart';
 
+import '../../../models/model/users.dart';
 import '../../../models/project_student.dart';
 import '../../../widgets/pop_up_project_widget.dart';
 
 class ProfileInputStudent2 extends StatefulWidget {
-  final StudentUser studentUser;
-  const ProfileInputStudent2(this.studentUser, {super.key});
+  final User user;
+  const ProfileInputStudent2(this.user, {super.key});
 
   @override
   _ProfileInputStudent2State createState() => _ProfileInputStudent2State();
@@ -40,9 +40,9 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
   void _addNewProject(String projectName, DateTime startDate, DateTime endDate,
       String description, List<String> skills) {
     setState(() {
-      widget.studentUser.experience?.add(Experience(
-        id: widget.studentUser.id,
-        studentId: widget.studentUser,
+      widget.user.studentUser?.experience?.add(Experience(
+        id: widget.user.id!,
+        studentId: widget.user.studentUser!,
         title: projectName,
         startDate: startDate,
         endDate: endDate,
@@ -56,7 +56,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
 
   void _deleteProject(String projectName) {
     setState(() {
-      widget.studentUser.experience
+      widget.user.studentUser?.experience
           ?.removeWhere((project) => project.title == projectName);
     });
     // Add your logic here for handling the icon press
@@ -153,7 +153,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                     SizedBox(
                       height: 500,
                       child: ShowProjectStudentWidget(
-                          userStudent: widget.studentUser,
+                          userStudent: widget.user.studentUser!,
                           deleteProject: _deleteProject,
                           addNewProject: _addNewProject),
                     ),
@@ -171,7 +171,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                   child: MaterialButton(
                     onPressed: () {
                       ControllerRoute(context)
-                          .navigateToProfileInputStudent3(widget.studentUser);
+                          .navigateToProfileInputStudent3(widget.user);
                     },
                     height: 45,
                     color: Colors.black,

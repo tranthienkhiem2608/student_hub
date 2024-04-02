@@ -2,7 +2,7 @@ import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/student_user.dart';
 
 class Proposal{
-  final String id;
+  final int id;
   final ProjectCompany projectId;
   final StudentUser studentId;
   final String coverLetter;

@@ -3,7 +3,7 @@ import 'package:student_hub/models/model/project_scope.dart';
 import 'package:student_hub/models/model/proposal.dart';
 
 class ProjectCompany {
-  final String id;
+  final int id;
   final CompanyUser companyId;
   final String title;
   final ProjectScope projectScopeId;

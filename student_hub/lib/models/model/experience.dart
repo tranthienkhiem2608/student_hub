@@ -2,7 +2,7 @@ import 'package:student_hub/models/model/skillSets.dart';
 import 'package:student_hub/models/model/student_user.dart';
 
 class Experience{
-  final String id;
+  final int id;
   final StudentUser studentId;
   final String title;
   final DateTime startDate;
