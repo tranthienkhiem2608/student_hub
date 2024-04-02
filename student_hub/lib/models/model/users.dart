@@ -39,4 +39,13 @@ class User{
     );
   }
 
+
+  Map<String, dynamic> toJson() {
+    return {
+      'email': email,
+      'password': password,
+      'fullname': fullname,
+      'role': role,
+    };
+  }
 }
