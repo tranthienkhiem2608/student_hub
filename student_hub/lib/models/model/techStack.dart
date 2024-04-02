@@ -1,5 +1,5 @@
 class TechStack{
-  final String id;
+  final int id;
   final String name;
 
 
@@ -23,6 +23,6 @@ class TechStack{
   }
 
   static fromListString(List<String> selectedSkills) {
-    return selectedSkills.map((e) => TechStack(id: e, name: e)).toList();
+    return selectedSkills.map((e) => TechStack(id: 0, name: e)).toList();
   }
 }

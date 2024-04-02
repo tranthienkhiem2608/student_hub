@@ -3,7 +3,7 @@ import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/models/model/interview.dart';
 
 class Message{
-  String id;
+  int id;
   User sender;
   User receiver;
   String messageFlag;

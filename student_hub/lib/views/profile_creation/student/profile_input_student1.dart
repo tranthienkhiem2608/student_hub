@@ -579,17 +579,18 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                   child: MaterialButton(
                     onPressed: () {
                       // Handle button press
-                      StudentUser studentUser = StudentUser(
-                        id: widget.user.fullname!,
+                      widget.user.studentUser = StudentUser(
+                        id: widget.user.id!,
                         user: widget.user,
                         techStack: TechStack(name: _selectedTechStack,
-                            id: widget.user.fullname!),
+                            id: widget.user.id!),
+
                         skillSet: TechStack.fromListString(_selectedSkills),
                         languages: Language.fromListMap(languages),
                         education: Education.fromListMap(educationList),
                       );
                       ControllerRoute(context)
-                          .navigateToProfileInputStudent2(studentUser);
+                          .navigateToProfileInputStudent2(widget.user);
                     },
                     height: 45,
                     color: Colors.black,

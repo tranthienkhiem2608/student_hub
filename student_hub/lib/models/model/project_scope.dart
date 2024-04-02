@@ -1,5 +1,5 @@
 class ProjectScope{
-  final String id;
+  final int id;
   final String range;
 
   ProjectScope({

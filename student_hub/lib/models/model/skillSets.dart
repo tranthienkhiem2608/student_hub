@@ -1,5 +1,5 @@
 class SkillSets{
-  final String id;
+  final int id;
   final String name;
 
   SkillSets({
@@ -22,6 +22,6 @@ class SkillSets{
   }
 
   static fromListString(List<String> skills) {
-    return skills.map((e) => SkillSets(id: e, name: e)).toList();
+    return skills.map((e) => SkillSets(id: 0, name: e)).toList();
   }
 }

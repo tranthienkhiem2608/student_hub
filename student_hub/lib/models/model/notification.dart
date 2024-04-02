@@ -2,7 +2,7 @@ import 'package:student_hub/models/user.dart';
 import 'package:student_hub/models/model/message.dart';
 
 class Notification {
-  String id;
+  int id;
   int notifyFlag;
   String title;
   User receiverId;

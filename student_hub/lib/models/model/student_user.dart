@@ -8,7 +8,7 @@ import 'package:student_hub/models/model/experience.dart';
 
 
 class StudentUser{
-  String id;
+  int id;
   User user;
   TechStack? techStack;
   List<SkillSets>? skillSet;

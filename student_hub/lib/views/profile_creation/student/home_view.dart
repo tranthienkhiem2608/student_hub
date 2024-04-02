@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
-import 'package:student_hub/models/model/company_user.dart';
-import 'package:student_hub/models/model/student_user.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/nav_bottom_controller.dart';
 import 'package:student_hub/views/auth/switch_account_view.dart';
 import 'package:student_hub/views/pages/alert_page.dart';
@@ -14,12 +13,11 @@ import 'package:student_hub/views/auth/switch_account_view.dart';
 
 
 class HomePage extends StatefulWidget {
-  final StudentUser? studentUser;
-  final CompanyUser? companyUser;
-  final bool showAlert;
+  final User? user;
+  final bool? showAlert;
 
   const HomePage(
-      {this.showAlert = false, this.companyUser, this.studentUser, Key? key})
+      {this.showAlert = false, this.user, Key? key})
       : super(key: key);
 
   // void functionInitialize({bool? shoAlert, CompanyUser? userCompany, StudentUser? userStudent, Key? key}) {
@@ -72,11 +70,11 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     _pages = [
       const ProjectsPage(),
-      DashboardPage(widget.studentUser, widget.companyUser),
+      DashboardPage(widget.user!),
       const MessagePage(),
       AlertPage(),
     ];
-    if (widget.showAlert) {
+    if (widget.showAlert!) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         QuickAlert.show(
           context: context,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/company_user.dart';
 import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/views/auth/chooserole_view.dart';
@@ -59,36 +60,38 @@ class ControllerRoute {
     );
   }
 
-  void navigateToProfileInputStudent2(StudentUser studentUser) {
+  void navigateToProfileInputStudent2(User studentUser) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => ProfileInputStudent2(studentUser)),
     );
   }
-  void navigateToProfileInputStudent3(StudentUser studentUser) {
+  void navigateToProfileInputStudent3(User studentUser) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => StudentProfileDragCv(studentUser)),
     );
   }
 
-  void navigateToWelcomeView(CompanyUser companyUser) {
+  void navigateToWelcomeView(User companyUser) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => WelcomeScreen(companyUser)),
     );
   }
 
-  void navigateToHomeScreen(bool? showAlert, CompanyUser? companyUser, StudentUser? studentUser) {
-    if(companyUser == null){
+  void navigateToHomeScreen(bool? showAlert, User? user) async{
+    SharedPreferences prefs =  await SharedPreferences.getInstance();
+    int? role = prefs.getInt('role');
+    if(role == 0){
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage(showAlert: true, studentUser: studentUser)),
+        MaterialPageRoute(builder: (context) => HomePage(showAlert: true, user: user)),
       );
-    } else if(studentUser == null){
+    } else if(role == 1){
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage(showAlert: false, companyUser: companyUser)),
+        MaterialPageRoute(builder: (context) => HomePage(showAlert: false, user: user)),
       );
     }
   }
