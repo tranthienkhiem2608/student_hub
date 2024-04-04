@@ -46,74 +46,116 @@ class AuthAccountViewModel {
         });
   }
 
-
-
-  Future<void> loginAccount(User user) async {
+  Future<dynamic> loginAccount(User user) async {
     print('Login Account');
     var payload = user.toMapUser();
     // Call a method to reload the page
-    try{
+    try {
       showDialog(context: context, builder: (context) => LoadingUI());
-      var response = await ConnectionService().post('/api/auth/sign-in', payload);
-      if(response != null){
+      var response =
+          await ConnectionService().post('/api/auth/sign-in', payload);
+      var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
         print("Connected to the server successfully");
         print(response);
-        var token = response['result']['token'];
+        var token = responseDecode['result']['token'];
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', token);
         var responseUser = await ConnectionService().get('/api/auth/me');
-        if(responseUser != null) {
-          var responseUserMap = jsonDecode(responseUser);
+        print(responseUser);
+        var responseUserMap = jsonDecode(responseUser);
+        if (responseUserMap['result'] != null) {
           print(responseUserMap);
           User userResponse = User.fromMapUser(responseUserMap['result']);
           print(userResponse.id);
           print(userResponse.fullname);
           print(userResponse.role);
           print(userResponse.role?[0]);
-
-          Navigator.of(context).pop();
+          int? rolePref = prefs.getInt('role');
           int role = int.parse(userResponse.role?[0]);
-          if (userResponse.role?.length == 1){
-            prefs.setInt('role', role);
-            if(role == 1){
-              ControllerRoute(context).navigateToProfileInputCompany(userResponse);
+          Navigator.of(context).pop();
+          print(role);
+          print(userResponse.role?.length);
+          if (userResponse.role?.length == 1) {
+            if (role == 1) {
+              userResponse.companyUser == null
+                  ? ControllerRoute(context)
+                      .navigateToProfileInputCompany(userResponse)
+                  : ControllerRoute(context)
+                      .navigateToHomeScreen(false, userResponse);
+            } else if (role == 0) {
+              print('USER RESPONSE');
+              print(userResponse.companyUser!);
 
+              userResponse.studentUser == null
+                  ? ControllerRoute(context)
+                      .navigateToProfileInputStudent1(userResponse)
+                  : ControllerRoute(context)
+                      .navigateToHomeScreen(true, userResponse);
             }
-            else if(userResponse.role?[0] == 0){
-              ControllerRoute(context).navigateToProfileInputStudent1(userResponse);
+          } else if (userResponse.role?.length == 2) {
+            // ControllerRoute(context).navigateToHomeScreen(false, userResponse);
+
+            if (userResponse.role?.first == '1') {
+              if (userResponse.companyUser?.id == null) {
+                print(userResponse.companyUser?.id);
+                print(userResponse.companyUser?.companyName);
+                print(userResponse.companyUser?.size);
+                print(userResponse.companyUser?.website);
+                print(userResponse.companyUser?.description);
+                ControllerRoute(context)
+                    .navigateToProfileInputCompany(userResponse);
+              } else {
+                ControllerRoute(context)
+                    .navigateToHomeScreen(false, userResponse);
+              }
+            } else if (userResponse.role?.first == 0) {
+              userResponse.studentUser == null
+                  ? ControllerRoute(context)
+                      .navigateToProfileInputStudent1(userResponse)
+                  : ControllerRoute(context)
+                      .navigateToHomeScreen(true, userResponse);
             }
+          } else {
+            print('Role is not valid');
           }
+        } else {
+          print("Failed to connect to the server");
+          print("Connect server failed");
         }
-      }else{
-        print("Failed to connect to the server");
-        print("Connect server failed");
+      } else {
+        return jsonDecode(response);
       }
-    }catch(e){
+    } catch (e) {
       print(e);
     }
-
   }
 
-  Future<void> signUpAccount(User user) async {
+  Future<String> signUpAccount(User user) async {
     print('Sign Up Account');
     var payload = user.toMapUser();
     // Call a method to reload the page
-    try{
+    try {
       showDialog(context: context, builder: (context) => LoadingUI());
-      var response = await ConnectionService().post('/api/auth/sign-up', payload);
-      if(response != null){
+      var response =
+          await ConnectionService().post('/api/auth/sign-up', payload);
+      var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
         print("Connected to the server successfully");
         print("Connect server successful");
         print(response);
         Navigator.of(context).pop();
-        ControllerRoute(context).navigateToLoginView(user.role?.last);
-      }else{
+        ControllerRoute(context).navigateToLoginView();
+      } else {
         print("Failed to connect to the server");
         print("Connect server failed");
+        Navigator.of(context).pop();
+        print(responseDecode['errorDetails']);
+        return response;
       }
-
-    }catch(e){
+    } catch (e) {
       print(e);
     }
+    return '';
   }
 }

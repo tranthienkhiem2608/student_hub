@@ -13,6 +13,7 @@ import 'package:student_hub/views/auth/login_view.dart';
 import 'package:student_hub/views/profile_creation/company/profile_input.dart';
 import 'package:student_hub/views/homescreen/welcome-screen.dart';
 import 'package:student_hub/models/model/users.dart';
+
 class ControllerRoute {
   final BuildContext context;
 
@@ -26,10 +27,10 @@ class ControllerRoute {
     );
   }
 
-  void navigateToLoginView(int typeUser) {
+  void navigateToLoginView() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LoginPage(typeUser)),
+      MaterialPageRoute(builder: (context) => LoginPage()),
     );
   }
 
@@ -53,6 +54,7 @@ class ControllerRoute {
       MaterialPageRoute(builder: (context) => ProfileInput(user)),
     );
   }
+
   void navigateToProfileInputStudent1(User user) {
     Navigator.push(
       context,
@@ -63,13 +65,16 @@ class ControllerRoute {
   void navigateToProfileInputStudent2(User studentUser) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ProfileInputStudent2(studentUser)),
+      MaterialPageRoute(
+          builder: (context) => ProfileInputStudent2(studentUser)),
     );
   }
+
   void navigateToProfileInputStudent3(User studentUser) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => StudentProfileDragCv(studentUser)),
+      MaterialPageRoute(
+          builder: (context) => StudentProfileDragCv(studentUser)),
     );
   }
 
@@ -80,24 +85,21 @@ class ControllerRoute {
     );
   }
 
-  void navigateToHomeScreen(bool? showAlert, User? user) async{
-    SharedPreferences prefs =  await SharedPreferences.getInstance();
+  void navigateToHomeScreen(bool? showAlert, User? user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     int? role = prefs.getInt('role');
-    if(role == 0){
+    if (role == 0) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage(showAlert: true, user: user)),
+        MaterialPageRoute(
+            builder: (context) => HomePage(showAlert: true, user: user)),
       );
-    } else if(role == 1){
+    } else if (role == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => HomePage(showAlert: false, user: user)),
+        MaterialPageRoute(
+            builder: (context) => HomePage(showAlert: false, user: user)),
       );
     }
   }
-
-
-
-
-
 }

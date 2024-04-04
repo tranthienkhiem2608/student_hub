@@ -57,7 +57,7 @@ class _LoginPageState extends State<ProfileInput>
   String _website = '';
   String _description = '';
   String _numberOfEmployees = '';
-  int _size = 0;
+  int? _size;
 
   @override
   void initState() {
@@ -275,7 +275,7 @@ class _LoginPageState extends State<ProfileInput>
                                 setState(() {
                                   _selectedValue = value;
                                   _numberOfEmployees = '2-9 employees';
-                                  _size = 9;
+                                  _size = 1;
                                 });
                               },
                             ),
@@ -307,7 +307,7 @@ class _LoginPageState extends State<ProfileInput>
                                 setState(() {
                                   _selectedValue = value;
                                   _numberOfEmployees = '10-99 employees';
-                                  _size = 99;
+                                  _size = 2;
                                 });
                               },
                             ),
@@ -339,7 +339,7 @@ class _LoginPageState extends State<ProfileInput>
                                 setState(() {
                                   _selectedValue = value;
                                   _numberOfEmployees = '100-1000 employees';
-                                  _size = 1000;
+                                  _size = 3;
                                 });
                               },
                             ),
@@ -370,8 +370,9 @@ class _LoginPageState extends State<ProfileInput>
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
-                                  _numberOfEmployees = 'More than 1000 employees';
-                                  _size = 1001;
+                                  _numberOfEmployees =
+                                      'More than 1000 employees';
+                                  _size = 4;
                                 });
                               },
                             ),
@@ -580,8 +581,12 @@ class _LoginPageState extends State<ProfileInput>
                         opacity: _fadeAnimation,
                         child: MaterialButton(
                           onPressed: () {
-                            CompanyUser userCompany = CompanyUser(
-                              id: widget.user.fullname!,
+                            widget.user.companyUser = CompanyUser(
+                              id: widget.user.id!,
+                              createAt: '',
+                              updatedAt: '',
+                              deletedAt: '',
+                              userID: widget.user.id!,
                               companyName: _companyName ?? '',
                               website: _website ?? '',
                               description: _description ?? '',
@@ -590,13 +595,14 @@ class _LoginPageState extends State<ProfileInput>
                             );
 
                             //print userCompany to cmd
-                            print(userCompany.companyName);
-                            print(userCompany.website);
-                            print(userCompany.description);
-                            print(userCompany.size);
-                            InputProfileViewModel(context).inputProfileCompany(userCompany);
-                            ControllerRoute(context)
-                                .navigateToWelcomeView(widget.user);
+                            print(widget.user.companyUser?.companyName);
+                            print(widget.user.companyUser?.website);
+                            print(widget.user.companyUser?.description);
+                            print(widget.user.companyUser?.size);
+                            InputProfileViewModel(context)
+                                .inputProfileCompany(widget.user);
+                            // ControllerRoute(context)
+                            //     .navigateToWelcomeView(widget.user);
                           },
                           height: 45,
                           color: Colors.black,

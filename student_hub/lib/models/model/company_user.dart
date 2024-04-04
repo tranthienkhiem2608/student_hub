@@ -1,33 +1,44 @@
+import 'dart:ffi';
+
 import 'package:student_hub/models/model/users.dart';
 
-class CompanyUser{
-  final String id;
+class CompanyUser {
+  final int? id;
+  final String? createAt;
+  final String? updatedAt;
+  final String? deletedAt;
+  final int? userID;
   final String? companyName;
   final int? size;
   final String? website;
   final String? description;
 
-
   CompanyUser({
-    required this.id,
-     this.companyName,
-      this.size,
-     this.website,
-     this.description,
+    this.id,
+    this.createAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.userID,
+    this.companyName,
+    this.size,
+    this.website,
+    this.description,
   });
 
-Map<String, dynamic> toMapCompanyUser() => {
-      'id': id,
-      'companyName': companyName,
-      'size': size,
-      'website': website,
-      'description': description,
-
-  };
+  Map<String, dynamic> toMapCompanyUser() => {
+        'companyName': companyName,
+        'size': size,
+        'website': website,
+        'description': description,
+      };
 
   factory CompanyUser.fromMapCompanyUser(Map<String, dynamic> map) {
     return CompanyUser(
       id: map['id'],
+      createAt: map['createAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      userID: map['userID'],
       companyName: map['companyName'],
       size: map['size'],
       website: map['website'],

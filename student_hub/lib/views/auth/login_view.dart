@@ -9,8 +9,7 @@ import 'package:student_hub/view_models/controller_route.dart';
 import '../../models/model/users.dart';
 
 class LoginPage extends StatefulWidget {
-  final int typeUser;
-  const LoginPage(this.typeUser, {super.key});
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -367,7 +366,8 @@ class _LoginPageState extends State<LoginPage>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: MaterialButton(
-                      onPressed: email.value.isNotEmpty && password.value.isNotEmpty
+                      onPressed: email.value.isNotEmpty &&
+                              password.value.isNotEmpty
                           ? () {
                               final user = User(
                                 email: email.value,

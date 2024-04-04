@@ -95,26 +95,26 @@ class _ChooseRoleState extends State<ChooseRole>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: const Text('Student Hub',
-            style: TextStyle(
-                color: Colors.blueAccent,
-                fontSize: 20,
-                fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFFBEEEF7),
-        actions: <Widget>[
-          IconButton(
-            icon: SizedBox(
-              width: 25,
-              height: 25,
-              child: Image.asset('assets/icons/user_ic.png'),
+          automaticallyImplyLeading: true,
+          title: const Text('Student Hub',
+              style: TextStyle(
+                  color: Colors.blueAccent,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+          backgroundColor: const Color(0xFFBEEEF7),
+          actions: <Widget>[
+            IconButton(
+              icon: SizedBox(
+                width: 25,
+                height: 25,
+                child: Image.asset('assets/icons/user_ic.png'),
+              ),
+              onPressed: () {
+                // Xử lý khi người dùng nhấn vào biểu tượng người dùng
+              },
             ),
-            onPressed: () {
-              // Xử lý khi người dùng nhấn vào biểu tượng người dùng
-            },
-          ),
-        ],
-      ),
+          ],
+        ),
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
@@ -356,8 +356,7 @@ class _ChooseRoleState extends State<ChooseRole>
                                   ); // cần edit lại dialog
                                 } else {
                                   ControllerRoute(context)
-                                      .navigateToSignupInfoView(
-                                          _role!.index);
+                                      .navigateToSignupInfoView(_role!.index);
                                 }
                               },
                               height: 45,
@@ -396,8 +395,7 @@ class _ChooseRoleState extends State<ChooseRole>
                     InkWell(
                       onTap: () {
                         // Xử lý khi nút được nhấn
-                        ControllerRoute(context)
-                            .navigateToLoginView(_role!.index);
+                        ControllerRoute(context).navigateToLoginView();
                       },
                       child: const Text(
                         'Log in',

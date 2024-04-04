@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +67,6 @@ class _SignUpInfoState extends State<SignUpInfo>
   final ValueNotifier<String> workEmailNotifier = ValueNotifier<String>('');
   final ValueNotifier<String> passwordNotifier = ValueNotifier<String>('');
   final ValueNotifier<bool> checkboxNotifier = ValueNotifier<bool>(false);
-
 
   void handleChangeTypeUser() {
     if (widget.typeUser == 'Role.company') {
@@ -163,7 +163,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Sign up as ${widget.typeUser == 0? 'student' : 'company'}',
+                          'Sign up as ${widget.typeUser == 0 ? 'student' : 'company'}',
                           style: const TextStyle(
                               color: Colors.black,
                               fontSize: 20.0,
@@ -440,7 +440,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                                           !EmailValidator.validate(
                                               _emailController
                                                   .text)) // Update this condition
-                                  ? () {
+                                  ? () async {
                                       if (!EmailValidator.validate(
                                           _emailController.text)) {
                                         setState(() {
@@ -449,15 +449,11 @@ class _SignUpInfoState extends State<SignUpInfo>
                                         });
                                         return;
                                       }
-                                      // Xử lý khi nút được nhấn
                                       final user = User(
-
                                         email: workEmailNotifier.value,
                                         password: passwordNotifier.value,
                                         fullname: fullNameNotifier.value,
-                                        role: widget.typeUser == 0
-                                            ? [0]
-                                            : [1],
+                                        role: widget.typeUser == 0 ? [0] : [1],
                                       );
                                       print(user.fullname);
                                       print(user.email);
@@ -472,7 +468,9 @@ class _SignUpInfoState extends State<SignUpInfo>
                                       //       .navigateToProfileInputStudent1(
                                       //           user);
                                       // }
-                                      AuthAccountViewModel(context).signUpAccount(user);
+
+                                      AuthAccountViewModel(context)
+                                          .signUpAccount(user);
                                     }
                                   : null,
                               height: 45,
@@ -484,7 +482,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: const Text(
-                                  "Create account",
+                                "Create account",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16.0),
                               ),
@@ -524,7 +522,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                         InkWell(
                           onTap: handleChangeTypeUser,
                           child: Text(
-                            'Apply as ${widget.typeUser == 1? 'student' : 'company'}',
+                            'Apply as ${widget.typeUser == 1 ? 'student' : 'company'}',
                             style: const TextStyle(
                               color: Colors.blue,
                               fontSize: 14.0,
