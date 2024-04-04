@@ -109,7 +109,7 @@ class AuthAccountViewModel {
                 ControllerRoute(context)
                     .navigateToHomeScreen(false, userResponse);
               }
-            } else if (userResponse.role?.first == 0) {
+            } else if (userResponse.role?.first == '0') {
               userResponse.studentUser == null
                   ? ControllerRoute(context)
                       .navigateToProfileInputStudent1(userResponse)
@@ -157,5 +157,31 @@ class AuthAccountViewModel {
       print(e);
     }
     return '';
+  }
+
+  Future<void> logoutAccount() async {
+    print('Sign Out Account');
+    try {
+      showDialog(context: context, builder: (context) => LoadingUI());
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var token = prefs.get('token');
+      var payload = {'authorization': token};
+      var response = await ConnectionService().postLogout('/api/auth/logout');
+      var responseDecode = jsonDecode(response);
+      if (responseDecode != null) {
+        print("Connected to the server successfully: logout");
+        print("Connect server successful");
+        print(response);
+        prefs.remove('token');
+        Navigator.of(context).pop();
+        ControllerRoute(context).navigateToLoginView();
+      } else {
+        print("Failed to connect to the server: logout");
+        print("Connect server failed");
+        print(responseDecode['errorDetails']);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

@@ -6,9 +6,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
 
-// final String _baseUrl =
-//     Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://10.0.2.1:4400';
-final String _baseUrl = 'http://34.16.137.128';
+final String _baseUrl =
+    Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://10.0.2.1:4400';
+// final String _baseUrl = 'http://34.16.137.128';
 
 class ConnectionService {
   var client = http.Client();
@@ -46,6 +46,25 @@ class ConnectionService {
     }
     var body = json.encode(payload);
     var response = await http.post(url, headers: headers, body: body);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print("Connect server successful");
+      return response.body;
+    } else {
+      print("Connect server failed");
+      print(json.decode(response.body));
+      return response.body;
+    }
+  }
+
+  Future<dynamic> postLogout(String api) async {
+    var url = Uri.parse(_baseUrl + api);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    print('Token: $token');
+    var _headers = {
+      'Authorization': 'Bearer $token',
+    };
+    var response = await http.post(url, headers: _headers);
     if (response.statusCode == 200 || response.statusCode == 201) {
       print("Connect server successful");
       return response.body;
