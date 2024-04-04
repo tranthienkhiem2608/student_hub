@@ -56,6 +56,25 @@ class ConnectionService {
     }
   }
 
+  Future<dynamic> postLogout(String api) async {
+    var url = Uri.parse(_baseUrl + api);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    print('Token: $token');
+    var _headers = {
+      'Authorization': 'Bearer $token',
+    };
+    var response = await http.post(url, headers: _headers);
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print("Connect server successful");
+      return response.body;
+    } else {
+      print("Connect server failed");
+      print(json.decode(response.body));
+      return response.body;
+    }
+  }
+
   Future<dynamic> put(String api, dynamic object) async {
     var url = Uri.parse(_baseUrl + api);
     var payload = json.encode(object);

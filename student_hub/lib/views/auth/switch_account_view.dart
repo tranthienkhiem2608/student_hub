@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/models/model/users.dart';
 
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/widgets/add_account_widget.dart';
@@ -145,10 +146,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                   child: TextButton.icon(
                     onPressed: () {
                       // Log out button pressed
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => WelcomePage()),
-                      );
+                      AuthAccountViewModel(context).logoutAccount();
                     },
                     icon: const Icon(Icons.logout,
                         color: Colors.black, size: 28.0),

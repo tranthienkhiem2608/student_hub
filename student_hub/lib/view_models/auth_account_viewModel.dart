@@ -76,11 +76,43 @@ Future<void> loginAccount(User user) async {
           if (userResponse.role?.length == 1) {
             prefs.setInt('role', role);
             if (role == 1) {
-              ControllerRoute(context)
-                  .navigateToProfileInputCompany(userResponse);
-            } else if (userResponse.role?[0] == 0) {
-              ControllerRoute(context)
-                  .navigateToProfileInputStudent1(userResponse);
+              userResponse.companyUser == null
+                  ? ControllerRoute(context)
+                      .navigateToProfileInputCompany(userResponse)
+                  : ControllerRoute(context)
+                      .navigateToHomeScreen(false, userResponse);
+            } else if (role == 0) {
+              print('USER RESPONSE');
+              print(userResponse.companyUser!);
+
+              userResponse.studentUser == null
+                  ? ControllerRoute(context)
+                      .navigateToProfileInputStudent1(userResponse)
+                  : ControllerRoute(context)
+                      .navigateToHomeScreen(true, userResponse);
+            }
+          } else if (userResponse.role?.length == 2) {
+            // ControllerRoute(context).navigateToHomeScreen(false, userResponse);
+
+            if (userResponse.role?.first == '1') {
+              if (userResponse.companyUser?.id == null) {
+                print(userResponse.companyUser?.id);
+                print(userResponse.companyUser?.companyName);
+                print(userResponse.companyUser?.size);
+                print(userResponse.companyUser?.website);
+                print(userResponse.companyUser?.description);
+                ControllerRoute(context)
+                    .navigateToProfileInputCompany(userResponse);
+              } else {
+                ControllerRoute(context)
+                    .navigateToHomeScreen(false, userResponse);
+              }
+            } else if (userResponse.role?.first == '0') {
+              userResponse.studentUser == null
+                  ? ControllerRoute(context)
+                      .navigateToProfileInputStudent1(userResponse)
+                  : ControllerRoute(context)
+                      .navigateToHomeScreen(true, userResponse);
             }
           }
         }
@@ -110,47 +142,57 @@ Future<void> loginAccount(User user) async {
   }
   }
 
-Future<dynamic> signUpAccount(User user) async {
-  print('Sign Up Account');
-  var payload = user.toMapUser();
-  
-  try {
-    showDialog(context: context, builder: (context) => LoadingUI());
-
-    var response = await ConnectionService().post('/api/auth/sign-up', payload);
-    var responseDecode = jsonDecode(response);
-
-    if (responseDecode['result'] != null) {
-      print("Connected to the server successfully");
-      print("Connect server successful");
-      print(response);
-      Navigator.of(context).pop();
-      ControllerRoute(context).navigateToLoginView();
-    } else {
-      print("Failed to connect to the server");
-      print("Connect server failed");
-      Navigator.of(context).pop();
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Error"),
-          content: Text(responseDecode['errorDetails'][0].toString()),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-      return jsonDecode(response);
+  Future<String> signUpAccount(User user) async {
+    print('Sign Up Account');
+    var payload = user.toMapUser();
+    // Call a method to reload the page
+    try {
+      showDialog(context: context, builder: (context) => LoadingUI());
+      var response =
+          await ConnectionService().post('/api/auth/sign-up', payload);
+      var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+        Navigator.of(context).pop();
+        ControllerRoute(context).navigateToLoginView();
+      } else {
+        print("Failed to connect to the server");
+        print("Connect server failed");
+        Navigator.of(context).pop();
+        print(responseDecode['errorDetails']);
+        return response;
+      }
+    } catch (e) {
+      print(e);
     }
-  } catch (e) {
-    print(e);
+    return '';
   }
-}
 
-
+  Future<void> logoutAccount() async {
+    print('Sign Out Account');
+    try {
+      showDialog(context: context, builder: (context) => LoadingUI());
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      var token = prefs.get('token');
+      var payload = {'authorization': token};
+      var response = await ConnectionService().postLogout('/api/auth/logout');
+      var responseDecode = jsonDecode(response);
+      if (responseDecode != null) {
+        print("Connected to the server successfully: logout");
+        print("Connect server successful");
+        print(response);
+        prefs.remove('token');
+        Navigator.of(context).pop();
+        ControllerRoute(context).navigateToLoginView();
+      } else {
+        print("Failed to connect to the server: logout");
+        print("Connect server failed");
+        print(responseDecode['errorDetails']);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }
