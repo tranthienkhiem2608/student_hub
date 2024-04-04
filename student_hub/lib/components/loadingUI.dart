@@ -5,7 +5,7 @@ class LoadingUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black.withOpacity(0.3),
+      color: Colors.grey.withOpacity(0.5),
       child: const Center(
         child: SpinKitThreeInOut(
           color: Colors.lightBlueAccent,

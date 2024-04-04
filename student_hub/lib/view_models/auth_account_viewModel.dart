@@ -46,7 +46,7 @@ class AuthAccountViewModel {
         });
   }
 
-  Future<void> loginAccount(User user) async {
+Future<void> loginAccount(User user) async {
     print('Login Account');
     var payload = user.toMapUser();
     // Call a method to reload the page
@@ -54,9 +54,10 @@ class AuthAccountViewModel {
       showDialog(context: context, builder: (context) => LoadingUI());
       var response =
           await ConnectionService().post('/api/auth/sign-in', payload);
-      if (response != null) {
+          var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
         print("Connected to the server successfully");
-        print(response);
+        print(responseDecode['errorDetails']);
         var token = response['result']['token'];
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', token);
@@ -84,39 +85,72 @@ class AuthAccountViewModel {
           }
         }
       } else {
-        print("Failed to connect to the server");
-        print("Connect server failed");
-      }
-    } catch (e) {
-      print(e);
+      print("Failed to connect to the server");
+      print("Connect server failed");
+      // Show error message with error details
+      Navigator.of(context).pop();
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Error"),
+          content: Text(responseDecode['errorDetails'].toString()),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        ),
+      );
     }
+  } catch (e) {
+    print(e);
+  }
   }
 
-  Future<dynamic> signUpAccount(User user) async {
-    print('Sign Up Account');
-    var payload = user.toMapUser();
-    // Call a method to reload the page
-    try {
-      showDialog(context: context, builder: (context) => LoadingUI());
-      var response =
-          await ConnectionService().post('/api/auth/sign-up', payload);
-      var responseDecode = jsonDecode(response);
-      if (responseDecode['result'] != null) {
-        print("Connected to the server successfully");
-        print("Connect server successful");
-        print(response);
-        Navigator.of(context).pop();
-        ControllerRoute(context).navigateToLoginView(context as int);
+Future<dynamic> signUpAccount(User user) async {
+  print('Sign Up Account');
+  var payload = user.toMapUser();
+  
+  try {
+    showDialog(context: context, builder: (context) => LoadingUI());
 
-      } else {
-        print("Failed to connect to the server");
-        print("Connect server failed");
-        Navigator.of(context).pop();
-        print(responseDecode['errorDetails']);
-        return jsonDecode(response);
-      }
-    } catch (e) {
-      print(e);
+    var response = await ConnectionService().post('/api/auth/sign-up', payload);
+    var responseDecode = jsonDecode(response);
+
+    if (responseDecode['result'] != null) {
+      print("Connected to the server successfully");
+      print("Connect server successful");
+      print(response);
+      Navigator.of(context).pop();
+      ControllerRoute(context).navigateToLoginView();
+    } else {
+      print("Failed to connect to the server");
+      print("Connect server failed");
+      Navigator.of(context).pop();
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Error"),
+          content: Text(responseDecode['errorDetails'][0].toString()),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return jsonDecode(response);
     }
+  } catch (e) {
+    print(e);
   }
+}
+
+
 }
