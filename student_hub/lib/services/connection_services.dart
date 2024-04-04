@@ -22,7 +22,7 @@ class ConnectionService {
   }
 
   //GET
-  Future<dynamic> get(String api) async {
+  Future<dynamic> get(String api, Map<String, dynamic> json) async {
     var url = Uri.parse(_baseUrl + api);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
@@ -50,18 +50,26 @@ Future<dynamic> post(String api, dynamic payload) async {
     headers['Authorization'] = 'Bearer $token';
   }
   var body = json.encode(payload);
-  var response = await http.post(url, headers: headers, body: body);
-  if (response.statusCode == 200 || response.statusCode == 201) {
-    print("Connect server successful");
-    return json.decode(response.body);
-  } else if (response.statusCode == 400) {
-    print('Server returned status code 400. Error message: ${response.body}');
-    throw Exception('Bad request');
-  } else {
-    print("Connect server failed");
-    throw Exception('Failed to connect to server');
+  
+  try {
+    var response = await http.post(url, headers: headers, body: body);
+    
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      print("Connected to server successfully");
+      return json.decode(response.body);
+    } else if (response.statusCode == 400) {
+      print('Server returned status code 400. Error message: ${response.body}');   
+      throw Exception('Bad request: ${json.decode(response.body)['message']}');
+    } else {
+      print("Failed to connect to server");
+      throw Exception('Failed to connect to server');
+    }
+  } catch (e) {
+    print("Failed to connect to server");
+    throw Exception('Failed to connect to server: $e');
   }
 }
+
 
 Future<dynamic> put(String api, dynamic object) async{
 var url = Uri.parse(_baseUrl + api);

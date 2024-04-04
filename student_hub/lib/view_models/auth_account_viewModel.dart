@@ -46,23 +46,22 @@ class AuthAccountViewModel {
         });
   }
 
-
-
   Future<void> loginAccount(User user) async {
     print('Login Account');
     var payload = user.toMapUser();
     // Call a method to reload the page
-    try{
+    try {
       showDialog(context: context, builder: (context) => LoadingUI());
-      var response = await ConnectionService().post('/api/auth/sign-in', payload);
-      if(response != null){
+      var response =
+          await ConnectionService().post('/api/auth/sign-in', payload);
+      if (response != null) {
         print("Connected to the server successfully");
         print(response);
         var token = response['result']['token'];
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', token);
-        var responseUser = await ConnectionService().get('/api/auth/me');
-        if(responseUser != null) {
+        var responseUser = await ConnectionService().get('/api/auth/me', {});
+        if (responseUser != null) {
           var responseUserMap = jsonDecode(responseUser);
           print(responseUserMap);
           User userResponse = User.fromMapUser(responseUserMap['result']);
@@ -73,46 +72,50 @@ class AuthAccountViewModel {
 
           Navigator.of(context).pop();
           int role = int.parse(userResponse.role?[0]);
-          if (userResponse.role?.length == 1){
+          if (userResponse.role?.length == 1) {
             prefs.setInt('role', role);
-            if(role == 1){
-              ControllerRoute(context).navigateToProfileInputCompany(userResponse);
-
-            }
-            else if(userResponse.role?[0] == 0){
-              ControllerRoute(context).navigateToProfileInputStudent1(userResponse);
+            if (role == 1) {
+              ControllerRoute(context)
+                  .navigateToProfileInputCompany(userResponse);
+            } else if (userResponse.role?[0] == 0) {
+              ControllerRoute(context)
+                  .navigateToProfileInputStudent1(userResponse);
             }
           }
         }
-      }else{
+      } else {
         print("Failed to connect to the server");
         print("Connect server failed");
       }
-    }catch(e){
+    } catch (e) {
       print(e);
     }
-
   }
 
-  Future<void> signUpAccount(User user) async {
+  Future<dynamic> signUpAccount(User user) async {
     print('Sign Up Account');
     var payload = user.toMapUser();
     // Call a method to reload the page
-    try{
+    try {
       showDialog(context: context, builder: (context) => LoadingUI());
-      var response = await ConnectionService().post('/api/auth/sign-up', payload);
-      if(response != null){
+      var response =
+          await ConnectionService().post('/api/auth/sign-up', payload);
+      var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
         print("Connected to the server successfully");
         print("Connect server successful");
         print(response);
         Navigator.of(context).pop();
-        ControllerRoute(context).navigateToLoginView(user.role?.last);
-      }else{
+        ControllerRoute(context).navigateToLoginView(context as int);
+
+      } else {
         print("Failed to connect to the server");
         print("Connect server failed");
+        Navigator.of(context).pop();
+        print(responseDecode['errorDetails']);
+        return jsonDecode(response);
       }
-
-    }catch(e){
+    } catch (e) {
       print(e);
     }
   }
