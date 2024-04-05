@@ -46,7 +46,7 @@ class AuthAccountViewModel {
         });
   }
 
-Future<void> loginAccount(User user) async {
+  Future<void> loginAccount(User user) async {
     print('Login Account');
     var payload = user.toMapUser();
     // Call a method to reload the page
@@ -54,17 +54,20 @@ Future<void> loginAccount(User user) async {
       showDialog(context: context, builder: (context) => LoadingUI());
       var response =
           await ConnectionService().post('/api/auth/sign-in', payload);
-          var responseDecode = jsonDecode(response);
+      var responseDecode = jsonDecode(response);
+      print(responseDecode);
       if (responseDecode['result'] != null) {
         print("Connected to the server successfully");
-        print(responseDecode['errorDetails']);
-        var token = response['result']['token'];
+        // print('ERROR: ' + responseDecode['errorDetails']);
+        String token = responseDecode['result']['token'];
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', token);
+        print(token);
         var responseUser = await ConnectionService().get('/api/auth/me', {});
-        if (responseUser != null) {
-          var responseUserMap = jsonDecode(responseUser);
-          print(responseUserMap);
+        var responseUserMap = jsonDecode(responseUser);
+
+        if (responseUserMap['result'] != null) {
+          print('User Response');
           User userResponse = User.fromMapUser(responseUserMap['result']);
           print(userResponse.id);
           print(userResponse.fullname);
@@ -72,7 +75,8 @@ Future<void> loginAccount(User user) async {
           print(userResponse.role?[0]);
 
           Navigator.of(context).pop();
-          int role = int.parse(userResponse.role?[0]);
+          // int role = int.parse(userResponse.role?[0]);
+          int role = int.parse(userResponse.role?[0] ?? '0');
           if (userResponse.role?.length == 1) {
             prefs.setInt('role', role);
             if (role == 1) {
@@ -96,11 +100,6 @@ Future<void> loginAccount(User user) async {
 
             if (userResponse.role?.first == '1') {
               if (userResponse.companyUser?.id == null) {
-                print(userResponse.companyUser?.id);
-                print(userResponse.companyUser?.companyName);
-                print(userResponse.companyUser?.size);
-                print(userResponse.companyUser?.website);
-                print(userResponse.companyUser?.description);
                 ControllerRoute(context)
                     .navigateToProfileInputCompany(userResponse);
               } else {
@@ -117,29 +116,29 @@ Future<void> loginAccount(User user) async {
           }
         }
       } else {
-      print("Failed to connect to the server");
-      print("Connect server failed");
-      // Show error message with error details
-      Navigator.of(context).pop();
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Error"),
-          content: Text(responseDecode['errorDetails'].toString()),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text("OK"),
-            ),
-          ],
-        ),
-      );
+        print("Failed to connect to the server");
+        print("Connect server failed");
+        // Show error message with error details
+        Navigator.of(context).pop();
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Error"),
+            content: Text(responseDecode['errorDetails'].toString()),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              ),
+            ],
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
     }
-  } catch (e) {
-    print(e);
-  }
   }
 
   Future<String> signUpAccount(User user) async {
