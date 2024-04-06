@@ -96,7 +96,3 @@ class _DashboardPageState extends State<DashboardPage> {
     );
   }
 }
-
-// SharedPreferences getPrefs(){
-//   return SharedPreferences.getInstance() as SharedPreferences;
-// }

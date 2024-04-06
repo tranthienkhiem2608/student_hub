@@ -76,7 +76,7 @@ class AuthAccountViewModel {
 
           Navigator.of(context).pop();
           // int role = int.parse(userResponse.role?[0]);
-          int role = int.parse(userResponse.role?[0] ?? '0');
+          int role = userResponse.role?[0];
           if (userResponse.role?.length == 1) {
             prefs.setInt('role', role);
             if (role == 1) {
