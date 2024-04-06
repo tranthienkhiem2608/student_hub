@@ -17,12 +17,28 @@ class DashboardPage extends StatefulWidget {
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
-
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+  int? role; // Keep the role variable
 
-  int? role = getPrefs().getInt('role');
+  Future<int?> getRole() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt('role');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeRole();
+  }
+
+  Future<void> _initializeRole() async {
+    int? role = await getRole();
+    setState(() {
+      this.role = role;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,23 +55,25 @@ class _DashboardPageState extends State<DashboardPage> {
                 style: const TextStyle(
                     color: Colors.black,
                     fontSize: 20,
-                    fontWeight: FontWeight.bold
-                ),
+                    fontWeight: FontWeight.bold),
               ),
               role == 0
                   ? Container() // Empty container (or any other widget you want to show when the button should be hidden)
                   : ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF69cde0)),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const PostScreen1()),
-                  );
-                },
-                child: const Text('Post a Job', style: TextStyle(color: Colors.black)),
-              ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0xFF69cde0)),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PostScreen1()),
+                        );
+                      },
+                      child: const Text('Post a Job',
+                          style: TextStyle(color: Colors.black)),
+                    ),
             ],
           ),
           bottom: const TabBar(
@@ -69,16 +87,16 @@ class _DashboardPageState extends State<DashboardPage> {
             ],
           ),
         ),
-        body: TabBarView(
-            children: [
-              role == 0 ? AllProjectsPageStudent() : AllProjectsPage(),
-              WorkingPage(),
-              ArchivedPage()]),
+        body: TabBarView(children: [
+          role == 0 ? AllProjectsPageStudent() : AllProjectsPage(),
+          WorkingPage(),
+          ArchivedPage()
+        ]),
       ),
     );
   }
 }
 
-SharedPreferences getPrefs(){
-  return SharedPreferences.getInstance() as SharedPreferences;
-}
+// SharedPreferences getPrefs(){
+//   return SharedPreferences.getInstance() as SharedPreferences;
+// }
