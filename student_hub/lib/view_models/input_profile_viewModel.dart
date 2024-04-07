@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/models/model/techStack.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 
 import '../components/loadingUI.dart';
@@ -49,5 +50,37 @@ class InputProfileViewModel {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<List<TechStack>> getTechStack() async {
+    print('Get Tech Stack');
+    try {
+      var response =
+          await ConnectionService().get('/api/techstack/getAllTechStack', {});
+      if (response != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+        // Call a method to reload the page
+        var responseList = jsonDecode(response);
+        if (responseList['result'] != null) {
+          List<TechStack> techStackList =
+              TechStack.fromMapListTechStack(responseList['result']);
+          // for (var techStack in techStackList) {
+          //   print(techStack.name);
+          // }
+          return techStackList;
+        }
+
+        // List<String> techStackList = [];
+        // for (var techStack in responseList['result']) {
+        //   techStackList.add(techStack[
+        //       'name']); // Assuming 'name' is the key for the skill name
+        // }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return [];
   }
 }

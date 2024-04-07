@@ -90,8 +90,9 @@ class AuthAccountViewModel {
                       .navigateToHomeScreen(false, userResponse);
             } else if (role == 0) {
               print('USER RESPONSE');
-              print(userResponse.companyUser!);
 
+              print(userResponse.studentUser?.id);
+              Navigator.of(context).pop();
               userResponse.studentUser == null
                   ? ControllerRoute(context)
                       .navigateToProfileInputStudent1(userResponse)

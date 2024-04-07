@@ -13,6 +13,7 @@ import 'package:student_hub/widgets/show_school_widget.dart';
 import 'package:student_hub/widgets/show_languages_widget.dart';
 import 'package:student_hub/widgets/pop_up_languages_widget.dart';
 
+import '../../../view_models/input_profile_viewModel.dart';
 import '../../../widgets/pop_up_languages_edit_widget.dart';
 
 class ProfileInputStudent1 extends StatefulWidget {
@@ -204,15 +205,17 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
             SizedBox(
               width: 350,
               height: 50,
-              child: DropdownSearch<String>(
-                asyncItems: (filter) async => await getData(filter),
+              child: DropdownSearch<TechStack>(
+                asyncItems: (filter) async => getData(context, filter),
                 compareFn: (item, selectedItem) => item == selectedItem,
                 dropdownBuilder: (context, selectedItem) {
-                  return Text(selectedItem ?? "Select TechStack");
+                  return Text(selectedItem?.name ?? "Select TechStack");
                 },
-                onChanged: (String? newValue) {
+                onChanged: (TechStack? newValue) {
                   setState(() {
-                    _selectedTechStack = newValue ?? '';
+                    _selectedTechStack = newValue!.name ?? '';
+                    print("chosen techstack: $_selectedTechStack");
+                    print("id: ${newValue.id}");
                   });
                 },
                 popupProps: const PopupProps.menu(
@@ -582,9 +585,8 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                       widget.user.studentUser = StudentUser(
                         id: widget.user.id!,
                         user: widget.user,
-                        techStack: TechStack(name: _selectedTechStack,
-                            id: widget.user.id!),
-
+                        techStack: TechStack(
+                            name: _selectedTechStack, id: widget.user.id!),
                         skillSet: TechStack.fromListString(_selectedSkills),
                         languages: Language.fromListMap(languages),
                         education: Education.fromListMap(educationList),
@@ -644,13 +646,14 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-Widget _customItemBuilder(BuildContext context, String item, bool isSelected) {
+Widget _customItemBuilder(
+    BuildContext context, TechStack item, bool isSelected) {
   return Padding(
       padding: const EdgeInsets.fromLTRB(5, 15, 5, 15),
       child: Column(
         children: [
           Text(
-            item,
+            item.name,
             style: TextStyle(
               color: isSelected ? Colors.blue : Colors.black,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
@@ -672,43 +675,24 @@ Widget _customLoadingBuilder(BuildContext context, String item) {
   );
 }
 
-Future<List<String>> getData(String? filter) async {
-  List<String> skillsTech = [
-    'Mobile App Developer',
-    'Web Developer',
-    'Software Engineer',
-    'Frontend Developer',
-    'Backend Developer',
-    'Full Stack Developer',
-    'UI/UX Designer',
-    'Data Scientist',
-    'DevOps Engineer',
-    'Cloud Architect',
-    'Database Administrator',
-    'Network Engineer',
-    'Cyber Security Analyst',
-    'Quality Assurance Engineer',
-    'AI/Machine Learning Engineer',
-    'Game Developer',
-    'Blockchain Developer',
-    'Embedded Systems Engineer',
-    'IT Project Manager',
-    'Technical Support Specialist',
-    'Systems Analyst',
-    'Business Analyst',
-    'IT Consultant',
-    'Network Administrator',
-    'IT Trainer/Educator',
-    'IT Sales Professional',
-    'IT Operations Manager',
-    'IT Director',
-    'Chief Technology Officer (CTO)',
-  ];
+Future<List<TechStack>> getData(BuildContext context, String? filter) async {
+  List<String> skillsTech = [];
+  Future<List<TechStack>> getTechStackList =
+      InputProfileViewModel(context).getTechStack();
+  List<TechStack> skillsTechList =
+      await InputProfileViewModel(context).getTechStack();
+
+  for (TechStack tech in skillsTechList) {
+    skillsTech.add(tech.name); // Assuming 'name' is the key for the skill name
+  }
+
   await Future.delayed(const Duration(milliseconds: 200));
   if (filter!.isNotEmpty) {
-    return skillsTech
-        .where((skill) => skill.toLowerCase().contains(filter.toLowerCase()))
+    return skillsTechList
+        .where((element) =>
+            element.name.toLowerCase().contains(filter.toLowerCase()))
         .toList();
   }
-  return skillsTech;
+
+  return skillsTechList;
 }
