@@ -337,7 +337,10 @@ class _LoginPageState extends State<LoginPage>
                       child: FadeTransition(
                           opacity: _fadeAnimation,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              ControllerRoute(context)
+                                  .navigateToForgotPasswordView();
+                            },
                             child: const Text(
                               'Forgot Password?',
                               style: TextStyle(
@@ -366,16 +369,17 @@ class _LoginPageState extends State<LoginPage>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: MaterialButton(
-                      onPressed: email.value.isNotEmpty &&
-                              password.value.isNotEmpty
-                          ? () {
-                              final user = User(
-                                email: email.value,
-                                password: password.value,
-                              );
-                              AuthAccountViewModel(context).loginAccount(user);
-                            }
-                          : null,
+                      onPressed:
+                          email.value.isNotEmpty && password.value.isNotEmpty
+                              ? () {
+                                  final user = User(
+                                    email: email.value,
+                                    password: password.value,
+                                  );
+                                  AuthAccountViewModel(context)
+                                      .loginAccount(true, user);
+                                }
+                              : null,
                       height: 45,
                       color: Colors.black,
                       padding: const EdgeInsets.symmetric(

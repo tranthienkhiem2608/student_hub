@@ -15,6 +15,9 @@ import 'package:student_hub/views/auth/signup_info_view.dart';
 
 import 'package:student_hub/views/profile_creation/student/profile_input_student2.dart';
 import 'package:student_hub/models/student_user.dart';
+import 'package:student_hub/views/auth/forgort_password_view.dart';
+import 'package:student_hub/views/auth/notify_send_password_view.dart';
+import 'package:student_hub/views/auth/change_password_view.dart';
 
 void main() {
   runApp(MyApp());

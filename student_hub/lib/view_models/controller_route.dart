@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_hub/models/model/company_user.dart';
-import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/views/auth/chooserole_view.dart';
+import 'package:student_hub/views/auth/forgort_password_view.dart';
 import 'package:student_hub/views/profile_creation/student/home_view.dart';
 import 'package:student_hub/views/profile_creation/student/profile_input_student1.dart';
 import 'package:student_hub/views/profile_creation/student/profile_input_student2.dart';
@@ -13,6 +12,8 @@ import 'package:student_hub/views/auth/login_view.dart';
 import 'package:student_hub/views/profile_creation/company/profile_input.dart';
 import 'package:student_hub/views/homescreen/welcome-screen.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/views/auth/notify_send_password_view.dart';
+import 'package:student_hub/views/auth/change_password_view.dart';
 
 class ControllerRoute {
   final BuildContext context;
@@ -82,6 +83,27 @@ class ControllerRoute {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => WelcomeScreen(companyUser)),
+    );
+  }
+
+  void navigateToForgotPasswordView() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ForgotPasswordView()),
+    );
+  }
+
+  void navigateToNotifySendPasswordView(String email) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => NotifySendPassword(email)),
+    );
+  }
+
+  void navigateToChangePasswordView(String email) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ChangePasswordView(email)),
     );
   }
 

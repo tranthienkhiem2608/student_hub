@@ -46,7 +46,7 @@ class AuthAccountViewModel {
         });
   }
 
-  Future<void> loginAccount(User user) async {
+  Future<void> loginAccount(bool stageNav, User user) async {
     print('Login Account');
     var payload = user.toMapUser();
     // Call a method to reload the page
@@ -63,6 +63,9 @@ class AuthAccountViewModel {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', token);
         print(token);
+        if (stageNav == false) {
+          return;
+        }
         var responseUser = await ConnectionService().get('/api/auth/me', {});
         var responseUserMap = jsonDecode(responseUser);
 
@@ -74,7 +77,7 @@ class AuthAccountViewModel {
           print(userResponse.role);
           print(userResponse.role?[0]);
 
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
           // int role = int.parse(userResponse.role?[0]);
           int role = userResponse.role?[0];
           if (userResponse.role?.length == 1) {
@@ -188,6 +191,108 @@ class AuthAccountViewModel {
       } else {
         print("Failed to connect to the server: logout");
         print("Connect server failed");
+        print(responseDecode['errorDetails']);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> forgotPassword(String email) async {
+    print('Forgot Password');
+    var payload = {'email': email};
+    // Call a method to reload the page
+    try {
+      showDialog(context: context, builder: (context) => LoadingUI());
+      var response =
+          await ConnectionService().post('/api/user/forgotPassword', payload);
+      var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+        Navigator.of(context).pop();
+        ControllerRoute(context).navigateToNotifySendPasswordView(email);
+      } else {
+        print("Failed to connect to the server");
+        print("Connect server failed");
+        Navigator.of(context).pop();
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Error"),
+            content: Text(responseDecode['errorDetails'].toString()),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              ),
+            ],
+          ),
+        );
+        print(responseDecode['errorDetails']);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> changePassword(
+      String email, String oldPassword, String newPassword) async {
+    print('Change Password');
+    var payload = {'oldPassword': oldPassword, 'newPassword': newPassword};
+    // Call a method to reload the page
+    try {
+      showDialog(context: context, builder: (context) => LoadingUI());
+      User user = User(
+        id: 0,
+        email: email,
+        password: oldPassword,
+        fullname: '',
+        role: [0],
+        companyUser: null,
+        studentUser: null,
+      );
+      loginAccount(false, user);
+      var response =
+          await ConnectionService().put('/api/user/changePassword', payload);
+      var responseDecode = jsonDecode(response);
+      if (responseDecode != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+        Navigator.of(context).pop();
+        user = User(
+          id: 0,
+          email: email,
+          password: newPassword,
+          fullname: '',
+          role: [0],
+          companyUser: null,
+          studentUser: null,
+        );
+        loginAccount(true, user);
+      } else {
+        print("Failed to connect to the server");
+        print("Connect server failed");
+        Navigator.of(context).pop();
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Error"),
+            content: Text(responseDecode['errorDetails'].toString()),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              ),
+            ],
+          ),
+        );
         print(responseDecode['errorDetails']);
       }
     } catch (e) {
