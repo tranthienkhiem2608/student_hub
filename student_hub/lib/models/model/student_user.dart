@@ -12,11 +12,15 @@ class StudentUser {
   final String? updatedAt;
   final String? deletedAt;
   int? userId;
-  int? techStack;
-  List<int>? skillSet;
-  List<Language>? languages;
+  int? techStackId;
+  String? resume;
+  String? transcript;
+  TechStack? techStack;
+  List<String>? proposals; // cần thêm model proposal
   List<Education>? education;
+  List<Language>? languages;
   List<Experience>? experience;
+  List<SkillSets>? skillSet;
 
   StudentUser({
     this.id,
@@ -24,11 +28,15 @@ class StudentUser {
     this.updatedAt,
     this.deletedAt,
     this.userId,
+    this.techStackId,
+    this.resume,
+    this.transcript,
     this.techStack,
-    this.skillSet,
-    this.languages,
+    this.proposals,
     this.education,
+    this.languages,
     this.experience,
+    this.skillSet,
   });
   Duration? get duration => experience?.fold(
         Duration.zero,
@@ -42,11 +50,15 @@ class StudentUser {
         'updatedAt': updatedAt,
         'deletedAt': deletedAt,
         'userId': userId,
-        'techStack': techStack,
-        'skillSet': skillSet,
-        'languages': languages?.map((e) => e.toMapLanguage()).toList(),
+        'techStackId': techStackId,
+        'resume': resume,
+        'transcript': transcript,
+        'techStack': techStack?.toMapTechStack(),
+        'proposals': proposals,
         'education': education?.map((e) => e.toMapEducation()).toList(),
+        'languages': languages?.map((e) => e.toMapLanguage()).toList(),
         'experience': experience?.map((e) => e.toMapExperience()).toList(),
+        'skillSets': skillSet?.map((e) => e.id).toList(),
       };
 
   factory StudentUser.fromMapStudentUser(Map<String, dynamic> map) {
@@ -56,14 +68,19 @@ class StudentUser {
       updatedAt: map['updatedAt'],
       deletedAt: map['deletedAt'],
       userId: map['userId'],
-      techStack: map['techStack'],
-      skillSet: List<int>.from(map['skillSet']),
+      techStackId: map['techStackId'],
+      resume: map['resume'],
+      transcript: map['transcript'],
+      techStack: TechStack.fromMapTechStack(map['techStack']),
+      proposals: List<String>.from(map['proposals']),
+      education: List<Education>.from(
+          map['educations'].map((e) => Education.fromMapEducation(e))),
       languages: List<Language>.from(
           map['languages'].map((e) => Language.fromMapLanguage(e))),
-      education: List<Education>.from(
-          map['education'].map((e) => Education.fromMapEducation(e))),
       experience: List<Experience>.from(
-          map['experience'].map((e) => Experience.fromMapExperience(e))),
+          map['experiences'].map((e) => Experience.fromMapExperience(e))),
+      skillSet: List<SkillSets>.from(
+          map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e))),
     );
   }
 }

@@ -32,6 +32,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
   String _selectedTechStack = '';
   final List<int> _selectedSkillsId = [];
   int _selectedTechStackId = 0;
+  List<SkillSets> _selectedSkillSet = [];
   TextEditingController _textEditingController = TextEditingController();
 
   @override
@@ -261,6 +262,10 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                                             .firstWhere((element) =>
                                                 element.name == option)
                                             .id!);
+                                        //add id and name skillSet to _selectedSkillsId
+                                        _selectedSkillSet.add(
+                                            skillsSets.firstWhere((element) =>
+                                                element.name == option));
                                       }
                                       setState(() {});
                                     },
@@ -404,6 +409,11 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                                                                         .name ==
                                                                     tag)
                                                             .id);
+                                                    _selectedSkillSet
+                                                        .removeWhere(
+                                                            (element) =>
+                                                                element.name ==
+                                                                tag);
                                                   }
                                                   setState(() {});
                                                 },
@@ -570,7 +580,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                           "Techstack: $_selectedTechStackId - $_selectedTechStack");
                       for (var i = 0; i < _selectedSkills.length; i++) {
                         print(
-                            "id ${_selectedSkillsId[i]}: ${_selectedSkills[i]}");
+                            "SkillSet: ${_selectedSkillSet[i].id} - ${_selectedSkillSet[i].name}");
                       }
                       for (var i = 0; i < languages.length; i++) {
                         print(
@@ -582,8 +592,8 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                         widget.user.studentUser = StudentUser(
                           id: widget.user.id!,
                           userId: widget.user.id!,
-                          techStack: _selectedTechStackId,
-                          skillSet: _selectedSkillsId,
+                          techStackId: _selectedTechStackId,
+                          skillSet: _selectedSkillSet ?? [],
                           languages: languages ?? [],
                           education: educationList ?? [],
                           experience: [],

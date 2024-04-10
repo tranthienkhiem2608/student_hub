@@ -174,16 +174,18 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                     onPressed: () {
                       widget.user.studentUser?.experience =
                           widget.user.studentUser?.experience ?? [];
-                      print(widget.user.studentUser?.experience![0].title);
-                      print(
-                          widget.user.studentUser?.experience![0].description);
-                      print(widget.user.studentUser?.experience![0].skillSet);
-                      print(DateFormat('MM-yyyy').format(DateTime.parse(widget
-                          .user.studentUser!.experience![0].startMonth
-                          .toString())));
-                      print(DateFormat('MM-yyyy').format(DateTime.parse(widget
-                          .user.studentUser!.experience![0].endMonth
-                          .toString())));
+                      if (widget.user.studentUser?.experience != null) {
+                        // print(widget.user.studentUser?.experience![0].title);
+                        // print(widget
+                        //     .user.studentUser?.experience![0].description);
+                        // print(widget.user.studentUser?.experience![0].skillSet);
+                        // print(DateFormat('MM-yyyy').format(DateTime.parse(widget
+                        //     .user.studentUser!.experience![0].startMonth
+                        //     .toString())));
+                        // print(DateFormat('MM-yyyy').format(DateTime.parse(widget
+                        //     .user.studentUser!.experience![0].endMonth
+                        //     .toString())));
+                      }
                       InputProfileViewModel(context)
                           .inputProfileStudent(widget.user);
                     },
