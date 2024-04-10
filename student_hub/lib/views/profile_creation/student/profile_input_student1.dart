@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:student_hub/models/model/education.dart';
 import 'package:student_hub/models/model/language.dart';
+import 'package:student_hub/models/model/skillSets.dart';
 import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/models/model/techStack.dart';
 import 'package:student_hub/models/model/users.dart';
@@ -29,6 +30,8 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
   late double _distanceToField;
   final List<String> _selectedSkills = [];
   String _selectedTechStack = '';
+  final List<int> _selectedSkillsId = [];
+  int _selectedTechStackId = 0;
   TextEditingController _textEditingController = TextEditingController();
 
   @override
@@ -50,33 +53,38 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
   }
 
   void _addNewLanguage(String language, String level) {
-    final newLanguage = {'name': language, 'level': level};
     setState(() {
+      print("ID: ${widget.user.id}, Language: $language, Level: $level");
+      final Language newLanguage = Language(
+        languageName: language,
+        level: level,
+      );
       languages.add(newLanguage);
     });
   }
 
   void _deleteLanguage(String language) {
     setState(() {
-      languages.removeWhere((element) => element['name'] == language);
+      languages.removeWhere((element) => element.languageName == language);
     });
   }
 
   void _addNewEducation(String schoolName, int yearsStart, int yearsEnd) {
     setState(() {
-      final newEducation = {
-        'schoolName': schoolName,
-        'yearsStart': yearsStart,
-        'yearsEnd': yearsEnd
-      };
+      print(
+          "ID: ${widget.user.id}, School: $schoolName, Start: $yearsStart, End: $yearsEnd");
+      final Education newEducation = Education(
+        schoolName: schoolName,
+        startYear: yearsStart,
+        endYear: yearsEnd,
+      );
       educationList.add(newEducation);
     });
   }
 
   void _deleteEducation(String schoolName) {
     setState(() {
-      educationList
-          .removeWhere((element) => element['schoolName'] == schoolName);
+      educationList.removeWhere((element) => element.schoolName == schoolName);
     });
   }
 
@@ -91,51 +99,12 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
     }
   }
 
-  final List<String> skills = [
-    'Flutter',
-    'Dart',
-    'Java',
-    'Kotlin',
-    'Python',
-    'C++',
-    'C#',
-    'C',
-    'Swift',
-    'React',
-    'Angular',
-    'Vue',
-    'Node.js',
-    'Express.js',
-    'MongoDB',
-    'Firebase',
-    'SQL',
-    'NoSQL',
-    'HTML',
-    'CSS',
-    'JavaScript',
-    'TypeScript',
-    'Redux',
-    'MobX',
-    'GraphQL',
-    'REST',
-    'Docker',
-    'Kubernetes',
-    'Jenkins',
-    'Git',
-    'GitHub',
-    'GitLab',
-  ];
-  List<Map<String, dynamic>> languages = [
-    {'name': 'English', 'level': 'Native'},
+  List<SkillSets> skillsSets = [];
+  List<Language> languages = [
     // Add more languages here
   ];
 
-  List<Map<String, dynamic>> educationList = [
-    {
-      'schoolName': 'Le Hong Phong High School',
-      'yearsStart': 2018,
-      'yearsEnd': 2021
-    },
+  List<Education> educationList = [
     // Add more education items here
   ];
   @override
@@ -213,9 +182,10 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                 },
                 onChanged: (TechStack? newValue) {
                   setState(() {
-                    _selectedTechStack = newValue!.name ?? '';
+                    _selectedTechStack = newValue!.name;
                     print("chosen techstack: $_selectedTechStack");
-                    print("id: ${newValue.id}");
+                    _selectedTechStackId = newValue.id;
+                    print("id: $_selectedTechStackId");
                   });
                 },
                 popupProps: const PopupProps.menu(
@@ -252,15 +222,18 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
               ),
             ),
             Autocomplete<String>(
-              optionsBuilder: (TextEditingValue textEditingValue) {
+              optionsBuilder: (TextEditingValue textEditingValue) async {
+                skillsSets = await getDataSkillSet(context);
                 if (textEditingValue.text == '') {
-                  return skills; // return all skills when input is empty
+                  return Future.value(
+                      skillsSets.map((skillSet) => skillSet.name));
                 }
-                return skills.where((String option) {
-                  return option
-                      .toLowerCase()
-                      .contains(textEditingValue.text.toLowerCase());
-                });
+                return skillsSets
+                    .where((skillSet) => skillSet.name
+                        .toLowerCase()
+                        .contains(textEditingValue.text.toLowerCase()))
+                    .map((skillSet) => skillSet.name)
+                    .toList();
               },
               optionsViewBuilder: (context, onSelected, options) {
                 return Container(
@@ -284,6 +257,10 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                                       onSelected(option);
                                       if (!_selectedSkills.contains(option)) {
                                         _selectedSkills.add(option);
+                                        _selectedSkillsId.add(skillsSets
+                                            .firstWhere((element) =>
+                                                element.name == option)
+                                            .id!);
                                       }
                                       setState(() {});
                                     },
@@ -419,6 +396,14 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                                                   if (_selectedSkills
                                                       .contains(tag)) {
                                                     _selectedSkills.remove(tag);
+                                                    _selectedSkillsId.remove(
+                                                        skillsSets
+                                                            .firstWhere(
+                                                                (element) =>
+                                                                    element
+                                                                        .name ==
+                                                                    tag)
+                                                            .id);
                                                   }
                                                   setState(() {});
                                                 },
@@ -461,7 +446,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                     alignment: Alignment.centerRight,
                     child: IconButton(
                       onPressed: () async {
-                        final result = await showDialog<Map<String, dynamic>>(
+                        final result = await showDialog<Language>(
                           context: context,
                           builder: (BuildContext context) {
                             return PopUpLanguagesWidget(
@@ -581,18 +566,54 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                   opacity: const AlwaysStoppedAnimation(1),
                   child: MaterialButton(
                     onPressed: () {
-                      // Handle button press
-                      widget.user.studentUser = StudentUser(
-                        id: widget.user.id!,
-                        user: widget.user,
-                        techStack: TechStack(
-                            name: _selectedTechStack, id: widget.user.id!),
-                        skillSet: TechStack.fromListString(_selectedSkills),
-                        languages: Language.fromListMap(languages),
-                        education: Education.fromListMap(educationList),
-                      );
-                      ControllerRoute(context)
-                          .navigateToProfileInputStudent2(widget.user);
+                      print(
+                          "Techstack: $_selectedTechStackId - $_selectedTechStack");
+                      for (var i = 0; i < _selectedSkills.length; i++) {
+                        print(
+                            "id ${_selectedSkillsId[i]}: ${_selectedSkills[i]}");
+                      }
+                      for (var i = 0; i < languages.length; i++) {
+                        print(
+                            "Language: ${languages[i].languageName} - ${languages[i].level}");
+                      }
+
+                      if (_selectedTechStackId != 0 &&
+                          _selectedSkillsId.isNotEmpty) {
+                        widget.user.studentUser = StudentUser(
+                          id: widget.user.id!,
+                          userId: widget.user.id!,
+                          techStack: _selectedTechStackId,
+                          skillSet: _selectedSkillsId,
+                          languages: languages ?? [],
+                          education: educationList ?? [],
+                          experience: [],
+                        );
+                        ControllerRoute(context)
+                            .navigateToProfileInputStudent2(widget.user);
+                      } else {
+                        //show dialog to choose techstack and skillset
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                  title: _selectedSkillsId.isEmpty
+                                      ? const Text('Skillset is empty')
+                                      : const Text('Techstack is empty'),
+                                  content: _selectedSkillsId.isEmpty
+                                      ? const Text(
+                                          'Please choose at least one skillset')
+                                      : const Text('Please choose a techstack'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                ));
+                      }
+                      // ControllerRoute(context)
+                      //     .navigateToProfileInputStudent2(widget.user);
                     },
                     height: 45,
                     color: Colors.black,
@@ -676,15 +697,8 @@ Widget _customLoadingBuilder(BuildContext context, String item) {
 }
 
 Future<List<TechStack>> getData(BuildContext context, String? filter) async {
-  List<String> skillsTech = [];
-  Future<List<TechStack>> getTechStackList =
-      InputProfileViewModel(context).getTechStack();
   List<TechStack> skillsTechList =
       await InputProfileViewModel(context).getTechStack();
-
-  for (TechStack tech in skillsTechList) {
-    skillsTech.add(tech.name); // Assuming 'name' is the key for the skill name
-  }
 
   await Future.delayed(const Duration(milliseconds: 200));
   if (filter!.isNotEmpty) {
@@ -695,4 +709,12 @@ Future<List<TechStack>> getData(BuildContext context, String? filter) async {
   }
 
   return skillsTechList;
+}
+
+Future<List<SkillSets>> getDataSkillSet(BuildContext context) async {
+  await Future.delayed(const Duration(milliseconds: 200));
+  List<SkillSets> skillsList =
+      await InputProfileViewModel(context).getSkillSets();
+
+  return skillsList;
 }

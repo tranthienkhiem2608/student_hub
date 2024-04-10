@@ -64,16 +64,77 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
             alignment: WrapAlignment.center,
             children: <Widget>[
               TextButton(
-                onPressed: () {
-                  // Handle view proposals
-                },
-                child: Align(
+                child: const Align(
                   alignment: Alignment.centerLeft,
                   child: Text('View proposals',
                       style: TextStyle(color: Colors.black)),
                 ),
+                onPressed: () {
+                  // Handle view proposals
+                },
               ),
-              // Add other options here
+              TextButton(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('View messages',
+                      style: TextStyle(color: Colors.black)),
+                ),
+                onPressed: () {
+                  // Handle view messages
+                },
+              ),
+              TextButton(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child:
+                      Text('View hired', style: TextStyle(color: Colors.black)),
+                ),
+                onPressed: () {
+                  // Handle view hired
+                },
+              ),
+              Divider(),
+              TextButton(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('View job posting',
+                      style: TextStyle(color: Colors.black)),
+                ),
+                onPressed: () {
+                  // Handle view job posting
+                },
+              ),
+              TextButton(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Edit posting',
+                      style: TextStyle(color: Colors.black)),
+                ),
+                onPressed: () {
+                  // Handle edit posting
+                },
+              ),
+              TextButton(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Remove posting',
+                      style: TextStyle(color: Colors.black)),
+                ),
+                onPressed: () {
+                  // Handle remove posting
+                },
+              ),
+              Divider(),
+              TextButton(
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Start working this project',
+                      style: TextStyle(color: Colors.black)),
+                ),
+                onPressed: () {
+                  // Handle start working this project
+                },
+              ),
             ],
           );
         });

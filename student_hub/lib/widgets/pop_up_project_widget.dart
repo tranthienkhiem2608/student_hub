@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:student_hub/models/model/skillSets.dart';
 import 'package:student_hub/models/project_student.dart';
+import 'package:student_hub/view_models/input_profile_viewModel.dart';
 import 'package:textfield_tags/textfield_tags.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
+// import 'package:flutter_month_picker/flutter_month_picker.dart';
 
 class PopUpProjectWidget extends StatefulWidget {
   final Function addProject;
@@ -10,7 +14,7 @@ class PopUpProjectWidget extends StatefulWidget {
   final DateTime? timeStart;
   final DateTime? timeEnd;
   final String projectDescription;
-  final List<String> skillsListProject;
+  final List<SkillSets> skillsListProject;
 
   const PopUpProjectWidget(
       this.addProject,
@@ -32,9 +36,12 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
   late TextEditingController _projectNameController;
   late TextEditingController _projectDescriptionController;
   final List<String>? _selectedSkills = [];
+  final List<int>? _selectedSkillsId = [];
+  final List<SkillSets> _skillsListProject = [];
   TextEditingController _textEditingController = TextEditingController();
   late TextfieldTagsController<String> _textfieldTagsController;
   late double _distanceToField;
+  List<SkillSets> skillsSets = [];
 
   @override
   void initState() {
@@ -43,7 +50,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
     _projectDescriptionController =
         TextEditingController(text: widget.projectDescription);
     _textfieldTagsController = TextfieldTagsController<String>();
-    _selectedSkills!.addAll(widget.skillsListProject);
+    _selectedSkills!.addAll(widget.skillsListProject.map((e) => e.toString()));
   }
 
   @override
@@ -74,40 +81,41 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
     });
   }
 
-  final List<String> skills = [
-    'Flutter',
-    'Dart',
-    'Java',
-    'Kotlin',
-    'Python',
-    'C++',
-    'C#',
-    'C',
-    'Swift',
-    'React',
-    'Angular',
-    'Vue',
-    'Node.js',
-    'Express.js',
-    'MongoDB',
-    'Firebase',
-    'SQL',
-    'NoSQL',
-    'HTML',
-    'CSS',
-    'JavaScript',
-    'TypeScript',
-    'Redux',
-    'MobX',
-    'GraphQL',
-    'REST',
-    'Docker',
-    'Kubernetes',
-    'Jenkins',
-    'Git',
-    'GitHub',
-    'GitLab',
-  ];
+  void _showStartMonthPicker() {
+    showMonthPicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2000),
+            lastDate: DateTime.now())
+        .then((date) {
+      if (date == null) {
+        return;
+      }
+      setState(() {
+        _timeStart = date;
+      });
+    });
+  }
+
+  void _showEndMonthPicker() {
+    showMonthPicker(
+      context: context,
+      initialDate: _timeStart!
+          .add(Duration(days: 1)), // start from the day after the start date
+      firstDate: _timeStart!.add(Duration(
+          days:
+              1)), // the first date that can be picked is the day after the start date
+      lastDate: DateTime
+          .now(), // the last date that can be picked is 5 years after the start date
+    ).then((value) {
+      if (value == null) {
+        return;
+      }
+      setState(() {
+        _timeEnd = value;
+      });
+    });
+  }
 
   void _showEndDatePicker() {
     showDatePicker(
@@ -161,13 +169,13 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                   Text(
                     _timeStart == null
                         ? 'No Date Chosen'
-                        : DateFormat.yMd().format(_timeStart!),
+                        : DateFormat.yM().format(_timeStart!),
                     style: const TextStyle(fontSize: 16),
                   ),
                   IconButton(
                     icon: const Icon(Icons.calendar_month_sharp,
                         color: Colors.blueGrey),
-                    onPressed: _showStartDatePicker,
+                    onPressed: _showStartMonthPicker,
                   ),
                 ]),
             Row(
@@ -179,27 +187,30 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                 Text(
                   _timeEnd == null
                       ? 'No Date Chosen'
-                      : DateFormat.yMd().format(_timeEnd!),
+                      : DateFormat.yM().format(_timeEnd!),
                   style: const TextStyle(fontSize: 16),
                 ),
                 IconButton(
                   icon: const Icon(Icons.calendar_month_sharp,
                       color: Colors.blueGrey),
-                  onPressed: _showEndDatePicker,
+                  onPressed: _showEndMonthPicker,
                 ),
               ],
             ),
             SizedBox(height: 10),
             Autocomplete<String>(
-              optionsBuilder: (TextEditingValue textEditingValue) {
+              optionsBuilder: (TextEditingValue textEditingValue) async {
+                skillsSets = await getDataSkillSet(context);
                 if (textEditingValue.text == '') {
-                  return skills; // return all skills when input is empty
+                  return Future.value(
+                      skillsSets.map((skillSet) => skillSet.name));
                 }
-                return skills.where((String option) {
-                  return option
-                      .toLowerCase()
-                      .contains(textEditingValue.text.toLowerCase());
-                });
+                return skillsSets
+                    .where((skillSet) => skillSet.name
+                        .toLowerCase()
+                        .contains(textEditingValue.text.toLowerCase()))
+                    .map((skillSet) => skillSet.name)
+                    .toList();
               },
               optionsViewBuilder: (context, onSelected, options) {
                 return Container(
@@ -221,8 +232,18 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                                 ? TextButton(
                                     onPressed: () {
                                       onSelected(option);
-                                      if (!_selectedSkills!.contains(option)) {
-                                        _selectedSkills.add(option);
+                                      if (_skillsListProject
+                                              .contains({'name': option}) ==
+                                          false) {
+                                        if (_skillsListProject
+                                            .where((element) =>
+                                                element.name == option)
+                                            .isEmpty) {
+                                          _skillsListProject.add(skillsSets
+                                              .where((element) =>
+                                                  element.name == option)
+                                              .first);
+                                        }
                                       }
                                       setState(() {});
                                     },
@@ -242,8 +263,8 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                                                 color: Colors.black,
                                               ),
                                             ),
-                                            if (_selectedSkills!
-                                                .contains(option))
+                                            if (_skillsListProject
+                                                .contains({'name': option}))
                                               const Icon(
                                                 Icons.check,
                                                 color: Colors.green,
@@ -355,9 +376,14 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                                                 onTap: () {
                                                   inputFieldValues
                                                       .onTagDelete(tag);
-                                                  if (_selectedSkills!
-                                                      .contains(tag)) {
-                                                    _selectedSkills.remove(tag);
+                                                  if (_skillsListProject
+                                                      .contains(
+                                                          {'name': tag})) {
+                                                    _skillsListProject
+                                                        .removeWhere((element) {
+                                                      return element.name ==
+                                                          tag;
+                                                    });
                                                   }
                                                   setState(() {});
                                                 },
@@ -420,12 +446,13 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
             // Handle the Add button press
             // You can access the project name using _projectNameController.text
             // You can access the project description using _projectDescriptionController.text
+            widget.deleteProject(_projectNameController.text);
             widget.addProject(
               _projectNameController.text,
               _timeStart,
               _timeEnd,
               _projectDescriptionController.text,
-              _selectedSkills,
+              _skillsListProject,
             );
             Navigator.of(context).pop();
           },
@@ -433,4 +460,12 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
       ],
     );
   }
+}
+
+Future<List<SkillSets>> getDataSkillSet(BuildContext context) async {
+  await Future.delayed(const Duration(milliseconds: 200));
+  List<SkillSets> skillsList =
+      await InputProfileViewModel(context).getSkillSets();
+
+  return skillsList;
 }

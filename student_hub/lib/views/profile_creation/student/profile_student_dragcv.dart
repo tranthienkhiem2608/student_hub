@@ -187,7 +187,8 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                   onPressed: () {
                     // 1. Simulate some processing (if needed)
                     // You would perform your upload logic or other tasks here.// Example delay
-                    InputProfileViewModel(context).inputProfileStudent(widget.studentUser);
+                    InputProfileViewModel(context)
+                        .inputProfileStudent(widget.studentUser);
                     ControllerRoute(context)
                         .navigateToHomeScreen(true, widget.studentUser);
                     // 3. Navigate to HomePage
@@ -261,7 +262,6 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
               color: Colors.blueAccent,

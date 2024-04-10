@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/models/model/language.dart';
 
 class PopUpLanguagesEditWidget extends StatefulWidget {
   final Function(String) _deleteLanguage;
-  final List<Map<String, dynamic>> languages;
+  final List<Language> languages;
 
   PopUpLanguagesEditWidget(this._deleteLanguage, this.languages);
 
@@ -34,16 +35,16 @@ class _PopUpLanguagesEditWidgetState extends State<PopUpLanguagesEditWidget> {
                   Expanded(
                     child: Row(
                       children: [
-                        Text(language['name']),
+                        Text(language.languageName!),
                         SizedBox(width: 5.0),
-                        Text(language['level']),
+                        Text(language.level!),
                       ],
                     ),
                   ),
                   IconButton(
                     icon: Icon(Icons.delete),
                     onPressed: () {
-                      widget._deleteLanguage(language['name']);
+                      widget._deleteLanguage(language.languageName!);
                       setState(() {
                         widget.languages.remove(language);
                       });

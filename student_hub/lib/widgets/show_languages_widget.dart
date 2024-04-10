@@ -1,8 +1,9 @@
 // show_languages_widget.dart
 import 'package:flutter/material.dart';
+import 'package:student_hub/models/model/language.dart';
 
 class ShowLanguagesWidget extends StatelessWidget {
-  final List<Map<String, dynamic>> languages;
+  final List<Language> languages;
 
   ShowLanguagesWidget({required this.languages});
 
@@ -17,13 +18,13 @@ class ShowLanguagesWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                languages[index]['name'],
+                languages[index].languageName!,
                 style: const TextStyle(fontSize: 16),
               ),
               SizedBox(
                 width: 200,
                 child: Text(
-                  languages[index]['level'],
+                  languages[index].level!,
                   style: const TextStyle(fontSize: 16),
                 ),
               ),

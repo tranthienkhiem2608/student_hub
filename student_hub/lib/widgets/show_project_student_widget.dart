@@ -25,10 +25,10 @@ class ShowProjectStudentWidget extends StatelessWidget {
         return Column(
           children: [
             ListTile(
-              title: Text(userStudent.experience![index].title,
+              title: Text(userStudent.experience![index].title!,
                   style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(
-                  '${DateFormat('dd-MM-yyyy').format(userStudent.experience![index].startDate)} - ${DateFormat('dd-MM-yyyy').format(userStudent.experience![index].endDate)}, \nDuration: ${(userStudent.duration!.inHours / 24).round()} days'),
+                  '${DateFormat('MM-yyyy').format(userStudent.experience![index].startMonth!)} - ${DateFormat('MM-yyyy').format(userStudent.experience![index].endMonth!)}, \nDuration: ${(userStudent.experience![index].duration)} days'),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
@@ -45,11 +45,11 @@ class ShowProjectStudentWidget extends StatelessWidget {
                               return PopUpProjectWidget(
                                 _addNewProject,
                                 _deleteProject,
-                                userStudent.experience![index].title,
-                                userStudent.experience![index].startDate,
-                                userStudent.experience![index].endDate,
-                                userStudent.experience![index].description,
-                                userStudent.experience![index].skillSet.cast<String>(),
+                                userStudent.experience![index].title!,
+                                userStudent.experience![index].startMonth!,
+                                userStudent.experience![index].endMonth!,
+                                userStudent.experience![index].description!,
+                                userStudent.experience![index].skillSet!,
                               );
                             },
                           );
@@ -72,7 +72,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 5, 10, 5),
               child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(userStudent.experience![index].description)),
+                  child: Text(userStudent.experience![index].description!)),
             ),
             const Padding(
               padding: EdgeInsets.all(8.0),
@@ -97,11 +97,11 @@ class ShowProjectStudentWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Wrap(
                     spacing: 6.0,
-                    runSpacing: 6.0, 
-                    children: userStudent
-                        .experience![index]
-                        .skillSet
-                        .map((skill) => Chip(label: Text(skill as String)))
+                    runSpacing: 6.0,
+                    children: userStudent.experience![index].skillSet!
+                        .map((skill) => Chip(
+                              label: Text(skill.name!),
+                            ))
                         .toList(),
                   ),
                 ),
