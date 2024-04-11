@@ -33,7 +33,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: const Text('Student Hub',
           style: TextStyle(
-              color: Colors.blueAccent,
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
       backgroundColor: const Color(0xFFBEEEF7),
@@ -99,7 +99,7 @@ class _PostScreen4State extends State<PostScreen4>
         automaticallyImplyLeading: true,
         title: const Text('Student Hub',
             style: TextStyle(
-                color: Colors.blueAccent,
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFFBEEEF7),

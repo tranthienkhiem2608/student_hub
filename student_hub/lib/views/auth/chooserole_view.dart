@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart'; // Import thư viện Google Fonts
 import 'package:iconsax/iconsax.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 
@@ -19,22 +20,31 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: true,
-      title: const Text('Student Hub',
-          style: TextStyle(
-              color: Colors.blueAccent,
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
-          icon: SizedBox(
-            width: 25,
-            height: 25,
-            child: Image.asset('assets/icons/user_ic.png'),
+          icon: Container(
+            // Add a Container as the parent
+            padding: const EdgeInsets.all(8.0), // Padding for spacing
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              shape: BoxShape.circle,
+            ),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              child: Image.asset('assets/icons/user_ic.png',
+                  width: 25, height: 25),
+            ),
           ),
           onPressed: () {},
-        ),
+        )
       ],
     );
   }
@@ -75,8 +85,8 @@ class _ChooseRoleState extends State<ChooseRole>
       CurvedAnimation(
         parent: _animationController,
         curve: const Interval(
-          0.3, // Start fading in at 50% of the animation duration
-          0.8, // Fully faded in at 100% of the animation duration
+          0.3, // Start fading in at 30% of the animation duration
+          0.8, // Fully faded in at 80% of the animation duration
           curve: Curves.easeIn,
         ),
       ),
@@ -94,27 +104,7 @@ class _ChooseRoleState extends State<ChooseRole>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: true,
-          title: const Text('Student Hub',
-              style: TextStyle(
-                  color: Colors.blueAccent,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold)),
-          backgroundColor: const Color(0xFFBEEEF7),
-          actions: <Widget>[
-            IconButton(
-              icon: SizedBox(
-                width: 25,
-                height: 25,
-                child: Image.asset('assets/icons/user_ic.png'),
-              ),
-              onPressed: () {
-                // Xử lý khi người dùng nhấn vào biểu tượng người dùng
-              },
-            ),
-          ],
-        ),
+        appBar: const _AppBar(),
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
@@ -122,7 +112,7 @@ class _ChooseRoleState extends State<ChooseRole>
             child: Column(
               children: [
                 const SizedBox(
-                  height: 20,
+                  height: 35,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
@@ -137,22 +127,38 @@ class _ChooseRoleState extends State<ChooseRole>
                   )),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Join as Company or Student',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                style: GoogleFonts.poppins(
+                                    color: Colors.black,
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.w600),
+                                children: [
+                                  TextSpan(text: 'Join as '),
+                                  TextSpan(
+                                      text: 'Company',
+                                      style: TextStyle(color: Color(0xFF406AFF))),
+                                  TextSpan(text: ' or '),
+                                  TextSpan(
+                                      text: 'Student',
+                                      style: TextStyle(color: Color(0xFF406AFF))),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 60,
                 ),
                 // creta collum with cross axis alignment center and main axis sapce even
                 Column(
@@ -184,8 +190,21 @@ class _ChooseRoleState extends State<ChooseRole>
                               height: 120,
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFBEEEF7),
+                                color: Color.fromARGB(255, 255, 255, 255),
                                 borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: Colors.grey.withOpacity(
+                                      0.2), // Màu border và opacity
+                                  width: 0.5, // Độ rộng của border
+                                ),
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -197,9 +216,36 @@ class _ChooseRoleState extends State<ChooseRole>
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Icon(
-                                        Iconsax.user,
-                                        size: 50,
+                                      IconButton(
+                                        icon: SizedBox(
+                                          width: 70,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/icons/student.png'),
+                                        ),
+                                        onPressed: () {
+                                          // Xử lý khi người dùng nhấn vào biểu tượng người dùng
+                                        },
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'I am a student',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            'I\'m find a project & company',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 14.5,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const SizedBox(
                                         height: 10,
@@ -215,23 +261,13 @@ class _ChooseRoleState extends State<ChooseRole>
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const Text(
-                                    'I am a student, find a project',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 25,
                         ),
                         // create container with width 150 and height 150
                         SlideTransition(
@@ -255,8 +291,20 @@ class _ChooseRoleState extends State<ChooseRole>
                               height: 120,
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: const Color(0xFFBEEEF7),
+                                color: Color.fromARGB(255, 255, 255, 255),
                                 borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 2,
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  width: 0.5,
+                                ),
                               ),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -268,9 +316,36 @@ class _ChooseRoleState extends State<ChooseRole>
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Icon(
-                                        Iconsax.user,
-                                        size: 50,
+                                      IconButton(
+                                        icon: SizedBox(
+                                          width: 70,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/icons/company.png'),
+                                        ),
+                                        onPressed: () {
+                                          // Xử lý khi người dùng nhấn vào biểu tượng người dùng
+                                        },
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'I\'m a company',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Text(
+                                            'I\'m find engineer for project',
+                                            style: GoogleFonts.poppins(
+                                              fontSize: 14.5,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const SizedBox(
                                         height: 10,
@@ -286,16 +361,6 @@ class _ChooseRoleState extends State<ChooseRole>
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  const Text(
-                                    'I am a company, find engineer for project',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
@@ -305,8 +370,9 @@ class _ChooseRoleState extends State<ChooseRole>
                     ),
                   ],
                 ),
+
                 const SizedBox(
-                  height: 30,
+                  height: 60,
                 ),
                 Row(
                   mainAxisAlignment:
@@ -360,16 +426,18 @@ class _ChooseRoleState extends State<ChooseRole>
                                 }
                               },
                               height: 45,
-                              color: Colors.black,
+                              color: Color(0xFF406AFF),
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 50),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: const Text(
+                              child: Text(
                                 "Create account",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 16.0),
+                                style: GoogleFonts.poppins(
+                                    // Thay đổi TextStyle này
+                                    color: Colors.white,
+                                    fontSize: 16.0),
                               ),
                             ),
                           ),
@@ -385,11 +453,12 @@ class _ChooseRoleState extends State<ChooseRole>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       'Already have an account?  ',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
+                      style: GoogleFonts.poppins(
+                        // Thay đổi TextStyle này
+                        color: Color(0xFF777B8A),
+                        fontSize: 16,
                       ),
                     ),
                     InkWell(
@@ -397,12 +466,13 @@ class _ChooseRoleState extends State<ChooseRole>
                         // Xử lý khi nút được nhấn
                         ControllerRoute(context).navigateToLoginView();
                       },
-                      child: const Text(
+                      child: Text(
                         'Log in',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
+                        style: GoogleFonts.poppins(
+                          // Thay đổi TextStyle này
+                          color: Color(0xFF406AFF),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),

@@ -146,7 +146,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
         automaticallyImplyLeading: true,
         title: const Text('Student Hub',
             style: TextStyle(
-                color: Colors.blueAccent,
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFFBEEEF7),
@@ -170,7 +170,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                 alignment: Alignment.topCenter,
                 child: Text(
                   "Welcome to Student Hub",
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -181,7 +181,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
               padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
               child: Text(
                 "Tell us about your self and you will be on your way connect with real-world project",
-                style: GoogleFonts.openSans(
+                style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
@@ -194,7 +194,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Techstack",
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -244,7 +244,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Skillset",
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -448,7 +448,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Languages",
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -522,7 +522,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Education",
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -625,7 +625,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
-              color: Colors.blueAccent,
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
       backgroundColor: const Color(0xFFBEEEF7),

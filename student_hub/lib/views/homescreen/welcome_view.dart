@@ -72,54 +72,32 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Student Hub',
-          style: TextStyle(
-              color: Colors.blueAccent,
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
-            icon: SizedBox(
-              width: 25,
-              height: 25,
-              child: Image.asset('assets/icons/user_ic.png'),
+          icon: Container(
+            // Add a Container as the parent
+            padding: const EdgeInsets.all(8.0), // Padding for spacing
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              shape: BoxShape.circle,
             ),
-            onPressed: () {
-              animationController.stop();
-              FocusScope.of(context).unfocus();
-              Future.delayed(const Duration(milliseconds: 300), () {
-                // Navigate to the user information registration page
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        const SwitchAccountView(),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      var begin = const Offset(1.0, 0.0);
-                      var end = Offset.zero;
-                      var curve = const Interval(
-                        0.3,
-                        0.9,
-                        curve: Curves.fastOutSlowIn,
-                      );
-                      var tween = Tween(begin: begin, end: end)
-                          .chain(CurveTween(curve: curve));
-                      var offsetAnimation = animation.drive(tween);
-
-                      return SlideTransition(
-                        position: offsetAnimation,
-                        child: child,
-                      );
-                    },
-                  ),
-                ).then((_) {
-                  animationController.reset();
-                  animationController.forward();
-                });
-              });
-            }),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              child: Image.asset('assets/icons/user_ic.png',
+                  width: 25, height: 25),
+            ),
+          ),
+          onPressed: () {
+            ControllerRoute(context).navigateToChooseRoleView();
+          },
+        )
       ],
     );
   }
@@ -214,97 +192,91 @@ class _Content extends StatelessWidget {
           child: const _DescriptionText(),
         ),
         // Animated Buttons
-        const SizedBox(height: 50),
+        const SizedBox(height: 20),
         SlideTransition(
-          position: Tween<Offset>(
-                  begin: const Offset(0, -0.5), end: const Offset(0, 0))
-              .animate(CurvedAnimation(
-            parent: animationController,
-            curve: const Interval(
-              0.3,
-              1,
-              curve: Curves.fastOutSlowIn,
-            ),
-          )),
-          child: FadeTransition(
-            opacity: fadeAnimation,
-            child: Container(
-                width: 200,
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle button press
-                    ControllerRoute(context)
-                        .navigateToLoginView(); //role company
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF13babd),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25), // Button radius
+            position: Tween<Offset>(
+                    begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                .animate(CurvedAnimation(
+              parent: animationController,
+              curve: const Interval(
+                0.3,
+                1,
+                curve: Curves.fastOutSlowIn,
+              ),
+            )),
+            child: FadeTransition(
+              opacity: fadeAnimation,
+              child: Container(
+                  width: 200,
+                  height: 50,
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Handle button press
+                      ControllerRoute(context)
+                          .navigateToLoginView(); //role company
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF406AFF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
                     ),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.groups,
-                        color: Colors.black,
-                        size: 24,
-                      ), // This is the icon
-                      Text('Company',
-                          style: TextStyle(color: Colors.black, fontSize: 16)),
-                    ],
-                  ),
-                )),
-          ),
-        ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('Company',
+                            style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  )),
+            )),
         const SizedBox(height: 10),
         SlideTransition(
-          position: Tween<Offset>(
-                  begin: const Offset(0, 0.5), end: const Offset(0, 0))
-              .animate(CurvedAnimation(
-            parent: animationController,
-            curve: const Interval(
-              0.3,
-              1,
-              curve: Curves.fastOutSlowIn,
-            ),
-          )),
-          child: FadeTransition(
-            opacity: fadeAnimation,
-            child: Container(
-                width: 200,
-                height: 50,
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle button press
-                    ControllerRoute(context)
-                        .navigateToLoginView(); //role student
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF13babd),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25), // Button radius
+            position: Tween<Offset>(
+                    begin: const Offset(0, 0.5), end: const Offset(0, 0))
+                .animate(CurvedAnimation(
+              parent: animationController,
+              curve: const Interval(
+                0.3,
+                1,
+                curve: Curves.fastOutSlowIn,
+              ),
+            )),
+            child: FadeTransition(
+              opacity: fadeAnimation,
+              child: Container(
+                  width: 200,
+                  height: 50,
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Handle button press
+                      ControllerRoute(context)
+                          .navigateToLoginView(); //role student
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF406AFF),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
                     ),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Icon(
-                        Icons.emoji_people,
-                        color: Colors.black,
-                        size: 24,
-                      ), // This is the icon
-                      Text('Student',
-                          style: TextStyle(color: Colors.black, fontSize: 16)),
-                    ],
-                  ),
-                )),
-          ),
-        ),
-        const SizedBox(height: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('Student',
+                            style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold)),
+                      ],
+                    ),
+                  )),
+            )),
+        const SizedBox(height: 50),
         SlideTransition(
           position:
               Tween<Offset>(begin: const Offset(1, 0), end: const Offset(0, 0))
@@ -331,13 +303,14 @@ class _AnimatedText extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 30, 20, 5),
       child: Align(
-        alignment: Alignment.topCenter,
+        alignment: Alignment.center, // Change: Center alignment horizontally
         child: Text(
           "Build your product with high-skilled students",
-          style: GoogleFonts.openSans(
-            fontSize: 14,
+          style: GoogleFonts.poppins(
+            fontSize: 24.5,
             fontWeight: FontWeight.bold,
           ),
+          textAlign: TextAlign.center, // Also center the text itself
         ),
       ),
     );
@@ -350,14 +323,15 @@ class _DescriptionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
           "Find and onboard best-skilled student for your product. Student works to gain experience & skills from real-world projects",
-          style: GoogleFonts.openSans(
+          style: GoogleFonts.poppins(
             fontSize: 14,
             fontWeight: FontWeight.normal,
+            color: Color(0xFF777B8A),
           ),
           textAlign: TextAlign.center,
         ),
@@ -377,9 +351,11 @@ class _DescriptionSecondText extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: Text(
           "StudentHub is university market place to connect high-skilled student and company on a real-world project",
-          style: GoogleFonts.openSans(
-            fontSize: 14,
+          style: GoogleFonts.poppins(
+            fontSize: 12,
             fontWeight: FontWeight.normal,
+            color: Color.fromARGB(
+                255, 148, 150, 155), // Use the provided hex color
           ),
           textAlign: TextAlign.center,
         ),

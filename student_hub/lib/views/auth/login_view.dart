@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart'; // Import Google Fonts
+
 import 'package:iconsax/iconsax.dart';
 import 'package:student_hub/components/encrypt.dart';
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
@@ -9,33 +11,41 @@ import 'package:student_hub/view_models/controller_route.dart';
 import '../../models/model/users.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar({super.key});
+  const _AppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Student Hub',
-          style: TextStyle(
-              color: Colors.blueAccent,
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins( // Use GoogleFonts.poppins to apply Poppins font
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
-          icon: SizedBox(
-            width: 25,
-            height: 25,
-            child: Image.asset('assets/icons/user_ic.png'),
+          icon: Container(
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              shape: BoxShape.circle,
+            ),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              child: Image.asset('assets/icons/user_ic.png',
+                  width: 25, height: 25),
+            ),
           ),
           onPressed: () {},
-        ),
+        )
       ],
     );
   }
@@ -51,7 +61,7 @@ class _LoginPageState extends State<LoginPage>
   late Animation<double> _fadeAnimation;
   Timer? _timer;
 
-  bool _obscurePassword = true; // Start with the password hidden
+  bool _obscurePassword = true;
   final ValueNotifier<String> email = ValueNotifier<String>('');
   final ValueNotifier<String> password = ValueNotifier<String>('');
 
@@ -78,8 +88,8 @@ class _LoginPageState extends State<LoginPage>
       CurvedAnimation(
         parent: _animationController,
         curve: const Interval(
-          0.3, // Start fading in at 50% of the animation duration
-          0.8, // Fully faded in at 100% of the animation duration
+          0.3,
+          0.8,
           curve: Curves.easeIn,
         ),
       ),
@@ -113,7 +123,7 @@ class _LoginPageState extends State<LoginPage>
                     opacity: _fadeAnimation,
                     child: Stack(children: [
                       Positioned(
-                        top: 0,
+                        top: -60,
                         left: 0,
                         right: 0,
                         bottom: 0,
@@ -125,12 +135,12 @@ class _LoginPageState extends State<LoginPage>
                           curve: Curves.linear,
                           child: Image.asset(
                             'assets/images/login1_img.png',
-                            height: 400,
+                            height: 500,
                           ),
                         ),
                       ),
                       Positioned(
-                        top: 0,
+                        top: -60,
                         left: 0,
                         right: 0,
                         bottom: 0,
@@ -140,12 +150,12 @@ class _LoginPageState extends State<LoginPage>
                           curve: Curves.linear,
                           child: Image.asset(
                             'assets/images/login2_img.png',
-                            height: 400,
+                            height: 500,
                           ),
                         ),
                       ),
                       Positioned(
-                        top: 0,
+                        top: -60,
                         left: 0,
                         right: 0,
                         bottom: 0,
@@ -155,12 +165,12 @@ class _LoginPageState extends State<LoginPage>
                           curve: Curves.linear,
                           child: Image.asset(
                             'assets/images/login3_img.png',
-                            height: 400,
+                            height: 500,
                           ),
                         ),
                       ),
                       Positioned(
-                        top: 0,
+                        top: -60,
                         left: 0,
                         right: 0,
                         bottom: 0,
@@ -170,7 +180,7 @@ class _LoginPageState extends State<LoginPage>
                           curve: Curves.linear,
                           child: Image.asset(
                             'assets/images/login4_img.png',
-                            height: 400,
+                            height: 500,
                           ),
                         ),
                       )
@@ -178,25 +188,39 @@ class _LoginPageState extends State<LoginPage>
                   ),
                 ),
                 const SizedBox(
-                  height: 40,
+                  height: 0,
                 ),
-                const Align(
+                Align(
                   alignment: Alignment.center,
-                  child: Text(
-                    'Login with StudentHub',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'Login with ',
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextSpan(
+                          text: 'Student Hub',
+                          style: GoogleFonts.poppins(
+                            color: Color(0xFF406AFF),
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 30,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -213,16 +237,16 @@ class _LoginPageState extends State<LoginPage>
                       },
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(0.0),
-                        labelText: 'Email',
+                        contentPadding:
+                        const EdgeInsets.symmetric(vertical: 18.0),
                         hintText: 'Username or e-mail',
-                        labelStyle: const TextStyle(
+                        labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
                         ),
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
+                        hintStyle: GoogleFonts.poppins(
+                          color: Color(0xFF777B8A),
                           fontSize: 14.0,
                         ),
                         prefixIcon: const Icon(
@@ -231,17 +255,17 @@ class _LoginPageState extends State<LoginPage>
                           size: 18,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7), width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        floatingLabelStyle: const TextStyle(
+                        floatingLabelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -253,7 +277,7 @@ class _LoginPageState extends State<LoginPage>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, 0.5), end: const Offset(0, 0))
+                      begin: const Offset(0, 0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -269,17 +293,17 @@ class _LoginPageState extends State<LoginPage>
                         password.value = value;
                       },
                       obscureText:
-                          _obscurePassword, // Use the visibility variable
+                      _obscurePassword,
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(0.0),
-                        labelText: 'Password',
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 18.0),
                         hintText: 'Password',
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
+                        hintStyle: GoogleFonts.poppins(
+                          color: Color(0xFF777B8A),
                           fontSize: 14.0,
                         ),
-                        labelStyle: const TextStyle(
+                        labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
@@ -290,17 +314,17 @@ class _LoginPageState extends State<LoginPage>
                           size: 18,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7), width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        floatingLabelStyle: const TextStyle(
+                        floatingLabelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         suffixIcon: IconButton(
@@ -310,8 +334,7 @@ class _LoginPageState extends State<LoginPage>
                           ),
                           onPressed: () {
                             setState(() {
-                              _obscurePassword =
-                                  !_obscurePassword; // Toggle visibility
+                              _obscurePassword = !_obscurePassword;
                             });
                           },
                         ),
@@ -324,8 +347,8 @@ class _LoginPageState extends State<LoginPage>
                   children: [
                     SlideTransition(
                       position: Tween<Offset>(
-                              begin: const Offset(0, -0.5),
-                              end: const Offset(0, 0))
+                          begin: const Offset(0, -0.5),
+                          end: const Offset(0, 0))
                           .animate(CurvedAnimation(
                         parent: _animationController,
                         curve: const Interval(
@@ -335,29 +358,33 @@ class _LoginPageState extends State<LoginPage>
                         ),
                       )),
                       child: FadeTransition(
-                          opacity: _fadeAnimation,
+                        opacity: _fadeAnimation,
+                        child: Center(
                           child: TextButton(
                             onPressed: () {
                               ControllerRoute(context)
                                   .navigateToForgotPasswordView();
                             },
-                            child: const Text(
+                            child:  Text(
                               'Forgot Password?',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w400),
+                              style: GoogleFonts.poppins(
+                                color: Color.fromARGB(255, 0, 0, 0),
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 16,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -370,18 +397,18 @@ class _LoginPageState extends State<LoginPage>
                     opacity: _fadeAnimation,
                     child: MaterialButton(
                       onPressed:
-                          email.value.isNotEmpty && password.value.isNotEmpty
-                              ? () {
-                                  final user = User(
-                                    email: email.value,
-                                    password: password.value,
-                                  );
-                                  AuthAccountViewModel(context)
-                                      .loginAccount(true, user);
-                                }
-                              : null,
+                      email.value.isNotEmpty && password.value.isNotEmpty
+                          ? () {
+                        final user = User(
+                          email: email.value,
+                          password: password.value,
+                        );
+                        AuthAccountViewModel(context)
+                            .loginAccount(true, user);
+                      }
+                          : null,
                       height: 45,
-                      color: Colors.black,
+                      color: Color(0xFF406AFF),
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 50),
                       shape: RoundedRectangleBorder(
@@ -399,7 +426,7 @@ class _LoginPageState extends State<LoginPage>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -415,21 +442,23 @@ class _LoginPageState extends State<LoginPage>
                       children: [
                         Text(
                           'Don\'t have an account?',
-                          style: TextStyle(
-                              color: Colors.grey.shade600,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w400),
+                          style: GoogleFonts.poppins(
+                            color: Color(0xFF777B8A),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                         TextButton(
                           onPressed: () {
                             ControllerRoute(context).navigateToChooseRoleView();
                           },
-                          child: const Text(
+                          child: Text(
                             'Sign Up',
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.bold),
+                            style: GoogleFonts.poppins(
+                              color: Color(0xFF406AFF),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         )
                       ],

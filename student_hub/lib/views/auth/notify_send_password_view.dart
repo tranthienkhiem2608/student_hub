@@ -34,7 +34,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
             alignment: Alignment.topCenter,
             child: Text(
               "Check your mail",
-              style: GoogleFonts.openSans(
+              style: GoogleFonts.poppins(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
                 color: Colors.lightBlue, // Set the color here
@@ -49,7 +49,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
             alignment: Alignment.topCenter,
             child: Text(
               "We have sent a password recover instructions to your mail.",
-              style: GoogleFonts.openSans(
+              style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
                 color: Colors.black.withOpacity(0.7), // Set the color here

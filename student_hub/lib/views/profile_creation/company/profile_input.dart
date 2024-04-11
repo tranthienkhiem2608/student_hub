@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart'; // Thêm thư viện google_fonts
+
 import 'package:iconsax/iconsax.dart';
 
 import 'package:student_hub/models/model/company_user.dart';
@@ -10,33 +12,43 @@ import 'package:student_hub/view_models/input_profile_viewModel.dart';
 
 class ProfileInput extends StatefulWidget {
   final User user;
-  const ProfileInput(this.user, {super.key});
+  const ProfileInput(this.user, {Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar({super.key});
+  const _AppBar({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Student Hub',
-          style: TextStyle(
-              color: Colors.blueAccent,
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
-          icon: SizedBox(
-            width: 25,
-            height: 25,
-            child: Image.asset('assets/icons/user_ic.png'),
+          icon: Container(
+            // Add a Container as the parent
+            padding: const EdgeInsets.all(8.0), // Padding for spacing
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              shape: BoxShape.circle,
+            ),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              child: Image.asset('assets/icons/user_ic.png',
+                  width: 25, height: 25),
+            ),
           ),
           onPressed: () {},
-        ),
+        )
       ],
     );
   }
@@ -82,8 +94,8 @@ class _LoginPageState extends State<ProfileInput>
       CurvedAnimation(
         parent: _animationController,
         curve: const Interval(
-          0.3, // Start fading in at 50% of the animation duration
-          0.8, // Fully faded in at 100% of the animation duration
+          0.3, // Start fading in at 30% of the animation duration
+          0.8, // Fully faded in at 80% of the animation duration
           curve: Curves.easeIn,
         ),
       ),
@@ -124,14 +136,14 @@ class _LoginPageState extends State<ProfileInput>
                   )),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'Welcome to Student Hub',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.0,
+                          style: GoogleFonts.poppins(
+                              color: Color(0xFF406AFF),
+                              fontSize: 22.0,
                               fontWeight: FontWeight.w600),
                         ),
                       ],
@@ -156,14 +168,14 @@ class _LoginPageState extends State<ProfileInput>
                   ),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: const Column(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           'Tell us about your company and you will be', // Dòng trên
                           textAlign: TextAlign.center, // Căn giữa
-                          style: TextStyle(
-                            color: Colors.black,
+                          style: GoogleFonts.poppins(
+                            color: Color(0xFF777B8A),
                             fontSize: 14.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -171,8 +183,8 @@ class _LoginPageState extends State<ProfileInput>
                         Text(
                           'on your way connect with high-skilled students', // Dòng dưới
                           textAlign: TextAlign.center, // Căn giữa
-                          style: TextStyle(
-                            color: Colors.black,
+                          style: GoogleFonts.poppins(
+                            color: Color(0xFF777B8A),
                             fontSize: 14.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -203,12 +215,12 @@ class _LoginPageState extends State<ProfileInput>
                       ),
                       child: FadeTransition(
                         opacity: _fadeAnimation,
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'How many people are in your company?',
-                              style: TextStyle(fontSize: 17),
+                              style: GoogleFonts.poppins(fontSize: 17, fontWeight: FontWeight.w600),
                             ),
                             SizedBox(height: 10),
                           ],
@@ -234,8 +246,8 @@ class _LoginPageState extends State<ProfileInput>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
-                              title: const Text('It\'s just me',
-                                  style: TextStyle(fontSize: 14)),
+                              title: Text('It\'s just me',
+                                  style: GoogleFonts.poppins(fontSize: 14)),
                               dense: true,
                               value: 100,
                               groupValue: _selectedValue,
@@ -246,6 +258,7 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 0;
                                 });
                               },
+                              activeColor: Color(0xFF406AFF), // Thay đổi màu ở đây
                             ),
                           ),
                         ),
@@ -266,8 +279,8 @@ class _LoginPageState extends State<ProfileInput>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
-                              title: const Text('2-9 employees',
-                                  style: TextStyle(fontSize: 14)),
+                              title: Text('2-9 employees',
+                                  style: GoogleFonts.poppins(fontSize: 14)),
                               dense: true,
                               value: 200,
                               groupValue: _selectedValue,
@@ -278,6 +291,7 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 1;
                                 });
                               },
+                              activeColor: Color(0xFF406AFF),  // Thay đổi màu ở đây
                             ),
                           ),
                         ),
@@ -298,8 +312,8 @@ class _LoginPageState extends State<ProfileInput>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
-                              title: const Text('10-99 employees',
-                                  style: TextStyle(fontSize: 14)),
+                              title: Text('10-99 employees',
+                                  style: GoogleFonts.poppins(fontSize: 14)),
                               dense: true,
                               value: 300,
                               groupValue: _selectedValue,
@@ -310,6 +324,7 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 2;
                                 });
                               },
+                              activeColor: Color(0xFF406AFF), 
                             ),
                           ),
                         ),
@@ -330,8 +345,8 @@ class _LoginPageState extends State<ProfileInput>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
-                              title: const Text('100-1000 employees',
-                                  style: TextStyle(fontSize: 14)),
+                              title: Text('100-1000 employees',
+                                  style: GoogleFonts.poppins(fontSize: 14)),
                               dense: true,
                               value: 400,
                               groupValue: _selectedValue,
@@ -342,6 +357,7 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 3;
                                 });
                               },
+                              activeColor: Color(0xFF406AFF), 
                             ),
                           ),
                         ),
@@ -362,8 +378,8 @@ class _LoginPageState extends State<ProfileInput>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
-                              title: const Text('More than 1000 employees',
-                                  style: TextStyle(fontSize: 14)),
+                              title: Text('More than 1000 employees',
+                                  style: GoogleFonts.poppins(fontSize: 14)),
                               dense: true,
                               value: 500,
                               groupValue: _selectedValue,
@@ -375,6 +391,7 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 4;
                                 });
                               },
+                              activeColor: Color(0xFF406AFF), 
                             ),
                           ),
                         ),
@@ -405,15 +422,14 @@ class _LoginPageState extends State<ProfileInput>
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
-                        labelText: 'Company Name',
-                        hintText: 'Your Company Name!',
-                        labelStyle: const TextStyle(
+                        hintText: 'Your company name',
+                        labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
                         ),
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
+                        hintStyle: GoogleFonts.poppins(
+                          color: const Color.fromARGB(255, 110, 110, 110),
                           fontSize: 14.0,
                         ),
                         prefixIcon: const Icon(
@@ -422,17 +438,17 @@ class _LoginPageState extends State<ProfileInput>
                           size: 18,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(244, 48, 48, 49), width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        floatingLabelStyle: const TextStyle(
+                        floatingLabelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(244, 48, 48, 49), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -462,10 +478,9 @@ class _LoginPageState extends State<ProfileInput>
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
-                        labelText: 'Website',
-                        hintText: 'Your Company Website!',
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
+                        hintText: 'Your company website!',
+                        hintStyle: GoogleFonts.poppins(
+                          color: const Color.fromARGB(255, 110, 110, 110),
                           fontSize: 14.0,
                         ),
                         labelStyle: const TextStyle(
@@ -479,17 +494,17 @@ class _LoginPageState extends State<ProfileInput>
                           size: 18,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(244, 48, 48, 49), width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        floatingLabelStyle: const TextStyle(
+                        floatingLabelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(244, 48, 48, 49), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -522,15 +537,14 @@ class _LoginPageState extends State<ProfileInput>
                             vertical: 40.0,
                             horizontal:
                                 20.0), // Khoảng cách giữa đường viền và nội dung
-                        labelText: 'Description',
                         hintText: 'Description',
-                        labelStyle: const TextStyle(
+                        labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
                         ),
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
+                        hintStyle: GoogleFonts.poppins(
+                          color: const Color.fromARGB(255, 110, 110, 110),
                           fontSize: 14.0,
                         ),
                         prefixIcon: const Icon(
@@ -539,17 +553,17 @@ class _LoginPageState extends State<ProfileInput>
                           size: 18,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(244, 48, 48, 49), width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        floatingLabelStyle: const TextStyle(
+                        floatingLabelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(244, 48, 48, 49), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -605,16 +619,16 @@ class _LoginPageState extends State<ProfileInput>
                             //     .navigateToWelcomeView(widget.user);
                           },
                           height: 45,
-                          color: Colors.black,
-                          padding: const EdgeInsets.symmetric(
+                          color: Color(0xFF406AFF),
+                          padding: EdgeInsets.symmetric(
                               vertical: 10, horizontal: 50),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: const Text(
+                          child: Text(
                             "Continue",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16.0),
+                            style: GoogleFonts.poppins(
+                                color: Colors.white, fontSize: 16.0),
                           ),
                         ),
                       ),

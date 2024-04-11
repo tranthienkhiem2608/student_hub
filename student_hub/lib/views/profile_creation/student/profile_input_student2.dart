@@ -73,7 +73,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
         automaticallyImplyLeading: true,
         title: const Text('Student Hub',
             style: TextStyle(
-                color: Colors.blueAccent,
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
         backgroundColor: const Color(0xFFBEEEF7),
@@ -97,7 +97,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                 alignment: Alignment.topCenter,
                 child: Text(
                   "Experiences",
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -108,7 +108,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
               padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
               child: Text(
                 "Tell us about your self and you will be on your way connect with real-world project",
-                style: GoogleFonts.openSans(
+                style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
@@ -122,7 +122,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                 children: [
                   Text(
                     "Projects",
-                    style: GoogleFonts.openSans(
+                    style: GoogleFonts.poppins(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -204,7 +204,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
-              color: Colors.blueAccent,
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
       backgroundColor: const Color(0xFFBEEEF7),

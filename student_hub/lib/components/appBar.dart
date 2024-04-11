@@ -39,7 +39,7 @@ class _CustomAppBarState extends State<CustomAppBar>
       automaticallyImplyLeading: widget.isShowBackButton,
       title: const Text('Student Hub',
           style: TextStyle(
-              color: Colors.blueAccent,
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
       backgroundColor: const Color(0xFFBEEEF7),

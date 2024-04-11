@@ -76,7 +76,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
-              color: Colors.blueAccent,
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
       backgroundColor: const Color(0xFFBEEEF7),
@@ -275,7 +275,7 @@ class _AnimatedText extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: Text(
           "Welcome, ${companyUser.fullname}!",
-          style: GoogleFonts.openSans(
+          style: GoogleFonts.poppins(
             fontSize: 19,
             fontWeight: FontWeight.bold,
           ),
@@ -296,7 +296,7 @@ class _DescriptionText extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: Text(
           "Let's start with your first project post!",
-          style: GoogleFonts.openSans(
+          style: GoogleFonts.poppins(
             fontSize: 16,
             fontWeight: FontWeight.normal,
           ),

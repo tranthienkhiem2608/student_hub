@@ -19,7 +19,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: const Text('Student Hub',
           style: TextStyle(
-              color: Colors.blueAccent,
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
       backgroundColor: const Color(0xFFBEEEF7),
@@ -65,7 +65,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                 child: // Replace with your image
                     Text(
                   "Create new password",
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.poppins(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Colors.black, // Set the color here
@@ -80,7 +80,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                 alignment: Alignment.topCenter,
                 child: Text(
                   "Your new password must be different from previous used password.",
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     color: Colors.black.withOpacity(0.7), // Set the color here
@@ -95,7 +95,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "Password",
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
                   ),
@@ -151,7 +151,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "New Password",
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
                   ),
@@ -223,7 +223,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                 alignment: Alignment.topLeft,
                 child: Text(
                   "Confirm Password",
-                  style: GoogleFonts.openSans(
+                  style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
                   ),
