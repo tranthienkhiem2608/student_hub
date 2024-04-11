@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:intl/intl.dart';
 import 'package:student_hub/models/model/experience.dart';
 import 'package:student_hub/models/model/skillSets.dart';
 import 'package:student_hub/view_models/controller_route.dart';
+import 'package:student_hub/view_models/input_profile_viewModel.dart';
 import 'package:student_hub/widgets/show_project_student_widget.dart';
 
 import '../../../models/model/users.dart';
@@ -36,19 +38,19 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
     'MongoDB',
     'Firebase',
   ];
+  List<SkillSets> skillsSets = [];
 
-  void _addNewProject(String projectName, DateTime startDate, DateTime endDate,
-      String description, List<String> skills) {
+  void _addNewProject(String projectName, DateTime startMonth,
+      DateTime endMonth, String description, List<SkillSets> skills) {
     setState(() {
       widget.user.studentUser?.experience?.add(Experience(
         id: widget.user.id!,
-        studentId: widget.user.studentUser!,
         title: projectName,
-        startDate: startDate,
-        endDate: endDate,
-        skillSet: SkillSets.fromListString(skills),
+        startMonth: startMonth,
+        endMonth: endMonth,
         description: description,
-
+        skillSet: skills,
+        duration: (widget.user.studentUser!.duration!.inHours / 24).round(),
       ));
     });
     // Add your logic here for handling the icon press
@@ -170,8 +172,22 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                   opacity: const AlwaysStoppedAnimation(1),
                   child: MaterialButton(
                     onPressed: () {
-                      ControllerRoute(context)
-                          .navigateToProfileInputStudent3(widget.user);
+                      widget.user.studentUser?.experience =
+                          widget.user.studentUser?.experience ?? [];
+                      if (widget.user.studentUser?.experience != null) {
+                        // print(widget.user.studentUser?.experience![0].title);
+                        // print(widget
+                        //     .user.studentUser?.experience![0].description);
+                        // print(widget.user.studentUser?.experience![0].skillSet);
+                        // print(DateFormat('MM-yyyy').format(DateTime.parse(widget
+                        //     .user.studentUser!.experience![0].startMonth
+                        //     .toString())));
+                        // print(DateFormat('MM-yyyy').format(DateTime.parse(widget
+                        //     .user.studentUser!.experience![0].endMonth
+                        //     .toString())));
+                      }
+                      InputProfileViewModel(context)
+                          .inputProfileStudent(widget.user);
                     },
                     height: 45,
                     color: Colors.black,
@@ -223,75 +239,4 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-Future<List<String>> getData(String? filter) async {
-  List<String> skills = [
-    'Flutter',
-    'Dart',
-    'Java',
-    'Kotlin',
-    'Python',
-    'C++',
-    'C#',
-    'Swift',
-    'React',
-    'Angular',
-    'Vue',
-    'Node.js',
-    'Express.js',
-    'MongoDB',
-    'Firebase',
-    'SQL',
-    'NoSQL',
-    'HTML',
-    'CSS',
-    'JavaScript',
-    'TypeScript',
-    'Redux',
-    'MobX',
-    'GraphQL',
-    'REST',
-    'Docker',
-    'Kubernetes',
-    'Jenkins',
-    'Git',
-    'GitHub',
-    'GitLab',
-    'Bitbucket',
-    'Jira',
-    'Confluence',
-    'Trello',
-    'Slack',
-    'Microsoft Teams',
-    'Zoom',
-    'Google Meet',
-    'Skype',
-    'WebRTC',
-    'Agile',
-    'Scrum',
-    'Kanban',
-    'Lean',
-    'XP',
-    'Pair Programming',
-    'TDD',
-    'BDD',
-    'CI/CD',
-    'DevOps',
-    'Microservices',
-    'Serverless',
-    'TDD',
-    'BDD',
-    'CI/CD',
-    'DevOps',
-    'Microservices',
-    'Serverless',
-  ];
-  await Future.delayed(const Duration(milliseconds: 200));
-  if (filter!.isNotEmpty) {
-    return skills
-        .where((skill) => skill.toLowerCase().contains(filter.toLowerCase()))
-        .toList();
-  }
-  return skills;
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PopUpEducationEditWidget extends StatefulWidget {
@@ -7,25 +8,42 @@ class PopUpEducationEditWidget extends StatefulWidget {
   final int startYear;
   final int endYear;
 
-  PopUpEducationEditWidget(this.addEducation, this.deleteEducation, this.schoolName, this.startYear, this.endYear);
+  PopUpEducationEditWidget(this.addEducation, this.deleteEducation,
+      this.schoolName, this.startYear, this.endYear);
 
   @override
   _PopUpEducationWidgetState createState() => _PopUpEducationWidgetState();
 }
 
 class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
-  late TextEditingController _schoolNameController;
-  late TextEditingController _startYearController;
-  late TextEditingController _endYearController;
+  late TextEditingController _schoolNameController = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
+  String schoolName = '';
+  int _startYear = 0;
+  int _endYear = 0;
+  List<int> yearList = List<int>.generate(
+      DateTime.now().year - (DateTime.now().year - 10) + 1,
+      (i) => i + (DateTime.now().year - 10)).reversed.toList();
+  List<int> yearListStart = [];
+  List<int> yearListEnd = [];
+  List<int> listYear = [];
+  FixedExtentScrollController scrollController = FixedExtentScrollController();
+  FixedExtentScrollController scrollControllerStart =
+      FixedExtentScrollController();
+  FixedExtentScrollController scrollControllerEnd =
+      FixedExtentScrollController();
+  bool showError = false;
 
   @override
   void initState() {
     super.initState();
     _schoolNameController = TextEditingController(text: widget.schoolName);
-    _startYearController = TextEditingController(text: widget.startYear.toString());
-    _endYearController = TextEditingController(text: widget.endYear.toString());
+    _startYear = widget.startYear;
+    _endYear = widget.endYear;
+
+    int initialItemIndex = yearList.indexOf(DateTime.now().year);
+    scrollController =
+        FixedExtentScrollController(initialItem: initialItemIndex);
   }
 
   @override
@@ -33,8 +51,7 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
     return AlertDialog(
       title: Text('Add Education', textAlign: TextAlign.center),
       content: SizedBox(
-        key: _formKey,
-        height: 200.0,
+        height: 250.0,
         child: Column(
           children: [
             Row(
@@ -56,55 +73,112 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
                 ),
               ],
             ),
+            SizedBox(height: 20.0),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('Start Year: '),
-                Expanded(
-                  child: TextFormField(
-                    controller: _startYearController,
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      _startYearController.text = value;
+                Text(_startYear == 0 ? 'Select Year' : _startYear.toString()),
+                IconButton(
+                    onPressed: () {
+                      _endYear == 0
+                          ? listYear = yearList
+                          : listYear = List<int>.generate(
+                                  _endYear - (DateTime.now().year - 10) + 1,
+                                  (i) => i + (DateTime.now().year - 10))
+                              .reversed
+                              .toList();
+                      int initialItemIndexStart =
+                          listYear.indexOf(DateTime.now().year);
+                      scrollControllerStart = FixedExtentScrollController(
+                          initialItem: initialItemIndexStart);
+                      showCupertinoModalPopup(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                                child: Container(
+                              height: 200.0,
+                              width: 300.0,
+                              color: Colors.white.withOpacity(0.95),
+                              child: CupertinoPicker(
+                                scrollController: _endYear == 0
+                                    ? scrollController
+                                    : scrollControllerStart,
+                                itemExtent: 40.0,
+                                onSelectedItemChanged: (index) {
+                                  setState(() {
+                                    _startYear = listYear[index];
+                                  });
+                                },
+                                children: listYear
+                                    .map((year) =>
+                                        Center(child: Text(year.toString())))
+                                    .toList(),
+                              ),
+                            ));
+                          });
                     },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter start year';
-                      }
-                      if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                        return 'Please enter a valid number';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
+                    icon: Icon(Icons.calendar_today)),
               ],
             ),
+            SizedBox(height: 20.0),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text('End Year: '),
-                Expanded(
-                  child: TextFormField(
-                    controller: _endYearController,
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      _endYearController.text = value;
+                Text(_endYear == 0 ? 'Select Year' : _endYear.toString()),
+                IconButton(
+                    onPressed: () {
+                      _startYear == 0
+                          ? listYear = yearList
+                          : listYear = List<int>.generate(
+                              DateTime.now().year - _startYear + 1 + 10,
+                              (i) => i + _startYear + 1).reversed.toList();
+                      int initialItemIndexEnd =
+                          listYear.indexOf(DateTime.now().year);
+                      scrollControllerEnd = FixedExtentScrollController(
+                          initialItem: initialItemIndexEnd);
+                      showCupertinoModalPopup(
+                          context: context,
+                          builder: (context) {
+                            return Center(
+                                child: Container(
+                              height: 200.0,
+                              width: 300.0,
+                              color: Colors.white.withOpacity(0.95),
+                              child: CupertinoPicker(
+                                scrollController: _startYear == 0
+                                    ? scrollController
+                                    : scrollControllerEnd,
+                                itemExtent: 40.0,
+                                onSelectedItemChanged: (index) {
+                                  setState(() {
+                                    _endYear = listYear[index];
+                                  });
+                                },
+                                children: listYear
+                                    .map((year) =>
+                                        Center(child: Text(year.toString())))
+                                    .toList(),
+                              ),
+                            ));
+                          });
                     },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter end year';
-                      }
-                      if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                        return 'Please enter a valid number';
-                      }
-                      if (int.parse(value) < int.parse(_startYearController.text)) {
-                        return 'End year cannot be before start year';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
+                    icon: Icon(Icons.calendar_today)),
               ],
             ),
+            if (showError == true)
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Make sure to fill all the fields',
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 14.0,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
           ],
         ),
       ),
@@ -113,15 +187,28 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
           child: Text('Cancel'),
           onPressed: () {
             Navigator.of(context).pop();
+            _startYear = 0;
+            _endYear = 0;
           },
         ),
         TextButton(
           child: Text('Add'),
           onPressed: () {
-            if (_formKey.currentState!.validate()) {
+            schoolName = _schoolNameController.text;
+            print(schoolName);
+            if (schoolName != " " && _startYear != 0 && _endYear != 0) {
               widget.deleteEducation(widget.schoolName);
-              widget.addEducation(_schoolNameController.text, int.parse(_startYearController.text), int.parse(_endYearController.text));
+              widget.addEducation(
+                schoolName,
+                _startYear,
+                _endYear,
+              );
               Navigator.of(context).pop();
+            } else {
+              //show text with red color at below end year
+              setState(() {
+                showError = true;
+              });
             }
           },
         ),

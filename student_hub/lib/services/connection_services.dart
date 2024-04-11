@@ -6,14 +6,15 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
 
-final String _baseUrl =
-    Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://10.0.2.1:4400';
-// final String _baseUrl = 'http://34.16.137.128';
+// final String _baseUrl =
+//     Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://10.0.2.1:4400';
+final String _baseUrl = 'http://34.16.137.128';
 // _baseUrl for local server
 // const String _baseUrl = 'http://localhost:4400';
 
 class ConnectionService {
   var client = http.Client();
+  var multiPart = http.MultipartRequest('PUT', Uri.parse(_baseUrl));
 
   //GET
   Future<dynamic> get(String api, Map<String, dynamic> json) async {
@@ -113,6 +114,29 @@ class ConnectionService {
     } else {
       print("Connect server failed");
       return response.body;
+      //throw exception and catch it in UI
+    }
+  }
+
+  Future<dynamic> putFile(String api, String filename) async {
+    var url = Uri.parse(_baseUrl + api);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'multipart/form-data',
+    };
+    var request = http.MultipartRequest('PUT', url);
+    request.headers.addAll(headers);
+    request.files.add(await http.MultipartFile.fromPath('file', filename));
+    var streamedResponse = await request.send();
+    final response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      print("Connect server successful");
+      return response;
+    } else {
+      print("Connect server failed");
+      return response;
       //throw exception and catch it in UI
     }
   }
