@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
 
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
@@ -8,7 +9,8 @@ import 'package:student_hub/models/company_user.dart';
 import '../homescreen/welcome_view.dart';
 
 class SwitchAccountView extends StatefulWidget {
-  const SwitchAccountView({super.key});
+  final User user;
+  const SwitchAccountView(this.user, {super.key});
 
   @override
   _SwitchAccountViewState createState() => _SwitchAccountViewState();
@@ -44,6 +46,18 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 class _SwitchAccountViewState extends State<SwitchAccountView> {
+  late SharedPreferences prefs;
+  int? role;
+
+  @override
+  void initState() {
+    super.initState();
+    initPrefs();
+  }
+  Future<void> initPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    role = prefs.getInt('role');
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,23 +67,18 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
         children: <Widget>[
           // If there are no accounts, show AddAccountWidget, else show a dropdown list of accounts
           accounts.isEmpty
-              ? const AddAccountWidget()
+              ?  AddAccountWidget(widget.user)
               : TextButton(
                   onPressed: () {
                     // Settings button pressed
-                    AuthAccountViewModel(context).showAccountList(accounts);
+                    AuthAccountViewModel(context).showAccountList(widget.user);
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
-                        child: Text(
-                            accounts
-                                .where((element) => element.isLogin == true)
-                                .first
-                                .user
-                                .fullName,
+                        child: Text("${widget.user.fullname!} \n ${role == 0 ? 'Student' : 'Company'}",
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 20.0,
@@ -107,7 +116,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                   alignment: Alignment.centerLeft,
                   child: TextButton.icon(
                     onPressed: () {
-                      // Profiles button pressed
+                      AuthAccountViewModel(context).userProfile(widget.user);
                     },
                     icon: const Icon(Icons.person,
                         color: Colors.black, size: 28.0),

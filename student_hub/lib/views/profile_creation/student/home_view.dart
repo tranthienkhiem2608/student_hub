@@ -29,8 +29,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar();
-
+  User? user;
+   _AppBar(this.user, {super.key});
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -50,7 +50,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SwitchAccountView()));
+                MaterialPageRoute(builder: (context) => SwitchAccountView(user!)));
           },
         ),
       ],
@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const _AppBar(),
+      appBar: _AppBar(widget.user),
       body: PageView(
         controller: _navController.controller,
         children: _pages,

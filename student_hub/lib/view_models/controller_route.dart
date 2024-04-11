@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/views/auth/chooserole_view.dart';
 import 'package:student_hub/views/auth/forgort_password_view.dart';
+import 'package:student_hub/views/profile_creation/company/edit_profile.dart';
 import 'package:student_hub/views/profile_creation/student/home_view.dart';
 import 'package:student_hub/views/profile_creation/student/profile_input_student1.dart';
 import 'package:student_hub/views/profile_creation/student/profile_input_student2.dart';
@@ -21,10 +22,10 @@ class ControllerRoute {
   ControllerRoute(this.context);
 
 //authentification
-  void navigateToSwitchAccountView() {
+  void navigateToSwitchAccountView(User user) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SwitchAccountView()),
+      MaterialPageRoute(builder: (context) => SwitchAccountView(user)),
     );
   }
 
@@ -53,6 +54,13 @@ class ControllerRoute {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => ProfileInput(user)),
+    );
+  }
+
+    void navigateToEditProfileInputCompany(User user) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EditProfile()),
     );
   }
 
@@ -124,4 +132,6 @@ class ControllerRoute {
       );
     }
   }
+
+  void toSwitchAccountView(User user) {}
 }

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:student_hub/models/company_user.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/widgets/show_account_widget.dart';
 
 class AccountListDialog extends StatelessWidget {
-  final List<CompanyUser> accounts;
-  Function(CompanyUser) onAccountSwitched;
+  final User accounts;
   Function reloadPage;
 
-  AccountListDialog(this.accounts, this.onAccountSwitched, this.reloadPage, {super.key});  @override
+AccountListDialog(this.accounts, this.reloadPage, {super.key});
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
@@ -47,7 +48,6 @@ class AccountListDialog extends StatelessWidget {
                 height: 250,
                 child: ShowAccountWidget(
                   accounts,
-                  onAccountSwitched,
                   reloadPage,
 
                 ),

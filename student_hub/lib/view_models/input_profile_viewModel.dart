@@ -42,8 +42,8 @@ class InputProfileViewModel {
   Future<void> inputProfileStudent(User studentUser) async {
     print('Input Profile Student');
     var payload = {
-      "techStackId": studentUser.studentUser?.techStack,
-      "skillSets": studentUser.studentUser?.skillSet
+      "techStackId": studentUser.studentUser?.techStack?.id,
+      "skillSets": studentUser.studentUser?.skillSet?.map((e) => e.id).toList(),
     };
     try {
       showDialog(context: context, builder: (context) => LoadingUI());

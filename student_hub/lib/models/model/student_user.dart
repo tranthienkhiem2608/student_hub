@@ -82,5 +82,6 @@ class StudentUser {
       skillSet: List<SkillSets>.from(
           map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e))),
     );
+    
   }
 }

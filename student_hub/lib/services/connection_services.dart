@@ -6,9 +6,9 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
 
-// final String _baseUrl =
-//     Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://10.0.2.1:4400';
-final String _baseUrl = 'http://34.16.137.128';
+final String _baseUrl =
+    Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://10.0.2.1:4400';
+// final String _baseUrl = 'http://34.16.137.128';
 // _baseUrl for local server
 // const String _baseUrl = 'http://localhost:4400';
 

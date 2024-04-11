@@ -16,14 +16,14 @@ class AuthAccountViewModel {
   final BuildContext context;
 
   AuthAccountViewModel(this.context);
-  void reloadPage() {
+  void reloadPage(User user) {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => SwitchAccountView()),
+      MaterialPageRoute(builder: (context) => SwitchAccountView(user)),
     );
   }
 
-  Future<void> showAccountList(List<CompanyUser> accounts) async {
+  Future<void> showAccountList(User accounts) async {
     print('Show Account List');
     return showModalBottomSheet(
         context: context,
@@ -33,13 +33,6 @@ class AuthAccountViewModel {
             behavior: HitTestBehavior.opaque,
             child: AccountListDialog(
               accounts,
-              (CompanyUser companyUser) async {
-                for (var account in accounts) {
-                  account.isLogin = false;
-                }
-                companyUser.isLogin = true;
-                // Call a method to reload the page
-              },
               reloadPage,
               // Pass the method to reload the page
             ),
@@ -291,4 +284,24 @@ class AuthAccountViewModel {
       print(e);
     }
   }
+  Future<void> userProfile(User user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int? role = prefs.getInt('role');
+
+    if(role == 1){
+      user.companyUser == null
+          ? ControllerRoute(context).navigateToProfileInputCompany(user)
+          : ControllerRoute(context).navigateToEditProfileInputCompany(user);
+    }
+    else if(role == 0){
+      user.studentUser == null
+          ? ControllerRoute(context).navigateToProfileInputStudent1(user)
+          : ControllerRoute(context).navigateToEditProfileInputCompany(user);
+    }
+}
+
+// Future<void> switchAccount(){
+//   return
+// }
+
 }

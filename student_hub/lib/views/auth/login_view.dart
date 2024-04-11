@@ -408,6 +408,7 @@ class _LoginPageState extends State<LoginPage>
                       }
                           : null,
                       height: 45,
+                      disabledColor: Color(0xFF4BEC0C7).withOpacity(0.5),
                       color: Color(0xFF406AFF),
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 50),

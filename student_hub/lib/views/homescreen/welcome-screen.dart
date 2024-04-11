@@ -46,7 +46,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(animationController: _animationController),
+      appBar: _AppBar(_animationController, widget.companyUser),
       backgroundColor: const Color(0xFFBEEEF7),
       body: SafeArea(
         child: _Body(
@@ -67,8 +67,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   final AnimationController animationController;
+  User companyUser;
 
-  const _AppBar({super.key, required this.animationController});
+   _AppBar(this.animationController, this.companyUser, {super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +98,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        const SwitchAccountView(),
+                         SwitchAccountView(companyUser),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       var begin = const Offset(1.0, 0.0);
