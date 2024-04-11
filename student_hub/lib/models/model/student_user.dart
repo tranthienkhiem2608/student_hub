@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:student_hub/models/model/file_cv.dart';
 import 'package:student_hub/models/model/language.dart';
 import 'package:student_hub/models/model/skillSets.dart';
 import 'package:student_hub/models/model/techStack.dart';
@@ -13,8 +14,7 @@ class StudentUser {
   final String? deletedAt;
   int? userId;
   int? techStackId;
-  String? resume;
-  String? transcript;
+  FileCV? file;
   TechStack? techStack;
   List<String>? proposals; // cần thêm model proposal
   List<Education>? education;
@@ -29,8 +29,7 @@ class StudentUser {
     this.deletedAt,
     this.userId,
     this.techStackId,
-    this.resume,
-    this.transcript,
+    this.file,
     this.techStack,
     this.proposals,
     this.education,
@@ -51,8 +50,8 @@ class StudentUser {
         'deletedAt': deletedAt,
         'userId': userId,
         'techStackId': techStackId,
-        'resume': resume,
-        'transcript': transcript,
+        'resume': file?.resume,
+        'transcript': file?.transcript,
         'techStack': techStack?.toMapTechStack(),
         'proposals': proposals,
         'education': education?.map((e) => e.toMapEducation()).toList(),
@@ -69,8 +68,10 @@ class StudentUser {
       deletedAt: map['deletedAt'],
       userId: map['userId'],
       techStackId: map['techStackId'],
-      resume: map['resume'],
-      transcript: map['transcript'],
+      file: FileCV(
+        resume: map['resume'],
+        transcript: map['transcript'],
+      ),
       techStack: TechStack.fromMapTechStack(map['techStack']),
       proposals: List<String>.from(map['proposals']),
       education: List<Education>.from(

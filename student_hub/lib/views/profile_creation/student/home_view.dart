@@ -15,8 +15,7 @@ class HomePage extends StatefulWidget {
   final User? user;
   final bool? showAlert;
 
-  const HomePage({this.showAlert = false, this.user, Key? key})
-      : super(key: key);
+  const HomePage({this.showAlert, this.user, Key? key}) : super(key: key);
 
   // void functionInitialize({bool? shoAlert, CompanyUser? userCompany, StudentUser? userStudent, Key? key}) {
   //     if()
@@ -28,7 +27,7 @@ class HomePage extends StatefulWidget {
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   User? user;
-   _AppBar(this.user, {super.key});
+  _AppBar(this.user, {super.key});
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -47,8 +46,10 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             child: Image.asset('assets/icons/user_ic.png'),
           ),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SwitchAccountView(user!)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SwitchAccountView(user!)));
           },
         ),
       ],
@@ -66,7 +67,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    print(widget.user!.companyUser!.id);
+    // print(widget.user!.companyUser!.id);
     _pages = [
       const ProjectsPage(),
       DashboardPage(widget.user!),
@@ -75,16 +76,18 @@ class _HomePageState extends State<HomePage> {
     ];
     if (widget.showAlert!) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        QuickAlert.show(
-          context: context,
-          type: QuickAlertType.success,
-          text:
-              'Welcome to StudentHub, a marketplace to connect Student <> Real-world projects',
-          title: 'Welcome',
-          showConfirmBtn: true,
-          customAsset: 'assets/alerts/success.gif',
-          confirmBtnText: 'Next',
-        );
+        Future.microtask(() {
+          QuickAlert.show(
+            context: context,
+            type: QuickAlertType.success,
+            text:
+                'Welcome to StudentHub, a marketplace to connect Student <> Real-world projects',
+            title: 'Welcome',
+            showConfirmBtn: true,
+            customAsset: 'assets/alerts/success.gif',
+            confirmBtnText: 'Next',
+          );
+        });
       });
     }
   }

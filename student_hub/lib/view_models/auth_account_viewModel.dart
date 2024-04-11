@@ -92,6 +92,8 @@ class AuthAccountViewModel {
                       .navigateToProfileInputStudent1(userResponse)
                   : ControllerRoute(context)
                       .navigateToHomeScreen(true, userResponse);
+              // ControllerRoute(context)
+              //     .navigateToProfileInputStudent3(userResponse);
             }
           } else if (userResponse.role?.length == 2) {
             // ControllerRoute(context).navigateToHomeScreen(false, userResponse);

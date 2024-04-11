@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:student_hub/models/model/file_cv.dart';
 // import 'package:quickalert/models/quickalert_type.dart';
 // import 'package:quickalert/widgets/quickalert_dialog.dart';
 // import 'package:student_hub/views/profile_creation/student/home_view.dart';
@@ -29,6 +30,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
   File? _transcriptFile;
   PlatformFile? _transcriptPlatformFile;
   DropzoneViewController? _dropzoneController;
+  FileCV? fileCV;
 
   Future<void> _selectCvFile() async {
     if (kIsWeb) {
@@ -42,6 +44,8 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
         _cvPlatformFile = PlatformFile(
           name: file.name,
           size: file.size,
+          //get path of file
+          path: file.path,
         );
       });
     } else {
@@ -55,6 +59,9 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
       final file = File(result.files.single.path!);
       setState(() {
         _cvFile = file;
+        fileCV = FileCV(
+          resume: file.path,
+        );
         _cvPlatformFile = result.files.first;
       });
     }
@@ -85,6 +92,9 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
       final file = File(result.files.single.path!);
       setState(() {
         _transcriptFile = file;
+        fileCV = FileCV(
+          transcript: file.path,
+        );
         _transcriptPlatformFile = result.files.first;
       });
     }
@@ -187,10 +197,9 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                   onPressed: () {
                     // 1. Simulate some processing (if needed)
                     // You would perform your upload logic or other tasks here.// Example delay
+                    widget.studentUser.studentUser?.file = fileCV;
                     InputProfileViewModel(context)
                         .inputProfileStudent(widget.studentUser);
-                    ControllerRoute(context)
-                        .navigateToHomeScreen(true, widget.studentUser);
                     // 3. Navigate to HomePage
                   },
                   style: ElevatedButton.styleFrom(

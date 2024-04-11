@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:student_hub/models/model/education.dart';
 import 'package:student_hub/models/model/experience.dart';
+import 'package:student_hub/models/model/file_cv.dart';
 import 'package:student_hub/models/model/language.dart';
 import 'package:student_hub/models/model/skillSets.dart';
 import 'package:student_hub/models/model/techStack.dart';
@@ -41,8 +42,9 @@ class InputProfileViewModel {
 
   Future<void> inputProfileStudent(User studentUser) async {
     print('Input Profile Student');
+    print(studentUser.studentUser?.techStack?.id);
     var payload = {
-      "techStackId": studentUser.studentUser?.techStack?.id,
+      "techStackId": studentUser.studentUser?.techStackId,
       "skillSets": studentUser.studentUser?.skillSet?.map((e) => e.id).toList(),
     };
     try {
@@ -67,8 +69,13 @@ class InputProfileViewModel {
           await putExperience(responseUserMap['result']['id'],
               studentUser.studentUser!.experience!);
         }
+        if (studentUser.studentUser?.file?.resume != null &&
+            studentUser.studentUser?.file?.transcript != null) {
+          await putFileCv(
+              responseUserMap['result']['id'], studentUser.studentUser!.file!);
+        }
         Navigator.of(context).pop();
-        ControllerRoute(context).navigateToProfileInputStudent3(studentUser);
+        ControllerRoute(context).navigateToHomeScreen(true, studentUser);
       } else {
         print("Failed");
         Navigator.of(context).pop();
@@ -196,7 +203,6 @@ class InputProfileViewModel {
       int studrntId, List<Experience> experienceList) async {
     print('Put Experience');
     String url = '/api/experience/updateByStudentId/$studrntId';
-    var experienceMap = experienceList.map((e) => e.toMapExperience()).toList();
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
       var payload = {
@@ -232,5 +238,48 @@ class InputProfileViewModel {
     }
 
     return [];
+  }
+
+  Future<FileCV> putFileCv(int studentId, FileCV fileCV) async {
+    print('Put File CV');
+    // String url = '/api/filecv/updateByStudentId/$studentId';
+    String url = '/api/profile/student';
+    try {
+      showDialog(context: context, builder: (context) => LoadingUI());
+      // var payload = fileCV.toMapFileCV();
+      if (fileCV.resume != null) {
+        String urlResume = '$url/resume/$studentId';
+        var response = await ConnectionService().put(urlResume, fileCV.resume);
+        var responseDecode = jsonDecode(response);
+        if (responseDecode['result'] != null) {
+          print("Connected to the server successfully");
+          print("Resume: Connect server successful");
+          print(response);
+          // Call a method to reload the page
+        } else {
+          print("Failed upload file resume");
+          print(responseDecode);
+        }
+      }
+      if (fileCV.transcript != null) {
+        String urlTranscript = '$url/transcript/$studentId';
+        var response =
+            await ConnectionService().put(urlTranscript, fileCV.transcript);
+        var responseDecode = jsonDecode(response);
+        if (responseDecode['result'] != null) {
+          print("Connected to the server successfully");
+          print("Transcript: Connect server successful");
+          print(response);
+          // Call a method to reload the page
+        } else {
+          print("Failed upload file transcript");
+          print(responseDecode);
+        }
+      }
+      Navigator.of(context).pop();
+    } catch (e) {
+      print(e);
+    }
+    return FileCV();
   }
 }

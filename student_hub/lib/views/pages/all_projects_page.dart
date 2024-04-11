@@ -25,18 +25,18 @@ class _AllProjectsPageState extends State<AllProjectsPage>
   int companyId = 0;
 
   Future<void> fetchProjects() async {
-    List<ProjectCompany> projects =
-        await ProjectCompanyViewModel(context).getProjectsData(companyId);
-    setState(() {
-      projectList = projects;
-    });
+    // List<ProjectCompany> projects =
+    //     await ProjectCompanyViewModel(context).getProjectsData(companyId);
+    // setState(() {
+    //   projectList = projects;
+    // });
   }
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController()..addListener(_onPageChange);
-    companyId = widget.user!.companyUser!.id!;
+    // companyId = widget.user!.companyUser!.id!;
   }
 
   @override
