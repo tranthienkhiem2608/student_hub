@@ -2,13 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/company_user.dart';
+import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/views/post_project/post_screen_3.dart';
 
 class PostScreen2 extends StatefulWidget {
-  const PostScreen2({super.key, required this.projectName});
-  final String projectName;
+  const PostScreen2({super.key, required this.project, required this.user});
+  final ProjectCompany project;
+  final User user;
 
   @override
   State<PostScreen2> createState() => _PostScreen2State();
@@ -50,8 +54,9 @@ class _PostScreen2State extends State<PostScreen2>
   late Animation<double> _fadeAnimation;
   Timer? _timer;
 
-  String duration = ''; // To store the selected duration
   String numberOfStudents = ''; // To store the number of students
+
+  ProjectDuration? selectedDuration; // Use the enum type
 
   @override
   void initState() {
@@ -227,16 +232,15 @@ class _PostScreen2State extends State<PostScreen2>
                           ),
                           child: FadeTransition(
                             opacity: _fadeAnimation,
-                            child: RadioListTile<String>(
-                              // Update value type to String
+                            child: RadioListTile<ProjectDuration>(
                               title: const Text('1 to 3 months',
                                   style: TextStyle(fontSize: 16)),
-                              value:
-                                  '1 to 3 months', // Radio value is the duration itself
-                              groupValue: duration,
+                              value: ProjectDuration
+                                  .oneToThreeMonths, // Use enum value
+                              groupValue: selectedDuration,
                               onChanged: (value) {
                                 setState(() {
-                                  duration = value ?? '';
+                                  selectedDuration = value;
                                 });
                               },
                             ),
@@ -258,14 +262,15 @@ class _PostScreen2State extends State<PostScreen2>
                           ),
                           child: FadeTransition(
                             opacity: _fadeAnimation,
-                            child: RadioListTile<String>(
+                            child: RadioListTile<ProjectDuration>(
                               title: const Text('3 to 6 months',
                                   style: TextStyle(fontSize: 16)),
-                              value: '3 to 6 months',
-                              groupValue: duration,
+                              value: ProjectDuration
+                                  .threeToSixMonths, // Use enum value
+                              groupValue: selectedDuration,
                               onChanged: (value) {
                                 setState(() {
-                                  duration = value ?? '';
+                                  selectedDuration = value;
                                 });
                               },
                             ),
@@ -379,16 +384,29 @@ class _PostScreen2State extends State<PostScreen2>
                         const Spacer(), // Push button to the right
                         MaterialButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PostScreen3(
-                                  projectName: widget.projectName,
-                                  duration: duration,
-                                  numberOfStudents: numberOfStudents,
-                                ),
-                              ),
-                            );
+                            if (selectedDuration != null &&
+                                numberOfStudents.isNotEmpty) {
+                              if (int.tryParse(numberOfStudents) != null) {
+                                int parsedNumberOfStudents =
+                                    int.parse(numberOfStudents);
+                                if (parsedNumberOfStudents >= 0) {
+                                  // Ensure numberOfStudents is not negative
+                                  widget.project.projectScopeFlag =
+                                      selectedDuration!.value;
+                                  widget.project.numberOfStudent =
+                                      int.parse(numberOfStudents);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => PostScreen3(
+                                        project: widget.project,
+                                        user: widget.user,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }
+                            }
                           },
                           height: 55, // Increased height
                           color: Colors.black,

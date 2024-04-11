@@ -255,11 +255,8 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
                         child: ShowProjectCompanyWidget(
                           projectName: '${entries[index]}',
                           creationTime: listTime[index],
-                          description: [
-                            'Clear expectations about your project or deliverables',
-                            'The skills required for your project',
-                            'Details about your project'
-                          ],
+                          description:
+                              'Clear expectations about your project or deliverables\n The skills required for your project \n Details about your project',
                           quantities: [],
                           labels: [],
                           showOptionsIcon: false,
