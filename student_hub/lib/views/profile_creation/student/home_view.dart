@@ -11,13 +11,11 @@ import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';
 import 'package:student_hub/views/auth/switch_account_view.dart';
 
-
 class HomePage extends StatefulWidget {
   final User? user;
   final bool? showAlert;
 
-  const HomePage(
-      {this.showAlert = false, this.user, Key? key})
+  const HomePage({this.showAlert = false, this.user, Key? key})
       : super(key: key);
 
   // void functionInitialize({bool? shoAlert, CompanyUser? userCompany, StudentUser? userStudent, Key? key}) {
@@ -68,6 +66,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    print(widget.user!.companyUser!.id);
     _pages = [
       const ProjectsPage(),
       DashboardPage(widget.user!),

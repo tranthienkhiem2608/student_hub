@@ -4,7 +4,7 @@ import 'dart:async';
 class ShowProjectCompanyWidget extends StatefulWidget {
   final String projectName;
   final DateTime creationTime;
-  final List<String> description;
+  final String description;
   final List<int> quantities;
   final List<String> labels;
   final bool showOptionsIcon;
@@ -167,7 +167,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                   style: TextStyle(fontWeight: FontWeight.bold)),
               ListView(
                 shrinkWrap: true,
-                children: widget.description.map((item) {
+                children: widget.description.split('\n').map((item) {
                   return Padding(
                     padding: const EdgeInsets.only(left: 20, top: 5),
                     child: Row(

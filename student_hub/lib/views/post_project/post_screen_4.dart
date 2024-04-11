@@ -1,26 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:student_hub/models/company_user.dart';
-import 'package:student_hub/models/student_user.dart';
-import 'package:student_hub/view_models/controller_route.dart';
-import 'package:student_hub/views/homescreen/welcome-screen.dart';
-import 'package:student_hub/views/pages/dashboard_page.dart';
-import 'package:student_hub/views/pages/projects_page.dart';
-import 'package:student_hub/views/profile_creation/student/home_view.dart';
-import 'package:student_hub/widgets/project_list_widget.dart';
+import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/users.dart';
+
+import 'package:student_hub/view_models/project_company_viewModel.dart';
 
 class PostScreen4 extends StatefulWidget {
-  const PostScreen4(
-      {super.key,
-      required this.projectName,
-      required this.duration,
-      required this.numberOfStudents,
-      required this.description});
-  final String projectName;
-  final String duration;
-  final String numberOfStudents;
-  final String description;
-
+  const PostScreen4({
+    super.key,
+    required this.project,
+    required this.user,
+  });
+  final ProjectCompany project;
+  final User user;
   @override
   State<PostScreen4> createState() => _PostScreen4State();
 }
@@ -65,7 +57,7 @@ class _PostScreen4State extends State<PostScreen4>
   void _parseExpectations() {
     // Assuming your expectations are separated by newlines in the description
     setState(() {
-      expectations = widget.description.split('\n');
+      expectations = widget.project.description!.split('\n');
     });
   }
 
@@ -127,7 +119,7 @@ class _PostScreen4State extends State<PostScreen4>
             ),
             SizedBox(height: 30),
             Text(
-              'Project Name: ${widget.projectName}',
+              'Project Name: ${widget.project.title}',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
@@ -186,7 +178,9 @@ class _PostScreen4State extends State<PostScreen4>
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${widget.duration} months',
+                widget.project.projectScopeFlag == 0
+                    ? '1-3 months'
+                    : '3-6 months',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -203,7 +197,7 @@ class _PostScreen4State extends State<PostScreen4>
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${widget.numberOfStudents} students',
+                '${widget.project.numberOfStudent} students',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -228,14 +222,8 @@ class _PostScreen4State extends State<PostScreen4>
                     const Spacer(), // Push button to the right
                     MaterialButton(
                       onPressed: () async {
-                        // ... (your code for gathering project data) ...
-                        // ... (your code for sending data to the backend) ...
-
-                        // Simple navigation without passing data
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                        ProjectCompanyViewModel(context)
+                            .postProject(widget.project, widget.user);
                       },
                       height: 55, // Increased height
                       color: Colors.black,

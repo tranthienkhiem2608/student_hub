@@ -2,21 +2,23 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/company_user.dart';
+import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/views/post_project/post_screen_3.dart';
 import 'package:bulleted_list/bulleted_list.dart';
 import 'package:student_hub/views/post_project/post_screen_4.dart';
 
 class PostScreen3 extends StatefulWidget {
-  const PostScreen3(
-      {super.key,
-      required this.projectName,
-      required this.duration,
-      required this.numberOfStudents});
-  final String projectName;
-  final String duration;
-  final String numberOfStudents;
+  const PostScreen3({
+    super.key,
+    required this.project,
+    required this.user,
+  });
+  final ProjectCompany project;
+  final User user;
 
   @override
   State<PostScreen3> createState() => _PostScreen3State();
@@ -300,15 +302,13 @@ class _PostScreen3State extends State<PostScreen3>
                         const Spacer(), // Push button to the right
                         MaterialButton(
                           onPressed: () {
+                            widget.project.description = description;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => PostScreen4(
-                                  projectName: widget.projectName,
-                                  duration: widget.duration,
-                                  numberOfStudents: widget.numberOfStudents,
-                                  description:
-                                      description, // Pass the description
+                                  project: widget.project,
+                                  user: widget.user,
                                 ),
                               ),
                             );

@@ -68,7 +68,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const PostScreen1()),
+                              builder: (context) => PostScreen1(widget.user)),
                         );
                       },
                       child: const Text('Post a Job',
@@ -88,7 +88,9 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
         ),
         body: TabBarView(children: [
-          role == 0 ? AllProjectsPageStudent() : AllProjectsPage(),
+          role == 0
+              ? AllProjectsPageStudent()
+              : AllProjectsPage(user: widget.user),
           WorkingPage(),
           ArchivedPage()
         ]),

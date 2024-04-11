@@ -4,11 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/post_project/post_screen_2.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 class PostScreen1 extends HookWidget {
-  const PostScreen1({super.key});
+  const PostScreen1(this.user, {super.key});
+  final User? user;
 
   @override
   Widget build(BuildContext context) {
@@ -308,11 +311,17 @@ class PostScreen1 extends HookWidget {
                         const Spacer(),
                         MaterialButton(
                           onPressed: () {
+                            ProjectCompany project = ProjectCompany(
+                              title: projectName.value,
+                              companyId: user!.companyUser?.id!,
+                            );
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    PostScreen2(projectName: projectName.value),
+                                builder: (context) => PostScreen2(
+                                  project: project,
+                                  user: user!,
+                                ),
                               ),
                             );
                           },

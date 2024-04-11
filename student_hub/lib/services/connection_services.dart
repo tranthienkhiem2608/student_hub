@@ -8,9 +8,9 @@ import 'package:student_hub/models/model/users.dart';
 
 // final String _baseUrl =
 //     Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://10.0.2.1:4400';
-final String _baseUrl = 'http://34.16.137.128';
+// final String _baseUrl = 'http://34.16.137.128';
 // _baseUrl for local server
-// const String _baseUrl = 'http://localhost:4400';
+const String _baseUrl = 'http://localhost:4400';
 
 class ConnectionService {
   var client = http.Client();
