@@ -133,7 +133,14 @@ class _AllProjectsPageState extends State<AllProjectsPage>
   }
 
   Future<List<ProjectCompany>> fetchDataProject() async {
-    return await ProjectCompanyViewModel(context)
-        .getProjectsData(widget.user.companyUser!.id!);
+    if (widget.user.companyUser != null &&
+        widget.user.companyUser!.id != null) {
+      return await ProjectCompanyViewModel(context)
+          .getProjectsData(widget.user.companyUser!.id!);
+    } else {
+      // Handle the case where companyUser or id is null
+      // For example, you might want to return an empty list
+      return [];
+    }
   }
 }
