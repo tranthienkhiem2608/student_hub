@@ -257,6 +257,7 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
                           print('Item at index $index was tapped.');
                         },
                         child: ShowProjectCompanyWidget(
+                          id: index,
                           projectName: '${entries[index]}',
                           creationTime: listTime[index],
                           description:
