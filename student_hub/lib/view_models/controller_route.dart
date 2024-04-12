@@ -57,7 +57,7 @@ class ControllerRoute {
     );
   }
 
-    void navigateToEditProfileInputCompany(User user) {
+  void navigateToEditProfileInputCompany(User user) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => EditProfile()),

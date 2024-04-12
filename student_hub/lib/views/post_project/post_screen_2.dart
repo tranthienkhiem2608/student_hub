@@ -393,7 +393,7 @@ class _PostScreen2State extends State<PostScreen2>
                                   // Ensure numberOfStudents is not negative
                                   widget.project.projectScopeFlag =
                                       selectedDuration!.value;
-                                  widget.project.numberOfStudent =
+                                  widget.project.numberOfStudents =
                                       int.parse(numberOfStudents);
                                   Navigator.push(
                                     context,

@@ -22,6 +22,7 @@ class ConnectionService {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     var _headers = {
+      'accept': '*/*',
       'Authorization': 'Bearer $token',
     };
 

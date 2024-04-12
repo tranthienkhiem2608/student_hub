@@ -9,13 +9,13 @@ import 'package:student_hub/views/pages/alert_page.dart';
 import 'package:student_hub/views/pages/dashboard_page.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';
-import 'package:student_hub/views/auth/switch_account_view.dart';
 
 class HomePage extends StatefulWidget {
   final User? user;
-  final bool? showAlert;
+  final bool showAlert;
 
-  const HomePage({this.showAlert, this.user, Key? key}) : super(key: key);
+  const HomePage({this.showAlert = false, this.user, Key? key})
+      : super(key: key);
 
   // void functionInitialize({bool? shoAlert, CompanyUser? userCompany, StudentUser? userStudent, Key? key}) {
   //     if()
@@ -26,15 +26,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  User? user;
-  _AppBar(this.user, {super.key});
+  final User? user;
+  const _AppBar({Key? key, this.user}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
       title: const Text('Student Hub',
           style: TextStyle(
-              color: Color.fromARGB(255, 0, 0, 0),
+              color: Colors.blueAccent,
               fontSize: 20,
               fontWeight: FontWeight.bold)),
       backgroundColor: const Color(0xFFBEEEF7),
@@ -67,27 +68,25 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    // print(widget.user!.companyUser!.id);
+
     _pages = [
       const ProjectsPage(),
       DashboardPage(widget.user!),
       const MessagePage(),
       AlertPage(),
     ];
-    if (widget.showAlert!) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        Future.microtask(() {
-          QuickAlert.show(
-            context: context,
-            type: QuickAlertType.success,
-            text:
-                'Welcome to StudentHub, a marketplace to connect Student <> Real-world projects',
-            title: 'Welcome',
-            showConfirmBtn: true,
-            customAsset: 'assets/alerts/success.gif',
-            confirmBtnText: 'Next',
-          );
-        });
+    if (widget.showAlert == true) {
+      Future.delayed(Duration.zero, () {
+        QuickAlert.show(
+          context: context,
+          type: QuickAlertType.success,
+          text:
+              'Welcome to StudentHub, a marketplace to connect Student <> Real-world projects',
+          title: 'Welcome',
+          // showConfirmBtn: true,
+          // customAsset: 'assets/alerts/success.gif',
+          confirmBtnText: 'Next',
+        );
       });
     }
   }
@@ -95,51 +94,96 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _AppBar(widget.user),
+      appBar: _AppBar(user: widget.user!),
       body: PageView(
         controller: _navController.controller,
         children: _pages,
         physics:
             const NeverScrollableScrollPhysics(), // Prevent swiping between pages
       ),
-      bottomNavigationBar: Container(
-        color: const Color(0xFFBEEEF7),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
-          child: GNav(
-            backgroundColor: const Color(0xFFBEEEF7),
-            color: Colors.black.withOpacity(0.8),
-            activeColor: Colors.black.withOpacity(0.8),
-            tabBackgroundColor: const Color(0xFF69cde0).withOpacity(0.5),
-            gap: 8,
-            padding: const EdgeInsets.all(12),
-            tabs: const [
-              GButton(
-                icon: Icons.list_alt_rounded,
-                text: 'Projects',
-              ),
-              GButton(
-                icon: Icons.dashboard_rounded,
-                text: 'Dashboard',
-              ),
-              GButton(
-                icon: Icons.messenger_outline_rounded,
-                text: 'Message',
-              ),
-              GButton(
-                icon: Icons.notifications,
-                text: 'Alerts',
-              ),
-            ],
-            selectedIndex: _navController.selectedIndex,
-            onTabChange: (index) {
-              setState(() {
-                _navController.selectedIndex = index;
-              });
-            },
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 5),
+        child: Container(
+          height: 70,
+          decoration: BoxDecoration(
+            color: const Color(0xFFBEEEF7),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            child: GNav(
+              gap: 8,
+              padding: const EdgeInsets.all(14),
+              backgroundColor: Colors.transparent,
+              activeColor: Colors.black.withOpacity(0.8),
+              iconSize: 24,
+              tabBackgroundColor: const Color(0xFF69cde0).withOpacity(0.5),
+              tabs: const [
+                GButton(
+                  icon: Icons.home,
+                  text: 'Home',
+                ),
+                GButton(
+                  icon: Icons.dashboard,
+                  text: 'Dashboard',
+                ),
+                GButton(
+                  icon: Icons.message,
+                  text: 'Message',
+                ),
+                GButton(
+                  icon: Icons.notifications,
+                  text: 'Alert',
+                ),
+              ],
+              selectedIndex: _navController.selectedIndex,
+              onTabChange: (index) {
+                setState(() {
+                  _navController.selectedIndex = index;
+                });
+              },
+            ),
           ),
         ),
       ),
+      //       bottomNavigationBar: Container(
+      //   color: const Color(0xFFBEEEF7),
+      //   child: Padding(
+      //     padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15),
+      //     child: GNav(
+      //       backgroundColor: const Color(0xFFBEEEF7),
+      //       color: Colors.black.withOpacity(0.8),
+      //       activeColor: Colors.black.withOpacity(0.8),
+      //       tabBackgroundColor: const Color(0xFF69cde0).withOpacity(0.5),
+      //       gap: 8,
+      //       padding: const EdgeInsets.all(12),
+      //       tabs: const [
+      //         GButton(
+      //           icon: Icons.list_alt_rounded,
+      //           text: 'Projects',
+      //         ),
+      //         GButton(
+      //           icon: Icons.dashboard_rounded,
+      //           text: 'Dashboard',
+      //         ),
+      //         GButton(
+      //           icon: Icons.messenger_outline_rounded,
+      //           text: 'Message',
+      //         ),
+      //         GButton(
+      //           icon: Icons.notifications,
+      //           text: 'Alerts',
+      //         ),
+      //       ],
+      //       selectedIndex: _navController.selectedIndex,
+      //       onTabChange: (index) {
+      //         setState(() {
+      //           _navController.selectedIndex = index;
+      //         });
+      //       },
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

@@ -197,7 +197,7 @@ class _PostScreen4State extends State<PostScreen4>
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${widget.project.numberOfStudent} students',
+                '${widget.project.numberOfStudents} students',
                 style: TextStyle(fontSize: 16),
               ),
             ),

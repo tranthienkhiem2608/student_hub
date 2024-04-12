@@ -73,22 +73,20 @@ class ProjectCompanyViewModel {
   Future<List<ProjectCompany>> getProjectsData(int companyId) async {
     print('Get Projects Data');
     try {
-      showDialog(context: context, builder: (context) => LoadingUI());
-
+      print('Get Projects Data flag');
       var response =
           await ConnectionService().get('/api/project/company/$companyId', {});
+      print('Get Projects Data flag1');
+
       var responseDecode = jsonDecode(response);
+      print('Get Projects Data flag2');
       if (responseDecode['result'] != null) {
         print("Connected to the server successfully");
         print("Connect server successful");
-        print(response);
-        List<ProjectCompany> projects = [];
-        for (var project in responseDecode['result']) {
-          projects.add(ProjectCompany.fromMapProjectCompany(project));
-        }
-        projectList = projects;
-        // Navigator.of(context).pop(); // Remove this line
-        return projects;
+        print(responseDecode['result']);
+        List<ProjectCompany> projectList =
+            ProjectCompany.fromListMapProjectCompany(responseDecode['result']);
+        return projectList;
       } else {
         print("Failed");
         print(responseDecode);

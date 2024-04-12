@@ -313,7 +313,7 @@ class PostScreen1 extends HookWidget {
                           onPressed: () {
                             ProjectCompany project = ProjectCompany(
                               title: projectName.value,
-                              companyId: user!.companyUser?.id!,
+                              companyId: user!.companyUser?.id!.toString(),
                             );
                             Navigator.push(
                               context,

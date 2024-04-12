@@ -32,9 +32,13 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
   }
 
   void _onPageChange() {
-    if (_pageController.page == _pageController.initialPage) {
-      setState(() {});
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_pageController.page == _pageController.initialPage) {
+        if (mounted) {
+          setState(() {});
+        }
+      }
+    });
   }
 
   @override

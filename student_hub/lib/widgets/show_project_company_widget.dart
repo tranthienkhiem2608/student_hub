@@ -147,7 +147,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
       children: [
         ListTile(
           title: Text(widget.projectName,
-              style: TextStyle(fontWeight: FontWeight.bold)),
+              style: const TextStyle(
+                  fontWeight: FontWeight.bold, color: Colors.greenAccent)),
           subtitle: Text(timeAgo(widget.creationTime)),
           trailing: widget.showOptionsIcon
               ? IconButton(
@@ -214,6 +215,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
             );
           }).toList(),
         ),
+        const Divider()
       ],
     );
   }

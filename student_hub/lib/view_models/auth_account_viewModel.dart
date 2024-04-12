@@ -73,7 +73,9 @@ class AuthAccountViewModel {
 
           // Navigator.of(context).pop();
           // int role = int.parse(userResponse.role?[0]);
-          int role = userResponse.role?[0];
+          int role = userResponse.role?[1];
+          print('length: ${userResponse.role?.length}');
+
           if (userResponse.role?.length == 1) {
             prefs.setInt('role', role);
             if (role == 1) {
@@ -95,18 +97,22 @@ class AuthAccountViewModel {
               // ControllerRoute(context)
               //     .navigateToProfileInputStudent3(userResponse);
             }
-          } else if (userResponse.role?.length == 2) {
+          } else {
             // ControllerRoute(context).navigateToHomeScreen(false, userResponse);
+            print('Switch Account');
+            prefs.setInt('role', 1);
+            if (role == 1) {
+              print('Switch Account1');
 
-            if (userResponse.role?.first == '1') {
-              if (userResponse.companyUser?.id == null) {
-                ControllerRoute(context)
-                    .navigateToProfileInputCompany(userResponse);
-              } else {
-                ControllerRoute(context)
-                    .navigateToHomeScreen(false, userResponse);
-              }
-            } else if (userResponse.role?.first == '0') {
+              Navigator.of(context).pop();
+              userResponse.companyUser == null
+                  ? ControllerRoute(context)
+                      .navigateToProfileInputCompany(userResponse)
+                  : ControllerRoute(context)
+                      .navigateToHomeScreen(false, userResponse);
+            } else if (role == 0) {
+              print('Switch Account2');
+
               userResponse.studentUser == null
                   ? ControllerRoute(context)
                       .navigateToProfileInputStudent1(userResponse)
@@ -286,24 +292,23 @@ class AuthAccountViewModel {
       print(e);
     }
   }
+
   Future<void> userProfile(User user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? role = prefs.getInt('role');
 
-    if(role == 1){
+    if (role == 1) {
       user.companyUser == null
           ? ControllerRoute(context).navigateToProfileInputCompany(user)
           : ControllerRoute(context).navigateToEditProfileInputCompany(user);
-    }
-    else if(role == 0){
+    } else if (role == 0) {
       user.studentUser == null
           ? ControllerRoute(context).navigateToProfileInputStudent1(user)
           : ControllerRoute(context).navigateToEditProfileInputCompany(user);
     }
-}
+  }
 
 // Future<void> switchAccount(){
 //   return
 // }
-
 }

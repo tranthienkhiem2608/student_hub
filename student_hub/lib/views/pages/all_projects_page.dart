@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/student_user.dart';
@@ -18,25 +20,19 @@ class AllProjectsPage extends StatefulWidget {
 
 class _AllProjectsPageState extends State<AllProjectsPage>
     with WidgetsBindingObserver {
-  late final PageController _pageController;
-
-  List<ProjectCompany> projectList = [];
-
-  int companyId = 0;
-
-  Future<void> fetchProjects() async {
-    // List<ProjectCompany> projects =
-    //     await ProjectCompanyViewModel(context).getProjectsData(companyId);
-    // setState(() {
-    //   projectList = projects;
-    // });
-  }
+  late PageController _pageController;
+  late Future<List<ProjectCompany>> futureProjects;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController()..addListener(_onPageChange);
     // companyId = widget.user!.companyUser!.id!;
+    setState(() {
+      // Update your state here
+      futureProjects = fetchDataProject();
+    });
+    //print projectList;
   }
 
   @override
@@ -47,9 +43,16 @@ class _AllProjectsPageState extends State<AllProjectsPage>
   }
 
   void _onPageChange() {
-    if (_pageController.page == _pageController.initialPage) {
-      setState(() {});
-    }
+    Future.microtask(() {
+      if (_pageController.page == _pageController.initialPage) {
+        if (mounted) {
+          setState(() {
+            // Update your state here
+            futureProjects = fetchDataProject();
+          });
+        }
+      }
+    });
   }
 
   @override
@@ -70,7 +73,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
       replacement: const Center(
         child: Text("\t\tWelcome, $username \nYou no have jobs"),
       ),
-      visible: projectList.isNotEmpty,
+      visible: futureProjects != null,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -79,24 +82,34 @@ class _AllProjectsPageState extends State<AllProjectsPage>
             const Divider(),
             const Padding(padding: EdgeInsets.only(bottom: 10)),
             Expanded(
-              child: FutureBuilder(
-                future: fetchProjects(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
+              child: FutureBuilder<List<ProjectCompany>>(
+                future: futureProjects,
+                builder: (context, project) {
+                  if (project.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
+                  } else if (project.hasError) {
+                    return Text('Error: ${project.error}');
                   } else {
                     return ListView.builder(
-                      itemCount: projectList.length,
+                      itemCount: project.data!.length,
                       itemBuilder: (context, index) {
+                        print(project.data![index].title);
+                        print(project.data![index].description);
+
                         return ShowProjectCompanyWidget(
-                          projectName: projectList[index].title!,
-                          creationTime:
-                              DateTime.parse(projectList[index].createdAt!),
-                          description: projectList[index].description!,
-                          quantities: [0, 8, 0],
-                          labels: ['Students are looking for'],
+                          projectName: project.data![index].title!.toString(),
+                          creationTime: DateTime.parse(
+                              project.data![index].createdAt!.toString()),
+                          description:
+                              project.data![index].description!.toString(),
+                          quantities: [
+                            project.data![index].countProposal!,
+                            project.data![index].countMessages!,
+                            project.data![index].countHired!
+                          ],
+                          labels: ['Proposals', 'Messages', 'Hired'],
                           showOptionsIcon: true,
                         );
                       },
@@ -109,5 +122,10 @@ class _AllProjectsPageState extends State<AllProjectsPage>
         ),
       ),
     );
+  }
+
+  Future<List<ProjectCompany>> fetchDataProject() async {
+    return await ProjectCompanyViewModel(context)
+        .getProjectsData(widget.user.companyUser!.id!);
   }
 }
