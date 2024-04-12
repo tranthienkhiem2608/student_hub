@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
 
 class ProjectList extends StatefulWidget {
@@ -14,110 +15,181 @@ class _ProjectListState extends State<ProjectList> {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      replacement: const Center(
+      replacement: Center(
         child: Text(
           "\t\tWelcome, You have no projects",
           textAlign: TextAlign.center,
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       visible: widget.projects.isNotEmpty,
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Divider(
-              height: 5,
-              thickness: 1.5,
-              color: Color.fromARGB(255, 54, 52, 52),
-            ),
-            const Padding(padding: EdgeInsets.only(bottom: 10)),
-            Expanded(
-              child: ListView.separated(
-                itemCount: widget.projects.length,
-                itemBuilder: (context, index) {
-                  ProjectInfo project = widget.projects[index];
-                  List<String> expectations = project.expectations.split('\n');
-                  String firstExpectation = expectations.isNotEmpty ? expectations.first : '';
-                  return Column(
+        child: Container(
+          
+          child: ListView.separated(
+            itemCount: widget.projects.length,
+            itemBuilder: (context, index) {
+              ProjectInfo project = widget.projects[index];
+              List<String> expectations = project.expectations.split('\n');
+              String firstExpectation =
+                  expectations.isNotEmpty ? expectations.first : '';
+              return Container(
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
+                padding: const EdgeInsets.fromLTRB(15, 0, 10, 5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    color: Color.fromARGB(255, 228, 228, 233),
+                    width: 1, // Màu và độ dày của border
+                  ),
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.25),
+                      spreadRadius: 1,
+                      blurRadius: 6,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: Row(
                     children: [
-                      ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: Text('Project ${project.name}'),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Created ${project.createdDate}',
-                              style: TextStyle(height: 1.0),
-                            ),
-                            Text(
-                              project.role,
-                              style: const TextStyle(
-                                color: Colors.green, // Màu xanh lá cho role
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              '\nTime: ${project.duration}, ${project.students} students needed',
-                              style: TextStyle(height: 1.0),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              'Students are looking for',
-                            ),
-                            Text(
-                              firstExpectation,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(
-                              'Proposals: Less than ${project.proposals}',
-                              style: TextStyle(height: 1.0),
-                            ),
-                          ],
-                        ),
-                        trailing: IconButton(
-                          iconSize: 30,
-                          icon: Icon(
-                            project.isFavorite
-                                ? Icons.favorite // Biểu tượng đã được chọn
-                                : Icons
-                                .favorite_border, // Biểu tượng chưa được chọn
-                            color: project.isFavorite
-                                ? Colors.red // Màu đỏ nếu đã được chọn
-                                : null, // Màu mặc định nếu chưa được chọn
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 206, 250, 223),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
-                          onPressed: () {
-                            setState(() {
-                              // Cập nhật trạng thái yêu thích của dự án khi người dùng nhấn vào biểu tượng
-                              project.isFavorite = !project.isFavorite;
-                            });
-                          },
+                          margin: const EdgeInsets.only(right: 230.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 7.0, vertical: 10.0),
+                          constraints: const BoxConstraints(
+                              minWidth: 0, maxWidth: double.infinity),
+                          child: Text(
+                            project.createdDate,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                                height: 1,
+                                fontSize: 11,
+                                color: Color.fromARGB(255, 18, 119, 52),
+                                fontWeight: FontWeight.w500),
+                          ),
                         ),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  ProjectDetailPage(project: project),
-                            ),
-                          );
+                      ),
+                      IconButton(
+                        iconSize: 30,
+                        icon: Icon(
+                          project.isFavorite
+                              ? Icons.bookmark_added
+                              : Icons.bookmark_add_outlined,
+                          color: project.isFavorite
+                              ? Color.fromARGB(255, 250, 55, 87)
+                              : null,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            project.isFavorite = !project.isFavorite;
+                          });
                         },
                       ),
-                      SizedBox(height: 12),
-                      const Divider(
-                        height: 12,
-                        thickness: 1.5,
-                        color: Color.fromARGB(255, 54, 52, 52),
+                    ],
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 5),
+                      Text(
+                        'Project ${project.name}',
+                        style: GoogleFonts.poppins(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF406AFF),
+                        ),
+                      ),
+                      Text(
+                        project.role,
+                        style: GoogleFonts.poppins(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        'Students are looking for',
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        firstExpectation,
+                        style: GoogleFonts.poppins(),
+                      ),
+                      const SizedBox(height: 15),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.access_time,
+                            color: Colors.grey,
+                            size: 18,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            '${project.duration}',
+                            style: GoogleFonts.poppins(height: 1.0, fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.group,
+                            color: Colors.grey,
+                            size: 18,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            '${project.students} students',
+                            style: GoogleFonts.poppins(height: 1.0, fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.assignment,
+                            color: Colors.grey,
+                            size: 18,
+                          ),
+                          SizedBox(width: 5),
+                          Text(
+                            '${project.proposals} proposals',
+                            style: GoogleFonts.poppins(height: 1.0, fontSize: 12),
+                          ),
+                        ],
                       ),
                     ],
-                  );
-                },
-                separatorBuilder: (context, index) => const SizedBox(),
-              ),
-            ),
-          ],
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            ProjectDetailPage(project: project),
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+            separatorBuilder: (context, index) => const SizedBox(),
+          ),
         ),
       ),
     );
@@ -142,6 +214,6 @@ class ProjectInfo {
     required this.students,
     required this.expectations,
     required this.proposals,
-    this.isFavorite = false, // Mặc định là không yêu thích
+    this.isFavorite = false,
   });
 }

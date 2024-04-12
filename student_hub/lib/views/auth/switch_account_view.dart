@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
 
@@ -54,59 +55,110 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
     super.initState();
     initPrefs();
   }
+
   Future<void> initPrefs() async {
     prefs = await SharedPreferences.getInstance();
     role = prefs.getInt('role');
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const _AppBar(),
+      appBar: AppBar(
+        title: Text('Student Hub',
+            style: GoogleFonts.poppins(
+                // Apply the Poppins font
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        actions: <Widget>[
+          IconButton(
+            icon: Container(
+              // Add a Container as the parent
+              padding: const EdgeInsets.all(8.0), // Padding for spacing
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                shape: BoxShape.circle,
+              ),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                child: Image.asset('assets/icons/user_ic.png',
+                    width: 25, height: 25),
+              ),
+            ),
+            onPressed: () {},
+          )
+        ],
+      ),
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: Column(
         children: <Widget>[
           // If there are no accounts, show AddAccountWidget, else show a dropdown list of accounts
           accounts.isEmpty
-              ?  AddAccountWidget(widget.user)
+              ? AddAccountWidget(widget.user)
               : TextButton(
                   onPressed: () {
                     // Settings button pressed
                     AuthAccountViewModel(context).showAccountList(widget.user);
                   },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
-                        child: Text("${widget.user.fullname!} \n ${role == 0 ? 'Student' : 'Company'}",
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold)),
-                      ),
                       Transform.rotate(
                         angle:
                             -90 * 3.14159 / 180, // Convert degrees to radians
                         child: const Icon(Icons.arrow_back_ios,
                             color: Colors.black, size: 20.0),
                       ),
+                      Container(
+                        width: 100, // Tăng giá trị width
+                        height: 100, // Tăng giá trị height
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.grey[200], // Màu nền của hình tròn
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(0.0),
+                          child: Image.asset(
+                            'assets/icons/company_account.png',
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                          width: 10), // Khoảng cách giữa hình ảnh và văn bản
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${widget.user.fullname!}",
+                            textAlign: TextAlign.center, // Căn giữa văn bản
+                            style: GoogleFonts.poppins(
+                              color: Color(0xFF406AFF),
+                              fontSize: 25.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          SizedBox(height: 4), // Khoảng cách giữa hai phần
+                          Text(
+                            "${role == 0 ? 'Student' : 'Company'}",
+                            textAlign: TextAlign.center, // Căn giữa văn bản
+                            style: GoogleFonts.poppins(
+                              color: Colors.black,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                width: 100,
-                height: 100,
-                child: Image.asset('assets/images/avatar_default_img.png'),
-              )
-            ],
-          ),
+
           const Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: 10), // Set the padding you want
-            child: Divider(color: Colors.black, thickness: 0.5),
+            padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+            // Set the padding you want
           ),
           Container(
             color: Color.fromARGB(255, 255, 255, 255),
@@ -120,16 +172,16 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                     },
                     icon: const Icon(Icons.person,
                         color: Colors.black, size: 28.0),
-                    label: const Text('Profiles',
-                        style: TextStyle(
+                    label: Text('Profiles',
+                        style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.normal)),
                   ),
                 ),
-                const Divider(
-                  color: Colors.black,
-                  thickness: 0.5,
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Divider(), // Set the padding you want
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -139,16 +191,16 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                     },
                     icon: const Icon(Icons.settings,
                         color: Colors.black, size: 28.0),
-                    label: const Text('Settings',
-                        style: TextStyle(
+                    label: Text('Settings',
+                        style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.normal)),
                   ),
                 ),
-                const Divider(
-                  color: Colors.black,
-                  thickness: 0.5,
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Divider(), // Set the padding you want
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
@@ -159,16 +211,12 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                     },
                     icon: const Icon(Icons.logout,
                         color: Colors.black, size: 28.0),
-                    label: const Text('Log out',
-                        style: TextStyle(
+                    label: Text('Log out',
+                        style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.normal)),
                   ),
-                ),
-                const Divider(
-                  color: Colors.black,
-                  thickness: 0.5,
                 ),
               ],
             ),

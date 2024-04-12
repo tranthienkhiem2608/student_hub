@@ -72,49 +72,60 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: const Text('Student Hub',
-            style: TextStyle(
+        title: Text('Student Hub',
+            style: GoogleFonts.poppins(
+                // Apply the Poppins font
                 color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFFBEEEF7),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         actions: <Widget>[
           IconButton(
-            icon: SizedBox(
-              width: 25,
-              height: 25,
-              child: Image.asset('assets/icons/user_ic.png'),
+            icon: Container(
+              // Add a Container as the parent
+              padding: const EdgeInsets.all(8.0), // Padding for spacing
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                shape: BoxShape.circle,
+              ),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                child: Image.asset('assets/icons/user_ic.png',
+                    width: 25, height: 25),
+              ),
             ),
             onPressed: () {},
-          ),
+          )
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 30, 20, 5),
+              padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Text(
                   "Experiences",
                   style: GoogleFonts.poppins(
-                    fontSize: 18,
+                    fontSize: 23,
                     fontWeight: FontWeight.bold,
+                    color: Color(0xFF406AFF),
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
               child: Text(
                 "Tell us about your self and you will be on your way connect with real-world project",
                 style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                ),
-                textAlign: TextAlign.left,
+                    fontSize: 14,
+                    color: Color.fromARGB(255, 90, 93, 104),
+                    fontWeight: FontWeight.normal,
+                  ),
+                  textAlign: TextAlign.center,
               ),
             ),
             Padding(
@@ -125,7 +136,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                   Text(
                     "Projects",
                     style: GoogleFonts.poppins(
-                      fontSize: 18,
+                      fontSize: 19,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.left,
@@ -141,7 +152,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                       );
                     },
                     icon: const Icon(Icons.add,
-                        size: 26, color: Colors.lightBlue),
+                        size: 26, color: Color(0xFF406AFF)),
                   ),
                 ],
               ),
@@ -190,7 +201,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                           .inputProfileStudent(widget.user);
                     },
                     height: 45,
-                    color: Colors.black,
+                    color: Color(0xFF406AFF),
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 50),
                     shape: RoundedRectangleBorder(

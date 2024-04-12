@@ -194,7 +194,7 @@ class _LoginPageState extends State<ProfileInput>
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 30,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +220,7 @@ class _LoginPageState extends State<ProfileInput>
                           children: [
                             Text(
                               'How many people are in your company?',
-                              style: GoogleFonts.poppins(fontSize: 17, fontWeight: FontWeight.w600),
+                              style: GoogleFonts.poppins(fontSize: 15.5, fontWeight: FontWeight.w600),
                             ),
                             SizedBox(height: 10),
                           ],

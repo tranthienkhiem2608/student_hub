@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/models/model/language.dart';
 
 class PopUpLanguagesWidget extends StatefulWidget {
@@ -56,25 +57,44 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Choose Language'),
+      backgroundColor: Color.fromARGB(244, 255, 255, 255),
+      title: Text('Add language',
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF406AFF),
+          )),
       content: SizedBox(
         height: 400.0,
         width: 300.0,
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment:
+              CrossAxisAlignment.start, // Để căn chỉnh văn bản theo chiều ngang
           children: [
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Select Level',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 20), // Khoảng cách dưới cùng
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Select Language',
+                    style:
+                        GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold)),
+              ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             DropdownSearch<String>(
               asyncItems: (filter) async => await getData(filter,
                   checkLanguageExits(widget.languagesSelected, languages)),
               compareFn: (item, selectedItem) => item == selectedItem,
               dropdownBuilder: (context, selectedItem) {
-                return Text(selectedItem ?? "Select Language");
+                return Text(
+                  selectedItem ?? "Select Language",
+                  style: GoogleFonts.poppins(
+                    fontSize: 13,
+                    color: Colors.grey,
+                  ),
+                );
               },
               onChanged: (String? newValue) {
                 setState(() {
@@ -92,7 +112,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
                   favoriteItemsAlignment: MainAxisAlignment.start,
                 ),
                 searchFieldProps: TextFieldProps(
-                  cursorColor: Colors.blue,
+                  cursorColor: Color(0xFF406AFF),
                   decoration: InputDecoration(
                     labelText: "Search Language",
                     hintText: "Search Language",
@@ -100,16 +120,18 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            const Align(
+            SizedBox(height: 30),
+            Align(
               alignment: Alignment.centerLeft,
               child: Text('Select Level',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  style:
+                        GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold)),
             ),
             Column(
               children: _levels.map((String level) {
                 return ListTile(
-                  title: Text(level),
+                  contentPadding: EdgeInsets.zero,
+                  title: Text(level, style: GoogleFonts.poppins(fontSize: 15)),
                   leading: Radio<String>(
                     value: level,
                     groupValue: _selectedLevel,
@@ -118,6 +140,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
                         _selectedLevel = value ?? "null";
                       });
                     },
+                    activeColor: Color(0xFF406AFF),
                   ),
                 );
               }).toList(),
@@ -131,6 +154,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
                     color: Colors.red,
                     fontSize: 14.0,
                     fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -139,7 +163,10 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('Cancel'),
+          style: TextButton.styleFrom(
+            backgroundColor: Color.fromARGB(244, 213, 222, 255),
+          ),
+            child: Text('Cancel', style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontWeight: FontWeight.w500)),
           onPressed: () {
             Navigator.of(context).pop();
             _selectedLanguage = "null";
@@ -147,7 +174,10 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
           },
         ),
         TextButton(
-          child: Text('OK'),
+          style: TextButton.styleFrom(
+            backgroundColor: Color(0xFF406AFF),
+          ),
+            child: Text('OK', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w500)),
           onPressed: () {
             // Handle the OK button press
             //check existing language
@@ -176,12 +206,12 @@ Widget _customItemBuilder(BuildContext context, String item, bool isSelected) {
           Text(
             item,
             style: TextStyle(
-              color: isSelected ? Colors.blue : Colors.black,
+              color: isSelected ? Color(0xFF406AFF) : Colors.black,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             ),
           ),
           const Divider(
-            color: Colors.black,
+            color: Color(0xFF777B8A),
             thickness: 0.2,
           ),
         ],
@@ -191,7 +221,7 @@ Widget _customItemBuilder(BuildContext context, String item, bool isSelected) {
 Widget _customLoadingBuilder(BuildContext context, String item) {
   return const Center(
     child: CircularProgressIndicator(
-      color: Colors.blue,
+      color: Color(0xFF406AFF),
     ),
   );
 }

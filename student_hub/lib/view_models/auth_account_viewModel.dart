@@ -73,7 +73,7 @@ class AuthAccountViewModel {
 
           // Navigator.of(context).pop();
           // int role = int.parse(userResponse.role?[0]);
-          int role = userResponse.role?[1];
+          int role = userResponse.role?[0];
           print('length: ${userResponse.role?.length}');
 
           if (userResponse.role?.length == 1) {
@@ -100,7 +100,7 @@ class AuthAccountViewModel {
           } else {
             // ControllerRoute(context).navigateToHomeScreen(false, userResponse);
             print('Switch Account');
-            prefs.setInt('role', 1);
+            // prefs.setInt('role', 1);
             if (role == 1) {
               print('Switch Account1');
 

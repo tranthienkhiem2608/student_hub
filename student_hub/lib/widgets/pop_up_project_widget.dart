@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:student_hub/models/model/skillSets.dart';
 import 'package:student_hub/models/project_student.dart';
@@ -139,290 +140,343 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text(
-        'Add Project',
-        textAlign: TextAlign.center,
+  return AlertDialog(
+    title: Padding(
+      padding: const EdgeInsets.fromLTRB(0, 5, 10, 10),
+      child: Text(
+        'Add project',
+        style: GoogleFonts.poppins(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Color(0xFF406AFF),
+        ),
       ),
+    ),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
-              child: Text('Project Name',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              child: Text('Project name:',
+                  style: GoogleFonts.poppins(
+                      fontSize: 15, fontWeight: FontWeight.bold)),
             ),
             TextField(
               controller: _projectNameController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: 'Enter project name',
+                hintStyle: GoogleFonts.poppins(
+                  // Sử dụng font Poppins
+                  color: Colors.grey,
+                  fontSize: 14.0,
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Color(0xFF406AFF), width: 2.0),
+                ),
               ),
             ),
             SizedBox(height: 10),
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  const Text('Start Date',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                  Text('Start year:',
+                      style: GoogleFonts.poppins(
+                          fontSize: 15, fontWeight: FontWeight.bold)),
                   Text(
                     _timeStart == null
                         ? 'No Date Chosen'
                         : DateFormat.yM().format(_timeStart!),
-                    style: const TextStyle(fontSize: 16),
+                    style:
+                        GoogleFonts.poppins(color: Colors.grey, fontSize: 13),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.calendar_month_sharp,
-                        color: Colors.blueGrey),
+                    icon: const Icon(
+                      Icons.calendar_month_sharp,
+                      color: Colors.blueGrey,
+                      size: 20.0,
+                    ),
                     onPressed: _showStartMonthPicker,
                   ),
                 ]),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                const Text('End Date',
-                    style:
-                        TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text('End year:  ',
+                    style: GoogleFonts.poppins(
+                        fontSize: 15, fontWeight: FontWeight.bold)),
                 Text(
                   _timeEnd == null
                       ? 'No Date Chosen'
                       : DateFormat.yM().format(_timeEnd!),
-                  style: const TextStyle(fontSize: 16),
+                  style: GoogleFonts.poppins(color: Colors.grey, fontSize: 13),
                 ),
                 IconButton(
                   icon: const Icon(Icons.calendar_month_sharp,
-                      color: Colors.blueGrey),
+                      color: Colors.blueGrey, size: 20.0),
                   onPressed: _showEndMonthPicker,
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            Autocomplete<String>(
-              optionsBuilder: (TextEditingValue textEditingValue) async {
-                skillsSets = await getDataSkillSet(context);
-                if (textEditingValue.text == '') {
-                  return Future.value(
-                      skillsSets.map((skillSet) => skillSet.name));
-                }
-                return skillsSets
-                    .where((skillSet) => skillSet.name
-                        .toLowerCase()
-                        .contains(textEditingValue.text.toLowerCase()))
-                    .map((skillSet) => skillSet.name)
-                    .toList();
-              },
-              optionsViewBuilder: (context, onSelected, options) {
-                return Container(
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 5.0),
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Material(
-                      elevation: 5.0,
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxHeight: 200),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: options.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final dynamic option = options.elementAt(index);
-                            return option.toLowerCase().contains(
-                                    _textEditingController.text.toLowerCase())
-                                ? TextButton(
-                                    onPressed: () {
-                                      onSelected(option);
-                                      if (_skillsListProject
-                                              .contains({'name': option}) ==
-                                          false) {
-                                        if (_skillsListProject
-                                            .where((element) =>
-                                                element.name == option)
-                                            .isEmpty) {
-                                          _skillsListProject.add(skillsSets
-                                              .where((element) =>
-                                                  element.name == option)
-                                              .first);
-                                        }
-                                      }
-                                      setState(() {});
-                                    },
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 0.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              '$option',
-                                              textAlign: TextAlign.left,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            if (_skillsListProject
-                                                .contains({'name': option}))
-                                              const Icon(
-                                                Icons.check,
-                                                color: Colors.green,
-                                              ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                : Container();
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-              onSelected: (String selectedTag) {
-                _textfieldTagsController.onSubmitted(selectedTag);
-              },
-              fieldViewBuilder: (context, textEditingController, focusNode,
-                  onFieldSubmitted) {
-                _textEditingController =
-                    textEditingController; // Save the TextEditingController
-                return TextFieldTags<String>(
-                  textEditingController: textEditingController,
-                  focusNode: focusNode,
-                  textfieldTagsController: _textfieldTagsController,
-                  letterCase: LetterCase.normal,
-                  validator: (String tag) {
-                    if (_textfieldTagsController.getTags!.contains(tag)) {
-                      return 'You already entered that';
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 0),
+                SizedBox(height: 10),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text('Skills:',
+                      style: GoogleFonts.poppins(
+                          fontSize: 15, fontWeight: FontWeight.bold)),
+                ),
+                Autocomplete<String>(
+                  optionsBuilder: (TextEditingValue textEditingValue) async {
+                    skillsSets = await getDataSkillSet(context);
+                    if (textEditingValue.text == '') {
+                      return Future.value(
+                          skillsSets.map((skillSet) => skillSet.name));
                     }
-                    return null;
+                    return skillsSets
+                        .where((skillSet) => skillSet.name
+                            .toLowerCase()
+                            .contains(textEditingValue.text.toLowerCase()))
+                        .map((skillSet) => skillSet.name)
+                        .toList();
                   },
-                  inputFieldBuilder: (context, inputFieldValues) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: SingleChildScrollView(
-                        child: TextField(
-                          controller: inputFieldValues.textEditingController,
-                          focusNode: inputFieldValues.focusNode,
-                          decoration: InputDecoration(
-                            border: const UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.black, width: 3.0),
-                            ),
-                            focusedBorder: const UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Color(0xFFBEEEF7), width: 2.0),
-                            ),
-                            hintText: inputFieldValues.tags.isNotEmpty
-                                ? ''
-                                : "Add your skills",
-                            errorText: inputFieldValues.error,
-                            prefixIconConstraints: BoxConstraints(
-                                maxWidth: _distanceToField * 0.90),
-                            prefixIcon: inputFieldValues.tags.isNotEmpty
-                                ? SingleChildScrollView(
-                                    controller:
-                                        inputFieldValues.tagScrollController,
-                                    scrollDirection: Axis.horizontal,
-                                    child: Wrap(
-                                        children: inputFieldValues.tags
-                                            .map((String tag) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(
-                                            2.0), // Add padding here
-
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0),
+                  optionsViewBuilder: (context, onSelected, options) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 5.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Material(
+                          elevation: 5.0,
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(
+                                maxHeight: 200, maxWidth: 250),
+                            child: ListView.builder(
+                              padding: EdgeInsets.only(left: 10.0),
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: options.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                final dynamic option = options.elementAt(index);
+                                return option.toLowerCase().contains(
+                                        _textEditingController.text
+                                            .toLowerCase())
+                                    ? TextButton(
+                                        onPressed: () {
+                                          onSelected(option);
+                                          if (_skillsListProject
+                                                  .contains({'name': option}) ==
+                                              false) {
+                                            if (_skillsListProject
+                                                .where((element) =>
+                                                    element.name == option)
+                                                .isEmpty) {
+                                              _skillsListProject.add(skillsSets
+                                                  .where((element) =>
+                                                      element.name == option)
+                                                  .first);
+                                            }
+                                          }
+                                          setState(() {});
+                                        },
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 0.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  '$option',
+                                                  textAlign: TextAlign.left,
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                if (_skillsListProject
+                                                    .contains({'name': option}))
+                                                  const Icon(
+                                                    Icons.check,
+                                                    color: Colors.green,
+                                                  ),
+                                              ],
                                             ),
-                                            color: Colors.lightBlueAccent,
-                                          ),
-                                          margin:
-                                              const EdgeInsets.only(right: 0.0),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10.0, vertical: 4.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              InkWell(
-                                                child: Row(
-                                                  children: [
-                                                    const Icon(Icons
-                                                        .person), // This is the user icon
-                                                    Text(
-                                                      tag,
-                                                      style: const TextStyle(
-                                                          color: Colors.black),
-                                                    ),
-                                                  ],
-                                                ),
-                                                onTap: () {
-                                                  //print("$tag selected");
-                                                },
-                                              ),
-                                              const SizedBox(width: 4.0),
-                                              InkWell(
-                                                child: const Icon(
-                                                  Icons.cancel,
-                                                  size: 14.0,
-                                                  color: Color.fromARGB(
-                                                      255, 233, 233, 233),
-                                                ),
-                                                onTap: () {
-                                                  inputFieldValues
-                                                      .onTagDelete(tag);
-                                                  if (_skillsListProject
-                                                      .contains(
-                                                          {'name': tag})) {
-                                                    _skillsListProject
-                                                        .removeWhere((element) {
-                                                      return element.name ==
-                                                          tag;
-                                                    });
-                                                  }
-                                                  setState(() {});
-                                                },
-                                              )
-                                            ],
                                           ),
                                         ),
-                                      );
-                                    }).toList()),
-                                  )
-                                : null,
+                                      )
+                                    : Container();
+                              },
+                            ),
                           ),
-                          onChanged: inputFieldValues.onChanged,
-                          onSubmitted: inputFieldValues.onSubmitted,
                         ),
                       ),
                     );
                   },
-                );
-              },
+                  onSelected: (String selectedTag) {
+                    _textfieldTagsController.onSubmitted(selectedTag);
+                  },
+                  fieldViewBuilder: (context, textEditingController, focusNode,
+                      onFieldSubmitted) {
+                    _textEditingController =
+                        textEditingController; // Save the TextEditingController
+                    return TextFieldTags<String>(
+                      textEditingController: textEditingController,
+                      focusNode: focusNode,
+                      textfieldTagsController: _textfieldTagsController,
+                      letterCase: LetterCase.normal,
+                      validator: (String tag) {
+                        if (_textfieldTagsController.getTags!.contains(tag)) {
+                          return 'You already entered that';
+                        }
+                        return null;
+                      },
+                      inputFieldBuilder: (context, inputFieldValues) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0, vertical: 3.0),
+                          child: SingleChildScrollView(
+                            child: TextField(
+                              controller:
+                                  inputFieldValues.textEditingController,
+                              focusNode: inputFieldValues.focusNode,
+                              decoration: InputDecoration(
+                                border: const UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.black, width: 3.0),
+                                ),
+                                focusedBorder: const UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Color(0xFF406AFF), width: 1.2),
+                                ),
+                                hintText: inputFieldValues.tags.isNotEmpty
+                                    ? ''
+                                    : "Add your skills",
+                                hintStyle: GoogleFonts.poppins(
+                                  color: Colors.grey,
+                                  fontSize:
+                                      14, // Đổi màu của hintText thành màu xám
+                                ),
+                                errorText: inputFieldValues.error,
+                                prefixIconConstraints: BoxConstraints(
+                                    maxWidth: _distanceToField * 0.90),
+                                prefixIcon: inputFieldValues.tags.isNotEmpty
+                                    ? SingleChildScrollView(
+                                        controller: inputFieldValues
+                                            .tagScrollController,
+                                        scrollDirection: Axis.horizontal,
+                                        child: Wrap(
+                                            children: inputFieldValues.tags
+                                                .map((String tag) {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(
+                                                2.0), // Add padding here
+
+                                            child: Container(
+                                              decoration: const BoxDecoration(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0),
+                                                ),
+                                                color: Color(0xFF4DBE3FF),
+                                              ),
+                                              margin: const EdgeInsets.only(
+                                                  right: 0.0),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10.0,
+                                                      vertical: 8.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  InkWell(
+                                                    child: Row(
+                                                      children: [
+                                                        // This is the user icon
+                                                        Text(
+                                                          tag,
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                                  // Đổi font thành Poppins
+                                                                  color: Color(
+                                                                      0xFF406AFF)),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    onTap: () {
+                                                      //print("$tag selected");
+                                                    },
+                                                  ),
+                                                  const SizedBox(width: 4.0),
+                                                  InkWell(
+                                                    child: const Icon(
+                                                      Icons.cancel,
+                                                      size: 14.0,
+                                                      color: Color(0xFF406AFF),
+                                                    ),
+                                                    onTap: () {
+                                                      inputFieldValues
+                                                          .onTagDelete(tag);
+                                                      if (_skillsListProject
+                                                          .contains(
+                                                              {'name': tag})) {
+                                                        _skillsListProject
+                                                            .removeWhere(
+                                                                (element) {
+                                                          return element.name ==
+                                                              tag;
+                                                        });
+                                                      }
+                                                      setState(() {});
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        }).toList()),
+                                      )
+                                    : null,
+                              ),
+                              onChanged: inputFieldValues.onChanged,
+                              onSubmitted: inputFieldValues.onSubmitted,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
             ),
             SizedBox(height: 20),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text('Project Description',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-            ),
+            Align(
+                alignment: Alignment.centerLeft,
+                child: Text('Project description:',
+                    style: GoogleFonts.poppins(
+                        fontSize: 15, fontWeight: FontWeight.bold))),
             SizedBox(height: 10),
             Container(
               width: 300.0,
-              height: 200.0,
+              height: 160.0,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
+                border: Border.all(color: Colors.grey),
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: TextFormField(
                 controller: _projectDescriptionController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Enter project description',
+                  hintStyle: GoogleFonts.poppins(
+                    color: Colors.grey,
+                    fontSize: 14.0,
+                  ),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(10.0),
                 ),
@@ -435,13 +489,23 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('Cancel'),
+          style: TextButton.styleFrom(
+            backgroundColor: Color.fromARGB(244, 213, 222, 255),
+          ),
+          child: Text('Cancel',
+              style: GoogleFonts.poppins(
+                  color: Color(0xFF406AFF), fontWeight: FontWeight.w500)),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         TextButton(
-          child: Text('Add'),
+          style: TextButton.styleFrom(
+            backgroundColor: Color(0xFF406AFF),
+          ),
+          child: Text('Add',
+              style: GoogleFonts.poppins(
+                  color: Colors.white, fontWeight: FontWeight.w500)),
           onPressed: () {
             // Handle the Add button press
             // You can access the project name using _projectNameController.text

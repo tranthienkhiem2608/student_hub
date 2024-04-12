@@ -1,5 +1,5 @@
-// show_school_widget.dart
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/widgets/pop_up_education_widget.dart';
 import 'package:student_hub/models/model/education.dart';
 
@@ -24,14 +24,22 @@ class ShowSchoolWidget extends StatelessWidget {
         return Column(
           children: [
             ListTile(
-              title: Text(educationList[index].schoolName!),
+              title: Text(educationList[index].schoolName!,
+                  style: GoogleFonts.poppins(
+                      fontSize: 15, fontWeight: FontWeight.w600)),
               subtitle: Text(
-                  '${educationList[index].startYear!} - ${educationList[index].endYear!}'),
+                  ' ${educationList[index].startYear!} - ${educationList[index].endYear!}',
+                  style: GoogleFonts.poppins(fontSize: 13)),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
+                
                 children: <Widget>[
                   IconButton(
-                    icon: const Icon(Icons.edit, color: Colors.black),
+                    icon: Image.asset(
+                      'assets/icons/edit.jpg', // Đường dẫn đến hình ảnh edit.jpg
+                      width: 21, // Kích thước của hình ảnh
+                      height: 21,
+                    ),
                     onPressed: () {
                       // Handle edit button press
                       showDialog(
@@ -49,7 +57,11 @@ class ShowSchoolWidget extends StatelessWidget {
                     },
                   ),
                   IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.red),
+                    icon: Image.asset(
+                      'assets/icons/delete.jpg', // Đường dẫn đến hình ảnh edit.jpg
+                      width: 21, // Kích thước của hình ảnh
+                      height: 21,
+                    ),
                     onPressed: () {
                       _deleteSchool(educationList[index].schoolName!);
                       // Handle delete button press
@@ -59,8 +71,8 @@ class ShowSchoolWidget extends StatelessWidget {
               ),
             ),
             const Divider(
-              color: Colors.black,
-              thickness: 0.3,
+              color: Color.fromARGB(255, 190, 190, 192),
+              thickness: 0.8,
             ),
           ],
         );

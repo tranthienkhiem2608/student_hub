@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/views/browse_project/project_search.dart';
 import 'package:student_hub/views/browse_project/project_saved.dart';
 import 'package:student_hub/widgets/project_list_widget.dart';
@@ -136,6 +137,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       controller: _searchController,
                       decoration: InputDecoration(
                         hintText: 'Search for projects...',
+                        hintStyle: GoogleFonts.poppins(),
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
@@ -216,6 +218,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         enabled: false,
                         decoration: InputDecoration(
                           hintText: 'Search for projects...',
+                          hintStyle: GoogleFonts.poppins(),
                           prefixIcon: Icon(Icons.search),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(50),
@@ -225,8 +228,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     ),
                   ),
                   IconButton(
-                    icon: Icon(Icons.favorite),
-                    color: Colors.red,
+                    icon: Icon(Icons.bookmark_rounded),
+                    color: Color.fromARGB(255, 250, 55, 87),
+                    iconSize: 30,
                     onPressed: () {
                       Navigator.push(
                         context,

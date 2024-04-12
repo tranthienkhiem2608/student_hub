@@ -79,6 +79,10 @@ flutter:
     - assets/icons/
     - assets/introduction_animation/
     - assets/alerts/
+    - assets/icons/home.png
+    - assets/icons/chat.png
+    - assets/icons/notification.png
+    - assets/icons/dashboard.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

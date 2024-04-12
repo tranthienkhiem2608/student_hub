@@ -113,22 +113,31 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: const Text('Student Hub',
-            style: TextStyle(
+        title: Text('Student Hub',
+            style: GoogleFonts.poppins(
+                // Apply the Poppins font
                 color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFFBEEEF7),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         actions: <Widget>[
           IconButton(
-            icon: SizedBox(
-              width: 25,
-              height: 25,
-              child: Image.asset('assets/icons/user_ic.png'),
+            icon: Container(
+              // Add a Container as the parent
+              padding: const EdgeInsets.all(8.0), // Padding for spacing
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                shape: BoxShape.circle,
+              ),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                child: Image.asset('assets/icons/user_ic.png',
+                    width: 25, height: 25),
+              ),
             ),
             onPressed: () {},
-          ),
+          )
         ],
       ),
       body: SingleChildScrollView(
@@ -138,58 +147,85 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
               padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
               child: Align(
                 alignment: Alignment.topCenter,
-                child: Text(
-                  "Welcome to Student Hub",
-                  style: GoogleFonts.poppins(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                child: RichText(
+                  text: TextSpan(
+                    style: GoogleFonts.poppins(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black, // Màu chữ mặc định
+                    ),
+                    children: [
+                      TextSpan(
+                        text: "Welcome to ",
+                      ),
+                      TextSpan(
+                        text: "Student Hub",
+                        style: TextStyle(
+                            color:
+                                Color(0xFF406AFF)), // Màu chữ của "Student Hub"
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
-              child: Text(
-                "Tell us about your self and you will be on your way connect with real-world project",
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
+                child: Text(
+                  "Tell us about your self and you will be on your way connect with real-world project",
+                  style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    color: Color.fromARGB(255, 90, 93, 104),
+                    fontWeight: FontWeight.normal,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.left,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Techstack",
                   style: GoogleFonts.poppins(
-                    fontSize: 16,
+                    fontSize: 17,
                     fontWeight: FontWeight.bold,
                   ),
                   textAlign: TextAlign.left,
                 ),
               ),
             ),
-            SizedBox(
-              width: 350,
+            Container(
+              padding: const EdgeInsets.fromLTRB(0, 1, 0, 0),
+              width: 390,
               height: 50,
               child: DropdownSearch<TechStack>(
                 asyncItems: (filter) async => getData(context, filter),
                 compareFn: (item, selectedItem) => item == selectedItem,
                 dropdownBuilder: (context, selectedItem) {
-                  return Text(selectedItem?.name ?? "Select TechStack");
+                  return Text(
+                    selectedItem?.name ?? "Select Techstack",
+                    style: GoogleFonts.poppins(
+                      fontSize: 13,
+                      color: Colors.grey,
+                    ),
+                  );
                 },
                 onChanged: (TechStack? newValue) {
                   setState(() {
                     _selectedTechStack = newValue!.name;
+                    
                     print("chosen techstack: $_selectedTechStack");
                     _selectedTechStackId = newValue.id;
                     print("id: $_selectedTechStackId");
                   });
                 },
                 popupProps: const PopupProps.menu(
+                  constraints: BoxConstraints(
+                    maxHeight: 250, // Đặt giới hạn chiều cao tối đa
+                  ),
                   isFilterOnline: true,
                   showSearchBox: true,
                   showSelectedItems: true,
@@ -200,7 +236,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                     favoriteItemsAlignment: MainAxisAlignment.start,
                   ),
                   searchFieldProps: TextFieldProps(
-                    cursorColor: Colors.blue,
+                    cursorColor: Color(0xFF406AFF),
                     decoration: InputDecoration(
                       labelText: "Search Techstack",
                       hintText: "Search Techstack",
@@ -216,7 +252,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                 child: Text(
                   "Skillset",
                   style: GoogleFonts.poppins(
-                    fontSize: 16,
+                    fontSize: 17,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -336,11 +372,13 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                             ),
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(
-                                  color: Color(0xFFBEEEF7), width: 2.0),
+                                  color: Color(0xFF406AFF), width: 2.0),
                             ),
                             hintText: inputFieldValues.tags.isNotEmpty
                                 ? ''
                                 : "Add your skills",
+                            hintStyle:
+                                GoogleFonts.poppins(fontSize: 13, color: Colors.grey),
                             errorText: inputFieldValues.error,
                             prefixIconConstraints: BoxConstraints(
                                 maxWidth: _distanceToField * 0.90),
@@ -350,82 +388,90 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                                         inputFieldValues.tagScrollController,
                                     scrollDirection: Axis.horizontal,
                                     child: Wrap(
-                                        children: inputFieldValues.tags
-                                            .map((String tag) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(
-                                            2.0), // Add padding here
+                                      children: inputFieldValues.tags
+                                          .map((String tag) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(
+                                              2.0), // Add padding here
 
-                                        child: Container(
-                                          decoration: const BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0),
-                                            ),
-                                            color: Colors.lightBlueAccent,
-                                          ),
-                                          margin:
-                                              const EdgeInsets.only(right: 0.0),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10.0, vertical: 4.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              InkWell(
-                                                child: Row(
-                                                  children: [
-                                                    const Icon(Icons
-                                                        .person), // This is the user icon
-                                                    Text(
-                                                      tag,
-                                                      style: const TextStyle(
-                                                          color: Colors.black),
-                                                    ),
-                                                  ],
-                                                ),
-                                                onTap: () {
-                                                  //print("$tag selected");
-                                                },
+                                          child: Container(
+                                            decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0),
                                               ),
-                                              const SizedBox(width: 4.0),
-                                              InkWell(
-                                                child: const Icon(
-                                                  Icons.cancel,
-                                                  size: 14.0,
-                                                  color: Color.fromARGB(
-                                                      255, 233, 233, 233),
+                                              color: Color(0xFF4DBE3FF),
+                                            ),
+                                            margin: const EdgeInsets.only(
+                                                right: 0.0),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15.0,
+                                                vertical: 8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                InkWell(
+                                                  child: Row(
+                                                    children: [
+                                                      // This is the user icon
+                                                      Text(
+                                                        tag,
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                                // Đổi font thành Poppins
+                                                                color: Color(
+                                                                    0xFF406AFF)),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  onTap: () {
+                                                    //print("$tag selected");
+                                                  },
                                                 ),
-                                                onTap: () {
-                                                  inputFieldValues
-                                                      .onTagDelete(tag);
-                                                  if (_selectedSkills
-                                                      .contains(tag)) {
-                                                    _selectedSkills.remove(tag);
-                                                    _selectedSkillsId.remove(
-                                                        skillsSets
-                                                            .firstWhere(
-                                                                (element) =>
-                                                                    element
-                                                                        .name ==
-                                                                    tag)
-                                                            .id);
-                                                    _selectedSkillSet
-                                                        .removeWhere(
-                                                            (element) =>
-                                                                element.name ==
-                                                                tag);
-                                                  }
-                                                  setState(() {});
-                                                },
-                                              )
-                                            ],
+                                                const SizedBox(width: 4.0),
+                                                InkWell(
+                                                  child: const Icon(
+                                                    Icons.cancel,
+                                                    size: 14.0,
+                                                    color: Color(0xFF406AFF),
+                                                  ),
+                                                  onTap: () {
+                                                    inputFieldValues
+                                                        .onTagDelete(tag);
+                                                    if (_selectedSkills
+                                                        .contains(tag)) {
+                                                      _selectedSkills
+                                                          .remove(tag);
+                                                      _selectedSkillsId.remove(
+                                                          skillsSets
+                                                              .firstWhere(
+                                                                  (element) =>
+                                                                      element
+                                                                          .name ==
+                                                                      tag)
+                                                              .id);
+                                                      _selectedSkillSet
+                                                          .removeWhere(
+                                                              (element) =>
+                                                                  element
+                                                                      .name ==
+                                                                  tag);
+                                                    }
+                                                    setState(() {});
+                                                  },
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    }).toList()),
+                                        );
+                                      }).toList(),
+                                    ),
                                   )
                                 : null,
                           ),
+                          style: GoogleFonts
+                              .poppins(), // Đổi font chữ thành Poppins
                           onChanged: inputFieldValues.onChanged,
                           onSubmitted: inputFieldValues.onSubmitted,
                         ),
@@ -444,14 +490,14 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                     child: Text(
                       "Languages",
                       style: GoogleFonts.poppins(
-                        fontSize: 16,
+                        fontSize: 17,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(160, 15, 0, 5),
+                  padding: const EdgeInsets.fromLTRB(160, 10, 0, 5),
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: IconButton(
@@ -470,8 +516,11 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                           });
                         }
                       },
-                      icon: const Icon(Icons.add,
-                          size: 26, color: Colors.lightBlue),
+                      icon: const Icon(
+                        Icons.add,
+                        size: 26,
+                        color: Color(0xFF406AFF),
+                      ),
                     ),
                   ),
                 ),
@@ -485,7 +534,11 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                       },
                     );
                   },
-                  icon: const Icon(Icons.edit, size: 23),
+                  icon: Image.asset(
+                    'assets/icons/edit.jpg', // Đường dẫn đến hình ảnh edit.jpg
+                    width: 20, // Kích thước của hình ảnh
+                    height: 20,
+                  ),
                 ),
               ],
             ),
@@ -497,8 +550,9 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.grey, // Set border color
-                          width: 2, // Set border width
+                          color: Color.fromARGB(
+                              255, 190, 190, 192), // Set border color
+                          width: 1, // Set border width
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -512,20 +566,20 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       "Education",
                       style: GoogleFonts.poppins(
-                        fontSize: 16,
+                        fontSize: 17,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(220, 15, 0, 5),
+                  padding: const EdgeInsets.fromLTRB(220, 10, 0, 5),
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: IconButton(
@@ -539,26 +593,27 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                         );
                       },
                       icon: const Icon(Icons.add,
-                          size: 26, color: Colors.lightBlue),
+                          size: 26, color: Color(0xFF406AFF)),
                     ),
                   ),
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
               child: SingleChildScrollView(
                 child: Column(
                   children: [
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.grey, // Set border color
-                          width: 2, // Set border width
+                          color: Color.fromARGB(
+                              255, 190, 190, 192), // Set border color
+                          width: 1, // Set border width
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      height: 160,
+                      height: 170,
                       child: ShowSchoolWidget(
                           educationList: educationList,
                           deleteSchool: _deleteEducation,
@@ -626,7 +681,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                       //     .navigateToProfileInputStudent2(widget.user);
                     },
                     height: 45,
-                    color: Colors.black,
+                    color: Color(0xFF406AFF),
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 50),
                     shape: RoundedRectangleBorder(
@@ -680,18 +735,18 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 Widget _customItemBuilder(
     BuildContext context, TechStack item, bool isSelected) {
   return Padding(
-      padding: const EdgeInsets.fromLTRB(5, 15, 5, 15),
+      padding: const EdgeInsets.fromLTRB(5, 15, 5, 10),
       child: Column(
         children: [
           Text(
             item.name,
             style: TextStyle(
-              color: isSelected ? Colors.blue : Colors.black,
+              color: isSelected ? Color(0xFF406AFF) : Colors.black,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             ),
           ),
           const Divider(
-            color: Colors.black,
+            color: Color(0xFF777B8A),
             thickness: 0.2,
           ),
         ],

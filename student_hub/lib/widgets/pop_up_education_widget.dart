@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PopUpEducationEditWidget extends StatefulWidget {
   final Function addEducation;
@@ -49,17 +50,28 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Add Education', textAlign: TextAlign.center),
+      title: Text('Add education',
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF406AFF),
+          )),
       content: SizedBox(
-        height: 250.0,
+        height: 210.0,
         child: Column(
           children: [
             Row(
               children: [
-                Text('School Name: '),
+                Text('Shcool name:',
+                    style: GoogleFonts.poppins(
+                        fontSize: 15, fontWeight: FontWeight.bold)),
+                        
                 Expanded(
                   child: TextFormField(
+                    
+                    cursorColor: Color(0xFF406AFF),
                     controller: _schoolNameController,
+                    
                     onChanged: (value) {
                       _schoolNameController.text = value;
                     },
@@ -77,8 +89,12 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Start Year: '),
-                Text(_startYear == 0 ? 'Select Year' : _startYear.toString()),
+                Text('Start year:',
+                    style: GoogleFonts.poppins(
+                        fontSize: 15, fontWeight: FontWeight.bold)),
+                Text(_startYear == 0 ? 'Select Year' : _startYear.toString(),
+                    style: GoogleFonts.poppins(
+                        color: Color(0xFF777B8A), fontSize: 14)),
                 IconButton(
                     onPressed: () {
                       _endYear == 0
@@ -98,8 +114,12 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
                             return Center(
                                 child: Container(
                               height: 200.0,
-                              width: 300.0,
-                              color: Colors.white.withOpacity(0.95),
+                              width: 250.0,
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(1),
+                                borderRadius: BorderRadius.circular(
+                                    20.0), // Điều chỉnh giá trị để thay đổi độ cong của góc
+                              ),
                               child: CupertinoPicker(
                                 scrollController: _endYear == 0
                                     ? scrollController
@@ -118,53 +138,63 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
                             ));
                           });
                     },
-                    icon: Icon(Icons.calendar_today)),
+                    icon: Icon(Icons.calendar_today),
+                    iconSize: 20.0),
               ],
             ),
             SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('End Year: '),
-                Text(_endYear == 0 ? 'Select Year' : _endYear.toString()),
+                Text('End year:  ',
+                    style: GoogleFonts.poppins(
+                        fontSize: 15, fontWeight: FontWeight.bold)),
+                Text(_endYear == 0 ? 'Select Year' : _endYear.toString(),
+                    style: GoogleFonts.poppins(
+                        color: Color(0xFF777B8A), fontSize: 14)),
                 IconButton(
-                    onPressed: () {
-                      _startYear == 0
-                          ? listYear = yearList
-                          : listYear = List<int>.generate(
-                              DateTime.now().year - _startYear + 1 + 10,
-                              (i) => i + _startYear + 1).reversed.toList();
-                      int initialItemIndexEnd =
-                          listYear.indexOf(DateTime.now().year);
-                      scrollControllerEnd = FixedExtentScrollController(
-                          initialItem: initialItemIndexEnd);
-                      showCupertinoModalPopup(
-                          context: context,
-                          builder: (context) {
-                            return Center(
-                                child: Container(
-                              height: 200.0,
-                              width: 300.0,
-                              color: Colors.white.withOpacity(0.95),
-                              child: CupertinoPicker(
-                                scrollController: _startYear == 0
-                                    ? scrollController
-                                    : scrollControllerEnd,
-                                itemExtent: 40.0,
-                                onSelectedItemChanged: (index) {
-                                  setState(() {
-                                    _endYear = listYear[index];
-                                  });
-                                },
-                                children: listYear
-                                    .map((year) =>
-                                        Center(child: Text(year.toString())))
-                                    .toList(),
-                              ),
-                            ));
-                          });
-                    },
-                    icon: Icon(Icons.calendar_today)),
+  onPressed: () {
+    _startYear == 0
+        ? listYear = yearList
+        : listYear = List<int>.generate(
+            DateTime.now().year - _startYear + 1 + 10,
+            (i) => i + _startYear + 1).reversed.toList();
+    int initialItemIndexEnd =
+        listYear.indexOf(DateTime.now().year);
+    scrollControllerEnd = FixedExtentScrollController(
+        initialItem: initialItemIndexEnd);
+    showCupertinoModalPopup(
+        context: context,
+        builder: (context) {
+          return Center(
+              child: Container(
+                height: 200.0,
+                width: 250.0,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(1),
+                  borderRadius: BorderRadius.circular(20.0), // Điều chỉnh giá trị để thay đổi độ cong của góc
+                ),
+                child: CupertinoPicker(
+                  scrollController: _startYear == 0
+                      ? scrollController
+                      : scrollControllerEnd,
+                  itemExtent: 40.0,
+                  onSelectedItemChanged: (index) {
+                    setState(() {
+                      _endYear = listYear[index];
+                    });
+                  },
+                  children: listYear
+                      .map((year) =>
+                  Center(child: Text(year.toString())))
+                      .toList(),
+                ),
+              ));
+        });
+  },
+  icon: Icon(Icons.calendar_today),
+  iconSize: 20.0),
+
               ],
             ),
             if (showError == true)
@@ -184,7 +214,12 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('Cancel'),
+          style: TextButton.styleFrom(
+            backgroundColor: Color.fromARGB(244, 213, 222, 255),
+          ),
+          child: Text('Cancel',
+              style: GoogleFonts.poppins(
+                  color: Color(0xFF406AFF), fontWeight: FontWeight.w500)),
           onPressed: () {
             Navigator.of(context).pop();
             _startYear = 0;
@@ -192,7 +227,12 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
           },
         ),
         TextButton(
-          child: Text('Add'),
+          style: TextButton.styleFrom(
+            backgroundColor: Color(0xFF406AFF),
+          ),
+          child: Text('Add',
+              style: GoogleFonts.poppins(
+                  color: Colors.white, fontWeight: FontWeight.w500)),
           onPressed: () {
             schoolName = _schoolNameController.text;
             print(schoolName);
