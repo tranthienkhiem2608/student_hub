@@ -59,9 +59,8 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
       final file = File(result.files.single.path!);
       setState(() {
         _cvFile = file;
-        fileCV = FileCV(
-          resume: file.path,
-        );
+
+        print("PATH: ${file.path}");
         _cvPlatformFile = result.files.first;
       });
     }
@@ -92,9 +91,8 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
       final file = File(result.files.single.path!);
       setState(() {
         _transcriptFile = file;
-        fileCV = FileCV(
-          transcript: file.path,
-        );
+
+        print("PATH: ${file.path}");
         _transcriptPlatformFile = result.files.first;
       });
     }
@@ -197,9 +195,17 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                   onPressed: () {
                     // 1. Simulate some processing (if needed)
                     // You would perform your upload logic or other tasks here.// Example delay
+                    fileCV = FileCV(
+                      transcript: _transcriptPlatformFile?.path,
+                      resume: _cvPlatformFile?.path,
+                    );
                     widget.studentUser.studentUser?.file = fileCV;
-                    InputProfileViewModel(context)
-                        .inputProfileStudent(widget.studentUser);
+                    print(
+                        "CV: ${widget.studentUser.studentUser?.file?.resume}");
+                    print(
+                        "Transcript: ${widget.studentUser.studentUser?.file?.transcript}");
+                    // InputProfileViewModel(context)
+                    //     .inputProfileStudent(widget.studentUser);
                     // 3. Navigate to HomePage
                   },
                   style: ElevatedButton.styleFrom(

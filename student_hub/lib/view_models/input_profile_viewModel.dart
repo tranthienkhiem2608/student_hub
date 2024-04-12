@@ -69,7 +69,7 @@ class InputProfileViewModel {
           await putExperience(responseUserMap['result']['id'],
               studentUser.studentUser!.experience!);
         }
-        if (studentUser.studentUser?.file?.resume != null &&
+        if (studentUser.studentUser?.file?.resume != null ||
             studentUser.studentUser?.file?.transcript != null) {
           await putFileCv(
               responseUserMap['result']['id'], studentUser.studentUser!.file!);

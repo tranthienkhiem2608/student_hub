@@ -599,7 +599,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                           experience: [],
                         );
                         ControllerRoute(context)
-                            .navigateToProfileInputStudent2(widget.user);
+                            .navigateToProfileInputStudent3(widget.user);
                       } else {
                         //show dialog to choose techstack and skillset
                         showDialog(
