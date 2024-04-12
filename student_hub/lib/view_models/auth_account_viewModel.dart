@@ -121,10 +121,10 @@ class AuthAccountViewModel {
               userResponse.studentUser == null
                   ? ControllerRoute(context)
                       .navigateToProfileInputStudent1(userResponse)
+                  // : ControllerRoute(context)
+                  //     .navigateToProfileInputStudent3(userResponse);
                   : ControllerRoute(context)
-                      .navigateToProfileInputStudent3(userResponse);
-              // : ControllerRoute(context)
-              //     .navigateToHomeScreen(true, userResponse);
+                      .navigateToHomeScreen(true, userResponse);
             }
           }
         }

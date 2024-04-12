@@ -44,9 +44,12 @@ class _ShowAccountWidgetState extends State<ShowAccountWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: widget._companyUser.role!.length + 1,
+      itemCount: widget._companyUser.role!.length == 1
+          ? widget._companyUser.role!.length + 1
+          : widget._companyUser.role!.length,
       itemBuilder: (ctx, index) {
-        if (index == widget._companyUser.role!.length) {
+        if (index == widget._companyUser.role!.length &&
+            widget._companyUser.role!.length < 2) {
           return AddAccountWidget(widget._companyUser);
         } else {
           return InkWell(
