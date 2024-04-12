@@ -52,12 +52,18 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
   @override
   void initState() {
     super.initState();
-    initPrefs();
+    setState(() {
+      initPrefs();
+    });
   }
+
   Future<void> initPrefs() async {
     prefs = await SharedPreferences.getInstance();
-    role = prefs.getInt('role');
+    setState(() {
+      role = prefs.getInt('role')!;
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +73,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
         children: <Widget>[
           // If there are no accounts, show AddAccountWidget, else show a dropdown list of accounts
           accounts.isEmpty
-              ?  AddAccountWidget(widget.user)
+              ? AddAccountWidget(widget.user)
               : TextButton(
                   onPressed: () {
                     // Settings button pressed
@@ -78,7 +84,8 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
-                        child: Text("${widget.user.fullname!} \n ${role == 0 ? 'Student' : 'Company'}",
+                        child: Text(
+                            "${widget.user.fullname!} \n ${role == 0 ? 'Student' : 'Company'}",
                             style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 20.0,

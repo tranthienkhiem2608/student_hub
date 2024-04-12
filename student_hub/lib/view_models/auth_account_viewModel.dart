@@ -16,11 +16,16 @@ class AuthAccountViewModel {
   final BuildContext context;
 
   AuthAccountViewModel(this.context);
-  void reloadPage(User user) {
+  void reloadPage(User user) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => SwitchAccountView(user)),
     );
+    prefs.getInt('role') == 0
+        ? ControllerRoute(context).navigateToHomeScreen(true, user)
+        : ControllerRoute(context).navigateToHomeScreen(false, user);
   }
 
   Future<void> showAccountList(User accounts) async {
@@ -73,7 +78,7 @@ class AuthAccountViewModel {
 
           // Navigator.of(context).pop();
           // int role = int.parse(userResponse.role?[0]);
-          int role = userResponse.role?[1];
+          int role = userResponse.role?[0];
           print('length: ${userResponse.role?.length}');
 
           if (userResponse.role?.length == 1) {
@@ -100,7 +105,7 @@ class AuthAccountViewModel {
           } else {
             // ControllerRoute(context).navigateToHomeScreen(false, userResponse);
             print('Switch Account');
-            prefs.setInt('role', 1);
+            // prefs.setInt('role', 1);
             if (role == 1) {
               print('Switch Account1');
 

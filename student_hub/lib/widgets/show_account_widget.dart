@@ -5,7 +5,7 @@ import 'package:student_hub/models/company_user.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/widgets/add_account_widget.dart';
 
-class ShowAccountWidget extends StatefulWidget  {
+class ShowAccountWidget extends StatefulWidget {
   final User _companyUser;
   final List<ValueNotifier<bool>> _isVisible;
   final Function reloadPage;
@@ -52,6 +52,7 @@ class _ShowAccountWidgetState extends State<ShowAccountWidget> {
           return InkWell(
             onTap: () {
               primaryFocus?.unfocus();
+              prefs.setInt('role', widget._companyUser.role![index]);
               Navigator.of(context).pop();
               widget.reloadPage(widget._companyUser);
             },
@@ -72,7 +73,9 @@ class _ShowAccountWidgetState extends State<ShowAccountWidget> {
                   color: Colors.black,
                 ),
               ),
-              trailing: role == widget._companyUser.role![index] ? const Icon(Icons.check, color: Colors.green) : null,
+              trailing: role == widget._companyUser.role![index]
+                  ? const Icon(Icons.check, color: Colors.green)
+                  : null,
             ),
           );
         }
