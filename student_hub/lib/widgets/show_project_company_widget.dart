@@ -214,7 +214,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Students are looking for',
+                Text('Students are looking for: ',
                     style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
                 ListView(
                   shrinkWrap: true,
@@ -225,9 +225,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.only(top: 6),
-                            width: 8,
-                            height: 8,
+                            margin: EdgeInsets.only(top: 8),
+                            width: 5,
+                            height: 5,
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.black,
