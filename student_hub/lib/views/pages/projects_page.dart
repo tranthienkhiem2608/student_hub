@@ -167,7 +167,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           hintStyle: GoogleFonts.poppins(),
                           prefixIcon: Icon(Icons.search),
                           border: OutlineInputBorder(
+                            //color
+                          
                             borderRadius: BorderRadius.circular(50),
+
                           ),
                         ),
                       ),
