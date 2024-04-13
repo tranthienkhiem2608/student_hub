@@ -58,14 +58,12 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
     });
   }
 
-
   Future<void> initPrefs() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
       role = prefs.getInt('role')!;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -112,15 +110,6 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
-                        child: Text(
-                            "${widget.user.fullname!} \n ${role == 0 ? 'Student' : 'Company'}",
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold)),
-                      ),
                       Transform.rotate(
                         angle:
                             -90 * 3.14159 / 180, // Convert degrees to radians
@@ -185,13 +174,20 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                     onPressed: () {
                       AuthAccountViewModel(context).userProfile(widget.user);
                     },
-                    icon: const Icon(Icons.person,
-                        color: Colors.black, size: 28.0),
-                    label: Text('Profiles',
-                        style: GoogleFonts.poppins(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.normal)),
+                    icon: Image.asset(
+                      'assets/icons/profile.jpg', // Đường dẫn của hình ảnh
+                       // Màu của biểu tượng (nếu cần)
+                      width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
+                      height: 28.0, // Chiều cao của biểu tượng (nếu cần)
+                    ),
+                    label: Text(
+                      'Profiles',
+                      style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.normal,
+                      ),
+                    ),
                   ),
                 ),
                 const Padding(
@@ -204,8 +200,12 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                     onPressed: () {
                       // Settings button pressed
                     },
-                    icon: const Icon(Icons.settings,
-                        color: Colors.black, size: 28.0),
+                    icon: Image.asset(
+                      'assets/icons/setting.jpg', // Đường dẫn của hình ảnh
+                       // Màu của biểu tượng (nếu cần)
+                      width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
+                      height: 28.0, // Chiều cao của biểu tượng (nếu cần)
+                    ),
                     label: Text('Settings',
                         style: GoogleFonts.poppins(
                             color: Colors.black,
@@ -224,8 +224,12 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                       // Log out button pressed
                       AuthAccountViewModel(context).logoutAccount();
                     },
-                    icon: const Icon(Icons.logout,
-                        color: Colors.black, size: 28.0),
+                    icon: Image.asset(
+                      'assets/icons/logout.jpg', // Đường dẫn của hình ảnh
+                       // Màu của biểu tượng (nếu cần)
+                      width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
+                      height: 28.0, // Chiều cao của biểu tượng (nếu cần)
+                    ),
                     label: Text('Log out',
                         style: GoogleFonts.poppins(
                             color: Colors.black,

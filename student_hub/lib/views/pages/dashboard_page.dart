@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/pages/all_projects_page.dart';
@@ -47,12 +48,13 @@ class _DashboardPageState extends State<DashboardPage> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Row(
+          title: 
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 role == 0 ? 'Your Projects' : 'Your Jobs',
-                style: const TextStyle(
+                style: GoogleFonts.poppins(
                     color: Colors.black,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
@@ -62,7 +64,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   : ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color(0xFF69cde0)),
+                            const Color(0xFF406AFF)),
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -71,16 +73,20 @@ class _DashboardPageState extends State<DashboardPage> {
                               builder: (context) => PostScreen1(widget.user)),
                         );
                       },
-                      child: const Text('Post a Job',
-                          style: TextStyle(color: Colors.black)),
+                      child: Text(
+                        'Post a Job',
+                        style: GoogleFonts.poppins(
+                            color: Colors.white, fontWeight: FontWeight.w500),
+                      ),
                     ),
             ],
           ),
-          bottom: const TabBar(
-            indicatorColor: Color(0xFF69cde0),
-            labelColor: Color(0xFF69cde0),
+          bottom: TabBar(
+            indicatorColor: const Color(0xFF406AFF),
+            labelColor: const Color.fromARGB(255, 0, 0, 0),
+            labelStyle: GoogleFonts.poppins(fontWeight: FontWeight.bold),
             unselectedLabelColor: Colors.black,
-            tabs: [
+            tabs: const [
               Tab(text: 'All Projects'),
               Tab(text: 'Working'),
               Tab(text: 'Archived'),
@@ -89,10 +95,10 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         body: TabBarView(children: [
           role == 0
-              ? AllProjectsPageStudent()
+              ? const AllProjectsPageStudent()
               : AllProjectsPage(user: widget.user),
-          WorkingPage(),
-          ArchivedPage()
+          const WorkingPage(),
+          const ArchivedPage()
         ]),
       ),
     );

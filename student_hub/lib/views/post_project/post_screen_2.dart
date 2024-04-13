@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
@@ -97,7 +98,34 @@ class _PostScreen2State extends State<PostScreen2>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const _AppBar(),
+        appBar: AppBar(
+          title: Text('Student Hub',
+              style: GoogleFonts.poppins(
+                  // Apply the Poppins font
+                  color: Color.fromARGB(255, 0, 0, 0),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          actions: <Widget>[
+            IconButton(
+              icon: Container(
+                // Add a Container as the parent
+                padding: const EdgeInsets.all(8.0), // Padding for spacing
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  shape: BoxShape.circle,
+                ),
+                child: ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                      Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                  child: Image.asset('assets/icons/user_ic.png',
+                      width: 25, height: 25),
+                ),
+              ),
+              onPressed: () {},
+            )
+          ],
+        ),
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
@@ -120,22 +148,36 @@ class _PostScreen2State extends State<PostScreen2>
                   )),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "2/4  Next, estimate the scope of your job",
-                          style: TextStyle(
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            style: GoogleFonts.poppins(
                               color: Colors.black,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold),
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: '2 /4  ',
+                                style: GoogleFonts.poppins(
+                                    color: Color(
+                                        0xFF406AFF)), // Thay đổi màu cho phần này
+                              ),
+                              TextSpan(
+                                text: "Estimate the scope of your job",
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 0,
                 ),
                 SizedBox(
                   child: SlideTransition(
@@ -154,15 +196,15 @@ class _PostScreen2State extends State<PostScreen2>
                     ),
                     child: FadeTransition(
                       opacity: _fadeAnimation,
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               "Consider the size of your project and the timeline",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 17.0,
+                              style: GoogleFonts.poppins(
+                                color: Color.fromARGB(255, 103, 107, 119),
+                                fontSize: 14.0,
                                 fontWeight: FontWeight.normal,
                               ),
                               softWrap: true,
@@ -174,7 +216,7 @@ class _PostScreen2State extends State<PostScreen2>
                   ),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 35,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,13 +237,13 @@ class _PostScreen2State extends State<PostScreen2>
                       ),
                       child: FadeTransition(
                         opacity: _fadeAnimation,
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'How long will your project take?',
-                              style: TextStyle(
-                                fontSize: 17,
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
@@ -230,8 +272,8 @@ class _PostScreen2State extends State<PostScreen2>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
-                              title: const Text('Less than 1 month',
-                                  style: TextStyle(fontSize: 16)),
+                              title: Text('Less than 1 month',
+                                  style: GoogleFonts.poppins(fontSize: 15)),
                               value: ProjectDuration
                                   .lessThanOneMonth, // Use enum value
                               groupValue: selectedDuration,
@@ -240,6 +282,7 @@ class _PostScreen2State extends State<PostScreen2>
                                   selectedDuration = value;
                                 });
                               },
+                               activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -260,8 +303,8 @@ class _PostScreen2State extends State<PostScreen2>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
-                              title: const Text('1 to 3 months',
-                                  style: TextStyle(fontSize: 16)),
+                              title: Text('1 to 3 months',
+                                  style: GoogleFonts.poppins(fontSize: 15)),
                               value: ProjectDuration
                                   .oneToThreeMonths, // Use enum value
                               groupValue: selectedDuration,
@@ -270,6 +313,7 @@ class _PostScreen2State extends State<PostScreen2>
                                   selectedDuration = value;
                                 });
                               },
+                               activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -290,8 +334,8 @@ class _PostScreen2State extends State<PostScreen2>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
-                              title: const Text('3 to 6 months',
-                                  style: TextStyle(fontSize: 16)),
+                              title: Text('3 to 6 months',
+                                  style: GoogleFonts.poppins(fontSize: 15)),
                               value: ProjectDuration
                                   .threeToSixMonths, // Use enum value
                               groupValue: selectedDuration,
@@ -300,6 +344,7 @@ class _PostScreen2State extends State<PostScreen2>
                                   selectedDuration = value;
                                 });
                               },
+                               activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -320,8 +365,8 @@ class _PostScreen2State extends State<PostScreen2>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
-                              title: const Text('More than 6 months',
-                                  style: TextStyle(fontSize: 16)),
+                              title: Text('More than 6 months',
+                                  style: GoogleFonts.poppins(fontSize: 15)),
                               value: ProjectDuration
                                   .moreThanSixMonth, // Use enum value
                               groupValue: selectedDuration,
@@ -330,6 +375,7 @@ class _PostScreen2State extends State<PostScreen2>
                                   selectedDuration = value;
                                 });
                               },
+                              activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -338,7 +384,7 @@ class _PostScreen2State extends State<PostScreen2>
                   ],
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
@@ -356,13 +402,13 @@ class _PostScreen2State extends State<PostScreen2>
                   ),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           'How many students do you want for this project?',
-                          style: TextStyle(
-                            fontSize: 17,
+                          style: GoogleFonts.poppins(
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
@@ -394,15 +440,19 @@ class _PostScreen2State extends State<PostScreen2>
                       },
                       keyboardType:
                           TextInputType.number, // Ensure numeric keyboard
-                      cursorColor: Colors.black,
+                      cursorColor: Color(0xFF406AFF),
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(
-                            10.0), // Add padding within the box
-                        labelText: 'Number of Students', // Change label
-                        hintText: 'Enter the number', // Adjust hint
+                        
+                        contentPadding: EdgeInsets.symmetric(vertical: 17.0, horizontal: 20.0),
+                        hintText: 'Enter the number', 
+                        hintStyle: GoogleFonts.poppins(
+                          color: Color(0xFF777B8A),
+                          fontSize: 14.0,
+                        ),
+                        // Adjust hint
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                              const BorderSide(color: Color(0xFF777B8A), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: const TextStyle(
@@ -411,7 +461,7 @@ class _PostScreen2State extends State<PostScreen2>
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                              const BorderSide(color: Color(0xFF777B8A), width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -419,7 +469,7 @@ class _PostScreen2State extends State<PostScreen2>
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 50,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
@@ -466,17 +516,19 @@ class _PostScreen2State extends State<PostScreen2>
                             }
                           },
                           height: 55, // Increased height
-                          color: Colors.black,
+                          color: Color(0xFF406AFF),
                           padding: const EdgeInsets.symmetric(
                               vertical: 15,
-                              horizontal: 30), // Increased padding
+                              horizontal: 40), // Increased padding
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: const Text(
-                            "Next: Description",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16.0),
+                          child: Text(
+                            "Next",
+                            style: GoogleFonts.poppins(
+                                // Thay đổi TextStyle này
+                                color: Colors.white,
+                                fontSize: 16.0),
                           ),
                         ),
                       ],

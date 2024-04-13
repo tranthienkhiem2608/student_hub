@@ -18,19 +18,19 @@ class _ProjectListState extends State<ProjectList> {
     final Duration diff = DateTime.now().difference(date);
 
     if (diff.inSeconds < 60) {
-      return 'Created ${diff.inSeconds} seconds ago';
+      return '${diff.inSeconds} seconds ago';
     } else if (diff.inMinutes < 60) {
-      return 'Created ${diff.inMinutes} minutes ago';
+      return '${diff.inMinutes} minutes ago';
     } else if (diff.inHours < 24) {
-      return 'Created ${diff.inHours} hours ago';
+      return '${diff.inHours} hours ago';
     } else if (diff.inDays < 7) {
-      return 'Created ${diff.inDays} days ago';
+      return '${diff.inDays} days ago';
     } else if (diff.inDays < 30) {
-      return 'Created ${(diff.inDays / 7).round()} weeks ago';
+      return '${(diff.inDays / 7).round()} weeks ago';
     } else if (diff.inDays < 365) {
-      return 'Created ${(diff.inDays / 30).round()} months ago';
+      return '${(diff.inDays / 30).round()} months ago';
     } else {
-      return 'Created ${(diff.inDays / 365).round()} years ago';
+      return '${(diff.inDays / 365).round()} years ago';
     }
   }
 
@@ -87,7 +87,7 @@ class _ProjectListState extends State<ProjectList> {
                             color: Color.fromARGB(255, 206, 250, 223),
                             borderRadius: BorderRadius.circular(20.0),
                           ),
-                          margin: const EdgeInsets.only(right: 230.0),
+                          margin: const EdgeInsets.only(right: 200.0),
                           padding: const EdgeInsets.symmetric(
                               horizontal: 7.0, vertical: 10.0),
                           constraints: const BoxConstraints(
@@ -126,20 +126,20 @@ class _ProjectListState extends State<ProjectList> {
                     children: [
                       SizedBox(height: 5),
                       Text(
-                        'Project ${project.title}',
+                        '${project.title}',
                         style: GoogleFonts.poppins(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
                           color: Color(0xFF406AFF),
                         ),
                       ),
-                      Text(
-                        project.title!,
-                        style: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      // Text(
+                      //   project.company.role,
+                      //   style: GoogleFonts.poppins(
+                      //     color: Colors.black,
+                      //     fontWeight: FontWeight.bold,
+                      //   ),
+                      // ),
                       const SizedBox(height: 15),
                       Text(
                         'Students are looking for',
@@ -191,7 +191,7 @@ class _ProjectListState extends State<ProjectList> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            '${project.proposals} proposals',
+                            '${project.proposals != null ? project.proposals : 0} proposals',
                             style:
                                 GoogleFonts.poppins(height: 1.0, fontSize: 12),
                           ),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
@@ -42,7 +43,34 @@ class PostScreen1 extends HookWidget {
     }, []);
 
     return Scaffold(
-        appBar: const _AppBar(),
+        appBar: AppBar(
+          title: Text('Student Hub',
+              style: GoogleFonts.poppins(
+                  // Apply the Poppins font
+                  color: Color.fromARGB(255, 0, 0, 0),
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
+          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          actions: <Widget>[
+            IconButton(
+              icon: Container(
+                // Add a Container as the parent
+                padding: const EdgeInsets.all(8.0), // Padding for spacing
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  shape: BoxShape.circle,
+                ),
+                child: ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                      Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                  child: Image.asset('assets/icons/user_ic.png',
+                      width: 25, height: 25),
+                ),
+              ),
+              onPressed: () {},
+            )
+          ],
+        ),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
@@ -59,15 +87,29 @@ class PostScreen1 extends HookWidget {
                   )),
                   child: FadeTransition(
                     opacity: fadeAnimation,
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "1/4 Let's start with a strong title",
-                          style: TextStyle(
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            style: GoogleFonts.poppins(
                               color: Colors.black,
                               fontSize: 20.0,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w600,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: '1 /4  ',
+                                style: GoogleFonts.poppins(
+                                    color: Color(
+                                        0xFF406AFF)), // Thay đổi màu cho phần này
+                              ),
+                              TextSpan(
+                                text: "Let's start with a strong title",
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -90,15 +132,15 @@ class PostScreen1 extends HookWidget {
                     ),
                     child: FadeTransition(
                       opacity: fadeAnimation,
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Expanded(
                             child: Text(
                               "This helps your post stand out to the right students. It's the first thing they'll see, so make it impressive!",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 17.0,
+                              style: GoogleFonts.poppins(
+                                color: Color.fromARGB(255, 103, 107, 119),
+                                fontSize: 14.0,
                                 fontWeight: FontWeight.normal,
                               ),
                               softWrap: true,
@@ -110,47 +152,51 @@ class PostScreen1 extends HookWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 35,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
                           begin: const Offset(0, -0.5), end: const Offset(0, 0))
-                      .animate(CurvedAnimation(
-                    parent: animationController,
-                    curve: const Interval(
-                      0.3,
-                      1,
-                      curve: Curves.fastOutSlowIn,
+                      .animate(
+                    CurvedAnimation(
+                      parent: animationController,
+                      curve: const Interval(
+                        0.3,
+                        1,
+                        curve: Curves.fastOutSlowIn,
+                      ),
                     ),
-                  )),
+                  ),
                   child: FadeTransition(
                     opacity: fadeAnimation,
                     child: TextField(
                       onChanged: (value) {
                         projectName.value = value;
                       },
-                      cursorColor: Colors.black,
+                      cursorColor: Color(0xFF406AFF),
+                      minLines: 5, // Đặt số dòng tối thiểu
+                      maxLines: null, // Đặt số dòng tối đa là không giới hạn
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(0.0),
-                        labelText: 'Title Name',
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 20.0), // Điều chỉnh khoảng cách nội dung
                         hintText: 'Your Title Name!',
-                        labelStyle: const TextStyle(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        hintStyle: const TextStyle(
+                        
+                        hintStyle: GoogleFonts.poppins(
                           color: Colors.grey,
-                          fontSize: 14.0,
+                          fontSize: 15.0,
                         ),
-                        prefixIcon: const Icon(
-                          Iconsax.paperclip_2,
-                          color: Colors.black,
-                          size: 18,
+                        prefixIcon: const Padding(
+                          padding: EdgeInsets.only(
+                              bottom: 95.0),
+                          child: Icon(
+                            Iconsax.paperclip_2,
+                            color: Colors.black,
+                            size: 18,
+                          ),
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                              const BorderSide(color: Color(0xFF777B8A), width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: const TextStyle(
@@ -159,7 +205,7 @@ class PostScreen1 extends HookWidget {
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                              const BorderSide(color: Color(0xFF777B8A), width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -167,7 +213,7 @@ class PostScreen1 extends HookWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 35,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
@@ -182,13 +228,13 @@ class PostScreen1 extends HookWidget {
                   )),
                   child: FadeTransition(
                     opacity: fadeAnimation,
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Example title",
-                          style: TextStyle(
-                            color: Colors.black,
+                          "Example title:",
+                          style: GoogleFonts.poppins(
+                            color: Color(0xFF406AFF),
                             fontSize: 17.0,
                             fontWeight: FontWeight.bold,
                           ),
@@ -198,7 +244,7 @@ class PostScreen1 extends HookWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 30.0),
@@ -223,7 +269,7 @@ class PostScreen1 extends HookWidget {
                         children: [
                           Flexible(
                             child: RichText(
-                              text: const TextSpan(
+                              text: TextSpan(
                                 style: TextStyle(
                                   // Style for overall text
                                   color: Colors.black,
@@ -233,9 +279,9 @@ class PostScreen1 extends HookWidget {
                                 children: [
                                   TextSpan(text: "• "), // Bullet point
                                   TextSpan(
-                                    text:
-                                        "Build responsive WordPress site with booking/payment functionality",
-                                  ),
+                                      text:
+                                          "Build responsive WordPress site with booking/payment functionality",
+                                      style: GoogleFonts.poppins(fontSize: 15)),
                                 ],
                               ),
                             ),
@@ -246,7 +292,7 @@ class PostScreen1 extends HookWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 6,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 30.0),
@@ -271,7 +317,7 @@ class PostScreen1 extends HookWidget {
                         children: [
                           Flexible(
                             child: RichText(
-                              text: const TextSpan(
+                              text: TextSpan(
                                 style: TextStyle(
                                   // Style for overall text
                                   color: Colors.black,
@@ -281,9 +327,11 @@ class PostScreen1 extends HookWidget {
                                 children: [
                                   TextSpan(text: "• "), // Bullet point
                                   TextSpan(
-                                    text:
-                                        "Facebook ad specialist need for product launch",
-                                  ),
+                                      text:
+                                          "Facebook ad specialist need for product launch",
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 15,
+                                      )),
                                 ],
                               ),
                             ),
@@ -294,7 +342,7 @@ class PostScreen1 extends HookWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 40,
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
@@ -326,16 +374,18 @@ class PostScreen1 extends HookWidget {
                             );
                           },
                           height: 55,
-                          color: Colors.black,
+                          color: Color(0xFF406AFF),
                           padding: const EdgeInsets.symmetric(
-                              vertical: 15, horizontal: 60),
+                              vertical: 15, horizontal: 40),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: const Text(
-                            "Next: Scope",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16.0),
+                          child: Text(
+                            "Next",
+                            style: GoogleFonts.poppins(
+                                // Thay đổi TextStyle này
+                                color: Colors.white,
+                                fontSize: 16.0),
                           ),
                         ),
                       ],

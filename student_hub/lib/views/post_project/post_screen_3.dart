@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/company_user.dart';
@@ -30,21 +31,31 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Student Hub',
-          style: TextStyle(
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
               color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
-          icon: SizedBox(
-            width: 25,
-            height: 25,
-            child: Image.asset('assets/icons/user_ic.png'),
+          icon: Container(
+            // Add a Container as the parent
+            padding: const EdgeInsets.all(8.0), // Padding for spacing
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              shape: BoxShape.circle,
+            ),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              child: Image.asset('assets/icons/user_ic.png',
+                  width: 25, height: 25),
+            ),
           ),
           onPressed: () {},
-        ),
+        )
       ],
     );
   }
@@ -127,22 +138,36 @@ class _PostScreen3State extends State<PostScreen3>
                   )),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          "3/4  Next, provide project description",
-                          style: TextStyle(
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            style: GoogleFonts.poppins(
                               color: Colors.black,
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold),
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: '3 /4  ',
+                                style: GoogleFonts.poppins(
+                                    color: Color(
+                                        0xFF406AFF)), // Thay đổi màu cho phần này
+                              ),
+                              TextSpan(
+                                text: "Provide project description",
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 35,
                 ),
                 SizedBox(
                   child: SlideTransition(
@@ -161,20 +186,23 @@ class _PostScreen3State extends State<PostScreen3>
                     ),
                     child: FadeTransition(
                       opacity: _fadeAnimation,
-                      child: const Column(
+                      child: Column(
                         // Add Column to contain heading and list
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('Students are looking for: ',
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold)),
+                              style: GoogleFonts.poppins(
+                                fontSize: 16.5,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
                           SizedBox(
-                              height: 3), // Spacing between heading and list
+                              height: 6), // Spacing between heading and list
                           BulletedList(
                             bulletColor: Colors.black,
-                            style: TextStyle(
+                            style: GoogleFonts.poppins(
                               color: Colors.black,
-                              fontSize: 16.0,
+                              fontSize: 15.0,
                               fontWeight: FontWeight.normal,
                             ),
                             listItems: [
@@ -204,7 +232,7 @@ class _PostScreen3State extends State<PostScreen3>
                   )),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: const Row(
+                    child: Row(
                       // Introduce a Row widget
                       mainAxisAlignment:
                           MainAxisAlignment.start, // Align content to the start
@@ -216,8 +244,8 @@ class _PostScreen3State extends State<PostScreen3>
                             children: [
                               Text(
                                 'Describe your project',
-                                style: TextStyle(
-                                  fontSize: 17,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 16.5,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                 ),
@@ -257,15 +285,22 @@ class _PostScreen3State extends State<PostScreen3>
                       maxLines: null, // Allow the box to grow vertically
                       keyboardType: TextInputType
                           .multiline, // Adjust keyboard for multiline
-                      cursorColor: Colors.black,
+                      cursorColor: Color(0xFF406AFF),
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(
                             10.0), // Add padding within the box
-                        labelText: 'Description', // Update label
                         hintText: 'Describe your project...',
+                        prefixIcon: const Padding(
+                          padding: EdgeInsets.only(
+                              bottom: 95.0),
+                          child: Icon(
+                            Iconsax.paperclip_2,
+                            color: Colors.black,
+                            size: 18,
+                          )),
                         enabledBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                              const BorderSide(color: Color(0xFF777B8A), width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: const TextStyle(
@@ -274,14 +309,14 @@ class _PostScreen3State extends State<PostScreen3>
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                              const BorderSide(color: Color(0xFF777B8A), width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: 40),
                 SlideTransition(
                   position: Tween<Offset>(
                           begin: const Offset(0, -0.5), end: const Offset(0, 0))
@@ -314,17 +349,19 @@ class _PostScreen3State extends State<PostScreen3>
                             );
                           },
                           height: 55, // Increased height
-                          color: Colors.black,
+                          color: Color(0xFF406AFF),
                           padding: const EdgeInsets.symmetric(
                               vertical: 15,
-                              horizontal: 30), // Increased padding
+                              horizontal: 40), // Increased padding
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          child: const Text(
-                            "Next: Description",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 16.0),
+                          child: Text(
+                            "Next",
+                            style: GoogleFonts.poppins(
+                                // Thay đổi TextStyle này
+                                color: Colors.white,
+                                fontSize: 16.0),
                           ),
                         ),
                       ],

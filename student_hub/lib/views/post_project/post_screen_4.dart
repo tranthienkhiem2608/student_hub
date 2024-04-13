@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 
@@ -23,21 +24,31 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Student Hub',
-          style: TextStyle(
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
               color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
-          icon: SizedBox(
-            width: 25,
-            height: 25,
-            child: Image.asset('assets/icons/user_ic.png'),
+          icon: Container(
+            // Add a Container as the parent
+            padding: const EdgeInsets.all(8.0), // Padding for spacing
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              shape: BoxShape.circle,
+            ),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              child: Image.asset('assets/icons/user_ic.png',
+                  width: 25, height: 25),
+            ),
           ),
           onPressed: () {},
-        ),
+        )
       ],
     );
   }
@@ -88,24 +99,31 @@ class _PostScreen4State extends State<PostScreen4>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: const Text('Student Hub',
-            style: TextStyle(
+        title: Text('Student Hub',
+            style: GoogleFonts.poppins(
+                // Apply the Poppins font
                 color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
-        backgroundColor: const Color(0xFFBEEEF7),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         actions: <Widget>[
           IconButton(
-            icon: SizedBox(
-              width: 25,
-              height: 25,
-              child: Image.asset('assets/icons/user_ic.png'),
+            icon: Container(
+              // Add a Container as the parent
+              padding: const EdgeInsets.all(8.0), // Padding for spacing
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                shape: BoxShape.circle,
+              ),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                child: Image.asset('assets/icons/user_ic.png',
+                    width: 25, height: 25),
+              ),
             ),
-            onPressed: () {
-              // User profile action can be handled here
-            },
-          ),
+            onPressed: () {},
+          )
         ],
       ),
       body: Padding(
@@ -113,95 +131,133 @@ class _PostScreen4State extends State<PostScreen4>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Project Detail',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 30),
-            Text(
-              'Project Name: ${widget.project.title}',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            const Divider(
-              height: 12,
-              thickness: 1.5,
-              color: Color.fromARGB(255, 54, 52, 52),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Student are looking for:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            // Sử dụng ListView để hiển thị danh sách các mục với dấu chấm đầu dòng
-            ListView(
-              shrinkWrap: true,
-              children: expectations.map((item) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 5),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 6),
-                        width: 8, // Độ rộng của dấu chấm
-                        height: 8, // Chiều cao của dấu chấm
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.black, // Màu của dấu chấm
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(child: Text(item)),
-                    ],
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w600,
+                ),
+                children: [
+                  TextSpan(
+                    text: '4 /4  ',
+                    style: GoogleFonts.poppins(
+                        color: Color(0xFF406AFF)), // Thay đổi màu cho phần này
                   ),
-                );
-              }).toList(),
+                  TextSpan(
+                    text: "Project details",
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 45),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize: 17.5,
+                  fontWeight: FontWeight.bold,
+                ),
+                children: [
+                  TextSpan(
+                    text: 'Project name: ',
+                    style: GoogleFonts.poppins(
+                        fontWeight:
+                            FontWeight.bold), // Thay đổi màu cho phần này
+                  ),
+                  TextSpan(
+                    text: widget.project.title,
+                    style: GoogleFonts.poppins(color: Color(0xFF406AFF)),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    SizedBox(width: 15),
+                    Icon(Icons.search), // Add an Icon widget here
+                    SizedBox(height: 10), // Add spacing between icon and text
+                    SizedBox(width: 12), // Add spacing between icon and text
+                    Text(
+                      'Student are looking for:',
+                      style: GoogleFonts.poppins(
+                          fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                ListView(
+                  shrinkWrap: true,
+                  children: expectations.map((item) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 20, top: 0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(width: 36),
+                          Container(
+                            margin: EdgeInsets.only(top: 8, right: 10),
+                            width: 4,
+                            height: 9,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Expanded(
+                              child: Text(item,
+                                  style: GoogleFonts.poppins(fontSize: 15.5))),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
             ),
             SizedBox(height: 20),
-            const Divider(
-              height: 12,
-              thickness: 1.5,
-              color: Color.fromARGB(255, 54, 52, 52),
-            ),
-            SizedBox(height: 30),
             ListTile(
               leading: Container(
-                margin: const EdgeInsets.only(top: 6),
-                width: 40, // Adjust the width for the larger icon
-                height: 40, // Adjust the height for the larger icon
-                child: Icon(Icons.watch_later_outlined, size: 40),
+                margin: const EdgeInsets.only(bottom: 10, right: 5),
+                width: 20, // Adjust the width for the larger icon
+                height: 20, // Adjust the height for the larger icon
+                child: Icon(Icons.watch_later_outlined, size: 25),
               ),
               title: Text(
                 'Project scope:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: GoogleFonts.poppins(
+                    fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
                 widget.project.projectScopeFlag == 0
                     ? '1-3 months'
                     : '3-6 months',
-                style: TextStyle(fontSize: 16),
+                style: GoogleFonts.poppins(fontSize: 15.5),
               ),
             ),
             SizedBox(height: 10),
             ListTile(
               leading: Container(
-                margin: const EdgeInsets.only(top: 6),
-                width: 40, // Adjust the width for the larger icon
-                height: 40, // Adjust the height for the larger icon
-                child: Icon(Icons.people_alt_outlined, size: 40),
+                margin: const EdgeInsets.only(bottom: 10, right: 5),
+                width: 20, // Adjust the width for the larger icon
+                height: 20, // Adjust the height for the larger icon
+                child: Icon(Icons.people_alt_outlined, size: 25),
               ),
               title: Text(
                 'Student required:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: GoogleFonts.poppins(
+                    fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
                 '${widget.project.numberOfStudents} students',
-                style: TextStyle(fontSize: 16),
+                style: GoogleFonts.poppins(fontSize: 15.5),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 25),
             SlideTransition(
               position: Tween<Offset>(
                       begin: const Offset(0, -0.5), end: const Offset(0, 0))
@@ -226,15 +282,18 @@ class _PostScreen4State extends State<PostScreen4>
                             .postProject(widget.project, widget.user);
                       },
                       height: 55, // Increased height
-                      color: Colors.black,
+                      color: Color(0xFF406AFF),
                       padding: const EdgeInsets.symmetric(
                           vertical: 15, horizontal: 40), // Increased padding
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      child: const Text(
+                      child: Text(
                         "Post job",
-                        style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        style: GoogleFonts.poppins(
+                            // Thay đổi TextStyle này
+                            color: Colors.white,
+                            fontSize: 16.0),
                       ),
                     ),
                   ],

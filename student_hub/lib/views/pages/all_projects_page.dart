@@ -78,9 +78,9 @@ class _AllProjectsPageState extends State<AllProjectsPage>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Divider(),
             const Padding(padding: EdgeInsets.only(bottom: 10)),
             Expanded(
+              
               child: FutureBuilder<List<ProjectCompany>>(
                 future: futureProjects,
                 builder: (context, project) {

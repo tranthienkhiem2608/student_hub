@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/models/project_company.dart';
 import 'package:student_hub/models/student_user.dart';
 import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
@@ -62,11 +63,10 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
         ),
         Container(
           width: double.infinity,
-          color: Color.fromARGB(255, 207, 219, 219),
           padding: EdgeInsets.all(12),
           child: Text(
             "Active Proposal (0)",
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
         Expanded(
@@ -77,12 +77,11 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
             ),
             visible: entries.isNotEmpty,
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Divider(),
-                  const Padding(padding: EdgeInsets.only(bottom: 1)),
+                  const Padding(padding: EdgeInsets.only(bottom: 0)),
                   Expanded(
                     child: ListView.separated(
                       itemCount: entries.length,
@@ -267,7 +266,7 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
                           showOptionsIcon: false,
                         ),
                       ),
-                      separatorBuilder: (context, index) => const Divider(),
+                      separatorBuilder: (context, index) => SizedBox(),
                     ),
                   )
                 ],

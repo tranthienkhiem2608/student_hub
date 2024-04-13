@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'dart:async';
 
@@ -37,19 +38,19 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
     final Duration diff = DateTime.now().difference(date);
 
     if (diff.inSeconds < 60) {
-      return 'Created ${diff.inSeconds} seconds ago';
+      return '${diff.inSeconds} seconds ago';
     } else if (diff.inMinutes < 60) {
-      return 'Created ${diff.inMinutes} minutes ago';
+      return '${diff.inMinutes} minutes ago';
     } else if (diff.inHours < 24) {
-      return 'Created ${diff.inHours} hours ago';
+      return '${diff.inHours} hours ago';
     } else if (diff.inDays < 7) {
-      return 'Created ${diff.inDays} days ago';
+      return '${diff.inDays} days ago';
     } else if (diff.inDays < 30) {
-      return 'Created ${(diff.inDays / 7).round()} weeks ago';
+      return '${(diff.inDays / 7).round()} weeks ago';
     } else if (diff.inDays < 365) {
-      return 'Created ${(diff.inDays / 30).round()} months ago';
+      return '${(diff.inDays / 30).round()} months ago';
     } else {
-      return 'Created ${(diff.inDays / 365).round()} years ago';
+      return '${(diff.inDays / 365).round()} years ago';
     }
   }
 
@@ -149,81 +150,125 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListTile(
-          title: Text(widget.projectName,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.greenAccent)),
-          subtitle: Text(timeAgo(widget.creationTime)),
-          trailing: widget.showOptionsIcon
-              ? IconButton(
-                  icon: Icon(Icons.more_horiz_rounded),
-                  onPressed: () {
-                    _showOptions(context);
-                  },
-                )
-              : null,
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10.0),
+      padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(
+          color: Color.fromARGB(255, 220, 220, 247),
+          width: 1, // Màu và độ dày của border
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(15, 5, 10, 5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Students are looking for',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              ListView(
-                shrinkWrap: true,
-                children: widget.description.split('\n').map((item) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 20, top: 5),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(top: 6),
-                          width: 8,
-                          height: 8,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(child: Text(item)),
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-            ],
+        borderRadius: BorderRadius.circular(20.0),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromARGB(244, 194, 207, 252).withOpacity(0.25),
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: Offset(0, 9),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: widget.quantities.map((quantity) {
-            return Expanded(
-              child: Text(
-                quantity.toString(),
-                textAlign: TextAlign.center,
-              ),
-            );
-          }).toList(),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: widget.labels.map((label) {
-            return Expanded(
-              child: Text(
-                label,
-                textAlign: TextAlign.center,
-              ),
-            );
-          }).toList(),
-        ),
-        const Divider()
-      ],
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            title: Container(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 206, 250, 223),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                margin: const EdgeInsets.fromLTRB(0, 0, 180, 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
+                constraints: const BoxConstraints(
+                    minWidth: 0, maxWidth: double.infinity),
+                child: Text(
+                  timeAgo(widget.creationTime),
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(
+                      height: 1,
+                      fontSize: 11,
+                      color: Color.fromARGB(255, 18, 119, 52),
+                      fontWeight: FontWeight.w500),
+                )),
+            subtitle: Text(widget.projectName,
+                style: GoogleFonts.poppins(
+                  fontSize: 17,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xFF406AFF),
+                )),
+            trailing: widget.showOptionsIcon
+                ? IconButton(
+                    icon: Icon(Icons.more_horiz_rounded),
+                    padding: EdgeInsets.only(bottom: 35),
+                    onPressed: () {
+                      _showOptions(context);
+                    },
+                  )
+                : null,
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 3, 10, 5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Students are looking for',
+                    style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+                ListView(
+                  shrinkWrap: true,
+                  children: widget.description.split('\n').map((item) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 0, top: 5),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(top: 6),
+                            width: 8,
+                            height: 8,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.black,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                              child: Text(item, style: GoogleFonts.poppins())),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: widget.quantities.map((quantity) {
+              return Expanded(
+                child: Text(
+                  quantity.toString(),
+                  textAlign: TextAlign.center,
+                   style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w500)
+                ),
+              );
+            }).toList(),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: widget.labels.map((label) {
+              return Expanded(
+                child: Text(label,
+                    textAlign: TextAlign.center, style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w500)),
+              );
+            }).toList(),
+          ),
+          SizedBox(height: 10),
+        ],
+      ),
     );
   }
 }
