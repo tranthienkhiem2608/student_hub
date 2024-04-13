@@ -44,7 +44,7 @@ class _ProjectListState extends State<ProjectList> {
                   color: Colors.white,
                   border: Border.all(
                     color: Color.fromARGB(255, 228, 228, 233),
-                    width: 1, // Màu và độ dày của border
+                    width: 1, 
                   ),
                   borderRadius: BorderRadius.circular(20.0),
                   boxShadow: [
