@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/constant/project_duration.dart';
+import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
 import 'package:student_hub/widgets/project_list_widget.dart';
 
 class FavoriteProjectsPage extends StatelessWidget {
-  final List<ProjectInfo> favoriteProjects;
+  final List<ProjectCompany> favoriteProjects;
 
   const FavoriteProjectsPage({Key? key, required this.favoriteProjects})
       : super(key: key);
@@ -35,7 +37,7 @@ class FavoriteProjectsPage extends StatelessWidget {
                   color: Color.fromARGB(255, 54, 52, 52),
                 ),
                 itemBuilder: (context, index) {
-                  ProjectInfo project = favoriteProjects[index];
+                  ProjectCompany project = favoriteProjects[index];
 
                   return ListTile(
                     contentPadding: EdgeInsets.zero,
@@ -44,35 +46,36 @@ class FavoriteProjectsPage extends StatelessWidget {
                       children: [
                         const Text(
                           'Saved Project',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 8),
-                        Text('Project ${project.name}'),
+                        Text('Project ${project.title}'),
                       ],
                     ),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Created ${project.createdDate}',
+                          'Created ${project.createdAt}',
                           style: TextStyle(height: 1.0),
                         ),
                         Text(
-                          project.role,
+                          project.title!,
                           style: const TextStyle(
                             color: Colors.green,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          '\nTime: ${project.duration}, ${project.students} students needed',
+                          '\nTime: ${_getProjectDurationText(ProjectDuration.values[project.projectScopeFlag ?? 0])}, ${project.numberOfStudents} students needed',
                           style: TextStyle(height: 1.0),
                         ),
                         SizedBox(height: 10),
                         Text('Students are looking for'),
                         Text(
-                          project.expectations.isNotEmpty
-                              ? project.expectations.split('\n').first
+                          project.description?.isNotEmpty ?? false
+                              ? project.description!.split('\n').first
                               : '',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
@@ -113,5 +116,19 @@ class FavoriteProjectsPage extends StatelessWidget {
               child: Text('You have no favorite projects.'),
             ),
     );
+  }
+}
+
+// Helper method to get project duration text from enum
+String _getProjectDurationText(ProjectDuration duration) {
+  switch (duration) {
+    case ProjectDuration.lessThanOneMonth:
+      return 'Less than 1 month';
+    case ProjectDuration.oneToThreeMonths:
+      return '1 to 3 months';
+    case ProjectDuration.threeToSixMonths:
+      return '3 to 6 months';
+    case ProjectDuration.moreThanSixMonth:
+      return 'More than 6 months';
   }
 }

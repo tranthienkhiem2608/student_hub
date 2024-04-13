@@ -16,20 +16,6 @@ class ProjectCompanyViewModel {
   final BuildContext context;
   ProjectCompanyViewModel(this.context);
 
-  Future<void> editProject(
-      ProjectCompany oldProject, ProjectCompany newProject) async {
-    // Simulate a delay for the API call
-    await Future.delayed(Duration(seconds: 1));
-
-    // Find the index of the old project in the list
-    int index = projectList.indexOf(oldProject);
-
-    // Replace the old project with the new project
-    if (index != -1) {
-      projectList[index] = newProject;
-    }
-  }
-
   // post new project
   Future<void> postProject(ProjectCompany project, User user) async {
     print('Post Project');
@@ -60,6 +46,29 @@ class ProjectCompanyViewModel {
     } catch (e) {
       print(e);
     }
+  }
+
+  // get all projects /api/project
+  Future<List<ProjectCompany>> getAllProjectsData() async {
+    print('Get All Projects Data');
+    try {
+      var response = await ConnectionService().get('/api/project', {});
+      var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(responseDecode['result']);
+        List<ProjectCompany> projectList =
+            ProjectCompany.fromListMapProjectCompany(responseDecode['result']);
+        return projectList;
+      } else {
+        print("Failed");
+        print(responseDecode);
+      }
+    } catch (e) {
+      print(e);
+    }
+    return [];
   }
 
   // get all projects of that user company id /api/project/company/{companyId}

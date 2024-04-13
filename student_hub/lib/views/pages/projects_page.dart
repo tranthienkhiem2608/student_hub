@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/view_models/project_company_viewModel.dart';
 import 'package:student_hub/views/browse_project/project_search.dart';
 import 'package:student_hub/views/browse_project/project_saved.dart';
 import 'package:student_hub/widgets/project_list_widget.dart';
@@ -12,61 +14,8 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
-  List<ProjectInfo> allProjects = [
-    ProjectInfo(
-      name: 'Create a mobile app',
-      createdDate: '3 days ago',
-      role: 'Senior frontend developer (Fintech)',
-      duration: 'Less than 1 month',
-      students: 1,
-      expectations: 'Clear expectation about your project or deliverables \n'
-          'Good communication skills',
-      proposals: 2,
-    ),
-    ProjectInfo(
-      name: 'Develop a website',
-      createdDate: '4 days ago',
-      role: 'Senior backend developer (Fintech)',
-      duration: '1 to 3 months',
-      students: 3,
-      expectations: 'Clear expectation about your project or deliverables \n'
-          'Good communication skills',
-      proposals: 6,
-    ),
-    ProjectInfo(
-      name: 'Develop a website',
-      createdDate: '6 days ago',
-      role: 'Senior backend developer (Fintech)',
-      duration: '1 to 3 months',
-      students: 5,
-      expectations: 'Clear expectation about your project or deliverables \n'
-          'Good communication skills',
-      proposals: 5,
-    ),
-    ProjectInfo(
-      name: 'Create a mobile app',
-      createdDate: '2 days ago',
-      role: 'Senior mobile developer (Fintech)',
-      duration: '3 to 6 months',
-      students: 3,
-      expectations: 'Clear expectation about your project or deliverables \n'
-          'Good communication skills',
-      proposals: 2,
-    ),
-    ProjectInfo(
-      name: 'Frontend development',
-      createdDate: '1 days ago',
-      role: 'Senior frontend developer (Fintech)',
-      duration: 'More than 6 months',
-      students: 5,
-      expectations: 'Clear expectation about your project or deliverables \n'
-          'Good communication skills',
-      proposals: 5,
-    ),
-  ];
-
-  List<ProjectInfo> filteredProjects = [];
-
+  late Future<List<ProjectCompany>> allProjects;
+  List<ProjectCompany> filteredProjects = [];
   List<String> suggestions = [];
 
   final TextEditingController _searchController = TextEditingController();
@@ -74,45 +23,45 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   void initState() {
     super.initState();
-    filteredProjects.addAll(allProjects);
-    suggestions = allProjects.map((project) => project.name).toList();
+    _initializeData();
   }
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  void filterProjects(String query) {
+  Future<void> _initializeData() async {
+    List<ProjectCompany> projects = await fetchAllProjects();
     setState(() {
-      if (query.isNotEmpty) {
-        filteredProjects = allProjects
-            .where((project) =>
-                project.name.toLowerCase().contains(query.toLowerCase()))
-            .toList();
-      } else {
-        filteredProjects.clear();
-        filteredProjects.addAll(allProjects);
-      }
-      updateSuggestions(
-          query); // Gọi phương thức updateSuggestions để cập nhật gợi ý
+      // Assuming you're using this in a StatefulWidget
+      filteredProjects = projects;
+      suggestions = projects.map((project) => project.title!).toList();
     });
   }
 
-  void updateSuggestions(String query) {
+  void filterProjects(String query) async {
+    final projects = await fetchAllProjects();
     setState(() {
       if (query.isNotEmpty) {
-        Set<String> uniqueSuggestions = {};
-        allProjects
+        filteredProjects = projects
             .where((project) =>
-                project.name.toLowerCase().contains(query.toLowerCase()))
-            .forEach((project) => uniqueSuggestions.add(project.name));
+                project.title!.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      } else {
+        filteredProjects = projects;
+      }
+      updateSuggestions(query);
+    });
+  }
+
+  void updateSuggestions(String query) async {
+    final projects = await fetchAllProjects();
+    setState(() {
+      if (query.isNotEmpty) {
+        final uniqueSuggestions = projects
+            .where((project) =>
+                project.title!.toLowerCase().contains(query.toLowerCase()))
+            .map((project) => project.title!)
+            .toSet();
         suggestions = uniqueSuggestions.toList();
       } else {
-        Set<String> uniqueSuggestions = {};
-        allProjects.forEach((project) => uniqueSuggestions.add(project.name));
-        suggestions = uniqueSuggestions.toList();
+        suggestions = projects.map((project) => project.title!).toList();
       }
     });
   }
@@ -144,10 +93,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         ),
                       ),
                       onChanged: (newValue) {
-                        setState(() {
-                          filterProjects(newValue);
-                          updateSuggestions(newValue);
-                        });
+                        filterProjects(newValue);
+                        updateSuggestions(newValue);
                       },
                     ),
                     SizedBox(height: 10),
@@ -170,14 +117,11 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                   MaterialPageRoute(
                                     builder: (context) => SearchProject(
                                       searchResults: filteredProjects,
-                                      allProjects: allProjects,
+                                      allProjects: filteredProjects,
                                     ),
                                   ),
                                 ).then((value) {
-                                  setState(() {
-                                    filteredProjects.clear();
-                                    filteredProjects.addAll(allProjects);
-                                  });
+                                  _initializeData();
                                 });
                               },
                             );
@@ -193,7 +137,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
       },
     );
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -236,7 +179,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => FavoriteProjectsPage(
-                            favoriteProjects: allProjects
+                            favoriteProjects: filteredProjects
                                 .where((project) => project.isFavorite)
                                 .toList(),
                           ),
@@ -256,5 +199,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
         ),
       ),
     );
+  }
+
+  Future<List<ProjectCompany>> fetchAllProjects() async {
+    return await ProjectCompanyViewModel(context).getAllProjectsData();
   }
 }

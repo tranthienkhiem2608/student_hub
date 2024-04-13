@@ -1,12 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:student_hub/constant/project_duration.dart';
-import 'package:student_hub/models/company_user.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
-import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/views/post_project/post_screen_3.dart';
 
 class PostScreen2 extends StatefulWidget {
@@ -233,6 +230,36 @@ class _PostScreen2State extends State<PostScreen2>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
+                              title: const Text('Less than 1 month',
+                                  style: TextStyle(fontSize: 16)),
+                              value: ProjectDuration
+                                  .lessThanOneMonth, // Use enum value
+                              groupValue: selectedDuration,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDuration = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(-0.5, 0),
+                            end: const Offset(0, 0),
+                          ).animate(
+                            CurvedAnimation(
+                              parent: _animationController,
+                              curve: const Interval(
+                                0.4, // Khởi đầu animation sau khi phần trên đã xuất hiện
+                                1,
+                                curve: Curves.fastOutSlowIn,
+                              ),
+                            ),
+                          ),
+                          child: FadeTransition(
+                            opacity: _fadeAnimation,
+                            child: RadioListTile<ProjectDuration>(
                               title: const Text('1 to 3 months',
                                   style: TextStyle(fontSize: 16)),
                               value: ProjectDuration
@@ -267,6 +294,36 @@ class _PostScreen2State extends State<PostScreen2>
                                   style: TextStyle(fontSize: 16)),
                               value: ProjectDuration
                                   .threeToSixMonths, // Use enum value
+                              groupValue: selectedDuration,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDuration = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        SlideTransition(
+                          position: Tween<Offset>(
+                            begin: const Offset(-0.5, 0),
+                            end: const Offset(0, 0),
+                          ).animate(
+                            CurvedAnimation(
+                              parent: _animationController,
+                              curve: const Interval(
+                                0.4, // Khởi đầu animation sau khi phần trên đã xuất hiện
+                                1,
+                                curve: Curves.fastOutSlowIn,
+                              ),
+                            ),
+                          ),
+                          child: FadeTransition(
+                            opacity: _fadeAnimation,
+                            child: RadioListTile<ProjectDuration>(
+                              title: const Text('More than 6 months',
+                                  style: TextStyle(fontSize: 16)),
+                              value: ProjectDuration
+                                  .moreThanSixMonth, // Use enum value
                               groupValue: selectedDuration,
                               onChanged: (value) {
                                 setState(() {

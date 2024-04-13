@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:student_hub/constant/project_duration.dart';
+import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
 
 class ProjectList extends StatefulWidget {
-  final List<ProjectInfo> projects;
+  final List<ProjectCompany> projects;
 
   const ProjectList({Key? key, required this.projects}) : super(key: key);
 
@@ -12,6 +14,26 @@ class ProjectList extends StatefulWidget {
 }
 
 class _ProjectListState extends State<ProjectList> {
+  String timeAgo(DateTime date) {
+    final Duration diff = DateTime.now().difference(date);
+
+    if (diff.inSeconds < 60) {
+      return 'Created ${diff.inSeconds} seconds ago';
+    } else if (diff.inMinutes < 60) {
+      return 'Created ${diff.inMinutes} minutes ago';
+    } else if (diff.inHours < 24) {
+      return 'Created ${diff.inHours} hours ago';
+    } else if (diff.inDays < 7) {
+      return 'Created ${diff.inDays} days ago';
+    } else if (diff.inDays < 30) {
+      return 'Created ${(diff.inDays / 7).round()} weeks ago';
+    } else if (diff.inDays < 365) {
+      return 'Created ${(diff.inDays / 30).round()} months ago';
+    } else {
+      return 'Created ${(diff.inDays / 365).round()} years ago';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -29,12 +51,11 @@ class _ProjectListState extends State<ProjectList> {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Container(
-          
           child: ListView.separated(
             itemCount: widget.projects.length,
             itemBuilder: (context, index) {
-              ProjectInfo project = widget.projects[index];
-              List<String> expectations = project.expectations.split('\n');
+              ProjectCompany project = widget.projects[index];
+              List<String> expectations = project.description!.split('\n');
               String firstExpectation =
                   expectations.isNotEmpty ? expectations.first : '';
               return Container(
@@ -44,7 +65,7 @@ class _ProjectListState extends State<ProjectList> {
                   color: Colors.white,
                   border: Border.all(
                     color: Color.fromARGB(255, 228, 228, 233),
-                    width: 1, 
+                    width: 1,
                   ),
                   borderRadius: BorderRadius.circular(20.0),
                   boxShadow: [
@@ -72,7 +93,7 @@ class _ProjectListState extends State<ProjectList> {
                           constraints: const BoxConstraints(
                               minWidth: 0, maxWidth: double.infinity),
                           child: Text(
-                            project.createdDate,
+                            timeAgo(DateTime.parse(project.createdAt!)),
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
                                 height: 1,
@@ -105,7 +126,7 @@ class _ProjectListState extends State<ProjectList> {
                     children: [
                       SizedBox(height: 5),
                       Text(
-                        'Project ${project.name}',
+                        'Project ${project.title}',
                         style: GoogleFonts.poppins(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
@@ -113,7 +134,7 @@ class _ProjectListState extends State<ProjectList> {
                         ),
                       ),
                       Text(
-                        project.role,
+                        project.title!,
                         style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
@@ -122,8 +143,7 @@ class _ProjectListState extends State<ProjectList> {
                       const SizedBox(height: 15),
                       Text(
                         'Students are looking for',
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.bold),
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.bold),
                       ),
                       Text(
                         firstExpectation,
@@ -139,8 +159,9 @@ class _ProjectListState extends State<ProjectList> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            '${project.duration}',
-                            style: GoogleFonts.poppins(height: 1.0, fontSize: 12),
+                            '${_getProjectDurationText(ProjectDuration.values[project.projectScopeFlag ?? 0])}',
+                            style:
+                                GoogleFonts.poppins(height: 1.0, fontSize: 12),
                           ),
                         ],
                       ),
@@ -154,8 +175,9 @@ class _ProjectListState extends State<ProjectList> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            '${project.students} students',
-                            style: GoogleFonts.poppins(height: 1.0, fontSize: 12),
+                            '${project.numberOfStudents} students',
+                            style:
+                                GoogleFonts.poppins(height: 1.0, fontSize: 12),
                           ),
                         ],
                       ),
@@ -170,7 +192,8 @@ class _ProjectListState extends State<ProjectList> {
                           SizedBox(width: 5),
                           Text(
                             '${project.proposals} proposals',
-                            style: GoogleFonts.poppins(height: 1.0, fontSize: 12),
+                            style:
+                                GoogleFonts.poppins(height: 1.0, fontSize: 12),
                           ),
                         ],
                       ),
@@ -196,24 +219,16 @@ class _ProjectListState extends State<ProjectList> {
   }
 }
 
-class ProjectInfo {
-  final String name;
-  final String createdDate;
-  final String role;
-  final String duration;
-  final int students;
-  final String expectations;
-  final int proposals;
-  bool isFavorite;
-
-  ProjectInfo({
-    required this.name,
-    required this.createdDate,
-    required this.role,
-    required this.duration,
-    required this.students,
-    required this.expectations,
-    required this.proposals,
-    this.isFavorite = false,
-  });
+// Helper method to get project duration text from enum
+String _getProjectDurationText(ProjectDuration duration) {
+  switch (duration) {
+    case ProjectDuration.lessThanOneMonth:
+      return 'Less than 1 month';
+    case ProjectDuration.oneToThreeMonths:
+      return '1 to 3 months';
+    case ProjectDuration.threeToSixMonths:
+      return '3 to 6 months';
+    case ProjectDuration.moreThanSixMonth:
+      return 'More than 6 months';
+  }
 }

@@ -1,15 +1,8 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'package:flutter/material.dart';
 import 'package:student_hub/models/model/project_company.dart';
-import 'package:student_hub/models/student_user.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/project_company_viewModel.dart';
-import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
 import 'package:student_hub/widgets/show_project_company_widget.dart';
-
-import '../../models/project_student.dart';
-import '../../models/student_registered.dart';
 
 class AllProjectsPage extends StatefulWidget {
   const AllProjectsPage({super.key, required this.user});

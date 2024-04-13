@@ -17,6 +17,7 @@ class ProjectCompany {
   int? countProposal;
   int? countMessages;
   int? countHired;
+  bool isFavorite;
 
   ProjectCompany({
     this.id,
@@ -33,6 +34,7 @@ class ProjectCompany {
     this.countProposal,
     this.countMessages,
     this.countHired,
+    this.isFavorite = false,
   });
 
   Map<String, dynamic> toMapProjectCompany() {
@@ -62,6 +64,7 @@ class ProjectCompany {
       countProposal: map['countProposals'],
       countMessages: map['countMessages'],
       countHired: map['countHired'],
+      isFavorite: map['isFavorite'] ?? false,
     );
   }
 

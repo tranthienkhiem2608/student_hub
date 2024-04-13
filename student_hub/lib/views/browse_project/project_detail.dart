@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/constant/project_duration.dart';
+import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/views/browse_project/submit_proposal.dart';
 import 'package:student_hub/widgets/project_list_widget.dart';
 
 class ProjectDetailPage extends StatelessWidget {
-  final ProjectInfo project;
+  final ProjectCompany project;
 
   const ProjectDetailPage({Key? key, required this.project}) : super(key: key);
 
@@ -42,12 +44,12 @@ class ProjectDetailPage extends StatelessWidget {
             ),
             SizedBox(height: 30),
             Text(
-              'Project Name: ${project.name}',
+              'Project Name: ${project.title}',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Text(
-              project.role,
+              project.title!,
               style: const TextStyle(
                 color: Colors.green, // Màu xanh lá cho role
                 fontWeight: FontWeight.bold,
@@ -69,7 +71,7 @@ class ProjectDetailPage extends StatelessWidget {
             // Sử dụng ListView để hiển thị danh sách các mục với dấu chấm đầu dòng
             ListView(
               shrinkWrap: true,
-              children: project.expectations.split('\n').map((item) {
+              children: project.description!.split('\n').map((item) {
                 return Padding(
                   padding: const EdgeInsets.only(left: 20, top: 5),
                   child: Row(
@@ -110,7 +112,7 @@ class ProjectDetailPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${project.duration} months',
+                '${_getProjectDurationText(ProjectDuration.values[project.projectScopeFlag ?? 0])}',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -127,7 +129,7 @@ class ProjectDetailPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${project.students} students',
+                '${project.numberOfStudents} students',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -144,7 +146,7 @@ class ProjectDetailPage extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black, 
+                    backgroundColor: Colors.black,
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 44),
                     shape: RoundedRectangleBorder(
@@ -178,5 +180,19 @@ class ProjectDetailPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+// Helper method to get project duration text from enum
+String _getProjectDurationText(ProjectDuration duration) {
+  switch (duration) {
+    case ProjectDuration.lessThanOneMonth:
+      return 'Less than 1 month';
+    case ProjectDuration.oneToThreeMonths:
+      return '1 to 3 months';
+    case ProjectDuration.threeToSixMonths:
+      return '3 to 6 months';
+    case ProjectDuration.moreThanSixMonth:
+      return 'More than 6 months';
   }
 }

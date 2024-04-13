@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/constant/project_duration.dart';
+import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
 import 'package:student_hub/widgets/project_list_widget.dart';
 
 class SearchProject extends StatefulWidget {
-  final List<ProjectInfo> searchResults;
+  final List<ProjectCompany> searchResults;
 
   const SearchProject({
     Key? key,
     required this.searchResults,
-    required List<ProjectInfo> allProjects,
+    required List<ProjectCompany> allProjects,
   }) : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class _SearchProjectState extends State<SearchProject> {
   int? _previousStudentsNeeded;
   int? _previousProposalsLessThan;
 
-  List<ProjectInfo> filteredProjects = [];
+  List<ProjectCompany> filteredProjects = [];
   String searchQuery = '';
   int? proposalsLessThan;
   int? studentsNeeded;
@@ -38,7 +40,7 @@ class _SearchProjectState extends State<SearchProject> {
     filteredProjects.addAll(widget.searchResults);
   }
 
-  void navigateToProjectDetailPage(ProjectInfo project) {
+  void navigateToProjectDetailPage(ProjectCompany project) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -57,17 +59,20 @@ class _SearchProjectState extends State<SearchProject> {
         if (projectLength != null) {
           switch (projectLength) {
             case 'less_than_one_month':
-              passProjectLengthFilter = project.duration == 'Less than 1 month';
+              passProjectLengthFilter = project.projectScopeFlag ==
+                  ProjectDuration.lessThanOneMonth.index;
               break;
             case 'one_to_three_months':
-              passProjectLengthFilter = project.duration == '1 to 3 months';
+              passProjectLengthFilter = project.projectScopeFlag ==
+                  ProjectDuration.oneToThreeMonths.index;
               break;
             case 'three_to_six_months':
-              passProjectLengthFilter = project.duration == '3 to 6 months';
+              passProjectLengthFilter = project.projectScopeFlag ==
+                  ProjectDuration.threeToSixMonths.index;
               break;
             case 'more_than_six_months':
-              passProjectLengthFilter =
-                  project.duration == 'More than 6 months';
+              passProjectLengthFilter = project.projectScopeFlag ==
+                  ProjectDuration.moreThanSixMonth.index;
               break;
             default:
               passProjectLengthFilter = true;
@@ -75,7 +80,7 @@ class _SearchProjectState extends State<SearchProject> {
         }
         bool passStudentsNeededFilter = true;
         if (studentsNeeded != null) {
-          passStudentsNeededFilter = project.students == studentsNeeded;
+          passStudentsNeededFilter = project.numberOfStudents == studentsNeeded;
         }
         bool passProposalsLessThanFilter = true;
         if (proposalsLessThan != null) {
@@ -359,7 +364,7 @@ class _SearchProjectState extends State<SearchProject> {
                         color: Color.fromARGB(255, 54, 52, 52),
                       ),
                       itemBuilder: (context, index) {
-                        ProjectInfo project = filteredProjects[index];
+                        ProjectCompany project = filteredProjects[index];
 
                         return ListTile(
                           contentPadding: EdgeInsets.zero,
@@ -367,32 +372,32 @@ class _SearchProjectState extends State<SearchProject> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(height: 8),
-                              Text('Project ${project.name}'),
+                              Text('Project ${project.title}'),
                             ],
                           ),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Created ${project.createdDate}',
+                                'Created ${project.createdAt}',
                                 style: TextStyle(height: 1.0),
                               ),
                               Text(
-                                project.role,
+                                project.title!,
                                 style: const TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                '\nTime: ${project.duration}, ${project.students} students needed',
+                                '\nTime: ${_getProjectDurationText(ProjectDuration.values[project.projectScopeFlag ?? 0])}, ${project.numberOfStudents} students needed',
                                 style: TextStyle(height: 1.0),
                               ),
                               SizedBox(height: 10),
                               Text('Students are looking for'),
                               Text(
-                                project.expectations.isNotEmpty
-                                    ? project.expectations.split('\n').first
+                                project.description?.isNotEmpty ?? false
+                                    ? project.description!.split('\n').first
                                     : '',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
@@ -431,5 +436,19 @@ class _SearchProjectState extends State<SearchProject> {
         ],
       ),
     );
+  }
+}
+
+// Helper method to get project duration text from enum
+String _getProjectDurationText(ProjectDuration duration) {
+  switch (duration) {
+    case ProjectDuration.lessThanOneMonth:
+      return 'Less than 1 month';
+    case ProjectDuration.oneToThreeMonths:
+      return '1 to 3 months';
+    case ProjectDuration.threeToSixMonths:
+      return '3 to 6 months';
+    case ProjectDuration.moreThanSixMonth:
+      return 'More than 6 months';
   }
 }
