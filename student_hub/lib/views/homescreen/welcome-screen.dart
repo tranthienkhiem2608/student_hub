@@ -53,8 +53,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         child: _Body(
             animationController: _animationController,
             fadeAnimation: _fadeAnimation,
-            companyUser: widget.companyUser,
-            fullName: widget.fullName),
+            companyUser: widget.companyUser),
       ),
     );
   }
@@ -137,14 +136,12 @@ class _Body extends StatelessWidget {
   final AnimationController animationController;
   final Animation<double> fadeAnimation;
   final User companyUser;
-  final String fullName;
 
   const _Body(
       {super.key,
       required this.animationController,
       required this.fadeAnimation,
-      required this.companyUser,
-      required this.fullName});
+      required this.companyUser});
 
   //
 
@@ -157,8 +154,7 @@ class _Body extends StatelessWidget {
             child: _Content(
                 animationController: animationController,
                 fadeAnimation: fadeAnimation,
-                companyUser: companyUser,
-                fullName: fullName),
+                companyUser: companyUser),
           ),
         ),
       ],
@@ -168,7 +164,6 @@ class _Body extends StatelessWidget {
 
 class _Content extends StatelessWidget {
   final User companyUser;
-  final String fullName;
   final AnimationController animationController;
   final Animation<double> fadeAnimation;
 
@@ -176,8 +171,7 @@ class _Content extends StatelessWidget {
       {super.key,
       required this.animationController,
       required this.fadeAnimation,
-      required this.companyUser,
-      required this.fullName});
+      required this.companyUser});
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +207,7 @@ class _Content extends StatelessWidget {
               ),
             ),
           ),
-          child: _AnimatedText(companyUser: companyUser, fullName: fullName),
+          child: _AnimatedText(companyUser: companyUser),
         ),
         // ... (Rest of your body code) ...
         SlideTransition(
@@ -270,9 +264,7 @@ class _Content extends StatelessWidget {
 
 class _AnimatedText extends StatelessWidget {
   final User companyUser;
-  final String fullName;
-  const _AnimatedText(
-      {super.key, required this.companyUser, required this.fullName});
+  const _AnimatedText({super.key, required this.companyUser});
 
   @override
   Widget build(BuildContext context) {
@@ -281,7 +273,7 @@ class _AnimatedText extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Welcome, ${fullName}!",
+          "Welcome, ${companyUser.fullname!}!",
           style: GoogleFonts.poppins(
             fontSize: 19,
             fontWeight: FontWeight.bold,

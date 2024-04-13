@@ -1,12 +1,12 @@
 class SkillSets {
-  final int id;
+  int? id;
   final String? createdAt;
   final String? updatedAt;
   final String? deletedAt;
   final String name;
 
   SkillSets({
-    required this.id,
+    this.id,
     this.createdAt,
     this.updatedAt,
     this.deletedAt,

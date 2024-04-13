@@ -18,7 +18,7 @@ class StudentUser {
   FileCV? file;
   String? user;
   TechStack? techStack;
-  List<Proposal>? proposals; // cần thêm model proposal
+  List<dynamic>? proposals; // cần thêm model proposal
   List<Education>? education;
   List<Language>? languages;
   List<Experience>? experience;
@@ -75,6 +75,7 @@ class StudentUser {
         resume: map['resume'],
         transcript: map['transcript'],
       ),
+      proposals: map['proposals'],
       techStack: TechStack.fromMapTechStack(map['techStack']),
       education: List<Education>.from(
           map['educations'].map((e) => Education.fromMapEducation(e))),

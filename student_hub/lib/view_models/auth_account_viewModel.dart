@@ -297,6 +297,7 @@ class AuthAccountViewModel {
         );
         print(responseDecode['errorDetails']);
       }
+      Navigator.of(context).pop();
     } catch (e) {
       print(e);
     }

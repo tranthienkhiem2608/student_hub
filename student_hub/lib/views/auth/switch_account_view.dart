@@ -113,7 +113,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                           Padding(
+                          Padding(
                             padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
                             child: Text("Switch account  ",
                                 style: GoogleFonts.poppins(
@@ -191,7 +191,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                     },
                     icon: Image.asset(
                       'assets/icons/profile.jpg', // Đường dẫn của hình ảnh
-                       // Màu của biểu tượng (nếu cần)
+                      // Màu của biểu tượng (nếu cần)
                       width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
                       height: 28.0, // Chiều cao của biểu tượng (nếu cần)
                     ),
@@ -217,10 +217,9 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                     },
                     icon: Image.asset(
                       'assets/icons/setting.jpg', // Đường dẫn của hình ảnh
-                       // Màu của biểu tượng (nếu cần)
+                      // Màu của biểu tượng (nếu cần)
                       width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
                       height: 28.0, // Chiều cao của biểu tượng (nếu cần)
-                      
                     ),
                     label: Text('Settings',
                         style: GoogleFonts.poppins(
@@ -242,7 +241,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                     },
                     icon: Image.asset(
                       'assets/icons/logout.jpg', // Đường dẫn của hình ảnh
-                       // Màu của biểu tượng (nếu cần)
+                      // Màu của biểu tượng (nếu cần)
                       width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
                       height: 28.0, // Chiều cao của biểu tượng (nếu cần)
                     ),

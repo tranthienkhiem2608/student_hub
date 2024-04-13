@@ -2,11 +2,11 @@ import 'package:student_hub/models/model/company_user.dart';
 import 'package:student_hub/models/model/student_user.dart';
 
 class User {
-  final int? id;
-  final String? email;
-  final String? password;
-  final String? fullname;
-  final List<dynamic>? role;
+  int? id;
+  String? email;
+  String? password;
+  String? fullname;
+  List<dynamic>? role;
   StudentUser? studentUser;
   CompanyUser? companyUser;
 

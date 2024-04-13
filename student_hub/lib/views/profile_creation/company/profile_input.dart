@@ -220,7 +220,8 @@ class _LoginPageState extends State<ProfileInput>
                           children: [
                             Text(
                               'How many people are in your company?',
-                              style: GoogleFonts.poppins(fontSize: 15.5, fontWeight: FontWeight.w600),
+                              style: GoogleFonts.poppins(
+                                  fontSize: 15.5, fontWeight: FontWeight.w600),
                             ),
                             SizedBox(height: 10),
                           ],
@@ -258,7 +259,8 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 0;
                                 });
                               },
-                              activeColor: Color(0xFF406AFF), // Thay đổi màu ở đây
+                              activeColor:
+                                  Color(0xFF406AFF), // Thay đổi màu ở đây
                             ),
                           ),
                         ),
@@ -291,7 +293,8 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 1;
                                 });
                               },
-                              activeColor: Color(0xFF406AFF),  // Thay đổi màu ở đây
+                              activeColor:
+                                  Color(0xFF406AFF), // Thay đổi màu ở đây
                             ),
                           ),
                         ),
@@ -324,7 +327,7 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 2;
                                 });
                               },
-                              activeColor: Color(0xFF406AFF), 
+                              activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -357,7 +360,7 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 3;
                                 });
                               },
-                              activeColor: Color(0xFF406AFF), 
+                              activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -391,7 +394,7 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 4;
                                 });
                               },
-                              activeColor: Color(0xFF406AFF), 
+                              activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -439,7 +442,8 @@ class _LoginPageState extends State<ProfileInput>
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
-                              color: Color.fromARGB(244, 48, 48, 49), width: 0.8),
+                              color: Color.fromARGB(244, 48, 48, 49),
+                              width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: GoogleFonts.poppins(
@@ -495,7 +499,8 @@ class _LoginPageState extends State<ProfileInput>
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
-                              color: Color.fromARGB(244, 48, 48, 49), width: 0.8),
+                              color: Color.fromARGB(244, 48, 48, 49),
+                              width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: GoogleFonts.poppins(
@@ -554,7 +559,8 @@ class _LoginPageState extends State<ProfileInput>
                         ),
                         enabledBorder: OutlineInputBorder(
                           borderSide: const BorderSide(
-                              color: Color.fromARGB(244, 48, 48, 49), width: 0.8),
+                              color: Color.fromARGB(244, 48, 48, 49),
+                              width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: GoogleFonts.poppins(
@@ -595,6 +601,7 @@ class _LoginPageState extends State<ProfileInput>
                         opacity: _fadeAnimation,
                         child: MaterialButton(
                           onPressed: () {
+                            print("fullname: ${widget.user.fullname}");
                             widget.user.companyUser = CompanyUser(
                               id: widget.user.id!,
                               createAt: '',

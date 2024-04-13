@@ -30,11 +30,30 @@ class InputProfileViewModel {
         print("Connect server successful");
         print(response);
         // Call a method to reload the page
-        var responseUserMap = jsonDecode(response);
-        User userReponse = User.fromMapUserForCompany(responseUserMap);
-        Navigator.of(context).pop();
-        ControllerRoute(context)
-            .navigateToWelcomeView(userReponse, companyUser.fullname!);
+        var responseUser = jsonDecode(response);
+        User userReponse = User.fromMapUserForCompany(responseUser);
+        var responseUserAuth =
+            await ConnectionService().get('/api/auth/me', {});
+        var responseUserMap = jsonDecode(responseUserAuth);
+
+        if (responseUserMap['result'] != null) {
+          print('User Response');
+          print(responseUserMap['result']);
+          User userResponseAuth = User.fromMapUser(responseUserMap['result']);
+          print(userResponseAuth.id);
+          print(userResponseAuth.fullname);
+          print(userResponseAuth.role);
+          print(userResponseAuth.role?[0]);
+          print(userResponseAuth.companyUser?.id);
+
+          // Navigator.of(context).pop();
+          // int role = int.parse(userResponse.role?[0]);
+          int role = userResponseAuth.role?[0];
+          print('length: ${userResponseAuth.role?.length}');
+          Navigator.of(context).pop();
+          ControllerRoute(context)
+              .navigateToWelcomeView(userResponseAuth, companyUser.fullname!);
+        }
       }
     } catch (e) {
       print(e);
