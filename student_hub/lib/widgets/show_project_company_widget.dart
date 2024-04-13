@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:student_hub/models/model/project_company.dart';
 import 'dart:async';
+
+import 'package:student_hub/view_models/project_company_viewModel.dart';
 
 class ShowProjectCompanyWidget extends StatefulWidget {
   final String projectName;
@@ -8,6 +11,8 @@ class ShowProjectCompanyWidget extends StatefulWidget {
   final List<int> quantities;
   final List<String> labels;
   final bool showOptionsIcon;
+  final int id;
+  final VoidCallback? onProjectDeleted;
 
   ShowProjectCompanyWidget({
     required this.projectName,
@@ -16,6 +21,8 @@ class ShowProjectCompanyWidget extends StatefulWidget {
     required this.quantities,
     required this.labels,
     required this.showOptionsIcon,
+    required this.id,
+    this.onProjectDeleted,
   });
 
   @override
@@ -121,7 +128,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                       style: TextStyle(color: Colors.black)),
                 ),
                 onPressed: () {
-                  // Handle remove posting
+                  _confirmDeletion(context, widget);
                 },
               ),
               Divider(),
@@ -219,4 +226,47 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
       ],
     );
   }
+}
+
+void _confirmDeletion(BuildContext context, ShowProjectCompanyWidget widget) {
+  Navigator.of(context).pop(); // Close bottom sheet first
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Confirm Deletion'),
+        content: Text('Are you sure you want to delete this project?'),
+        actions: [
+          TextButton(
+            child: Text('Cancel', style: TextStyle(color: Colors.grey)),
+            onPressed: () {
+              Navigator.of(context).pop(); // Close dialog
+            },
+          ),
+          TextButton(
+            child: Text('Delete', style: TextStyle(color: Colors.red)),
+            onPressed: () {
+              ProjectCompanyViewModel(context)
+                  .deleteProject(widget.id)
+                  .then((value) {
+                Navigator.of(context).pop(); // Close dialog
+                if (widget.onProjectDeleted != null) {
+                  widget
+                      .onProjectDeleted!(); // Trigger project deleted callback
+                }
+              }).catchError((error) {
+                Navigator.of(context).pop(); // Close dialog even on error
+                print('Error deleting project: $error');
+
+                // Show Error Message (Here's one way using a snackbar):
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Error deleting project.')));
+              });
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
