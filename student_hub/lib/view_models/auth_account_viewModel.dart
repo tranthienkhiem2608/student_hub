@@ -76,6 +76,7 @@ class AuthAccountViewModel {
           print(userResponse.fullname);
           print(userResponse.role);
           print(userResponse.role?[0]);
+          print(userResponse.companyUser?.id);
 
           // Navigator.of(context).pop();
           // int role = int.parse(userResponse.role?[0]);

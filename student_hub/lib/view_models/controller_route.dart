@@ -87,10 +87,11 @@ class ControllerRoute {
     );
   }
 
-  void navigateToWelcomeView(User companyUser) {
+  void navigateToWelcomeView(User companyUser, String fullName) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => WelcomeScreen(companyUser)),
+      MaterialPageRoute(
+          builder: (context) => WelcomeScreen(companyUser, fullName)),
     );
   }
 

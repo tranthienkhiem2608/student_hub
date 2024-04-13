@@ -33,7 +33,8 @@ class InputProfileViewModel {
         var responseUserMap = jsonDecode(response);
         User userReponse = User.fromMapUserForCompany(responseUserMap);
         Navigator.of(context).pop();
-        ControllerRoute(context).navigateToWelcomeView(userReponse);
+        ControllerRoute(context)
+            .navigateToWelcomeView(userReponse, companyUser.fullname!);
       }
     } catch (e) {
       print(e);

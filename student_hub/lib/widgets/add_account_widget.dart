@@ -24,6 +24,7 @@ class _AddAccountWidgetState extends State<AddAccountWidget> {
     prefs = await SharedPreferences.getInstance();
     role = prefs.getInt('role');
   }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -35,23 +36,34 @@ class _AddAccountWidgetState extends State<AddAccountWidget> {
         ),
         child: TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: const Color(0xFFdce8e8), // Set the background color you want
+            backgroundColor:
+                const Color(0xFFdce8e8), // Set the background color you want
           ),
           onPressed: () {
-        Navigator.of(context).pop();
-        if(widget.user.studentUser == null && widget.user.companyUser == null) {
-          role == 0 ? ControllerRoute(context).navigateToProfileInputStudent1(widget.user) : ControllerRoute(context).navigateToProfileInputCompany(widget.user);
-        }
-        else {
-          widget.user.studentUser != null ? ControllerRoute(context).navigateToProfileInputCompany(widget.user) : ControllerRoute(context).navigateToProfileInputStudent1(widget.user);
-          }
+            prefs.setInt('role', role == 0 ? 1 : 0);
+            Navigator.of(context).pop();
+            if (widget.user.studentUser == null &&
+                widget.user.companyUser == null) {
+              role == 0
+                  ? ControllerRoute(context)
+                      .navigateToProfileInputStudent1(widget.user)
+                  : ControllerRoute(context)
+                      .navigateToProfileInputCompany(widget.user);
+            } else {
+              widget.user.studentUser != null
+                  ? ControllerRoute(context)
+                      .navigateToProfileInputCompany(widget.user)
+                  : ControllerRoute(context)
+                      .navigateToProfileInputStudent1(widget.user);
+            }
           },
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Icon(Icons.add, size: 34, color: Colors.black),
               SizedBox(width: 10),
-              Text('Add new account', style: TextStyle(fontSize: 21, color: Colors.black)),
+              Text('Add new account',
+                  style: TextStyle(fontSize: 21, color: Colors.black)),
             ],
           ),
         ),

@@ -6,7 +6,8 @@ import 'package:student_hub/views/auth/switch_account_view.dart';
 
 class WelcomeScreen extends StatefulWidget {
   final User companyUser;
-  const WelcomeScreen(this.companyUser, {super.key});
+  final String fullName;
+  const WelcomeScreen(this.companyUser, this.fullName, {super.key});
 
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
@@ -52,7 +53,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
         child: _Body(
             animationController: _animationController,
             fadeAnimation: _fadeAnimation,
-            companyUser: widget.companyUser),
+            companyUser: widget.companyUser,
+            fullName: widget.fullName),
       ),
     );
   }
@@ -135,12 +137,14 @@ class _Body extends StatelessWidget {
   final AnimationController animationController;
   final Animation<double> fadeAnimation;
   final User companyUser;
+  final String fullName;
 
   const _Body(
       {super.key,
       required this.animationController,
       required this.fadeAnimation,
-      required this.companyUser});
+      required this.companyUser,
+      required this.fullName});
 
   //
 
@@ -153,7 +157,8 @@ class _Body extends StatelessWidget {
             child: _Content(
                 animationController: animationController,
                 fadeAnimation: fadeAnimation,
-                companyUser: companyUser),
+                companyUser: companyUser,
+                fullName: fullName),
           ),
         ),
       ],
@@ -163,6 +168,7 @@ class _Body extends StatelessWidget {
 
 class _Content extends StatelessWidget {
   final User companyUser;
+  final String fullName;
   final AnimationController animationController;
   final Animation<double> fadeAnimation;
 
@@ -170,7 +176,8 @@ class _Content extends StatelessWidget {
       {super.key,
       required this.animationController,
       required this.fadeAnimation,
-      required this.companyUser});
+      required this.companyUser,
+      required this.fullName});
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +213,7 @@ class _Content extends StatelessWidget {
               ),
             ),
           ),
-          child: _AnimatedText(companyUser: companyUser),
+          child: _AnimatedText(companyUser: companyUser, fullName: fullName),
         ),
         // ... (Rest of your body code) ...
         SlideTransition(
@@ -263,7 +270,9 @@ class _Content extends StatelessWidget {
 
 class _AnimatedText extends StatelessWidget {
   final User companyUser;
-  const _AnimatedText({super.key, required this.companyUser});
+  final String fullName;
+  const _AnimatedText(
+      {super.key, required this.companyUser, required this.fullName});
 
   @override
   Widget build(BuildContext context) {
@@ -272,7 +281,7 @@ class _AnimatedText extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Welcome, ${companyUser.fullname!}!",
+          "Welcome, ${fullName}!",
           style: GoogleFonts.poppins(
             fontSize: 19,
             fontWeight: FontWeight.bold,
