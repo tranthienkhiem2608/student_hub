@@ -24,6 +24,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
   void initState() {
     super.initState();
     _initializeData();
+    setState(() {
+      allProjects = fetchAllProjects();
+    });
   }
 
   Future<void> _initializeData() async {

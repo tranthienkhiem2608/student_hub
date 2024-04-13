@@ -69,8 +69,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   final AnimationController animationController;
   User companyUser;
 
-   _AppBar(this.animationController, this.companyUser, {super.key});
-  
+  _AppBar(this.animationController, this.companyUser, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +97,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                         SwitchAccountView(companyUser),
+                        SwitchAccountView(companyUser),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       var begin = const Offset(1.0, 0.0);
@@ -139,9 +138,9 @@ class _Body extends StatelessWidget {
 
   const _Body(
       {super.key,
-        required this.animationController,
-        required this.fadeAnimation,
-        required this.companyUser});
+      required this.animationController,
+      required this.fadeAnimation,
+      required this.companyUser});
 
   //
 
@@ -154,8 +153,7 @@ class _Body extends StatelessWidget {
             child: _Content(
                 animationController: animationController,
                 fadeAnimation: fadeAnimation,
-                companyUser: companyUser
-            ),
+                companyUser: companyUser),
           ),
         ),
       ],
@@ -240,10 +238,8 @@ class _Content extends StatelessWidget {
           )),
           child: FadeTransition(
             opacity: fadeAnimation,
-            child: _AnimatedButton(
-              text: 'Get started!',
-                companyUser: companyUser
-            ),
+            child:
+                _AnimatedButton(text: 'Get started!', companyUser: companyUser),
           ),
         ),
 
@@ -276,7 +272,7 @@ class _AnimatedText extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Welcome, ${companyUser.fullname}!",
+          "Welcome, ${companyUser.fullname!}!",
           style: GoogleFonts.poppins(
             fontSize: 19,
             fontWeight: FontWeight.bold,
@@ -309,13 +305,12 @@ class _DescriptionText extends StatelessWidget {
   }
 }
 
-
-
 class _AnimatedButton extends StatelessWidget {
   final String text;
   final User companyUser;
 
-  const _AnimatedButton({super.key, required this.text, required this.companyUser });
+  const _AnimatedButton(
+      {super.key, required this.text, required this.companyUser});
 
   @override
   Widget build(BuildContext context) {
@@ -324,7 +319,7 @@ class _AnimatedButton extends StatelessWidget {
       height: 50, // Set the height to your desired size
       child: ElevatedButton(
         onPressed: () {
-          ControllerRoute(context).navigateToHomeScreen(true,companyUser );
+          ControllerRoute(context).navigateToHomeScreen(false, companyUser);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.blueAccent,

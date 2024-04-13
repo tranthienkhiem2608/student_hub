@@ -1,5 +1,7 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:flutter/material.dart';
-import 'package:student_hub/models/project_company.dart';
+import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/project_detail/detail_page.dart';
 import 'package:student_hub/views/pages/project_detail/hired_page.dart';
@@ -32,7 +34,7 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  widget.projectCompany.projectName,
+                  widget.projectCompany.title!,
                   style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -54,10 +56,7 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  ProposalsPage(
-                      studentRegistered:
-                          widget.projectCompany.studentRegistered,
-                      hiredStudents: hiredStudents),
+                  ProposalsPage(projectCompany: widget.projectCompany),
                   DetailPage(projectCompany: widget.projectCompany),
                   MessagePage(),
                   HiredPage(

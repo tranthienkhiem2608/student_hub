@@ -33,38 +33,39 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        title: Text('Student Hub',
-            style: GoogleFonts.poppins(
-                // Apply the Poppins font
-                color: Color.fromARGB(255, 0, 0, 0),
-                fontSize: 20,
-                fontWeight: FontWeight.bold)),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        actions: <Widget>[
-          IconButton(
-            icon: Container(
-              // Add a Container as the parent
-              padding: const EdgeInsets.all(8.0), // Padding for spacing
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
-                shape: BoxShape.circle,
-              ),
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
-                child: Image.asset('assets/icons/user_ic.png',
-                    width: 25, height: 25),
-              ),
+      automaticallyImplyLeading: false,
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
+              color: Color.fromARGB(255, 0, 0, 0),
+              fontSize: 20,
+              fontWeight: FontWeight.bold)),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      actions: <Widget>[
+        IconButton(
+          icon: Container(
+            // Add a Container as the parent
+            padding: const EdgeInsets.all(8.0), // Padding for spacing
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              shape: BoxShape.circle,
             ),
-            onPressed: () {
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              child: Image.asset('assets/icons/user_ic.png',
+                  width: 25, height: 25),
+            ),
+          ),
+          onPressed: () {
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (context) => SwitchAccountView(user!)));
           },
-          )
-        ],
-      );
+        )
+      ],
+    );
   }
 
   @override
@@ -130,29 +131,32 @@ class _HomePageState extends State<HomePage> {
               tabBackgroundColor: Color.fromARGB(244, 255, 255, 255),
               tabs: [
                 GButton(
-                icon: Icons.home_rounded,
-                text: 'Home',
-                textStyle: GoogleFonts.poppins( // Sử dụng GoogleFonts.poppins()
+                  icon: Icons.home_rounded,
+                  text: 'Home',
+                  textStyle: GoogleFonts.poppins(
+                    // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
                     color: Color(0xFF406AFF), // Màu chữ
                     fontWeight: FontWeight.w500,
                   ),
-                iconColor: Colors.white,
-              ),
+                  iconColor: Colors.white,
+                ),
                 GButton(
                   icon: Icons.space_dashboard_rounded,
                   text: 'Dashboard',
-                  textStyle: GoogleFonts.poppins( // Sử dụng GoogleFonts.poppins()
+                  textStyle: GoogleFonts.poppins(
+                    // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
                     color: Color(0xFF406AFF),
-                    fontWeight: FontWeight.w500,  // Màu chữ
+                    fontWeight: FontWeight.w500, // Màu chữ
                   ),
                   iconColor: Colors.white,
                 ),
                 GButton(
                   icon: Icons.message_rounded,
                   text: 'Message',
-                  textStyle: GoogleFonts.poppins( // Sử dụng GoogleFonts.poppins()
+                  textStyle: GoogleFonts.poppins(
+                    // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
                     color: Color(0xFF406AFF), // Màu chữ
                     fontWeight: FontWeight.w500,
@@ -162,7 +166,8 @@ class _HomePageState extends State<HomePage> {
                 GButton(
                   icon: Icons.notifications_rounded,
                   text: 'Alert',
-                  textStyle: GoogleFonts.poppins( // Sử dụng GoogleFonts.poppins()
+                  textStyle: GoogleFonts.poppins(
+                    // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
                     color: Color(0xFF406AFF), // Màu chữ
                     fontWeight: FontWeight.w500,

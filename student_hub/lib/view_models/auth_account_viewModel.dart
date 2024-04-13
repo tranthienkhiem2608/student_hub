@@ -70,6 +70,7 @@ class AuthAccountViewModel {
 
         if (responseUserMap['result'] != null) {
           print('User Response');
+          print(responseUserMap['result']);
           User userResponse = User.fromMapUser(responseUserMap['result']);
           print(userResponse.id);
           print(userResponse.fullname);

@@ -89,7 +89,7 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         body: TabBarView(children: [
           role == 0
-              ? AllProjectsPageStudent()
+              ? const AllProjectsPageStudent()
               : AllProjectsPage(user: widget.user),
           WorkingPage(),
           ArchivedPage()

@@ -191,7 +191,7 @@ class _ProjectListState extends State<ProjectList> {
                           ),
                           SizedBox(width: 5),
                           Text(
-                            '${project.proposals} proposals',
+                            '${project.countProposal} proposals',
                             style:
                                 GoogleFonts.poppins(height: 1.0, fontSize: 12),
                           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:student_hub/models/model/file_cv.dart';
 import 'package:student_hub/models/model/language.dart';
+import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/skillSets.dart';
 import 'package:student_hub/models/model/techStack.dart';
 import 'package:student_hub/models/model/education.dart';
@@ -15,8 +16,9 @@ class StudentUser {
   int? userId;
   int? techStackId;
   FileCV? file;
+  String? user;
   TechStack? techStack;
-  List<String>? proposals; // cần thêm model proposal
+  List<Proposal>? proposals; // cần thêm model proposal
   List<Education>? education;
   List<Language>? languages;
   List<Experience>? experience;
@@ -30,6 +32,7 @@ class StudentUser {
     this.userId,
     this.techStackId,
     this.file,
+    this.user,
     this.techStack,
     this.proposals,
     this.education,
@@ -73,7 +76,6 @@ class StudentUser {
         transcript: map['transcript'],
       ),
       techStack: TechStack.fromMapTechStack(map['techStack']),
-      proposals: List<String>.from(map['proposals']),
       education: List<Education>.from(
           map['educations'].map((e) => Education.fromMapEducation(e))),
       languages: List<Language>.from(
@@ -83,6 +85,26 @@ class StudentUser {
       skillSet: List<SkillSets>.from(
           map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e))),
     );
-    
+  }
+
+  factory StudentUser.fromMapStudentProposal(Map<String, dynamic> map) {
+    return StudentUser(
+      id: map['id'],
+      createAt: map['createAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      userId: map['userId'],
+      techStackId: map['techStackId'],
+      file: FileCV(
+        resume: map['resume'],
+        transcript: map['transcript'],
+      ),
+      user: map['user']['fullname'],
+      techStack: TechStack.fromMapTechStack(map['techStack']),
+      education: map['educations'] != null
+          ? List<Education>.from(
+              map['educations'].map((e) => Education.fromMapEducation(e)))
+          : null,
+    );
   }
 }

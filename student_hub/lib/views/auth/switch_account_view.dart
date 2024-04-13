@@ -58,14 +58,12 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
     });
   }
 
-
   Future<void> initPrefs() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
       role = prefs.getInt('role')!;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -112,20 +110,25 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
-                        child: Text(
-                            "${widget.user.fullname!} \n ${role == 0 ? 'Student' : 'Company'}",
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                      Transform.rotate(
-                        angle:
-                            -90 * 3.14159 / 180, // Convert degrees to radians
-                        child: const Icon(Icons.arrow_back_ios,
-                            color: Colors.black, size: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Padding(
+                            padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
+                            child: Text("Switch account  ",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                          Transform.rotate(
+                            angle: -90 *
+                                3.14159 /
+                                180, // Convert degrees to radians
+                            child: const Icon(Icons.arrow_back_ios,
+                                color: Colors.black, size: 20.0),
+                          ),
+                        ],
                       ),
                       Container(
                         width: 100, // Tăng giá trị width
@@ -141,6 +144,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                           ),
                         ),
                       ),
+
                       SizedBox(
                           width: 10), // Khoảng cách giữa hình ảnh và văn bản
                       Column(

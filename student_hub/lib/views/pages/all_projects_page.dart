@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/project_company_viewModel.dart';
+import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
 import 'package:student_hub/widgets/show_project_company_widget.dart';
 
 class AllProjectsPage extends StatefulWidget {
@@ -97,21 +98,32 @@ class _AllProjectsPageState extends State<AllProjectsPage>
                         print(project.data![index].title);
                         print(project.data![index].description);
 
-                        return ShowProjectCompanyWidget(
-                          id: project.data![index].id!,
-                          projectName: project.data![index].title!.toString(),
-                          creationTime: DateTime.parse(
-                              project.data![index].createdAt!.toString()),
-                          description:
-                              project.data![index].description!.toString(),
-                          quantities: [
-                            project.data![index].countProposal!,
-                            project.data![index].countMessages!,
-                            project.data![index].countHired!
-                          ],
-                          labels: ['Proposals', 'Messages', 'Hired'],
-                          showOptionsIcon: true,
-                          onProjectDeleted: _handleProjectDeleted,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HireStudentScreen(
+                                    projectCompany: project.data![index]),
+                              ),
+                            );
+                          },
+                          child: ShowProjectCompanyWidget(
+                            id: project.data![index].id!,
+                            projectName: project.data![index].title!.toString(),
+                            creationTime: DateTime.parse(
+                                project.data![index].createdAt!.toString()),
+                            description:
+                                project.data![index].description!.toString(),
+                            quantities: [
+                              project.data![index].countProposal!.toString(),
+                              project.data![index].countMessages!.toString(),
+                              project.data![index].countHired!.toString()
+                            ],
+                            labels: ['Proposals', 'Messages', 'Hired'],
+                            showOptionsIcon: true,
+                            onProjectDeleted: _handleProjectDeleted,
+                          ),
                         );
                       },
                     );

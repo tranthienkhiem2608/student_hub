@@ -6,9 +6,10 @@ import 'package:student_hub/widgets/show_project_company_widget.dart';
 
 import '../../models/project_student.dart';
 import '../../models/student_registered.dart';
-import '../../models/user.dart'; // Import the ShowProjectCompanyWidget
+import 'package:student_hub/models/user.dart';
 
 class AllProjectsPageStudent extends StatefulWidget {
+  // final User user;
   const AllProjectsPageStudent({super.key});
   @override
   _AllProjectsPageStudentState createState() => _AllProjectsPageStudentState();
@@ -245,14 +246,13 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
                             ],
                           );
                           Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HireStudentScreen(
-                                projectCompany: projectCompany,
-                              ),
-                            ),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) =>
+                          //         HireStudentScreen(user: widget.user),
+                          //   ),
+                          // );
 
                           print('Item at index $index was tapped.');
                         },
