@@ -9,7 +9,7 @@ class ShowProjectCompanyWidget extends StatefulWidget {
   final String projectName;
   final DateTime creationTime;
   final String description;
-  final List<int> quantities;
+  final List<String> quantities;
   final List<String> labels;
   final bool showOptionsIcon;
   final int id;

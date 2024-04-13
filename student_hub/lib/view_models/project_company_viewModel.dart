@@ -59,7 +59,7 @@ class ProjectCompanyViewModel {
         print("Connect server successful");
         print(responseDecode['result']);
         List<ProjectCompany> projectList =
-            ProjectCompany.fromListMapProjectCompany(responseDecode['result']);
+            ProjectCompany.fromListMapAllProject(responseDecode['result']);
         return projectList;
       } else {
         print("Failed");

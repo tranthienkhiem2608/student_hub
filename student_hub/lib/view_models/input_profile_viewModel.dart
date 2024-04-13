@@ -31,7 +31,7 @@ class InputProfileViewModel {
         print(response);
         // Call a method to reload the page
         var responseUserMap = jsonDecode(response);
-        User userReponse = User.fromMapUser(responseUserMap['result']);
+        User userReponse = User.fromMapUserForCompany(responseUserMap);
         Navigator.of(context).pop();
         ControllerRoute(context).navigateToWelcomeView(userReponse);
       }

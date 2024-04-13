@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../models/project_company.dart';
+import '../../../models/model/project_company.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key, required this.projectCompany});
@@ -9,7 +9,6 @@ class DetailPage extends StatefulWidget {
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
-
 
 class _DetailPageState extends State<DetailPage>
     with SingleTickerProviderStateMixin {
@@ -22,7 +21,7 @@ class _DetailPageState extends State<DetailPage>
   void _parseExpectations() {
     // Assuming your expectations are separated by newlines in the description
     setState(() {
-      expectations = widget.projectCompany.description.split('\n');
+      expectations = widget.projectCompany.description!.split('\n');
     });
   }
 
@@ -113,7 +112,7 @@ class _DetailPageState extends State<DetailPage>
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${widget.projectCompany.duration} months',
+                '${widget.projectCompany.projectScopeFlag} months',
                 style: TextStyle(fontSize: 16),
               ),
             ),
@@ -130,7 +129,7 @@ class _DetailPageState extends State<DetailPage>
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${widget.projectCompany.studentRequired} students',
+                '${widget.projectCompany.numberOfStudents} students',
                 style: TextStyle(fontSize: 16),
               ),
             ),
