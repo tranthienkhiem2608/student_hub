@@ -113,12 +113,12 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Padding(
+                           Padding(
                             padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
                             child: Text("Switch account  ",
-                                style: TextStyle(
+                                style: GoogleFonts.poppins(
                                     color: Colors.black,
-                                    fontSize: 20.0,
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.bold)),
                           ),
                           Transform.rotate(
@@ -126,7 +126,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                                 3.14159 /
                                 180, // Convert degrees to radians
                             child: const Icon(Icons.arrow_back_ios,
-                                color: Colors.black, size: 20.0),
+                                color: Colors.black, size: 18.0),
                           ),
                         ],
                       ),
@@ -200,7 +200,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                       style: GoogleFonts.poppins(
                         color: Colors.black,
                         fontSize: 20.0,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -220,12 +220,13 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                        // Màu của biểu tượng (nếu cần)
                       width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
                       height: 28.0, // Chiều cao của biểu tượng (nếu cần)
+                      
                     ),
                     label: Text('Settings',
                         style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 20.0,
-                            fontWeight: FontWeight.normal)),
+                            fontWeight: FontWeight.w600)),
                   ),
                 ),
                 const Padding(
@@ -249,7 +250,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                         style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 20.0,
-                            fontWeight: FontWeight.normal)),
+                            fontWeight: FontWeight.w600)),
                   ),
                 ),
               ],

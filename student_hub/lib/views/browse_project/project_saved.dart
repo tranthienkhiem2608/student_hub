@@ -188,7 +188,7 @@ class FavoriteProjectsPage extends StatelessWidget {
               ),
             )
           : Center(
-              child: Text('You have no favorite projects.'),
+              child: Text('You have no favorite projects.', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold),),
             ),
     );
   }

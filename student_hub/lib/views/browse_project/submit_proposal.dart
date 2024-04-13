@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/widgets/project_list_widget.dart';
 
 class ApplyPage extends StatelessWidget {
@@ -6,27 +7,31 @@ class ApplyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: const Text(
-          'Student Hub',
-          style: TextStyle(
-            color: Color.fromARGB(255, 0, 0, 0),
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: const Color(0xFFBEEEF7),
+        title: Text('Student Hub',
+            style: GoogleFonts.poppins(
+                // Apply the Poppins font
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         actions: <Widget>[
           IconButton(
-            icon: SizedBox(
-              width: 25,
-              height: 25,
-              child: Image.asset('assets/icons/user_ic.png'),
+            icon: Container(
+              // Add a Container as the parent
+              padding: const EdgeInsets.all(8.0), // Padding for spacing
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                shape: BoxShape.circle,
+              ),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                child: Image.asset('assets/icons/user_ic.png',
+                    width: 25, height: 25),
+              ),
             ),
-            onPressed: () {
-              // Xử lý khi người dùng nhấn vào biểu tượng người dùng
-            },
-          ),
+            onPressed: () {},
+          )
         ],
       ),
       body: Padding(
@@ -36,23 +41,27 @@ class ApplyPage extends StatelessWidget {
           children: [
             Text(
               'Cover Letter',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: GoogleFonts.poppins(
+                  fontSize: 22, fontWeight: FontWeight.bold),
             ),
             Text(
               'Decribe why do you fit to this project.',
-              style: TextStyle(fontSize: 17,),
+              style: GoogleFonts.poppins(
+                fontSize: 15,
+              ),
             ),
             SizedBox(height: 20),
             Container(
               width: 500.0,
               height: 200.0,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
+                border: Border.all(color: Color(0xFF777B8A)),
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: TextFormField(
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                   hintText: 'Enter project description',
+                  hintStyle: GoogleFonts.poppins(color: Color(0xFF777B8A), fontSize: 14),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(10.0),
                 ),
@@ -60,7 +69,7 @@ class ApplyPage extends StatelessWidget {
                 keyboardType: TextInputType.multiline,
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 50),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -69,24 +78,24 @@ class ApplyPage extends StatelessWidget {
                     // Xử lý khi nút "Apply Now" được nhấn
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
+                    backgroundColor: Color(0xFF4DBE3FF),
                     padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 60),
+                        vertical: 10, horizontal: 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
                   child: const Text(
                     "Cancel",
-                    style: TextStyle(color: Colors.white, fontSize: 16.0),
+                    style: TextStyle(color: Color(0xFF406AFF), fontSize: 16.0),
                   ),
                 ),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
+                    backgroundColor: Color(0xFF406AFF),
                     padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 30),
+                        vertical: 10, horizontal: 15),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),

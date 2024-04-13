@@ -155,7 +155,7 @@ class ProjectDetailPage extends StatelessWidget {
                 style: GoogleFonts.poppins(fontSize: 15.5),
               ),
             ),
-            SizedBox(height: 60),
+            SizedBox(height: 40),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -168,22 +168,22 @@ class ProjectDetailPage extends StatelessWidget {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF406AFF),
+                    backgroundColor: Color(0xFF4DBE3FF),
                     padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 30),
+                        vertical: 10, horizontal: 20),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
                   child: Text(
-                    "Apply Now",
-                    style: GoogleFonts.poppins(color: Colors.white, fontSize: 16.0),
+                    "Save project",
+                    style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontSize: 16.0),
                   ),
                 ),
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 250, 55, 87),
+                    backgroundColor: Color(0xFF406AFF),
                     padding: const EdgeInsets.symmetric(
                         vertical: 10, horizontal: 25),
                     shape: RoundedRectangleBorder(
@@ -191,7 +191,7 @@ class ProjectDetailPage extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    "Save Project",
+                    "Apply now",
                     style: GoogleFonts.poppins(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
