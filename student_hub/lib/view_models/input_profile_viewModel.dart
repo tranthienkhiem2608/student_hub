@@ -262,14 +262,17 @@ class InputProfileViewModel {
 
   Future<FileCV> putFileCv(int studentId, FileCV fileCV) async {
     print('Put File CV');
-    // String url = '/api/filecv/updateByStudentId/$studentId';
     String url = '/api/profile/student';
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
       // var payload = fileCV.toMapFileCV();
       if (fileCV.resume != null) {
-        String urlResume = '$url/resume/$studentId';
-        var response = await ConnectionService().put(urlResume, fileCV.resume);
+        String urlResume = '$url/$studentId/resume';
+        print(urlResume);
+        print(fileCV.resume);
+        var response =
+            await ConnectionService().putFile(urlResume, fileCV.resume!);
+        print(response);
         var responseDecode = jsonDecode(response);
         if (responseDecode['result'] != null) {
           print("Connected to the server successfully");
@@ -282,9 +285,10 @@ class InputProfileViewModel {
         }
       }
       if (fileCV.transcript != null) {
-        String urlTranscript = '$url/transcript/$studentId';
-        var response =
-            await ConnectionService().put(urlTranscript, fileCV.transcript);
+        String urlTranscript = '$url/$studentId/transcript';
+        print(fileCV.transcript);
+        var response = await ConnectionService()
+            .putFile(urlTranscript, fileCV.transcript!);
         var responseDecode = jsonDecode(response);
         if (responseDecode['result'] != null) {
           print("Connected to the server successfully");

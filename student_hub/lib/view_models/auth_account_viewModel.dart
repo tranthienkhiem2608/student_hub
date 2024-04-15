@@ -65,6 +65,7 @@ class AuthAccountViewModel {
         if (stageNav == false) {
           return;
         }
+        print('Stage Nav: $stageNav');
         var responseUser = await ConnectionService().get('/api/auth/me', {});
         var responseUserMap = jsonDecode(responseUser);
 
@@ -101,8 +102,6 @@ class AuthAccountViewModel {
                       .navigateToProfileInputStudent1(userResponse)
                   : ControllerRoute(context)
                       .navigateToHomeScreen(true, userResponse);
-              // ControllerRoute(context)
-              //     .navigateToProfileInputStudent3(userResponse);
             }
           } else {
             // ControllerRoute(context).navigateToHomeScreen(false, userResponse);
@@ -123,8 +122,6 @@ class AuthAccountViewModel {
               userResponse.studentUser == null
                   ? ControllerRoute(context)
                       .navigateToProfileInputStudent1(userResponse)
-                  // : ControllerRoute(context)
-                  //     .navigateToProfileInputStudent3(userResponse);
                   : ControllerRoute(context)
                       .navigateToHomeScreen(true, userResponse);
             }

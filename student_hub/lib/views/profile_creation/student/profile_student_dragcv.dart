@@ -193,8 +193,6 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // 1. Simulate some processing (if needed)
-                    // You would perform your upload logic or other tasks here.// Example delay
                     fileCV = FileCV(
                       transcript: _transcriptPlatformFile?.path,
                       resume: _cvPlatformFile?.path,
@@ -204,9 +202,8 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                         "CV: ${widget.studentUser.studentUser?.file?.resume}");
                     print(
                         "Transcript: ${widget.studentUser.studentUser?.file?.transcript}");
-                    // InputProfileViewModel(context)
-                    //     .inputProfileStudent(widget.studentUser);
-                    // 3. Navigate to HomePage
+                    InputProfileViewModel(context)
+                        .inputProfileStudent(widget.studentUser);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
