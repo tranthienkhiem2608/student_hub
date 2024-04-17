@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/views/browse_project/submit_proposal.dart';
-import 'package:student_hub/widgets/project_list_widget.dart';
 
 class ProjectDetailPage extends StatelessWidget {
   final ProjectCompany project;
@@ -48,7 +47,10 @@ class ProjectDetailPage extends StatelessWidget {
           children: [
             Text(
               'Project Details',
-              style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF406AFF)),
+              style: GoogleFonts.poppins(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF406AFF)),
             ),
             SizedBox(height: 45),
             RichText(
@@ -80,8 +82,8 @@ class ProjectDetailPage extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(width: 15),
-                    Icon(Icons.search), 
-                    SizedBox(height: 10), 
+                    Icon(Icons.search),
+                    SizedBox(height: 10),
                     SizedBox(width: 12),
                     Text(
                       'Student are looking for:',
@@ -118,7 +120,6 @@ class ProjectDetailPage extends StatelessWidget {
                 ),
               ],
             ),
-            
             SizedBox(height: 20),
             ListTile(
               leading: Container(
@@ -177,7 +178,8 @@ class ProjectDetailPage extends StatelessWidget {
                   ),
                   child: Text(
                     "Save project",
-                    style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontSize: 16.0),
+                    style: GoogleFonts.poppins(
+                        color: Color(0xFF406AFF), fontSize: 16.0),
                   ),
                 ),
                 ElevatedButton(
@@ -198,7 +200,8 @@ class ProjectDetailPage extends StatelessWidget {
                   ),
                   child: Text(
                     "Apply now",
-                    style: GoogleFonts.poppins(color: Colors.white, fontSize: 16.0),
+                    style: GoogleFonts.poppins(
+                        color: Colors.white, fontSize: 16.0),
                   ),
                 ),
               ],

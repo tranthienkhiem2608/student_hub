@@ -1,11 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:student_hub/models/model/file_cv.dart';
 import 'package:student_hub/models/model/language.dart';
-import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/skillSets.dart';
 import 'package:student_hub/models/model/techStack.dart';
 import 'package:student_hub/models/model/education.dart';
-import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/models/model/experience.dart';
 
 class StudentUser {

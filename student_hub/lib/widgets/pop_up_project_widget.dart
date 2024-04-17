@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:student_hub/models/model/skillSets.dart';
-import 'package:student_hub/models/project_student.dart';
 import 'package:student_hub/view_models/input_profile_viewModel.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
@@ -140,18 +139,18 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
 
   @override
   Widget build(BuildContext context) {
-  return AlertDialog(
-    title: Padding(
-      padding: const EdgeInsets.fromLTRB(0, 5, 10, 10),
-      child: Text(
-        'Add project',
-        style: GoogleFonts.poppins(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Color(0xFF406AFF),
+    return AlertDialog(
+      title: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 5, 10, 10),
+        child: Text(
+          'Add project',
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF406AFF),
+          ),
         ),
       ),
-    ),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/models/project_company.dart';
 import 'package:student_hub/models/student_user.dart';
-import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
 import 'package:student_hub/widgets/show_project_company_widget.dart';
 
 import '../../models/project_student.dart';
@@ -67,7 +66,8 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
           padding: EdgeInsets.all(12),
           child: Text(
             "Active Proposal (0)",
-            style: GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
+            style:
+                GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
         Expanded(

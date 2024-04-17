@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:student_hub/models/model/project_company.dart';
-import 'dart:async';
 
 import 'package:student_hub/view_models/project_company_viewModel.dart';
 
@@ -75,7 +73,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text('View proposals',
-                      style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
+                      style: GoogleFonts.poppins(
+                          color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view proposals
@@ -85,7 +84,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text('View messages',
-                      style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
+                      style: GoogleFonts.poppins(
+                          color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view messages
@@ -94,8 +94,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               TextButton(
                 child: Align(
                   alignment: Alignment.center,
-                  child:
-                      Text('View hired', style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
+                  child: Text('View hired',
+                      style: GoogleFonts.poppins(
+                          color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view hired
@@ -106,7 +107,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text('View job posting',
-                      style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
+                      style: GoogleFonts.poppins(
+                          color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view job posting
@@ -116,7 +118,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text('Edit posting',
-                      style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
+                      style: GoogleFonts.poppins(
+                          color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle edit posting
@@ -126,7 +129,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text('Remove posting',
-                      style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
+                      style: GoogleFonts.poppins(
+                          color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   _confirmDeletion(context, widget);
@@ -137,7 +141,10 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text('Start working this project',
-                      style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontSize: 15, fontWeight: FontWeight.bold)),
+                      style: GoogleFonts.poppins(
+                          color: Color(0xFF406AFF),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold)),
                 ),
                 onPressed: () {
                   // Handle start working this project
@@ -249,11 +256,10 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: widget.quantities.map((quantity) {
               return Expanded(
-                child: Text(
-                  quantity.toString(),
-                  textAlign: TextAlign.center,
-                   style: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.w500)
-                ),
+                child: Text(quantity.toString(),
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                        fontSize: 13, fontWeight: FontWeight.w500)),
               );
             }).toList(),
           ),
@@ -262,7 +268,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
             children: widget.labels.map((label) {
               return Expanded(
                 child: Text(label,
-                    textAlign: TextAlign.center, style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w500)),
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                        fontSize: 12, fontWeight: FontWeight.w500)),
               );
             }).toList(),
           ),

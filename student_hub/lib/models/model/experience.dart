@@ -1,5 +1,4 @@
 import 'package:student_hub/models/model/skillSets.dart';
-import 'package:student_hub/models/model/student_user.dart';
 import 'package:intl/intl.dart';
 
 class Experience {

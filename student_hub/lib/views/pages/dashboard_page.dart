@@ -7,8 +7,6 @@ import 'package:student_hub/views/pages/archieved_page.dart';
 import 'package:student_hub/views/pages/working_page.dart';
 import 'package:student_hub/views/post_project/post_screen_1.dart';
 
-import '../../models/model/company_user.dart';
-import '../../models/model/student_user.dart';
 import 'all_projects_page_student.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -48,8 +46,7 @@ class _DashboardPageState extends State<DashboardPage> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: 
-          Row(
+          title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(

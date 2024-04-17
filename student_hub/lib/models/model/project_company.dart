@@ -1,5 +1,3 @@
-import 'package:student_hub/models/model/company_user.dart';
-import 'package:student_hub/models/model/project_scope.dart';
 import 'package:student_hub/models/model/proposal.dart';
 
 class ProjectCompany {

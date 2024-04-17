@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:student_hub/widgets/project_list_widget.dart';
 
 class ApplyPage extends StatelessWidget {
   @override
@@ -59,9 +58,10 @@ class ApplyPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: TextFormField(
-                decoration:  InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Enter project description',
-                  hintStyle: GoogleFonts.poppins(color: Color(0xFF777B8A), fontSize: 14),
+                  hintStyle: GoogleFonts.poppins(
+                      color: Color(0xFF777B8A), fontSize: 14),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(10.0),
                 ),

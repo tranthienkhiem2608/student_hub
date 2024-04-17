@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:student_hub/app_theme.dart';
 import 'package:student_hub/models/user_chat_model.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_page.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';

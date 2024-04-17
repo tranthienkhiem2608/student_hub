@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/message_model.dart'; // Replace with your actual Schedule model import
 import '../../../models/schedule.dart'; // Replace with your actual Schedule model import
 
 class ScheduleWidget extends StatelessWidget {

@@ -7,7 +7,6 @@ import 'package:iconsax/iconsax.dart';
 
 import 'package:student_hub/models/model/company_user.dart';
 import 'package:student_hub/models/model/users.dart';
-import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/view_models/input_profile_viewModel.dart';
 
 class ProfileInput extends StatefulWidget {

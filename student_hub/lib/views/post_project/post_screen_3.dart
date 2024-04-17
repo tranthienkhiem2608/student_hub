@@ -3,12 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:student_hub/constant/project_duration.dart';
-import 'package:student_hub/models/company_user.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
-import 'package:student_hub/view_models/controller_route.dart';
-import 'package:student_hub/views/post_project/post_screen_3.dart';
 import 'package:bulleted_list/bulleted_list.dart';
 import 'package:student_hub/views/post_project/post_screen_4.dart';
 
@@ -291,16 +287,15 @@ class _PostScreen3State extends State<PostScreen3>
                             10.0), // Add padding within the box
                         hintText: 'Describe your project...',
                         prefixIcon: const Padding(
-                          padding: EdgeInsets.only(
-                              bottom: 95.0),
-                          child: Icon(
-                            Iconsax.paperclip_2,
-                            color: Colors.black,
-                            size: 18,
-                          )),
+                            padding: EdgeInsets.only(bottom: 95.0),
+                            child: Icon(
+                              Iconsax.paperclip_2,
+                              color: Colors.black,
+                              size: 18,
+                            )),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFF777B8A), width: 2),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF777B8A), width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: const TextStyle(
@@ -308,8 +303,8 @@ class _PostScreen3State extends State<PostScreen3>
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFF777B8A), width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF777B8A), width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),

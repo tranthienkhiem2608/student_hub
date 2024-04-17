@@ -1,7 +1,3 @@
-import 'dart:ffi';
-
-import 'package:student_hub/models/model/users.dart';
-
 class CompanyUser {
   final int? id;
   final String? createAt;

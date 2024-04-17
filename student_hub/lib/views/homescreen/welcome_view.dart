@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:student_hub/views/auth/login_view.dart';
-import 'package:student_hub/views/auth/signup_info_view.dart';
-import 'package:student_hub/views/auth/switch_account_view.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -89,7 +86,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
               shape: BoxShape.circle,
             ),
             child: ColorFiltered(
-              colorFilter: ColorFilter.mode(Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(
+                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
               child: Image.asset('assets/icons/user_ic.png',
                   width: 25, height: 25),
             ),

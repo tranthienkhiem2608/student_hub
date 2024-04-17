@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:dropdown_search/dropdown_search.dart';
-import 'package:intl/intl.dart';
 import 'package:student_hub/models/model/experience.dart';
 import 'package:student_hub/models/model/skillSets.dart';
 import 'package:student_hub/view_models/controller_route.dart';
-import 'package:student_hub/view_models/input_profile_viewModel.dart';
 import 'package:student_hub/widgets/show_project_student_widget.dart';
 
 import '../../../models/model/users.dart';
-import '../../../models/project_student.dart';
 import '../../../widgets/pop_up_project_widget.dart';
 
 class ProfileInputStudent2 extends StatefulWidget {

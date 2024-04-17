@@ -7,8 +7,6 @@ import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/widgets/add_account_widget.dart';
 import 'package:student_hub/models/company_user.dart';
 
-import '../homescreen/welcome_view.dart';
-
 class SwitchAccountView extends StatefulWidget {
   final User user;
   const SwitchAccountView(this.user, {Key? key}) : super(key: key);

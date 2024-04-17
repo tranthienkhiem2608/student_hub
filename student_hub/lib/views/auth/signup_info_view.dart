@@ -1,11 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:student_hub/components/encrypt.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/view_models/controller_route.dart';
@@ -198,7 +194,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding:
-                              const EdgeInsets.symmetric(vertical: 18.0),
+                            const EdgeInsets.symmetric(vertical: 18.0),
                         hintText: 'Your full name',
                         labelStyle: GoogleFonts.poppins(
                           // Thay đổi TextStyle này
@@ -261,8 +257,8 @@ class _SignUpInfoState extends State<SignUpInfo>
                           _emailController, // Controller for email input // Update workEmailNotifier when text changes
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
-                       contentPadding:
-                              const EdgeInsets.symmetric(vertical: 18.0),
+                        contentPadding:
+                            const EdgeInsets.symmetric(vertical: 18.0),
                         errorText: _showEmailError ? 'Invalid Email' : null,
                         errorStyle: TextStyle(color: Colors.red),
                         focusedErrorBorder: OutlineInputBorder(
@@ -326,7 +322,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding:
-                              const EdgeInsets.symmetric(vertical: 18.0),
+                            const EdgeInsets.symmetric(vertical: 18.0),
                         hintText: 'Password',
                         hintStyle: GoogleFonts.poppins(
                           // Thay đổi TextStyle này
@@ -400,8 +396,8 @@ class _SignUpInfoState extends State<SignUpInfo>
                               checkboxNotifier.value = value;
                             });
                           },
-                          activeColor:
-                              Color(0xFF406AFF), // Đặt màu xanh cho nút checkbox
+                          activeColor: Color(
+                              0xFF406AFF), // Đặt màu xanh cho nút checkbox
                         ),
                         Text(
                           'Yes, I understand and agree to StudentHub',

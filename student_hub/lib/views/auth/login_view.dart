@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; // Import Google Fonts
 
 import 'package:iconsax/iconsax.dart';
-import 'package:student_hub/components/encrypt.dart';
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 
@@ -24,7 +23,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text('Student Hub',
-          style: GoogleFonts.poppins( // Use GoogleFonts.poppins to apply Poppins font
+          style: GoogleFonts.poppins(
+              // Use GoogleFonts.poppins to apply Poppins font
               color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
@@ -220,7 +220,7 @@ class _LoginPageState extends State<LoginPage>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -238,7 +238,7 @@ class _LoginPageState extends State<LoginPage>
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding:
-                        const EdgeInsets.symmetric(vertical: 18.0),
+                            const EdgeInsets.symmetric(vertical: 18.0),
                         hintText: 'Username or e-mail',
                         labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
@@ -277,7 +277,7 @@ class _LoginPageState extends State<LoginPage>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                      begin: const Offset(0, 0.5), end: const Offset(0, 0))
+                          begin: const Offset(0, 0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -292,12 +292,11 @@ class _LoginPageState extends State<LoginPage>
                       onChanged: (value) {
                         password.value = value;
                       },
-                      obscureText:
-                      _obscurePassword,
+                      obscureText: _obscurePassword,
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 18.0),
+                        contentPadding:
+                            const EdgeInsets.symmetric(vertical: 18.0),
                         hintText: 'Password',
                         hintStyle: GoogleFonts.poppins(
                           color: Color(0xFF777B8A),
@@ -347,8 +346,8 @@ class _LoginPageState extends State<LoginPage>
                   children: [
                     SlideTransition(
                       position: Tween<Offset>(
-                          begin: const Offset(0, -0.5),
-                          end: const Offset(0, 0))
+                              begin: const Offset(0, -0.5),
+                              end: const Offset(0, 0))
                           .animate(CurvedAnimation(
                         parent: _animationController,
                         curve: const Interval(
@@ -365,7 +364,7 @@ class _LoginPageState extends State<LoginPage>
                               ControllerRoute(context)
                                   .navigateToForgotPasswordView();
                             },
-                            child:  Text(
+                            child: Text(
                               'Forgot Password?',
                               style: GoogleFonts.poppins(
                                 color: Color.fromARGB(255, 0, 0, 0),
@@ -384,7 +383,7 @@ class _LoginPageState extends State<LoginPage>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
@@ -397,16 +396,16 @@ class _LoginPageState extends State<LoginPage>
                     opacity: _fadeAnimation,
                     child: MaterialButton(
                       onPressed:
-                      email.value.isNotEmpty && password.value.isNotEmpty
-                          ? () {
-                        final user = User(
-                          email: email.value,
-                          password: password.value,
-                        );
-                        AuthAccountViewModel(context)
-                            .loginAccount(true, user);
-                      }
-                          : null,
+                          email.value.isNotEmpty && password.value.isNotEmpty
+                              ? () {
+                                  final user = User(
+                                    email: email.value,
+                                    password: password.value,
+                                  );
+                                  AuthAccountViewModel(context)
+                                      .loginAccount(true, user);
+                                }
+                              : null,
                       height: 45,
                       disabledColor: Color(0xFF4BEC0C7).withOpacity(0.5),
                       color: Color(0xFF406AFF),
@@ -427,7 +426,7 @@ class _LoginPageState extends State<LoginPage>
                 ),
                 SlideTransition(
                   position: Tween<Offset>(
-                      begin: const Offset(0, -0.5), end: const Offset(0, 0))
+                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
                     parent: _animationController,
                     curve: const Interval(
