@@ -121,11 +121,11 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
               child: Text(
                 "Tell us about your self and you will be on your way connect with real-world project",
                 style: GoogleFonts.poppins(
-                    fontSize: 14,
-                    color: Color.fromARGB(255, 90, 93, 104),
-                    fontWeight: FontWeight.normal,
-                  ),
-                  textAlign: TextAlign.center,
+                  fontSize: 14,
+                  color: Color.fromARGB(255, 90, 93, 104),
+                  fontWeight: FontWeight.normal,
+                ),
+                textAlign: TextAlign.center,
               ),
             ),
             Padding(
@@ -185,20 +185,8 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                     onPressed: () {
                       widget.user.studentUser?.experience =
                           widget.user.studentUser?.experience ?? [];
-                      if (widget.user.studentUser?.experience != null) {
-                        // print(widget.user.studentUser?.experience![0].title);
-                        // print(widget
-                        //     .user.studentUser?.experience![0].description);
-                        // print(widget.user.studentUser?.experience![0].skillSet);
-                        // print(DateFormat('MM-yyyy').format(DateTime.parse(widget
-                        //     .user.studentUser!.experience![0].startMonth
-                        //     .toString())));
-                        // print(DateFormat('MM-yyyy').format(DateTime.parse(widget
-                        //     .user.studentUser!.experience![0].endMonth
-                        //     .toString())));
-                      }
-                      InputProfileViewModel(context)
-                          .inputProfileStudent(widget.user);
+                      ControllerRoute(context)
+                          .navigateToProfileInputStudent3(widget.user);
                     },
                     height: 45,
                     color: Color(0xFF406AFF),
