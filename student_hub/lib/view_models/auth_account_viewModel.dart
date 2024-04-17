@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_hub/models/company_user.dart';
+
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:quickalert/quickalert.dart';
 

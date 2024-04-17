@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
-import 'package:student_hub/widgets/project_list_widget.dart';
 
 class FavoriteProjectsPage extends StatelessWidget {
   final List<ProjectCompany> favoriteProjects;
@@ -94,7 +93,10 @@ class FavoriteProjectsPage extends StatelessWidget {
                             Text(
                               timeAgo(DateTime.parse(project.createdAt!)),
                               style: GoogleFonts.poppins(
-                                  height: 1.0, fontSize: 13,fontWeight: FontWeight.w500, color: Color.fromARGB(255, 25, 241, 43)),
+                                  height: 1.0,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color.fromARGB(255, 25, 241, 43)),
                             ),
                             const SizedBox(height: 15),
                             Text(
@@ -188,7 +190,11 @@ class FavoriteProjectsPage extends StatelessWidget {
               ),
             )
           : Center(
-              child: Text('You have no favorite projects.', style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold),),
+              child: Text(
+                'You have no favorite projects.',
+                style: GoogleFonts.poppins(
+                    fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
     );
   }

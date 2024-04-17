@@ -1,5 +1,3 @@
-import 'package:student_hub/models/model/student_user.dart';
-
 class Language {
   final int? studentId;
   final int? id;

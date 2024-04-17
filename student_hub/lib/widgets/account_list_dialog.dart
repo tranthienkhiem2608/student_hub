@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:student_hub/models/company_user.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/widgets/show_account_widget.dart';
 

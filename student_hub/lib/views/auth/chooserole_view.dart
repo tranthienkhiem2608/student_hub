@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; // Import thư viện Google Fonts
-import 'package:iconsax/iconsax.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 
 enum Role { student, company }
@@ -143,11 +142,13 @@ class _ChooseRoleState extends State<ChooseRole>
                                   TextSpan(text: 'Join as '),
                                   TextSpan(
                                       text: 'Company',
-                                      style: TextStyle(color: Color(0xFF406AFF))),
+                                      style:
+                                          TextStyle(color: Color(0xFF406AFF))),
                                   TextSpan(text: ' or '),
                                   TextSpan(
                                       text: 'Student',
-                                      style: TextStyle(color: Color(0xFF406AFF))),
+                                      style:
+                                          TextStyle(color: Color(0xFF406AFF))),
                                 ],
                               ),
                             ),

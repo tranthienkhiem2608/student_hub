@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/services/connection_services.dart';

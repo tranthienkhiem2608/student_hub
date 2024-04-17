@@ -1,15 +1,10 @@
 // ignore_for_file: deprecated_member_use
-
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart' as path;
-import 'package:async/async.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_hub/models/model/users.dart';
 
 // final String _baseUrl =
 //     Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://localhost:4400';

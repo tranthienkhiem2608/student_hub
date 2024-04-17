@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:student_hub/models/model/education.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/student_user.dart';
-import 'package:student_hub/models/student_registered.dart';
 
 class ShowStudentProposalsWidget extends StatefulWidget {
   Proposal proposal;

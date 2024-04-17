@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:student_hub/models/model/student_user.dart';
-
 class Education {
   final int? studentId;
   final int? id;

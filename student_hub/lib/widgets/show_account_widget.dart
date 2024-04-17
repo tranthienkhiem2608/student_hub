@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_hub/models/company_user.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/widgets/add_account_widget.dart';
 
@@ -61,7 +59,9 @@ class _ShowAccountWidgetState extends State<ShowAccountWidget> {
             },
             highlightColor: Colors.grey,
             child: ListTile(
-              leading: Image.asset(widget._companyUser.role?[index] == 0 ?'assets/icons/student_account.png' : 'assets/icons/company_account.png'),
+              leading: Image.asset(widget._companyUser.role?[index] == 0
+                  ? 'assets/icons/student_account.png'
+                  : 'assets/icons/company_account.png'),
               title: Text(
                 widget._companyUser.fullname!,
                 style: const TextStyle(
