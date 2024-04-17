@@ -255,16 +255,12 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
 
                           print('Item at index $index was tapped.');
                         },
-                        child: ShowProjectCompanyWidget(
-                          id: index,
-                          projectName: '${entries[index]}',
-                          creationTime: listTime[index],
-                          description:
-                              'Clear expectations about your project or deliverables\n The skills required for your project \n Details about your project',
-                          quantities: [],
-                          labels: [],
-                          showOptionsIcon: false,
-                        ),
+                        // child: ShowProjectCompanyWidget(
+                        //   projectCompany: entries[index],
+                        //   quantities: [],
+                        //   labels: [],
+                        //   showOptionsIcon: false,
+                        // ),
                       ),
                       separatorBuilder: (context, index) => SizedBox(),
                     ),

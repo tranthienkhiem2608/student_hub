@@ -6,8 +6,10 @@ import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
 import 'package:student_hub/widgets/show_project_company_widget.dart';
 
 class AllProjectsPage extends StatefulWidget {
-  const AllProjectsPage({super.key, required this.user});
+  const AllProjectsPage(
+      {super.key, required this.user, required this.fetchProjectData});
   final User user;
+  final Future<List<ProjectCompany>> fetchProjectData;
   @override
   _AllProjectsPageState createState() => _AllProjectsPageState();
 }
@@ -19,7 +21,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
 
   void _handleProjectDeleted() {
     setState(() {
-      futureProjects = fetchDataProject();
+      futureProjects = widget.fetchProjectData;
     });
   }
 
@@ -30,7 +32,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
     // companyId = widget.user!.companyUser!.id!;
     setState(() {
       // Update your state here
-      futureProjects = fetchDataProject();
+      futureProjects = widget.fetchProjectData;
     });
     //print projectList;
   }
@@ -48,7 +50,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
         if (mounted) {
           setState(() {
             // Update your state here
-            futureProjects = fetchDataProject();
+            futureProjects = widget.fetchProjectData;
           });
         }
       }
@@ -57,95 +59,63 @@ class _AllProjectsPageState extends State<AllProjectsPage>
 
   @override
   Widget build(BuildContext context) {
-    final List<String> entries = <String>[
-      'Senior frontend developer (Fintech)',
-      'Senior backend developer (Fintech)',
-      'Fresher fullstack developer'
-    ];
-    final List<DateTime> listTime = <DateTime>[
-      DateTime.now(),
-      DateTime.now(),
-      DateTime.now()
-    ];
-    const String username = "John";
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(padding: EdgeInsets.only(bottom: 10)),
+          Expanded(
+            child: FutureBuilder<List<ProjectCompany>>(
+              future: futureProjects,
+              builder: (context, project) {
+                if (project.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (project.hasError) {
+                  return Text('Error: ${project.error}');
+                } else if (project.hasData && project.data!.isEmpty) {
+                  return Center(
+                      child: Text(
+                          "\t\tWelcome, ${widget.user.fullname} \nYou no have jobs"));
+                } else {
+                  return ListView.builder(
+                    itemCount: project.data!.length,
+                    itemBuilder: (context, index) {
+                      print(project.data![index].title);
+                      print(project.data![index].description);
 
-    return Visibility(
-      replacement: const Center(
-        child: Text("\t\tWelcome, $username \nYou no have jobs"),
-      ),
-      visible: futureProjects != null,
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(padding: EdgeInsets.only(bottom: 10)),
-            Expanded(
-              
-              child: FutureBuilder<List<ProjectCompany>>(
-                future: futureProjects,
-                builder: (context, project) {
-                  if (project.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (project.hasError) {
-                    return Text('Error: ${project.error}');
-                  } else {
-                    return ListView.builder(
-                      itemCount: project.data!.length,
-                      itemBuilder: (context, index) {
-                        print(project.data![index].title);
-                        print(project.data![index].description);
-
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => HireStudentScreen(
-                                    projectCompany: project.data![index]),
-                              ),
-                            );
-                          },
-                          child: ShowProjectCompanyWidget(
-                            id: project.data![index].id!,
-                            projectName: project.data![index].title!.toString(),
-                            creationTime: DateTime.parse(
-                                project.data![index].createdAt!.toString()),
-                            description:
-                                project.data![index].description!.toString(),
-                            quantities: [
-                              project.data![index].countProposal!.toString(),
-                              project.data![index].countMessages!.toString(),
-                              project.data![index].countHired!.toString()
-                            ],
-                            labels: ['Proposals', 'Messages', 'Hired'],
-                            showOptionsIcon: true,
-                            onProjectDeleted: _handleProjectDeleted,
-                          ),
-                        );
-                      },
-                    );
-                  }
-                },
-              ),
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HireStudentScreen(
+                                  projectCompany: project.data![index]),
+                            ),
+                          );
+                        },
+                        child: ShowProjectCompanyWidget(
+                          projectCompany: project.data![index],
+                          quantities: [
+                            project.data![index].countProposal!.toString(),
+                            project.data![index].countMessages!.toString(),
+                            project.data![index].countHired!.toString()
+                          ],
+                          labels: ['Proposals', 'Messages', 'Hired'],
+                          showOptionsIcon: true,
+                          onProjectDeleted: _handleProjectDeleted,
+                        ),
+                      );
+                    },
+                  );
+                }
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
-  }
-
-  Future<List<ProjectCompany>> fetchDataProject() async {
-    if (widget.user.companyUser != null &&
-        widget.user.companyUser!.id != null) {
-      return await ProjectCompanyViewModel(context)
-          .getProjectsData(widget.user.companyUser!.id!);
-    } else {
-      // Handle the case where companyUser or id is null
-      // For example, you might want to return an empty list
-      return [];
-    }
   }
 }

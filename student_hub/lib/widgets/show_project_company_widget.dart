@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:student_hub/models/model/project_company.dart';
 
 import 'package:student_hub/view_models/project_company_viewModel.dart';
 
 class ShowProjectCompanyWidget extends StatefulWidget {
-  final String projectName;
-  final DateTime creationTime;
-  final String description;
   final List<String> quantities;
+  final ProjectCompany projectCompany;
+
   final List<String> labels;
   final bool showOptionsIcon;
-  final int id;
   final VoidCallback? onProjectDeleted;
 
   ShowProjectCompanyWidget({
-    required this.projectName,
-    required this.creationTime,
-    required this.description,
     required this.quantities,
+    required this.projectCompany,
     required this.labels,
     required this.showOptionsIcon,
-    required this.id,
     this.onProjectDeleted,
   });
 
@@ -192,7 +188,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 constraints: const BoxConstraints(
                     minWidth: 0, maxWidth: double.infinity),
                 child: Text(
-                  timeAgo(widget.creationTime),
+                  timeAgo(DateTime.parse(
+                      widget.projectCompany.createdAt!.toString())),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                       height: 1,
@@ -200,7 +197,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                       color: Color.fromARGB(255, 18, 119, 52),
                       fontWeight: FontWeight.w500),
                 )),
-            subtitle: Text(widget.projectName,
+            subtitle: Text(widget.projectCompany.title!,
                 style: GoogleFonts.poppins(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,
@@ -225,7 +222,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                     style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
                 ListView(
                   shrinkWrap: true,
-                  children: widget.description.split('\n').map((item) {
+                  children: widget.projectCompany.description!
+                      .split('\n')
+                      .map((item) {
                     return Padding(
                       padding: const EdgeInsets.only(left: 0, top: 5),
                       child: Row(
@@ -301,7 +300,7 @@ void _confirmDeletion(BuildContext context, ShowProjectCompanyWidget widget) {
             child: Text('Delete', style: TextStyle(color: Colors.red)),
             onPressed: () {
               ProjectCompanyViewModel(context)
-                  .deleteProject(widget.id)
+                  .deleteProject(widget.projectCompany.id!)
                   .then((value) {
                 Navigator.of(context).pop(); // Close dialog
                 if (widget.onProjectDeleted != null) {
