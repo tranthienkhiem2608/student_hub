@@ -80,9 +80,9 @@ class ProjectDetailPage extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(width: 15),
-                    Icon(Icons.search), // Add an Icon widget here
-                    SizedBox(height: 10), // Add spacing between icon and text
-                    SizedBox(width: 12), // Add spacing between icon and text
+                    Icon(Icons.search), 
+                    SizedBox(height: 10), 
+                    SizedBox(width: 12),
                     Text(
                       'Student are looking for:',
                       style: GoogleFonts.poppins(
@@ -181,7 +181,13 @@ class ProjectDetailPage extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    // Xử lý khi nút "Apply Now" được nhấn
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ApplyPage()),
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF406AFF),
                     padding: const EdgeInsets.symmetric(

@@ -138,8 +138,13 @@ class AuthAccountViewModel {
 
         QuickAlert.show(
             context: context,
-            type: QuickAlertType.error,
-            text: responseDecode['errorDetails'].toString());
+            type: QuickAlertType.warning,
+            text: responseDecode['errorDetails']
+                .toString()
+                .replaceAll('[', '')
+                .replaceAll(']', '')
+                .replaceFirstMapped(
+                    RegExp(r'^\w'), (match) => match.group(0)!.toUpperCase()));
       }
     } catch (e) {
       print(e);
@@ -165,8 +170,15 @@ class AuthAccountViewModel {
         print("Failed to connect to the server");
         print("Connect server failed");
         Navigator.of(context).pop();
-        print(responseDecode['errorDetails']);
-        return response;
+        QuickAlert.show(
+            context: context,
+            type: QuickAlertType.warning,
+            text: responseDecode['errorDetails']
+                .toString()
+                .replaceAll('[', '')
+                .replaceAll(']', '')
+                .replaceFirstMapped(
+                    RegExp(r'^\w'), (match) => match.group(0)!.toUpperCase()));
       }
     } catch (e) {
       print(e);

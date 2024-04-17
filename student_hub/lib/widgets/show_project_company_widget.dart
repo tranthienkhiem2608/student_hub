@@ -72,10 +72,10 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
             alignment: WrapAlignment.center,
             children: <Widget>[
               TextButton(
-                child: const Align(
-                  alignment: Alignment.centerLeft,
+                child: Align(
+                  alignment: Alignment.center,
                   child: Text('View proposals',
-                      style: TextStyle(color: Colors.black)),
+                      style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view proposals
@@ -83,9 +83,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               ),
               TextButton(
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text('View messages',
-                      style: TextStyle(color: Colors.black)),
+                      style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view messages
@@ -93,9 +93,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               ),
               TextButton(
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child:
-                      Text('View hired', style: TextStyle(color: Colors.black)),
+                      Text('View hired', style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view hired
@@ -104,9 +104,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               Divider(),
               TextButton(
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text('View job posting',
-                      style: TextStyle(color: Colors.black)),
+                      style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view job posting
@@ -114,9 +114,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               ),
               TextButton(
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text('Edit posting',
-                      style: TextStyle(color: Colors.black)),
+                      style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle edit posting
@@ -124,9 +124,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               ),
               TextButton(
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text('Remove posting',
-                      style: TextStyle(color: Colors.black)),
+                      style: GoogleFonts.poppins(color: Colors.black, fontSize: 15)),
                 ),
                 onPressed: () {
                   _confirmDeletion(context, widget);
@@ -135,9 +135,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               Divider(),
               TextButton(
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text('Start working this project',
-                      style: TextStyle(color: Colors.black)),
+                      style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontSize: 15, fontWeight: FontWeight.bold)),
                 ),
                 onPressed: () {
                   // Handle start working this project

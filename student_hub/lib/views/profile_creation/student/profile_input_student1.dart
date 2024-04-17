@@ -307,9 +307,8 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                                     },
                                     child: Align(
                                       alignment: Alignment.centerLeft,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 0.0),
+                                      child: Container(
+                                        margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,

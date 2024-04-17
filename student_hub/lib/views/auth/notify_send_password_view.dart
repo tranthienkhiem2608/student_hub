@@ -14,7 +14,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF2F5FC), // Set the background color here
+      backgroundColor: Colors.white, // Set the background color here
       body: Column(children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(30, 120, 30, 10),
@@ -22,8 +22,8 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
             alignment: Alignment.topCenter,
             child: Image.asset(
               'assets/images/check_mail_img.png',
-              width: 300,
-              height: 300,
+              width: 350,
+              height: 350,
             ),
           ),
         ),
@@ -37,7 +37,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
               style: GoogleFonts.poppins(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: Colors.lightBlue, // Set the color here
+                color: Color(0xFF406AFF), // Set the color here
               ),
               textAlign: TextAlign.center,
             ),
@@ -52,7 +52,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
               style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: Colors.black.withOpacity(0.7), // Set the color here
+                color: Colors.black.withOpacity(0.5),
               ),
               textAlign: TextAlign.center,
             ),
@@ -69,7 +69,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(
-                  Color(0xFF408cff).withOpacity(0.7)),
+                  Color(0xFF406AFF)),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
@@ -92,8 +92,8 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
                 Text(
                   'Did not receive the email? ',
                   style: TextStyle(
-                      color: Colors.grey.shade600,
-                      fontSize: 15.0,
+                      color: Colors.grey,
+                      fontSize: 16.0,
                       fontWeight: FontWeight.w400),
                 ),
                 TextButton(
@@ -103,8 +103,8 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
                   },
                   child: const Text('Resend.',
                       style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 14.0,
+                          color: Color(0xFF406AFF),
+                          fontSize: 16.0,
                           fontWeight: FontWeight.bold)),
                 )
               ],

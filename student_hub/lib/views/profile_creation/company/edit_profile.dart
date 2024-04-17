@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 
 class EditProfile extends StatefulWidget {
@@ -16,21 +17,31 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Student Hub',
-          style: TextStyle(
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
               color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
-          icon: SizedBox(
-            width: 25,
-            height: 25,
-            child: Image.asset('assets/icons/user_ic.png'),
+          icon: Container(
+            // Add a Container as the parent
+            padding: const EdgeInsets.all(8.0), // Padding for spacing
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              shape: BoxShape.circle,
+            ),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              child: Image.asset('assets/icons/user_ic.png',
+                  width: 25, height: 25),
+            ),
           ),
           onPressed: () {},
-        ),
+        )
       ],
     );
   }
@@ -113,15 +124,28 @@ class _LoginPageState extends State<EditProfile>
                   )),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'Welcome to Student Hub',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w600),
+                        RichText(
+                          text: TextSpan(
+                            style: GoogleFonts.poppins(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black, // Màu chữ mặc định
+                            ),
+                            children: [
+                              TextSpan(
+                                text: "Welcome to ",
+                              ),
+                              TextSpan(
+                                text: "Student Hub",
+                                style: GoogleFonts.poppins(
+                                    color: Color(
+                                        0xFF406AFF)), // Màu chữ của "Student Hub"
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -144,19 +168,18 @@ class _LoginPageState extends State<EditProfile>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
-                      cursorColor: Colors.black,
+                      cursorColor: Color(0xFF406AFF),
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
-                        labelText: 'Company Name',
-                        hintText: 'Your Company Name!',
-                        labelStyle: const TextStyle(
+                        hintText: 'Your company name',
+                        labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
                         ),
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14.0,
+                        hintStyle: GoogleFonts.poppins(
+                          color: Color(0xFF777B8A),
+                          fontSize: 13.5,
                         ),
                         prefixIcon: const Icon(
                           Iconsax.building,
@@ -164,17 +187,17 @@ class _LoginPageState extends State<EditProfile>
                           size: 18,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7), width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        floatingLabelStyle: const TextStyle(
+                        floatingLabelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -198,16 +221,15 @@ class _LoginPageState extends State<EditProfile>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
-                      cursorColor: Colors.black,
+                      cursorColor: Color(0xFF406AFF),
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
-                        labelText: 'Website',
-                        hintText: 'Your Company Website!',
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14.0,
+                        hintText: 'Your company website',
+                        hintStyle: GoogleFonts.poppins(
+                          color: Color(0xFF777B8A),
+                          fontSize: 13.5,
                         ),
-                        labelStyle: const TextStyle(
+                        labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
@@ -218,17 +240,17 @@ class _LoginPageState extends State<EditProfile>
                           size: 18,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7), width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        floatingLabelStyle: const TextStyle(
+                        floatingLabelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -252,40 +274,43 @@ class _LoginPageState extends State<EditProfile>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
-                      cursorColor: Colors.black,
+                      cursorColor: Color(0xFF406AFF),
+                      minLines: 5, // Đặt số dòng tối thiểu
+                      maxLines: null,
                       decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 40.0,
-                            horizontal:
-                                20.0), // Khoảng cách giữa đường viền và nội dung
-                        labelText: 'Description',
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 20.0), // Khoảng cách giữa đường viền và nội dung
                         hintText: 'Description',
-                        labelStyle: const TextStyle(
+                        labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
                         ),
-                        hintStyle: const TextStyle(
-                          color: Colors.grey,
+                        hintStyle: GoogleFonts.poppins(
+                          color: Color(0xFF777B8A),
                           fontSize: 14.0,
                         ),
-                        prefixIcon: const Icon(
-                          Iconsax.note_add,
-                          color: Colors.black,
-                          size: 18,
+                         prefixIcon: const Padding(
+                          padding: EdgeInsets.only(
+                              bottom: 95.0),
+                          child: Icon(
+                            Iconsax.paperclip_2,
+                            color: Colors.black,
+                            size: 18,
+                          ),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 2),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7), width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        floatingLabelStyle: const TextStyle(
+                        floatingLabelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Colors.black, width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -317,16 +342,16 @@ class _LoginPageState extends State<EditProfile>
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'How many people are in your company?',
-                              style: TextStyle(fontSize: 17),
+                              style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600),
                             ),
                             const SizedBox(height: 10),
                             Column(
                               children: [
                                 RadioListTile<int>(
-                                  title: const Text('It\'s just me',
-                                      style: TextStyle(fontSize: 14)),
+                                  title: Text('It\'s just me',
+                                      style: GoogleFonts.poppins(fontSize: 14)),
                                   dense: true,
                                   value: 100,
                                   groupValue: _selectedValue,
@@ -335,8 +360,8 @@ class _LoginPageState extends State<EditProfile>
                                       _selectedValue = 100;
                                     });
                                   },
+                                  activeColor: Color(0xFF406AFF),
                                 ),
-                          
                               ],
                             ),
                           ],
@@ -376,16 +401,16 @@ class _LoginPageState extends State<EditProfile>
                                 // Xử lý khi nút được nhấn
                               },
                               height: 45,
-                              color: Colors.black,
+                              color: Color(0xFF4DBE3FF),
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 50),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: const Text(
+                              child: Text(
                                 "Edit",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 16.0),
+                                style: GoogleFonts.poppins(
+                                    color: Color(0xFF406AFF), fontSize: 16.0),
                               ),
                             ),
                           ),
@@ -410,15 +435,15 @@ class _LoginPageState extends State<EditProfile>
                             child: MaterialButton(
                               onPressed: () {},
                               height: 45,
-                              color: Colors.black,
+                              color: Color(0xFF406AFF),
                               padding: const EdgeInsets.symmetric(
                                   vertical: 10, horizontal: 35),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
-                              child: const Text(
+                              child: Text(
                                 "Continue",
-                                style: TextStyle(
+                                style: GoogleFonts.poppins(
                                     color: Colors.white, fontSize: 16.0),
                               ),
                             ),

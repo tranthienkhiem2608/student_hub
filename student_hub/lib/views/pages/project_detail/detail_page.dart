@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../models/model/project_company.dart';
 
@@ -52,85 +53,83 @@ class _DetailPageState extends State<DetailPage>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.fromLTRB(16, 30, 16, 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
-            const Divider(
-              height: 12,
-              thickness: 1.5,
-              color: Color.fromARGB(255, 54, 52, 52),
+            Row(
+              children: [
+                SizedBox(width: 15),
+                Icon(Icons.search),
+                SizedBox(height: 10),
+                SizedBox(width: 12),
+                Text(
+                  'Student are looking for:',
+                  style: GoogleFonts.poppins(
+                      fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            const Text(
-              'Student are looking for:',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            // Sử dụng ListView để hiển thị danh sách các mục với dấu chấm đầu dòng
             ListView(
               shrinkWrap: true,
               children: expectations.map((item) {
                 return Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 5),
+                  padding: const EdgeInsets.only(left: 20, top: 0),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(width: 36),
                       Container(
-                        margin: EdgeInsets.only(top: 6),
-                        width: 8, // Độ rộng của dấu chấm
-                        height: 8, // Chiều cao của dấu chấm
+                        margin: EdgeInsets.only(top: 8, right: 10),
+                        width: 4,
+                        height: 9,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.black, // Màu của dấu chấm
+                          color: Colors.black,
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(child: Text(item)),
+                      Expanded(
+                          child: Text(item,
+                              style: GoogleFonts.poppins(fontSize: 15.5))),
                     ],
                   ),
                 );
               }).toList(),
             ),
             SizedBox(height: 20),
-            const Divider(
-              height: 12,
-              thickness: 1.5,
-              color: Color.fromARGB(255, 54, 52, 52),
-            ),
-            SizedBox(height: 30),
             ListTile(
               leading: Container(
-                margin: const EdgeInsets.only(top: 6),
-                width: 40, // Adjust the width for the larger icon
-                height: 40, // Adjust the height for the larger icon
-                child: Icon(Icons.watch_later_outlined, size: 40),
+                margin: const EdgeInsets.only(bottom: 10, right: 5),
+                width: 20, // Adjust the width for the larger icon
+                height: 20, // Adjust the height for the larger icon
+                child: Icon(Icons.watch_later_outlined, size: 25),
               ),
-              title: const Text(
+              title: Text(
                 'Project scope:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: GoogleFonts.poppins(
+                    fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
                 '${widget.projectCompany.projectScopeFlag} months',
-                style: TextStyle(fontSize: 16),
+                style: GoogleFonts.poppins(fontSize: 15),
               ),
             ),
             SizedBox(height: 10),
             ListTile(
               leading: Container(
-                margin: const EdgeInsets.only(top: 6),
-                width: 40, // Adjust the width for the larger icon
-                height: 40, // Adjust the height for the larger icon
-                child: Icon(Icons.people_alt_outlined, size: 40),
+                margin: const EdgeInsets.only(bottom: 10, right: 5),
+                width: 20, // Adjust the width for the larger icon
+                height: 20, // Adjust the height for the larger icon
+                child: Icon(Icons.people_alt_outlined, size: 25),
               ),
-              title: const Text(
+              title: Text(
                 'Student required:',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: GoogleFonts.poppins(
+                    fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${widget.projectCompany.numberOfStudents} students',
-                style: TextStyle(fontSize: 16),
+               '${widget.projectCompany.numberOfStudents} students',
+                style: GoogleFonts.poppins(fontSize: 15.5),
               ),
             ),
           ],

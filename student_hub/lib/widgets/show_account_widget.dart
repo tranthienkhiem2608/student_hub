@@ -61,7 +61,7 @@ class _ShowAccountWidgetState extends State<ShowAccountWidget> {
             },
             highlightColor: Colors.grey,
             child: ListTile(
-              leading: Image.asset('assets/images/avatar_default_img.png'),
+              leading: Image.asset(widget._companyUser.role?[index] == 0 ?'assets/icons/student_account.png' : 'assets/icons/company_account.png'),
               title: Text(
                 widget._companyUser.fullname!,
                 style: const TextStyle(
@@ -77,7 +77,7 @@ class _ShowAccountWidgetState extends State<ShowAccountWidget> {
                 ),
               ),
               trailing: role == widget._companyUser.role![index]
-                  ? const Icon(Icons.check, color: Colors.green)
+                  ? const Icon(Icons.check, color: Color(0xFF406AFF))
                   : null,
             ),
           );

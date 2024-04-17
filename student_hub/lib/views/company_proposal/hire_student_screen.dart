@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/project_detail/detail_page.dart';
@@ -30,21 +31,22 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
         body: Column(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.fromLTRB(25, 5, 5, 0),
+              padding: EdgeInsets.fromLTRB(15, 5, 5, 0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   widget.projectCompany.title!,
-                  style: TextStyle(
-                      fontSize: 16,
+                  style: GoogleFonts.poppins(
+                      fontSize: 19,
                       fontWeight: FontWeight.bold,
-                      color: Colors.green),
+                      color: Color(0xFF406AFF)),
                 ),
               ),
             ),
-            const TabBar(
-              indicatorColor: Color(0xFF69cde0),
-              labelColor: Color(0xFF69cde0),
+             TabBar(
+              indicatorColor: Color(0xFF406AFF),
+              labelColor: Color(0xFF406AFF),
+              labelStyle: GoogleFonts.poppins(fontSize: 13, fontWeight: FontWeight.bold),
               unselectedLabelColor: Colors.black,
               tabs: [
                 Tab(text: 'Proposals'),
@@ -78,23 +80,33 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Student Hub',
-          style: TextStyle(
-              color: Color.fromARGB(255, 0, 0, 0),
-              fontSize: 20,
-              fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
-      actions: <Widget>[
-        IconButton(
-          icon: SizedBox(
-            width: 25,
-            height: 25,
-            child: Image.asset('assets/icons/user_ic.png'),
-          ),
-          onPressed: () {},
-        ),
-      ],
-    );
+        title: Text('Student Hub',
+            style: GoogleFonts.poppins(
+                // Apply the Poppins font
+                color: Color.fromARGB(255, 0, 0, 0),
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        actions: <Widget>[
+          IconButton(
+            icon: Container(
+              // Add a Container as the parent
+              padding: const EdgeInsets.all(8.0), // Padding for spacing
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                shape: BoxShape.circle,
+              ),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                child: Image.asset('assets/icons/user_ic.png',
+                    width: 25, height: 25),
+              ),
+            ),
+            onPressed: () {},
+          )
+        ],
+      );
   }
 
   @override

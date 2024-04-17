@@ -48,7 +48,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _AppBar(_animationController, widget.companyUser),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: _Body(
             animationController: _animationController,
@@ -75,19 +75,28 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      automaticallyImplyLeading: false,
-      title: const Text('Student Hub',
-          style: TextStyle(
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
               color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
-            icon: SizedBox(
-              width: 25,
-              height: 25,
-              child: Image.asset('assets/icons/user_ic.png'),
+            icon: Container(
+              // Add a Container as the parent
+              padding: const EdgeInsets.all(8.0), // Padding for spacing
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 255, 255),
+                shape: BoxShape.circle,
+              ),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                child: Image.asset('assets/icons/user_ic.png',
+                    width: 25, height: 25),
+              ),
             ),
             onPressed: () {
               animationController.stop();
@@ -123,7 +132,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                   animationController.forward();
                 });
               });
-            }),
+            })
       ],
     );
   }
@@ -269,14 +278,31 @@ class _AnimatedText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 30, 20, 5),
+      padding: const EdgeInsets.fromLTRB(15, 80, 20, 5),
       child: Align(
         alignment: Alignment.topCenter,
-        child: Text(
-          "Welcome, ${companyUser.fullname!}!",
-          style: GoogleFonts.poppins(
-            fontSize: 19,
-            fontWeight: FontWeight.bold,
+        child: RichText(
+          text: TextSpan(
+            style: GoogleFonts.poppins(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black, // Màu của phần còn lại của văn bản
+            ),
+            children: [
+              TextSpan(
+                text: "Welcome, ",
+              ),
+              TextSpan(
+                text: "${companyUser.fullname}",
+                style: GoogleFonts.poppins(
+                  color: Color(0xFF406AFF),
+                  fontWeight: FontWeight.bold, // Màu của phần được đổi
+                ),
+              ),
+              TextSpan(
+                text: " !",
+              ),
+            ],
           ),
         ),
       ),
@@ -290,14 +316,14 @@ class _DescriptionText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+      padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Let's start with your first project post!",
+          "Let's start with your first project post.",
           style: GoogleFonts.poppins(
             fontSize: 16,
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.w400,
           ),
           textAlign: TextAlign.center,
         ),
@@ -323,7 +349,7 @@ class _AnimatedButton extends StatelessWidget {
           ControllerRoute(context).navigateToHomeScreen(false, companyUser);
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: Color(0xFF406AFF),
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
@@ -342,7 +368,7 @@ class AnimationImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+      padding: const EdgeInsets.fromLTRB(20, 90, 20, 5),
       child: Align(
         alignment: Alignment.topCenter,
         child: Image.asset(
