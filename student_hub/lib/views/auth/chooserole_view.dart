@@ -254,6 +254,7 @@ class _ChooseRoleState extends State<ChooseRole>
                                       Radio<Role>(
                                         value: Role.student,
                                         groupValue: _role,
+                                        activeColor: Color(0xFF406AFF),
                                         onChanged: (val) {
                                           setState(() {
                                             _role = val;
@@ -354,6 +355,7 @@ class _ChooseRoleState extends State<ChooseRole>
                                       Radio<Role>(
                                         value: Role.company,
                                         groupValue: _role,
+                                        activeColor: Color(0xFF406AFF),
                                         onChanged: (val) {
                                           setState(() {
                                             _role = val;
