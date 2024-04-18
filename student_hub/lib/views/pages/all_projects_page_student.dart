@@ -73,8 +73,11 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
         Expanded(
           // Thêm Expanded ở đây
           child: Visibility(
-            replacement: const Center(
-              child: Text("\t\tWelcome, $username \nYou no have jobs"),
+            replacement: Center(
+              child: Text(
+                "\t\tWelcome, $username \nYou no have j",
+                style: GoogleFonts.poppins(),
+              ),
             ),
             visible: entries.isNotEmpty,
             child: Padding(
@@ -86,181 +89,188 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
                   Expanded(
                     child: ListView.separated(
                       itemCount: entries.length,
-                      itemBuilder: (context, index) => GestureDetector(
-                        onTap: () {
-                          // Handle your tap here.
-                          ProjectCompany projectCompany = ProjectCompany(
-                            projectName: entries[index],
-                            creationTime: listTime[index],
-                            studentRequired: 3,
-                            duration: "3 to 6",
-                            description:
-                                'Clear expectations about your project or deliverables\n The skills required for your project \n Details about your project',
-                            studentRegistered: [
-                              StudentRegistered(
-                                student: StudentUser(
-                                  user: User(
-                                    fullName: 'Truong Le',
-                                    email: '223mnd@gmail.com',
-                                    password: 'password123',
-                                    typeUser: 'student',
-                                  ),
-                                  techStack: 'Frontend engineer',
-                                  skillsList: ['HTML', 'CSS', 'JS'],
-                                  languagesList: [
-                                    {
-                                      'name': 'English',
-                                      'level': 'Intermediate'
-                                    },
-                                    {'name': 'Vietnamese', 'level': 'Native'},
-                                  ],
-                                  educationList: [
-                                    {
-                                      'school': 'University of Florida',
-                                      'degree':
-                                          'Bachelor of Science in Computer Science',
-                                      'graduationDate': '2023-05-01',
-                                    },
-                                  ],
-                                  projectsList: [
-                                    ProjectStudent(
-                                      projectName: 'Project 1',
-                                      projectDescription:
-                                          'This is a project 1 description',
-                                      timeStart: DateTime.parse('2021-10-01'),
-                                      timeEnd: DateTime.parse('2021-10-01'),
-                                      skillsListProject: [
-                                        'HTML',
-                                        'CSS',
-                                        'JS',
-                                      ],
+                      itemBuilder: (context, index) => Container(
+                        width: 200, // Set your desired width
+                        height: 50, // Set your desired height
+                        child: GestureDetector(
+                          onTap: () {
+                            // Handle your tap here.
+                            ProjectCompany projectCompany = ProjectCompany(
+                              projectName: entries[index],
+                              creationTime: listTime[index],
+                              studentRequired: 3,
+                              duration: "3 to 6",
+                              description:
+                                  'Clear expectations about your project or deliverables\n The skills required for your project \n Details about your project',
+                              studentRegistered: [
+                                StudentRegistered(
+                                  student: StudentUser(
+                                    user: User(
+                                      fullName: 'Truong Le',
+                                      email: '223mnd@gmail.com',
+                                      password: 'password123',
+                                      typeUser: 'student',
                                     ),
-                                  ],
-                                ),
-                                levelStudent: 'Excellent',
-                                introductionStudent: 'I am a student at HCMUT',
-                                statusStudent: 'Hire',
-                                isMessage: false,
-                              ),
-                              StudentRegistered(
-                                student: StudentUser(
-                                  user: User(
-                                    fullName: 'Hung Tran',
-                                    email: '232fs@gmail.com',
-                                    password: 'password123',
-                                    typeUser: 'student',
+                                    techStack: 'Frontend engineer',
+                                    skillsList: ['HTML', 'CSS', 'JS'],
+                                    languagesList: [
+                                      {
+                                        'name': 'English',
+                                        'level': 'Intermediate'
+                                      },
+                                      {'name': 'Vietnamese', 'level': 'Native'},
+                                    ],
+                                    educationList: [
+                                      {
+                                        'school': 'University of Florida',
+                                        'degree':
+                                            'Bachelor of Science in Computer Science',
+                                        'graduationDate': '2023-05-01',
+                                      },
+                                    ],
+                                    projectsList: [
+                                      ProjectStudent(
+                                        projectName: 'Project 1',
+                                        projectDescription:
+                                            'This is a project 1 description',
+                                        timeStart: DateTime.parse('2021-10-01'),
+                                        timeEnd: DateTime.parse('2021-10-01'),
+                                        skillsListProject: [
+                                          'HTML',
+                                          'CSS',
+                                          'JS',
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  techStack: 'Backend engineer',
-                                  skillsList: ['Java', 'Python', 'C++'],
-                                  languagesList: [
-                                    {
-                                      'name': 'English',
-                                      'level': 'Intermediate'
-                                    },
-                                    {'name': 'Vietnamese', 'level': 'Native'},
-                                  ],
-                                  educationList: [
-                                    {
-                                      'school': 'University of Florida',
-                                      'degree':
-                                          'Bachelor of Science in Computer Science',
-                                      'graduationDate': '2023-05-01',
-                                    },
-                                  ],
-                                  projectsList: [
-                                    ProjectStudent(
-                                      projectName: 'Project 1',
-                                      projectDescription:
-                                          'This is a project 1 description',
-                                      timeStart: DateTime.parse('2021-10-23'),
-                                      timeEnd: DateTime.parse('2021-12-01'),
-                                      skillsListProject: [
-                                        'Java',
-                                        'Python',
-                                        'C++',
-                                      ],
-                                    ),
-                                  ],
+                                  levelStudent: 'Excellent',
+                                  introductionStudent:
+                                      'I am a student at HCMUT',
+                                  statusStudent: 'Hire',
+                                  isMessage: false,
                                 ),
-                                levelStudent: "Good",
-                                introductionStudent: "I am a student at HCMUT",
-                                statusStudent: "Send hire offer",
-                                isMessage: false,
-                              ),
-                              StudentRegistered(
-                                student: StudentUser(
-                                  user: User(
-                                    fullName: 'Quan Nguyen',
-                                    email: '1m23n@gmail.com',
-                                    password: 'password',
-                                    typeUser: 'student',
+                                StudentRegistered(
+                                  student: StudentUser(
+                                    user: User(
+                                      fullName: 'Hung Tran',
+                                      email: '232fs@gmail.com',
+                                      password: 'password123',
+                                      typeUser: 'student',
+                                    ),
+                                    techStack: 'Backend engineer',
+                                    skillsList: ['Java', 'Python', 'C++'],
+                                    languagesList: [
+                                      {
+                                        'name': 'English',
+                                        'level': 'Intermediate'
+                                      },
+                                      {'name': 'Vietnamese', 'level': 'Native'},
+                                    ],
+                                    educationList: [
+                                      {
+                                        'school': 'University of Florida',
+                                        'degree':
+                                            'Bachelor of Science in Computer Science',
+                                        'graduationDate': '2023-05-01',
+                                      },
+                                    ],
+                                    projectsList: [
+                                      ProjectStudent(
+                                        projectName: 'Project 1',
+                                        projectDescription:
+                                            'This is a project 1 description',
+                                        timeStart: DateTime.parse('2021-10-23'),
+                                        timeEnd: DateTime.parse('2021-12-01'),
+                                        skillsListProject: [
+                                          'Java',
+                                          'Python',
+                                          'C++',
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  techStack: 'Fullstack',
-                                  skillsList: [
-                                    'HTML',
-                                    'CSS',
-                                    'JS',
-                                    'Java',
-                                    'Python',
-                                    'C++'
-                                  ],
-                                  languagesList: [
-                                    {
-                                      'name': 'English',
-                                      'level': 'Intermediate'
-                                    },
-                                    {'name': 'Vietnamese', 'level': 'Native'},
-                                  ],
-                                  educationList: [
-                                    {
-                                      'school': 'University of Florida',
-                                      'degree':
-                                          'Bachelor of Science in Computer Science',
-                                      'graduationDate': '2023-05-01',
-                                    },
-                                  ],
-                                  projectsList: [
-                                    ProjectStudent(
-                                      projectName: 'Project 1',
-                                      projectDescription:
-                                          'This is a project 1 description',
-                                      timeStart: DateTime.parse('2021-10-23'),
-                                      timeEnd: DateTime.parse('2021-12-01'),
-                                      skillsListProject: [
-                                        'HTML',
-                                        'CSS',
-                                        'JS',
-                                        'Java',
-                                        'Python',
-                                        'C++',
-                                      ],
-                                    ),
-                                  ],
+                                  levelStudent: "Good",
+                                  introductionStudent:
+                                      "I am a student at HCMUT",
+                                  statusStudent: "Send hire offer",
+                                  isMessage: false,
                                 ),
-                                levelStudent: 'Good',
-                                introductionStudent: 'I am a student at HCMUT',
-                                statusStudent: 'Send hire offer',
-                                isMessage: false,
-                              ),
-                            ],
-                          );
-                          Navigator.pop(context);
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) =>
-                          //         HireStudentScreen(user: widget.user),
-                          //   ),
-                          // );
+                                StudentRegistered(
+                                  student: StudentUser(
+                                    user: User(
+                                      fullName: 'Quan Nguyen',
+                                      email: '1m23n@gmail.com',
+                                      password: 'password',
+                                      typeUser: 'student',
+                                    ),
+                                    techStack: 'Fullstack',
+                                    skillsList: [
+                                      'HTML',
+                                      'CSS',
+                                      'JS',
+                                      'Java',
+                                      'Python',
+                                      'C++'
+                                    ],
+                                    languagesList: [
+                                      {
+                                        'name': 'English',
+                                        'level': 'Intermediate'
+                                      },
+                                      {'name': 'Vietnamese', 'level': 'Native'},
+                                    ],
+                                    educationList: [
+                                      {
+                                        'school': 'University of Florida',
+                                        'degree':
+                                            'Bachelor of Science in Computer Science',
+                                        'graduationDate': '2023-05-01',
+                                      },
+                                    ],
+                                    projectsList: [
+                                      ProjectStudent(
+                                        projectName: 'Project 1',
+                                        projectDescription:
+                                            'This is a project 1 description',
+                                        timeStart: DateTime.parse('2021-10-23'),
+                                        timeEnd: DateTime.parse('2021-12-01'),
+                                        skillsListProject: [
+                                          'HTML',
+                                          'CSS',
+                                          'JS',
+                                          'Java',
+                                          'Python',
+                                          'C++',
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  levelStudent: 'Good',
+                                  introductionStudent:
+                                      'I am a student at HCMUT',
+                                  statusStudent: 'Send hire offer',
+                                  isMessage: false,
+                                ),
+                              ],
+                            );
+                            Navigator.pop(context);
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         HireStudentScreen(user: widget.user),
+                            //   ),
+                            // );
 
-                          print('Item at index $index was tapped.');
-                        },
-                        // child: ShowProjectCompanyWidget(
-                        //   projectCompany: entries[index],
-                        //   quantities: [],
-                        //   labels: [],
-                        //   showOptionsIcon: false,
-                        // ),
+                            print('Item at index $index was tapped.');
+                          },
+                          // child: ShowProjectCompanyWidget(
+                          //   projectCompany: entries[index],
+                          //   quantities: [],
+                          //   labels: [],
+                          //   showOptionsIcon: false,
+                          // ),
+                        ),
                       ),
                       separatorBuilder: (context, index) => SizedBox(),
                     ),

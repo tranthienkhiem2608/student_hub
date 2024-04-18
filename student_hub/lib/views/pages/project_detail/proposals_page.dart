@@ -5,6 +5,7 @@ import 'package:student_hub/models/student_registered.dart';
 import 'package:student_hub/widgets/show_student_proposals_widget.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/view_models/proposal_viewModel.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProposalsPage extends StatefulWidget {
   final ProjectCompany projectCompany;
@@ -62,8 +63,8 @@ class _ProposalsPageState extends State<ProposalsPage> {
       'Send hire offer'
     ];
     return Visibility(
-      replacement: const Center(
-        child: Text("\t\tYou no have jobs"),
+      replacement: Center(
+        child: Text("\t\tYou no have jobs", style: GoogleFonts.poppins(),),
       ),
       visible: widget.projectCompany.proposals!.isNotEmpty,
       child: Padding(
