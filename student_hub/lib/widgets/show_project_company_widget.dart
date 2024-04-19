@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 
 import 'package:student_hub/view_models/project_company_viewModel.dart';
 
@@ -11,6 +13,7 @@ class ShowProjectCompanyWidget extends StatefulWidget {
   final List<String> labels;
   final bool showOptionsIcon;
   final VoidCallback? onProjectDeleted;
+  final User? user;
 
   ShowProjectCompanyWidget({
     required this.quantities,
@@ -18,6 +21,7 @@ class ShowProjectCompanyWidget extends StatefulWidget {
     required this.labels,
     required this.showOptionsIcon,
     this.onProjectDeleted,
+    this.user,
   });
 
   @override
@@ -302,7 +306,9 @@ void _confirmDeletion(BuildContext context, ShowProjectCompanyWidget widget) {
               ProjectCompanyViewModel(context)
                   .deleteProject(widget.projectCompany.id!)
                   .then((value) {
-                Navigator.of(context).pop(); // Close dialog
+                Navigator.of(context).pop();
+                ControllerRoute(context).navigateToHomeScreen(
+                    false, widget.user, 1); // Close dialog
                 if (widget.onProjectDeleted != null) {
                   widget
                       .onProjectDeleted!(); // Trigger project deleted callback

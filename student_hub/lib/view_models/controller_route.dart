@@ -116,7 +116,8 @@ class ControllerRoute {
     );
   }
 
-  void navigateToHomeScreen(bool? showAlert, User? user) async {
+  void navigateToHomeScreen(
+      bool? showAlert, User? user, int? pageDefault) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? role = prefs.getInt('role');
     print(role);
@@ -136,7 +137,11 @@ class ControllerRoute {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => HomePage(showAlert: showAlert!, user: user)),
+          builder: (context) => HomePage(
+                showAlert: showAlert!,
+                user: user,
+                pageDefault: pageDefault,
+              )),
     );
   }
 

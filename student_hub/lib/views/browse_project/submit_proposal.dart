@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/proposal.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/proposal_viewModel.dart';
 
 class ApplyPage extends StatefulWidget {
   final ProjectCompany project;
   final int studentId;
+  final User user;
 
-  const ApplyPage({Key? key, required this.project, required this.studentId})
+  const ApplyPage(
+      {Key? key,
+      required this.project,
+      required this.studentId,
+      required this.user})
       : super(key: key);
 
   @override
@@ -116,7 +122,8 @@ class _ApplyPageState extends State<ApplyPage> {
                         projectId: widget.project.id,
                         coverLetter: coverLetter);
 
-                    ProposalViewModel(context).postSendApply(proposal);
+                    ProposalViewModel(context)
+                        .postSendApply(proposal, widget.user);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF406AFF),

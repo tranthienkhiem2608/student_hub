@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 
 class BottomNavController {
-  final PageController _pageController = PageController(initialPage: 1);
-  int _selectedIndex = 1;
+  final int pageDefault;
+  late final PageController _pageController;
+  late int _selectedIndex;
+
+  BottomNavController({required this.pageDefault}) {
+    _pageController = PageController(initialPage: pageDefault);
+    _selectedIndex = pageDefault;
+  }
 
   void navigateTo(int index) {
     _pageController.jumpToPage(index);

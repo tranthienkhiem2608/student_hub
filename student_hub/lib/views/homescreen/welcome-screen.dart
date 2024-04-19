@@ -346,7 +346,7 @@ class _AnimatedButton extends StatelessWidget {
       height: 50, // Set the height to your desired size
       child: ElevatedButton(
         onPressed: () {
-          ControllerRoute(context).navigateToHomeScreen(false, companyUser);
+          ControllerRoute(context).navigateToHomeScreen(false, companyUser, 1);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Color(0xFF406AFF),

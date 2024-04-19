@@ -74,7 +74,6 @@ class ProjectCompany {
     return projects;
   }
 
-//chưa dùng
   factory ProjectCompany.fromMapAllProject(Map<String, dynamic> map) {
     return ProjectCompany(
       id: map['projectId'],

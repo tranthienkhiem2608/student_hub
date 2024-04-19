@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/users.dart';
@@ -125,6 +126,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                       searchResults: filteredProjects,
                                       allProjects: filteredProjects,
                                       studentId: widget.user!.studentUser!.id!,
+                                      user: widget.user!,
                                     ),
                                   ),
                                 ).then((value) {
@@ -192,6 +194,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                 .where((project) => project.isFavorite)
                                 .toList(),
                             studentId: widget.user!.studentUser!.id!,
+                            user: widget.user!,
                           ),
                         ),
                       );
@@ -213,9 +216,11 @@ class _ProjectsPageState extends State<ProjectsPage> {
               return TabBarView(
                 children: [
                   ProjectList(
-                      key: Key('allProjects'),
-                      projects: snapshot.data!,
-                      studentId: widget.user!.studentUser!.id!),
+                    key: Key('allProjects'),
+                    projects: snapshot.data!,
+                    studentId: widget.user!.studentUser!.id!,
+                    user: widget.user!,
+                  ),
                 ],
               );
             }
@@ -228,6 +233,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
   Future<List<ProjectCompany>> fetchAllProjects() async {
     List<ProjectCompany> projectTmp =
         await ProjectCompanyViewModel(context).getAllProjectsData();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getInt('role') == 1) {
+      return projectTmp;
+    }
     List<Proposal> proposals = await ProposalViewModel(context)
         .getProposalById(widget.user!.studentUser!.id!);
     //check if projectId have in proposal will remove from project list

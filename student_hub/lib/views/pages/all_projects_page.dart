@@ -104,6 +104,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
                           labels: ['Proposals', 'Messages', 'Hired'],
                           showOptionsIcon: true,
                           onProjectDeleted: _handleProjectDeleted,
+                          user: widget.user,
                         ),
                       );
                     },

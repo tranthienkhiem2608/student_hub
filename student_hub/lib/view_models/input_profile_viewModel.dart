@@ -97,7 +97,7 @@ class InputProfileViewModel {
               responseUserMap['result']['id'], studentUser.studentUser!.file!);
         }
         Navigator.of(context).pop();
-        ControllerRoute(context).navigateToHomeScreen(true, studentUser);
+        ControllerRoute(context).navigateToHomeScreen(true, studentUser, 1);
       } else {
         print("Failed");
         Navigator.of(context).pop();

@@ -120,6 +120,26 @@ class ConnectionService {
     }
   }
 
+  Future<dynamic> patch(String api, dynamic object) async {
+    var url = Uri.parse(_baseUrl + api);
+    var payload = json.encode(object);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+    var response = await client.patch(url, headers: headers, body: payload);
+    if (response.statusCode == 200) {
+      print("Connect server successful");
+      return response.body;
+    } else {
+      print("Connect server failed");
+      return response.body;
+      //throw exception and catch it in UI
+    }
+  }
+
   Future<dynamic> putFile(String api, String filePath) async {
     var url = Uri.parse(_baseUrl + api);
     SharedPreferences prefs = await SharedPreferences.getInstance();

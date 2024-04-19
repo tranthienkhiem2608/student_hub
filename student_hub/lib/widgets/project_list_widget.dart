@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
 
 class ProjectList extends StatefulWidget {
   final List<ProjectCompany> projects;
   final int studentId;
+  final User user;
 
-  const ProjectList({Key? key, required this.projects, required this.studentId})
+  const ProjectList(
+      {Key? key,
+      required this.projects,
+      required this.studentId,
+      required this.user})
       : super(key: key);
 
   @override
@@ -108,20 +115,54 @@ class _ProjectListState extends State<ProjectList> {
                           ),
                         ),
                       ),
-                      IconButton(
-                        iconSize: 30,
-                        icon: Icon(
-                          project.isFavorite
-                              ? Icons.bookmark_added
-                              : Icons.bookmark_add_outlined,
-                          color: project.isFavorite
-                              ? Color.fromARGB(255, 250, 55, 87)
-                              : null,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            project.isFavorite = !project.isFavorite;
-                          });
+                      // IconButton(
+                      //   iconSize: 30,
+                      //   icon: Icon(
+                      //     project.isFavorite
+                      //         ? Icons.bookmark_added
+                      //         : Icons.bookmark_add_outlined,
+                      //     color: project.isFavorite
+                      //         ? Color.fromARGB(255, 250, 55, 87)
+                      //         : null,
+                      //   ),
+                      //   onPressed: () {
+                      //     setState(() {
+                      //       project.isFavorite = !project.isFavorite;
+                      //     });
+                      //   },
+                      // ),
+                      FutureBuilder<int>(
+                        future: SharedPreferences.getInstance()
+                            .then((prefs) => prefs.getInt('role') ?? 0),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<int> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            if (snapshot.hasData && snapshot.data == 0) {
+                              return IconButton(
+                                iconSize: 30,
+                                icon: Icon(
+                                  project.isFavorite
+                                      ? Icons.bookmark_added
+                                      : Icons.bookmark_add_outlined,
+                                  color: project.isFavorite
+                                      ? Color.fromARGB(255, 250, 55, 87)
+                                      : null,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    project.isFavorite = !project.isFavorite;
+                                    
+                                  });
+                                },
+                              );
+                            } else {
+                              return SizedBox
+                                  .shrink(); // Return an empty widget if role is not 0
+                            }
+                          } else {
+                            return CircularProgressIndicator(); // Show a loading spinner while waiting for the future to complete
+                          }
                         },
                       ),
                     ],
@@ -210,7 +251,9 @@ class _ProjectListState extends State<ProjectList> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => ProjectDetailPage(
-                            project: project, studentId: widget.studentId),
+                            project: project,
+                            studentId: widget.studentId,
+                            user: widget.user),
                       ),
                     );
                   },

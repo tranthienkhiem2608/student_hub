@@ -14,8 +14,10 @@ import 'package:student_hub/views/pages/projects_page.dart';
 class HomePage extends StatefulWidget {
   final User? user;
   final bool showAlert;
+  final int? pageDefault;
 
-  const HomePage({this.showAlert = false, this.user, Key? key})
+  const HomePage(
+      {this.showAlert = false, this.user, this.pageDefault, Key? key})
       : super(key: key);
 
   // void functionInitialize({bool? shoAlert, CompanyUser? userCompany, StudentUser? userStudent, Key? key}) {
@@ -74,11 +76,12 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
 class _HomePageState extends State<HomePage> {
   late List<Widget> _pages;
-  final BottomNavController _navController = BottomNavController();
+  late BottomNavController _navController;
 
   @override
   void initState() {
     super.initState();
+    _navController = BottomNavController(pageDefault: widget.pageDefault!);
 
     _pages = [
       ProjectsPage(widget.user!),

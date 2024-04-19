@@ -37,6 +37,7 @@ class ProjectCompanyViewModel {
                 builder: (context) => HomePage(
                       user: user,
                       showAlert: false,
+                      pageDefault: 1,
                     )));
       } else {
         print("Failed");

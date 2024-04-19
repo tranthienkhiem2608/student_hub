@@ -2,14 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/browse_project/submit_proposal.dart';
 
 class ProjectDetailPage extends StatefulWidget {
   final ProjectCompany project;
   final int studentId;
+  final User user;
 
   const ProjectDetailPage(
-      {Key? key, required this.project, required this.studentId})
+      {Key? key,
+      required this.project,
+      required this.studentId,
+      required this.user})
       : super(key: key);
 
   @override
@@ -169,17 +174,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    // Xử lý khi nút "Apply Now" được nhấn
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (context) => ApplyPage(
-                    //             project: widget.project,
-                    //             studentId: widget.studentId,
-                    //           )),
-                    // );
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF4DBE3FF),
                     padding: const EdgeInsets.symmetric(
@@ -202,7 +197,8 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                       MaterialPageRoute(
                           builder: (context) => ApplyPage(
                               project: widget.project,
-                              studentId: widget.studentId)),
+                              studentId: widget.studentId,
+                              user: widget.user)),
                     );
                   },
                   style: ElevatedButton.styleFrom(

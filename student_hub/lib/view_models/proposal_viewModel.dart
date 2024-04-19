@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:student_hub/models/model/proposal.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/services/connection_services.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 
 class ProposalViewModel {
   final BuildContext context;
@@ -33,7 +35,7 @@ class ProposalViewModel {
     return [];
   }
 
-  Future<void> postSendApply(Proposal proposal) async {
+  Future<void> postSendApply(Proposal proposal, User user) async {
     print('postSendApply');
     var payload = proposal.toMapProposal();
     try {
@@ -52,7 +54,7 @@ class ProposalViewModel {
           confirmBtnText: 'Next',
           onConfirmBtnTap: () {
             Navigator.pop(context);
-            Navigator.pop(context);
+            ControllerRoute(context).navigateToHomeScreen(false, user, 0);
           },
         );
       } else {
