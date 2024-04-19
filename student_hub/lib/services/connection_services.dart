@@ -7,10 +7,10 @@ import 'package:http/http.dart' as http;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-final String _baseUrl =
-    Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://localhost:4400';
+// final String _baseUrl =
+//     Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://localhost:4400';
 
-// const String _baseUrl = 'https://api.studenthub.dev';
+const String _baseUrl = 'https://api.studenthub.dev';
 // _baseUrl for local server
 
 class ConnectionService {

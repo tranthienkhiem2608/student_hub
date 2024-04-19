@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:student_hub/constant/project_profile.dart';
+import 'package:student_hub/models/model/company_profile.dart';
 import 'package:student_hub/models/model/education.dart';
 import 'package:student_hub/models/model/experience.dart';
 import 'package:student_hub/models/model/file_cv.dart';
@@ -305,5 +307,68 @@ class InputProfileViewModel {
       print(e);
     }
     return FileCV();
+  }
+
+  //  /api/profile/company/{companyId} get
+  Future<CompanyProfile> getProfileCompany(int companyId) async {
+    print('Get Profile Company');
+    try {
+      var response =
+          await ConnectionService().get('/api/profile/company/$companyId', {});
+      if (response != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+        // Call a method to reload the page
+        var responseDecode = jsonDecode(response);
+        if (responseDecode['result'] != null) {
+          CompanyProfile companyProfile =
+              CompanyProfile.fromJson(responseDecode['result']);
+          return companyProfile;
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return CompanyProfile(
+      id: 0,
+      userId: 0,
+      email: '',
+      fullname: '',
+      companyName: '',
+      website: '',
+      size: 0,
+      description: '',
+    );
+  }
+
+  // /api/profile/company/{id} put method
+  Future<void> putProfileCompany(CompanyProfile companyUser) async {
+    print('Put Profile Company');
+    String url = '/api/profile/company/${companyUser.id}';
+    try {
+      showDialog(context: context, builder: (context) => LoadingUI());
+      var payload = {
+        "companyName": companyUser.companyName,
+        "website": companyUser.website,
+        "description": companyUser.description,
+        "size": companyUser.size,
+      };
+      var response = await ConnectionService().put(url, payload);
+      var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+        // Call a method to reload the page
+        Navigator.of(context).pop();
+        ;
+      } else {
+        print("Failed");
+        print(responseDecode);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

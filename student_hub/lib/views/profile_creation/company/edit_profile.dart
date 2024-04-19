@@ -3,12 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:student_hub/constant/project_profile.dart';
+import 'package:student_hub/models/model/company_profile.dart';
+import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/input_profile_viewModel.dart';
 
 class EditProfile extends StatefulWidget {
-  const EditProfile({super.key});
+  EditProfile({super.key, required this.user});
+
+  User user;
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _EditProfileState createState() => _EditProfileState();
 }
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -50,17 +56,57 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class _LoginPageState extends State<EditProfile>
+class _EditProfileState extends State<EditProfile>
     with SingleTickerProviderStateMixin {
   int activeIndex = 0;
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
   Timer? _timer;
 
-  int? _selectedValue;
+  CompanyProfile? _companyProfiles;
+
+  Future<void> _getCompanyProfile() async {
+    CompanyProfile data = await InputProfileViewModel(context)
+        .getProfileCompany(widget.user.companyUser!.id!);
+    setState(() {
+      _companyProfiles = data;
+    });
+  }
+
+  Future<void> _handleSubmit() async {
+    CompanyProfile companyProfile = CompanyProfile(
+      id: _companyProfiles?.id,
+      companyName: _companyNameController.text,
+      size: _selectedCompanySize!.index,
+      website: _websiteController.text,
+      description: _descriptionController.text,
+    );
+    await InputProfileViewModel(context).putProfileCompany(companyProfile);
+    setState(() {
+      _isEditing = false;
+      _isEditingCompanySize = false;
+      _getCompanyProfile();
+    });
+  }
+
+  CompanySize? _selectedCompanySize;
+
+  bool _isEditing = false;
+  bool _isEditingCompanySize = false;
+  final TextEditingController _companyNameController = TextEditingController();
+  final TextEditingController _websiteController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
   @override
   void initState() {
+    _getCompanyProfile().then((_) {
+      if (_companyProfiles != null) {
+        _companyNameController.text = _companyProfiles!.companyName;
+        _websiteController.text = _companyProfiles!.website;
+        _descriptionController.text = _companyProfiles!.description;
+        _selectedCompanySize = CompanySize.values[_companyProfiles!.size];
+      }
+    });
     _timer = Timer.periodic(const Duration(seconds: 4), (timer) {
       if (mounted) {
         setState(() {
@@ -95,11 +141,15 @@ class _LoginPageState extends State<EditProfile>
   void dispose() {
     _timer?.cancel();
     _animationController.dispose();
+    _companyNameController.dispose();
+    _websiteController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_companyProfiles);
     return Scaffold(
         appBar: const _AppBar(),
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
@@ -168,10 +218,11 @@ class _LoginPageState extends State<EditProfile>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      controller: _companyNameController,
+                      readOnly: !_isEditing,
                       cursorColor: Color(0xFF406AFF),
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
-                        hintText: 'Your company name',
                         labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 14.0,
@@ -211,57 +262,59 @@ class _LoginPageState extends State<EditProfile>
                   position: Tween<Offset>(
                           begin: const Offset(0, -0.5), end: const Offset(0, 0))
                       .animate(CurvedAnimation(
-                    parent: _animationController,
-                    curve: const Interval(
-                      0.3,
-                      1,
-                      curve: Curves.fastOutSlowIn,
-                    ),
-                  )),
+                          parent: _animationController,
+                          curve: const Interval(0.3, 1,
+                              curve: Curves.fastOutSlowIn))),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: TextField(
-                      cursorColor: Color(0xFF406AFF),
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(0.0),
-                        hintText: 'Your company website',
-                        hintStyle: GoogleFonts.poppins(
-                          color: Color(0xFF777B8A),
-                          fontSize: 13.5,
+                    child: Column(
+                      // Add a Column to hold both the label and input field
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(
+                            height: 5), // Spacing between label and TextField
+                        TextField(
+                          controller: _websiteController,
+                          readOnly: !_isEditing,
+                          cursorColor: Color(0xFF406AFF),
+                          decoration: InputDecoration(
+                            labelStyle: GoogleFonts.poppins(
+                              // Use labelStyle if you need the label inside
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.w400,
+                            ),
+                            prefixIcon: const Icon(
+                              Iconsax.link,
+                              color: Colors.black,
+                              size: 18,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Color(0xFF4BEC0C7), width: 0.8),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            floatingLabelStyle: GoogleFonts.poppins(
+                              color: Colors.black,
+                              fontSize: 18.0,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Color(0xFF4BEC0C7), width: 1),
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
                         ),
-                        labelStyle: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        prefixIcon: const Icon(
-                          Iconsax.link,
-                          color: Colors.black,
-                          size: 18,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color(0xFF4BEC0C7), width: 0.8),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        floatingLabelStyle: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: 18.0,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color(0xFF4BEC0C7), width: 1),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
+                      ],
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
                 SlideTransition(
                   position: Tween<Offset>(
-                          begin: const Offset(0, -0.5), end: const Offset(0, 0))
-                      .animate(
+                    begin: const Offset(0, -0.5),
+                    end: const Offset(0, 0),
+                  ).animate(
                     CurvedAnimation(
                       parent: _animationController,
                       curve: const Interval(
@@ -273,98 +326,140 @@ class _LoginPageState extends State<EditProfile>
                   ),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: TextField(
-                      cursorColor: Color(0xFF406AFF),
-                      minLines: 5, // Đặt số dòng tối thiểu
-                      maxLines: null,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 20.0), // Khoảng cách giữa đường viền và nội dung
-                        hintText: 'Description',
-                        labelStyle: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        hintStyle: GoogleFonts.poppins(
-                          color: Color(0xFF777B8A),
-                          fontSize: 14.0,
-                        ),
-                         prefixIcon: const Padding(
-                          padding: EdgeInsets.only(
-                              bottom: 95.0),
-                          child: Icon(
-                            Iconsax.paperclip_2,
-                            color: Colors.black,
-                            size: 18,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: 100),
+                      child: TextField(
+                        controller: _descriptionController,
+                        readOnly: !_isEditing,
+                        cursorColor: Color(0xFF406AFF),
+                        minLines: null,
+                        maxLines: null,
+                        expands: true,
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0,
+                            horizontal: 10.0,
                           ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color(0xFF4BEC0C7), width: 0.8),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        floatingLabelStyle: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: 18.0,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color(0xFF4BEC0C7), width: 1),
-                          borderRadius: BorderRadius.circular(10.0),
+                          labelStyle: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          hintStyle: GoogleFonts.poppins(
+                            color: Color(0xFF777B8A),
+                            fontSize: 14.0,
+                          ),
+                          prefixIcon: const Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Icon(
+                              Iconsax.paperclip_2,
+                              color: Colors.black,
+                              size: 18,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7),
+                              width: 0.8,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          floatingLabelStyle: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                              color: Color(0xFF4BEC0C7),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 50,
+                  height: 30,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0, -0.5),
-                        end: const Offset(0, 0),
-                      ).animate(
-                        CurvedAnimation(
-                          parent: _animationController,
-                          curve: const Interval(
-                            0.3, // Start sliding in at 30% of the animation duration
-                            1, // Fully slid in at 100% of the animation duration
-                            curve: Curves.fastOutSlowIn,
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0, -0.5),
+                          end: const Offset(0, 0),
+                        ).animate(
+                          CurvedAnimation(
+                            parent: _animationController,
+                            curve: const Interval(
+                              0.3, // Start sliding in at 30% of the animation duration
+                              1, // Fully slid in at 100% of the animation duration
+                              curve: Curves.fastOutSlowIn,
+                            ),
                           ),
                         ),
-                      ),
-                      child: FadeTransition(
-                        opacity: _fadeAnimation,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'How many people are in your company?',
-                              style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.w600),
-                            ),
-                            const SizedBox(height: 10),
-                            Column(
-                              children: [
-                                RadioListTile<int>(
-                                  title: Text('It\'s just me',
-                                      style: GoogleFonts.poppins(fontSize: 14)),
-                                  dense: true,
-                                  value: 100,
-                                  groupValue: _selectedValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _selectedValue = 100;
-                                    });
-                                  },
-                                  activeColor: Color(0xFF406AFF),
+                        child: FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: _isEditingCompanySize
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'How many people are in your company?',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    // Render the radio options based on CompanySize enum
+                                    Column(
+                                      children: CompanySize.values.map((size) {
+                                        return RadioListTile<CompanySize>(
+                                          title: Text(
+                                            _getSizeDescription(size
+                                                .index), // Get description based on index
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 14),
+                                          ),
+                                          dense: true,
+                                          value: size,
+                                          groupValue: _selectedCompanySize,
+                                          onChanged: (CompanySize? value) {
+                                            if (value != null) {
+                                              setState(() {
+                                                _selectedCompanySize = value;
+                                              });
+                                            }
+                                          },
+                                          activeColor: Color(0xFF406AFF),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ],
+                                )
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Current Company Size:',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      _getSizeDescription(
+                                          _companyProfiles?.size ?? 0),
+                                      // Show current size description
+                                      style: GoogleFonts.poppins(fontSize: 14),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ],
                         ),
                       ),
                     ),
@@ -398,7 +493,11 @@ class _LoginPageState extends State<EditProfile>
                             opacity: _fadeAnimation,
                             child: MaterialButton(
                               onPressed: () {
-                                // Xử lý khi nút được nhấn
+                                setState(() {
+                                  _isEditing = !_isEditing;
+                                  _isEditingCompanySize =
+                                      !_isEditingCompanySize;
+                                });
                               },
                               height: 45,
                               color: Color(0xFF4DBE3FF),
@@ -433,7 +532,7 @@ class _LoginPageState extends State<EditProfile>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: MaterialButton(
-                              onPressed: () {},
+                              onPressed: _handleSubmit,
                               height: 45,
                               color: Color(0xFF406AFF),
                               padding: const EdgeInsets.symmetric(
@@ -442,7 +541,7 @@ class _LoginPageState extends State<EditProfile>
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Text(
-                                "Continue",
+                                "Submit",
                                 style: GoogleFonts.poppins(
                                     color: Colors.white, fontSize: 16.0),
                               ),
@@ -460,5 +559,23 @@ class _LoginPageState extends State<EditProfile>
             ),
           ),
         ));
+  }
+}
+
+String _getSizeDescription(int sizeIndex) {
+  CompanySize companySize = CompanySize.values.elementAt(sizeIndex);
+
+  switch (companySize) {
+    // Switch on the enum value
+    case CompanySize.justMe:
+      return 'It\'s just me';
+    case CompanySize.small:
+      return '2-9 employees'; // Adjust the text as needed
+    case CompanySize.medium:
+      return '10-99 employees'; // Adjust the text as needed
+    case CompanySize.large:
+      return '100-1000 employees'; // Adjust the text as needed
+    case CompanySize.veryLarge:
+      return 'More than 100 employees'; // Adjust the text as needed
   }
 }

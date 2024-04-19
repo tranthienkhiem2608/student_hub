@@ -101,7 +101,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       ),
                       onChanged: (newValue) {
                         filterProjects(newValue);
-                        updateSuggestions(newValue);
                       },
                     ),
                     SizedBox(height: 10),

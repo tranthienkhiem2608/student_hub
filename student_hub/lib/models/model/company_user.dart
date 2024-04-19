@@ -5,7 +5,7 @@ class CompanyUser {
   final String? deletedAt;
   final int? userID;
   final String? companyName;
-  final int? size;
+  int? size;
   final String? website;
   final String? description;
 
