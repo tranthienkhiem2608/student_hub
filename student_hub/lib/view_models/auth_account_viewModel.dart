@@ -83,9 +83,9 @@ class AuthAccountViewModel {
           // int role = int.parse(userResponse.role?[0]);
           int role = userResponse.role?[0];
           print('length: ${userResponse.role?.length}');
+          prefs.setInt('role', role);
 
           if (userResponse.role?.length == 1) {
-            prefs.setInt('role', role);
             if (role == 1) {
               userResponse.companyUser == null
                   ? ControllerRoute(context)
@@ -188,8 +188,6 @@ class AuthAccountViewModel {
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var token = prefs.get('token');
-      var payload = {'authorization': token};
       var response = await ConnectionService().postLogout('/api/auth/logout');
       var responseDecode = jsonDecode(response);
       if (responseDecode != null) {

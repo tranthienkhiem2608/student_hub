@@ -30,12 +30,11 @@ class Proposal {
 
   Map<String, dynamic> toMapProposal() {
     return {
-      'id': id,
       'projectId': projectId,
       'studentId': studentId,
       'coverLetter': coverLetter,
-      'statusFlag': statusFlag,
-      'disableFlag': disableFlag,
+      'statusFlag': 1,
+      'disableFlag': 1,
     };
   }
 
@@ -80,7 +79,7 @@ class Proposal {
       coverLetter: map['coverLetter'],
       statusFlag: map['statusFlag'],
       disableFlag: map['disableFlag'],
-      studentUser: StudentUser.fromMapStudentProposal(map['student']),
+      projectCompany: ProjectCompany.fromMapProposalProject(map['project']),
     );
   }
   static List<Proposal> fromListMapProposalCompany(List<dynamic> list) {

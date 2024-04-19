@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     _pages = [
-      const ProjectsPage(),
+      ProjectsPage(widget.user!),
       DashboardPage(widget.user!),
       const MessagePage(),
       AlertPage(),

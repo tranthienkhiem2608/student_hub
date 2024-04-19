@@ -6,8 +6,10 @@ import 'package:student_hub/views/browse_project/project_detail.dart';
 
 class FavoriteProjectsPage extends StatelessWidget {
   final List<ProjectCompany> favoriteProjects;
+  final int studentId;
 
-  const FavoriteProjectsPage({Key? key, required this.favoriteProjects})
+  const FavoriteProjectsPage(
+      {Key? key, required this.favoriteProjects, required this.studentId})
       : super(key: key);
 
   @override
@@ -180,8 +182,10 @@ class FavoriteProjectsPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  ProjectDetailPage(project: project),
+                              builder: (context) => ProjectDetailPage(
+                                project: project,
+                                studentId: studentId,
+                              ),
                             ),
                           );
                         },

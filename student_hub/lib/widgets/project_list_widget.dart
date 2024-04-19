@@ -6,8 +6,10 @@ import 'package:student_hub/views/browse_project/project_detail.dart';
 
 class ProjectList extends StatefulWidget {
   final List<ProjectCompany> projects;
+  final int studentId;
 
-  const ProjectList({Key? key, required this.projects}) : super(key: key);
+  const ProjectList({Key? key, required this.projects, required this.studentId})
+      : super(key: key);
 
   @override
   _ProjectListState createState() => _ProjectListState();
@@ -58,6 +60,9 @@ class _ProjectListState extends State<ProjectList> {
               List<String> expectations = project.description!.split('\n');
               String firstExpectation =
                   expectations.isNotEmpty ? expectations.first : '';
+              if (project.typeFlag == 1 || project.typeFlag == 0) {
+                return const SizedBox.shrink();
+              }
               return Container(
                 margin: const EdgeInsets.symmetric(vertical: 10.0),
                 padding: const EdgeInsets.fromLTRB(15, 0, 10, 5),
@@ -200,11 +205,12 @@ class _ProjectListState extends State<ProjectList> {
                     ],
                   ),
                   onTap: () {
+                    print('Id student: ${widget.studentId}');
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            ProjectDetailPage(project: project),
+                        builder: (context) => ProjectDetailPage(
+                            project: project, studentId: widget.studentId),
                       ),
                     );
                   },

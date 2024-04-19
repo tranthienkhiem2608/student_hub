@@ -6,10 +6,12 @@ import 'package:student_hub/views/browse_project/project_detail.dart';
 
 class SearchProject extends StatefulWidget {
   final List<ProjectCompany> searchResults;
+  final int studentId;
 
   const SearchProject({
     Key? key,
     required this.searchResults,
+    required this.studentId,
     required List<ProjectCompany> allProjects,
   }) : super(key: key);
 
@@ -64,7 +66,8 @@ class _SearchProjectState extends State<SearchProject> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProjectDetailPage(project: project),
+        builder: (context) =>
+            ProjectDetailPage(project: project, studentId: widget.studentId),
       ),
     );
   }
