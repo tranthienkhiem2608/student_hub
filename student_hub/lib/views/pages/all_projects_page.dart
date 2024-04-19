@@ -7,9 +7,9 @@ import 'package:student_hub/widgets/show_project_company_widget.dart';
 
 class AllProjectsPage extends StatefulWidget {
   const AllProjectsPage(
-      {super.key, required this.user, required this.fetchProjectData});
+      {super.key, required this.user, required this.fetchProjectDataFunction});
   final User user;
-  final Future<List<ProjectCompany>> fetchProjectData;
+  final Future<List<ProjectCompany>> Function() fetchProjectDataFunction;
   @override
   _AllProjectsPageState createState() => _AllProjectsPageState();
 }
@@ -21,7 +21,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
 
   void _handleProjectDeleted() {
     setState(() {
-      futureProjects = widget.fetchProjectData;
+      futureProjects = widget.fetchProjectDataFunction();
     });
   }
 
@@ -31,8 +31,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
     _pageController = PageController()..addListener(_onPageChange);
     // companyId = widget.user!.companyUser!.id!;
     setState(() {
-      // Update your state here
-      futureProjects = widget.fetchProjectData;
+      futureProjects = widget.fetchProjectDataFunction();
     });
     //print projectList;
   }
@@ -49,8 +48,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
       if (_pageController.page == _pageController.initialPage) {
         if (mounted) {
           setState(() {
-            // Update your state here
-            futureProjects = widget.fetchProjectData;
+            futureProjects = widget.fetchProjectDataFunction();
           });
         }
       }
