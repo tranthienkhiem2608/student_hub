@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:student_hub/models/model/proposal.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/models/project_company.dart';
-import 'package:student_hub/models/student_user.dart';
 import 'package:student_hub/widgets/show_project_company_widget.dart';
 
-import '../../models/project_student.dart';
-import '../../models/student_registered.dart';
-import 'package:student_hub/models/user.dart';
-
 class AllProjectsPageStudent extends StatefulWidget {
-  // final User user;
-  const AllProjectsPageStudent({super.key});
+  final User user;
+  final Future<List<Proposal>> Function() fetchProjectDataFunction;
+  const AllProjectsPageStudent(
+      {super.key, required this.user, required this.fetchProjectDataFunction});
   @override
   _AllProjectsPageStudentState createState() => _AllProjectsPageStudentState();
 }
@@ -18,11 +17,15 @@ class AllProjectsPageStudent extends StatefulWidget {
 class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
     with WidgetsBindingObserver {
   late final PageController _pageController;
+  late Future<List<Proposal>> futureProjects;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController()..addListener(_onPageChange);
+    setState(() {
+      futureProjects = widget.fetchProjectDataFunction();
+    });
   }
 
   @override
@@ -36,7 +39,9 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_pageController.page == _pageController.initialPage) {
         if (mounted) {
-          setState(() {});
+          setState(() {
+            futureProjects = widget.fetchProjectDataFunction();
+          });
         }
       }
     });
@@ -44,17 +49,6 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
 
   @override
   Widget build(BuildContext context) {
-    final List<String> entries = <String>[
-      'Senior frontend developer (Fintech)',
-      'Senior backend developer (Fintech)',
-      'Fresher fullstack developer'
-    ];
-    final List<DateTime> listTime = <DateTime>[
-      DateTime.now(),
-      DateTime.now(),
-      DateTime.now()
-    ];
-    const String username = "John";
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -72,211 +66,119 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
         ),
         Expanded(
           // Thêm Expanded ở đây
-          child: Visibility(
-            replacement: Center(
-              child: Text(
-                "\t\tWelcome, $username \nYou no have j",
-                style: GoogleFonts.poppins(),
-              ),
-            ),
-            visible: entries.isNotEmpty,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(padding: EdgeInsets.only(bottom: 0)),
-                  Expanded(
-                    child: ListView.separated(
-                      itemCount: entries.length,
-                      itemBuilder: (context, index) => Container(
-                        width: 200, // Set your desired width
-                        height: 50, // Set your desired height
-                        child: GestureDetector(
-                          onTap: () {
-                            // Handle your tap here.
-                            ProjectCompany projectCompany = ProjectCompany(
-                              projectName: entries[index],
-                              creationTime: listTime[index],
-                              studentRequired: 3,
-                              duration: "3 to 6",
-                              description:
-                                  'Clear expectations about your project or deliverables\n The skills required for your project \n Details about your project',
-                              studentRegistered: [
-                                StudentRegistered(
-                                  student: StudentUser(
-                                    user: User(
-                                      fullName: 'Truong Le',
-                                      email: '223mnd@gmail.com',
-                                      password: 'password123',
-                                      typeUser: 'student',
-                                    ),
-                                    techStack: 'Frontend engineer',
-                                    skillsList: ['HTML', 'CSS', 'JS'],
-                                    languagesList: [
-                                      {
-                                        'name': 'English',
-                                        'level': 'Intermediate'
-                                      },
-                                      {'name': 'Vietnamese', 'level': 'Native'},
-                                    ],
-                                    educationList: [
-                                      {
-                                        'school': 'University of Florida',
-                                        'degree':
-                                            'Bachelor of Science in Computer Science',
-                                        'graduationDate': '2023-05-01',
-                                      },
-                                    ],
-                                    projectsList: [
-                                      ProjectStudent(
-                                        projectName: 'Project 1',
-                                        projectDescription:
-                                            'This is a project 1 description',
-                                        timeStart: DateTime.parse('2021-10-01'),
-                                        timeEnd: DateTime.parse('2021-10-01'),
-                                        skillsListProject: [
-                                          'HTML',
-                                          'CSS',
-                                          'JS',
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  levelStudent: 'Excellent',
-                                  introductionStudent:
-                                      'I am a student at HCMUT',
-                                  statusStudent: 'Hire',
-                                  isMessage: false,
-                                ),
-                                StudentRegistered(
-                                  student: StudentUser(
-                                    user: User(
-                                      fullName: 'Hung Tran',
-                                      email: '232fs@gmail.com',
-                                      password: 'password123',
-                                      typeUser: 'student',
-                                    ),
-                                    techStack: 'Backend engineer',
-                                    skillsList: ['Java', 'Python', 'C++'],
-                                    languagesList: [
-                                      {
-                                        'name': 'English',
-                                        'level': 'Intermediate'
-                                      },
-                                      {'name': 'Vietnamese', 'level': 'Native'},
-                                    ],
-                                    educationList: [
-                                      {
-                                        'school': 'University of Florida',
-                                        'degree':
-                                            'Bachelor of Science in Computer Science',
-                                        'graduationDate': '2023-05-01',
-                                      },
-                                    ],
-                                    projectsList: [
-                                      ProjectStudent(
-                                        projectName: 'Project 1',
-                                        projectDescription:
-                                            'This is a project 1 description',
-                                        timeStart: DateTime.parse('2021-10-23'),
-                                        timeEnd: DateTime.parse('2021-12-01'),
-                                        skillsListProject: [
-                                          'Java',
-                                          'Python',
-                                          'C++',
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  levelStudent: "Good",
-                                  introductionStudent:
-                                      "I am a student at HCMUT",
-                                  statusStudent: "Send hire offer",
-                                  isMessage: false,
-                                ),
-                                StudentRegistered(
-                                  student: StudentUser(
-                                    user: User(
-                                      fullName: 'Quan Nguyen',
-                                      email: '1m23n@gmail.com',
-                                      password: 'password',
-                                      typeUser: 'student',
-                                    ),
-                                    techStack: 'Fullstack',
-                                    skillsList: [
-                                      'HTML',
-                                      'CSS',
-                                      'JS',
-                                      'Java',
-                                      'Python',
-                                      'C++'
-                                    ],
-                                    languagesList: [
-                                      {
-                                        'name': 'English',
-                                        'level': 'Intermediate'
-                                      },
-                                      {'name': 'Vietnamese', 'level': 'Native'},
-                                    ],
-                                    educationList: [
-                                      {
-                                        'school': 'University of Florida',
-                                        'degree':
-                                            'Bachelor of Science in Computer Science',
-                                        'graduationDate': '2023-05-01',
-                                      },
-                                    ],
-                                    projectsList: [
-                                      ProjectStudent(
-                                        projectName: 'Project 1',
-                                        projectDescription:
-                                            'This is a project 1 description',
-                                        timeStart: DateTime.parse('2021-10-23'),
-                                        timeEnd: DateTime.parse('2021-12-01'),
-                                        skillsListProject: [
-                                          'HTML',
-                                          'CSS',
-                                          'JS',
-                                          'Java',
-                                          'Python',
-                                          'C++',
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  levelStudent: 'Good',
-                                  introductionStudent:
-                                      'I am a student at HCMUT',
-                                  statusStudent: 'Send hire offer',
-                                  isMessage: false,
-                                ),
-                              ],
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(padding: EdgeInsets.only(bottom: 0)),
+                Expanded(
+                  child: FutureBuilder<List<Proposal>>(
+                    future: futureProjects,
+                    builder: (context, proposal) {
+                      if (proposal.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (proposal.hasError) {
+                        return Text('Error: ${proposal.error}');
+                      } else if (proposal.hasData && proposal.data!.isEmpty) {
+                        return const Center(
+                            child: Text(
+                                "\t\tYou no have active proposal yet. Please check back later."));
+                      } else {
+                        return ListView.builder(
+                          itemCount: proposal.data!.length,
+                          itemBuilder: (context, index) {
+                            Proposal proposalItem = proposal.data![index];
+                            print(proposalItem.projectCompany!.title);
+                            print(proposalItem.projectCompany!.description);
+                            if (proposalItem.statusFlag != 1) {
+                              return const SizedBox.shrink();
+                            }
+                            return GestureDetector(
+                              onTap: () {},
+                              child: ShowProjectCompanyWidget(
+                                projectCompany: proposalItem.projectCompany!,
+                                quantities: const [],
+                                labels: const [],
+                                showOptionsIcon: false,
+                                onProjectDeleted: () {},
+                                user: widget.user,
+                              ),
                             );
-                            Navigator.pop(context);
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         HireStudentScreen(user: widget.user),
-                            //   ),
-                            // );
-
-                            print('Item at index $index was tapped.');
                           },
-                          // child: ShowProjectCompanyWidget(
-                          //   projectCompany: entries[index],
-                          //   quantities: [],
-                          //   labels: [],
-                          //   showOptionsIcon: false,
-                          // ),
-                        ),
-                      ),
-                      separatorBuilder: (context, index) => SizedBox(),
-                    ),
-                  )
-                ],
-              ),
+                        );
+                      }
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(12),
+          child: Text(
+            "Submitted proposal (0)",
+            style:
+                GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+        ),
+        Expanded(
+          // Thêm Expanded ở đây
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(padding: EdgeInsets.only(bottom: 0)),
+                Expanded(
+                  child: FutureBuilder<List<Proposal>>(
+                    future: futureProjects,
+                    builder: (context, proposal) {
+                      if (proposal.connectionState == ConnectionState.waiting) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (proposal.hasError) {
+                        return Text('Error: ${proposal.error}');
+                      } else if (proposal.hasData && proposal.data!.isEmpty) {
+                        return const Center(
+                            child: Text(
+                                "\t\tYou no have active proposal yet. Please check back later."));
+                      } else {
+                        return ListView.builder(
+                          itemCount: proposal.data!.length,
+                          itemBuilder: (context, index) {
+                            Proposal proposalItem = proposal.data![index];
+                            print(proposalItem.projectCompany!.title);
+                            print(proposalItem.projectCompany!.description);
+                            if (proposalItem.statusFlag != 0) {
+                              return const SizedBox.shrink();
+                            }
+                            return GestureDetector(
+                              onTap: () {},
+                              child: ShowProjectCompanyWidget(
+                                projectCompany: proposalItem.projectCompany!,
+                                quantities: const [],
+                                labels: const [],
+                                showOptionsIcon: false,
+                                onProjectDeleted: () {},
+                                user: widget.user,
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
+                )
+              ],
             ),
           ),
         ),

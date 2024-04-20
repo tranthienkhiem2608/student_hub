@@ -101,14 +101,15 @@ class InputProfileViewModel {
         var responseUserAuth =
             await ConnectionService().get('/api/auth/me', {});
         var responseUser = jsonDecode(responseUserAuth);
-        if(responseUser['result'] != null){
+        if (responseUser['result'] != null) {
           User userResponseAuth = User.fromMapUser(responseUser['result']);
           print(userResponseAuth.id);
           print(userResponseAuth.fullname);
           print(userResponseAuth.role);
           print(userResponseAuth.role?[0]);
           print(userResponseAuth.studentUser?.id);
-          ControllerRoute(context).navigateToHomeScreen(true, userResponseAuth, 1);
+          ControllerRoute(context)
+              .navigateToHomeScreen(true, userResponseAuth, 1);
         }
       } else {
         print("Failed");
@@ -170,7 +171,6 @@ class InputProfileViewModel {
   Future<void> putLanguage(int studentId, List<Language> languageList) async {
     print('Put Language');
     String url = '/api/language/updateByStudentId/$studentId';
-    var languageMap = languageList.map((e) => e.toMapLanguage()).toList();
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
 
@@ -204,7 +204,6 @@ class InputProfileViewModel {
     print('Put Education');
     String url = '/api/education/updateByStudentId/$studentId';
     //convert the list of education to a map
-    var educationMap = educationList.map((e) => e.toMapEducation()).toList();
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
       var payload = {
@@ -321,7 +320,7 @@ class InputProfileViewModel {
     return FileCV();
   }
 
-    //  /api/profile/student/{studentId} get
+  //  /api/profile/student/{studentId} get
   Future<StudentUser> getProfileStudent(int studentId) async {
     print('Get Profile Student');
     try {
@@ -334,7 +333,8 @@ class InputProfileViewModel {
         // Call a method to reload the page
         var responseDecode = jsonDecode(response);
         if (responseDecode['result'] != null) {
-          StudentUser studentUser = StudentUser.fromMapStudentUser(responseDecode['result']);
+          StudentUser studentUser =
+              StudentUser.fromMapStudentUser(responseDecode['result']);
           return studentUser;
         }
       }
@@ -353,37 +353,31 @@ class InputProfileViewModel {
     );
   }
 
-Future<void> putProfileStudent(User user) async {
-  print('Put Profile Student');
-  try{
-    showDialog(context: context, builder: (context) => LoadingUI());
+  Future<void> putProfileStudent(User user) async {
+    print('Put Profile Student');
+    try {
+      showDialog(context: context, builder: (context) => LoadingUI());
 
       // Call a method to reload the page
       if (user.studentUser?.languages != null) {
-          await putLanguage(user.studentUser!.id!,
-              user.studentUser!.languages!);
-        }
-        if (user.studentUser?.education != null) {
-          await putEducation(user.studentUser!.id!,
-              user.studentUser!.education!);
-        }
-        if (user.studentUser?.experience != null) {
-          await putExperience(user.studentUser!.id!,
-              user.studentUser!.experience!);
-        }
-        if (user.studentUser?.file?.resume != null ||
-            user.studentUser?.file?.transcript != null) {
-          await putFileCv(
-              user.studentUser!.id!, user.studentUser!.file!);
-        }
-      Navigator.of(context).pop();
-    
-  } catch (e) {
-    print(e);
+        await putLanguage(user.studentUser!.id!, user.studentUser!.languages!);
+      }
+      if (user.studentUser?.education != null) {
+        await putEducation(user.studentUser!.id!, user.studentUser!.education!);
+      }
+      if (user.studentUser?.experience != null) {
+        await putExperience(
+            user.studentUser!.id!, user.studentUser!.experience!);
+      }
+      if (user.studentUser?.file?.resume != null ||
+          user.studentUser?.file?.transcript != null) {
+        await putFileCv(user.studentUser!.id!, user.studentUser!.file!);
+      }
+//      Navigator.of(context).pop();
+    } catch (e) {
+      print(e);
+    }
   }
-
-}
-
 
   //  /api/profile/company/{companyId} get
   Future<CompanyProfile> getProfileCompany(int companyId) async {
@@ -447,6 +441,4 @@ Future<void> putProfileStudent(User user) async {
       print(e);
     }
   }
-
-    
 }

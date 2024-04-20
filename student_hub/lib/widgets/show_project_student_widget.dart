@@ -48,13 +48,13 @@ class ShowProjectStudentWidget extends StatelessWidget {
                   ),
                 ),
                 // Các phần khác của ListTile
-                //subtitle: Text(
-                // '${DateFormat('MM-yyyy').format(userStudent.experience![index].startMonth!)} - ${DateFormat('MM-yyyy').format(userStudent.experience![index].endMonth!)}, \nDuration: ${(userStudent.experience![index].duration)} days',
-                //  style: GoogleFonts.poppins(
-                //    fontStyle: FontStyle.italic,
-                //    fontSize: 12,
-                //  ),
-                //),
+                subtitle: Text(
+                  '${DateFormat('MM-yyyy').format(userStudent.experience![index].startMonth!)} - ${DateFormat('MM-yyyy').format(userStudent.experience![index].endMonth!)}, \nDuration: ${userStudent.experience![index].endMonth!.difference(userStudent.experience![index].startMonth!).inDays} days',
+                  style: GoogleFonts.poppins(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 12,
+                  ),
+                ),
 
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,

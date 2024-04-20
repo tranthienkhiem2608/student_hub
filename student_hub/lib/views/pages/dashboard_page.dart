@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/project_company_viewModel.dart';
+import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:student_hub/views/pages/all_projects_page.dart';
 import 'package:student_hub/views/pages/archieved_page.dart';
 import 'package:student_hub/views/pages/working_page.dart';
@@ -47,10 +49,13 @@ class _DashboardPageState extends State<DashboardPage> {
       return await ProjectCompanyViewModel(context)
           .getProjectsData(widget.user.companyUser!.id!);
     } else {
-      // Handle the case where companyUser or id is null
-      // For example, you might want to return an empty list
       return [];
     }
+  }
+
+  Future<List<Proposal>> fetchProposals() async {
+    return await ProposalViewModel(context)
+        .getProposalById(widget.user.studentUser!.id!);
   }
 
   @override
@@ -106,7 +111,10 @@ class _DashboardPageState extends State<DashboardPage> {
         ),
         body: TabBarView(children: [
           role == 0
-              ? const AllProjectsPageStudent()
+              ? AllProjectsPageStudent(
+                  user: widget.user,
+                  fetchProjectDataFunction: fetchProposals,
+                )
               : AllProjectsPage(
                   user: widget.user,
                   fetchProjectDataFunction: fetchDataProject,

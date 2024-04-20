@@ -7,10 +7,10 @@ import 'package:http/http.dart' as http;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
- final String _baseUrl =
-     Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://localhost:4400';
+// final String _baseUrl =
+//     Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://localhost:4400';
 
-//const String _baseUrl = 'https://api.studenthub.dev';
+final String _baseUrl = 'https://api.studenthub.dev';
 // _baseUrl for local server
 
 class ConnectionService {
@@ -44,11 +44,11 @@ class ConnectionService {
     String? token = prefs.getString('token');
     print('Token: $token');
     var headers = {
+      'accept': '*/*', // 'application/json
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
     };
-    if (token != null) {
-      headers['Authorization'] = 'Bearer $token';
-    }
+
     var body = json.encode(payload);
     var response = await http.post(url, headers: headers, body: body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -58,6 +58,29 @@ class ConnectionService {
       print("Connect server failed");
       print(json.decode(response.body));
       return response.body;
+    }
+  }
+
+  Future<dynamic> postAuth(String api, dynamic payload) async {
+    try {
+      var url = Uri.parse(_baseUrl + api);
+      var headers = {
+        'accept': '*/*', // 'application/json
+        'Content-Type': 'application/json',
+      };
+
+      var body = json.encode(payload);
+      var response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print("Connect server successful");
+        return response.body;
+      } else {
+        print("Connect server failed");
+        print(json.decode(response.body));
+        return response.body;
+      }
+    } catch (e) {
+      print('Error: $e');
     }
   }
 

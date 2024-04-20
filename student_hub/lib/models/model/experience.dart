@@ -48,13 +48,17 @@ class Experience {
   }
 
   factory Experience.fromMapExperience(Map<String, dynamic> map) {
+    String startMonthString = "01-${map['startMonth']}";
+    String endMonthString = "01-${map['endMonth']}";
+
     return Experience(
       studentId: map['studentId'],
       id: map['id'],
       title: map['title'],
-      startMonth: map['startDate'],
-      endMonth: map['endDate'],
-      skillSet: List<SkillSets>.from(map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e))),
+      startMonth: parseDate("01-${map['startMonth']}"),
+      endMonth: parseDate("01-${map['endMonth']}"),
+      skillSet: List<SkillSets>.from(
+          map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e))),
       description: map['description'],
       createAt: map['createAt'],
       deletedAt: map['deletedAt'],
@@ -65,6 +69,12 @@ class Experience {
   static fromListMap(List<Map<String, dynamic>> experienceList) {
     return experienceList.map((e) => Experience.fromMapExperience(e)).toList();
   }
+}
+
+DateTime parseDate(String date) {
+  List<String> parts = date.split('-');
+  String reformatted = '${parts[2]}-${parts[1]}-${parts[0]}';
+  return DateTime.parse(reformatted);
 }
 
 // String dateString = '01-2024'; // Replace with your actual date string

@@ -47,14 +47,16 @@ class AuthAccountViewModel {
 
   Future<void> loginAccount(bool stageNav, User user) async {
     print('Login Account');
-    var payload = user.toMapUser();
+
     // Call a method to reload the page
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
+      var payload = user.toMapUserLogin();
+      print(payload);
       var response =
-          await ConnectionService().post('/api/auth/sign-in', payload);
+          await ConnectionService().postAuth('/api/auth/sign-in', payload);
       var responseDecode = jsonDecode(response);
-      print(responseDecode);
+      print("token $responseDecode");
       if (responseDecode['result'] != null) {
         print("Connected to the server successfully");
         // print('ERROR: ' + responseDecode['errorDetails']);
@@ -155,7 +157,7 @@ class AuthAccountViewModel {
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
       var response =
-          await ConnectionService().post('/api/auth/sign-up', payload);
+          await ConnectionService().postAuth('/api/auth/sign-up', payload);
       var responseDecode = jsonDecode(response);
       if (responseDecode['result'] != null) {
         print("Connected to the server successfully");

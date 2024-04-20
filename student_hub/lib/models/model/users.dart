@@ -29,6 +29,10 @@ class User {
         'student': studentUser?.toMapStudentUser(),
         'company': companyUser?.toMapCompanyUser(),
       };
+  Map<String, dynamic> toMapUserLogin() => {
+        'email': email,
+        'password': password,
+      };
 
   factory User.fromMapUser(Map<String, dynamic> map) => User(
         id: map['id'],
