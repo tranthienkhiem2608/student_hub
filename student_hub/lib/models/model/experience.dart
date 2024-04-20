@@ -54,7 +54,7 @@ class Experience {
       title: map['title'],
       startMonth: map['startDate'],
       endMonth: map['endDate'],
-      skillSet: map['skillSet'],
+      skillSet: List<SkillSets>.from(map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e))),
       description: map['description'],
       createAt: map['createAt'],
       deletedAt: map['deletedAt'],

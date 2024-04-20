@@ -7,12 +7,14 @@ class ShowSchoolWidget extends StatelessWidget {
   final List<Education> educationList;
   final Function _deleteSchool;
   final Function _addNewEducation;
+  final bool? isEditing;
 
   const ShowSchoolWidget({
     super.key,
     required this.educationList,
     required Function deleteSchool,
     required Function addNewEducation,
+    required this.isEditing,
   })  : _deleteSchool = deleteSchool,
         _addNewEducation = addNewEducation;
 
@@ -34,7 +36,9 @@ class ShowSchoolWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 
                 children: <Widget>[
-                  IconButton(
+                  Visibility(
+                  visible: isEditing!, // Hiển thị khi isEditing là true
+                  child: IconButton(
                     icon: Image.asset(
                       'assets/icons/edit.jpg', // Đường dẫn đến hình ảnh edit.jpg
                       width: 21, // Kích thước của hình ảnh
@@ -56,7 +60,10 @@ class ShowSchoolWidget extends StatelessWidget {
                       );
                     },
                   ),
-                  IconButton(
+                  ),
+                  Visibility(
+                  visible: isEditing!, // Hiển thị khi isEditing là true
+                  child: IconButton(
                     icon: Image.asset(
                       'assets/icons/delete.jpg', // Đường dẫn đến hình ảnh edit.jpg
                       width: 21, // Kích thước của hình ảnh
@@ -66,6 +73,7 @@ class ShowSchoolWidget extends StatelessWidget {
                       _deleteSchool(educationList[index].schoolName!);
                       // Handle delete button press
                     },
+                  ),
                   ),
                 ],
               ),

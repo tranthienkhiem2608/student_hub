@@ -321,7 +321,7 @@ class AuthAccountViewModel {
     } else if (role == 0) {
       user.studentUser == null
           ? ControllerRoute(context).navigateToProfileInputStudent1(user)
-          : ControllerRoute(context).navigateToEditProfileInputCompany(user);
+          : ControllerRoute(context).navigateToEditProfileInputStudent(user);
     }
   }
 

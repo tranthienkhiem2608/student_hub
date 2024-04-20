@@ -7,6 +7,7 @@ import 'package:student_hub/models/model/experience.dart';
 import 'package:student_hub/models/model/file_cv.dart';
 import 'package:student_hub/models/model/language.dart';
 import 'package:student_hub/models/model/skillSets.dart';
+import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/models/model/techStack.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 
@@ -97,7 +98,18 @@ class InputProfileViewModel {
               responseUserMap['result']['id'], studentUser.studentUser!.file!);
         }
         Navigator.of(context).pop();
-        ControllerRoute(context).navigateToHomeScreen(true, studentUser, 1);
+        var responseUserAuth =
+            await ConnectionService().get('/api/auth/me', {});
+        var responseUser = jsonDecode(responseUserAuth);
+        if(responseUser['result'] != null){
+          User userResponseAuth = User.fromMapUser(responseUser['result']);
+          print(userResponseAuth.id);
+          print(userResponseAuth.fullname);
+          print(userResponseAuth.role);
+          print(userResponseAuth.role?[0]);
+          print(userResponseAuth.studentUser?.id);
+          ControllerRoute(context).navigateToHomeScreen(true, userResponseAuth, 1);
+        }
       } else {
         print("Failed");
         Navigator.of(context).pop();
@@ -309,6 +321,70 @@ class InputProfileViewModel {
     return FileCV();
   }
 
+    //  /api/profile/student/{studentId} get
+  Future<StudentUser> getProfileStudent(int studentId) async {
+    print('Get Profile Student');
+    try {
+      var response =
+          await ConnectionService().get('/api/profile/student/$studentId', {});
+      if (response != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+        // Call a method to reload the page
+        var responseDecode = jsonDecode(response);
+        if (responseDecode['result'] != null) {
+          StudentUser studentUser = StudentUser.fromMapStudentUser(responseDecode['result']);
+          return studentUser;
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+    return StudentUser(
+      id: 0,
+      userId: 0,
+      techStackId: 0,
+      skillSet: [],
+      languages: [],
+      education: [],
+      experience: [],
+      file: FileCV(),
+    );
+  }
+
+Future<void> putProfileStudent(User user) async {
+  print('Put Profile Student');
+  try{
+    showDialog(context: context, builder: (context) => LoadingUI());
+
+      // Call a method to reload the page
+      if (user.studentUser?.languages != null) {
+          await putLanguage(user.studentUser!.id!,
+              user.studentUser!.languages!);
+        }
+        if (user.studentUser?.education != null) {
+          await putEducation(user.studentUser!.id!,
+              user.studentUser!.education!);
+        }
+        if (user.studentUser?.experience != null) {
+          await putExperience(user.studentUser!.id!,
+              user.studentUser!.experience!);
+        }
+        if (user.studentUser?.file?.resume != null ||
+            user.studentUser?.file?.transcript != null) {
+          await putFileCv(
+              user.studentUser!.id!, user.studentUser!.file!);
+        }
+      Navigator.of(context).pop();
+    
+  } catch (e) {
+    print(e);
+  }
+
+}
+
+
   //  /api/profile/company/{companyId} get
   Future<CompanyProfile> getProfileCompany(int companyId) async {
     print('Get Profile Company');
@@ -371,4 +447,6 @@ class InputProfileViewModel {
       print(e);
     }
   }
+
+    
 }

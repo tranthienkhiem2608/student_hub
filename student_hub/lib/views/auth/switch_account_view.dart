@@ -189,7 +189,14 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                   alignment: Alignment.centerLeft,
                   child: TextButton.icon(
                     onPressed: () {
-                      AuthAccountViewModel(context).userProfile(widget.user);
+                      print('Techstack: ${widget.user.studentUser!.techStack!.name}');
+                      print('Skillset: ${widget.user.studentUser!.skillSet!.map((e) => e.name)}');
+                      print('Language: ${widget.user.studentUser!.languages!.map((e) => e.languageName)}');
+                      print('Education: ${widget.user.studentUser!.education!.map((e) => e.schoolName)}');
+                      // skillset in experience
+                      print('Skillset in experience: ${widget.user.studentUser!.experience!.map((e) => e.skillSet!.map((e) => e.name))}');
+                       AuthAccountViewModel(context).userProfile(widget.user);
+                       
                     },
                     icon: Image.asset(
                       'assets/icons/profile.jpg',
@@ -214,8 +221,8 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                   alignment: Alignment.centerLeft,
                   child: TextButton.icon(
                     onPressed: () {
-                      ControllerRoute(context)
-                            .navigateToEditProfileInputStudent(widget.user);
+                      // ControllerRoute(context)
+                      //       .navigateToEditProfileInputStudent(widget.user);
                     },
                     icon: Image.asset(
                       'assets/icons/setting.jpg', // Đường dẫn của hình ảnh

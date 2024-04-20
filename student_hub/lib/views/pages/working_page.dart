@@ -77,7 +77,7 @@ class _WorkingPageState extends State<WorkingPage> with WidgetsBindingObserver {
                 } else if (project.hasData && project.data!.isEmpty) {
                   return Center(
                       child: Text(
-                          "\t\tWelcome, ${widget.user.fullname} \You no working in progress"));
+                          "\t\tWelcome, ${widget.user.fullname}!. You no working in progress", style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.bold)));
                 } else {
                   return ListView.builder(
                     itemCount: project.data!.length,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:student_hub/components/loadingUI.dart';
 import 'package:student_hub/models/model/education.dart';
 import 'package:student_hub/models/model/experience.dart';
 import 'package:student_hub/models/model/language.dart';
@@ -9,7 +10,8 @@ import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/models/model/techStack.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
-import 'package:student_hub/widgets/pop_up_edit_techstack.dart';
+import 'package:student_hub/views/auth/switch_account_view.dart';
+import 'package:student_hub/views/profile_creation/company/profile_input.dart';
 import 'package:student_hub/widgets/pop_up_education_widget.dart';
 import 'package:student_hub/widgets/pop_up_project_widget.dart';
 import 'package:student_hub/widgets/show_project_student_widget.dart';
@@ -31,28 +33,11 @@ class EditProfileInputStudent extends StatefulWidget {
 }
 
 class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
-  final List<String> skills = [
-    'Flutter',
-    'Dart',
-    'Java',
-    'Kotlin',
-    'Python',
-    'C++',
-    'C#',
-    'Swift',
-    'React',
-    'Angular',
-    'Vue',
-    'Node.js',
-    'Express.js',
-    'MongoDB',
-    'Firebase',
-  ];
-  List<SkillSets> skillsSets = [];
+  bool isEditing = false;
   late TextfieldTagsController<String> _textfieldTagsController;
   late double _distanceToField;
-  final List<String> _selectedSkills = [];
   String _selectedTechStack = '';
+  final List<String> _selectedSkills = [];
   final List<int> _selectedSkillsId = [];
   int _selectedTechStackId = 0;
   List<SkillSets> _selectedSkillSet = [];
@@ -65,32 +50,28 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
   }
 
   @override
- void initState() {
+  void initState() {
     super.initState();
+    isEditing = false;
     _textfieldTagsController = TextfieldTagsController<String>();
+
     _selectedTechStack = widget.user.studentUser?.techStack?.name ?? '';
+    _selectedTechStackId = widget.user.studentUser?.techStack?.id ?? 0;
+
+    // Initialize _selectedSkills with user's existing skillset data
     _selectedSkills.addAll(
         widget.user.studentUser?.skillSet?.map((skill) => skill.name) ?? []);
-    languages = widget.user.studentUser?.languages ?? [];
+    // You can also initialize _selectedSkillSet if needed
+    _selectedSkillSet.addAll(widget.user.studentUser?.skillSet ?? []);
+    // Other initialization code...
+
     educationList = widget.user.studentUser?.education ?? [];
+
+    widget.user.studentUser?.education?.addAll([]);
+
+    languages = widget.user.studentUser?.languages ?? [];
+
     widget.user.studentUser?.experience?.addAll([]);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _textfieldTagsController.dispose();
-  }
-
-  void _addNewLanguage(String language, String level) {
-    setState(() {
-      print("ID: ${widget.user.id}, Language: $language, Level: $level");
-      final Language newLanguage = Language(
-        languageName: language,
-        level: level,
-      );
-      languages.add(newLanguage);
-    });
   }
 
   void _addNewProject(String projectName, DateTime startMonth,
@@ -117,7 +98,22 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
     // Add your logic here for handling the icon press
   }
 
-  String _searchQuery = '';
+  @override
+  void dispose() {
+    super.dispose();
+    _textfieldTagsController.dispose();
+  }
+
+  void _addNewLanguage(String language, String level) {
+    setState(() {
+      print("ID: ${widget.user.id}, Language: $language, Level: $level");
+      final Language newLanguage = Language(
+        languageName: language,
+        level: level,
+      );
+      languages.add(newLanguage);
+    });
+  }
 
   void _deleteLanguage(String language) {
     setState(() {
@@ -155,13 +151,14 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
     }
   }
 
+  StudentUser? _studentProfiles;
+
+  List<SkillSets> skillsSets = [];
   List<Language> languages = [
     // Add more languages here
   ];
 
-  List<Education> educationList = [
-    // Add more education items here
-  ];
+  List<Education> educationList = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,7 +213,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Techstack: ",
+                    "Techstack",
                     style: GoogleFonts.poppins(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
@@ -233,27 +230,11 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                           : "No Techstack selected", // Nếu không có Techstack được chọn
                       style: GoogleFonts.poppins(
                         fontSize: 15,
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 126, 126, 126),
                       ),
                       textAlign: TextAlign.left,
                       overflow: TextOverflow
                           .ellipsis, // Đảm bảo văn bản không tràn ra ngoài
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return PopUpTechstackEditWidget(
-                              _deleteLanguage, languages);
-                        },
-                      );
-                    },
-                    icon: Image.asset(
-                      'assets/icons/edit.jpg', // Đường dẫn đến hình ảnh edit.jpg
-                      width: 20, // Kích thước của hình ảnh
-                      height: 20,
                     ),
                   ),
                 ],
@@ -267,7 +248,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Skillset: ",
+                      "Skillset",
                       style: GoogleFonts.poppins(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -291,7 +272,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                                 skill, // Hiển thị tên của Skillset đã chọn
                                 style: GoogleFonts.poppins(
                                   fontSize: 15,
-                                  color: Colors.black,
+                                  color: Color.fromARGB(255, 126, 126, 126),
                                 ),
                               ),
                             ),
@@ -299,28 +280,12 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                             Text(
                               "No Skillset selected", // Hiển thị thông báo nếu không có Skillset nào được chọn
                               style: GoogleFonts.poppins(
-                                fontSize: 15,
-                                color: Colors.black,
+                                fontSize: 13,
+                                color: Colors.grey,
                               ),
                             ),
                         ],
                       ),
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      // showDialog(
-                      //   context: context,
-                      //   builder: (BuildContext context) {
-                      //     return PopUpLanguagesEditWidget(
-                      //         _deleteLanguage, languages);
-                      //   },
-                      // );
-                    },
-                    icon: Image.asset(
-                      'assets/icons/edit.jpg', // Đường dẫn đến hình ảnh edit.jpg
-                      width: 20, // Kích thước của hình ảnh
-                      height: 20,
                     ),
                   ),
                 ],
@@ -341,50 +306,38 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(160, 10, 0, 5),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      onPressed: () async {
-                        final result = await showDialog<Language>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return PopUpLanguagesWidget(
-                                _addNewLanguage, languages);
-                          },
-                        );
+                Visibility(
+                  visible: isEditing, // Hiển thị khi isEditing là true
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(210, 10, 0, 5),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        onPressed: () async {
+                      final result = await showDialog<Language>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return PopUpLanguagesWidget(
+                              _addNewLanguage, languages);
+                        },
+                      );
 
-                        if (result != null) {
-                          setState(() {
-                            languages.add(result);
-                          });
-                        }
-                      },
-                      icon: const Icon(
-                        Icons.add,
-                        size: 26,
-                        color: Color(0xFF406AFF),
+                      if (result != null) {
+                        setState(() {
+                          languages.add(result);
+                        });
+                      }
+                    },
+                        icon: const Icon(
+                      Icons.add,
+                      size: 26,
+                      color: Color(0xFF406AFF),
+                    ),
                       ),
                     ),
                   ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return PopUpLanguagesEditWidget(
-                            _deleteLanguage, languages);
-                      },
-                    );
-                  },
-                  icon: Image.asset(
-                    'assets/icons/edit.jpg', // Đường dẫn đến hình ảnh edit.jpg
-                    width: 20, // Kích thước của hình ảnh
-                    height: 20,
-                  ),
-                ),
+                
               ],
             ),
             Padding(
@@ -396,13 +349,18 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Color.fromARGB(
-                              255, 190, 190, 192), // Set border color
-                          width: 1, // Set border width
+                              244, 212, 221, 253), // Set border color
+                          width: 2, // Set border width
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      height: 50,
-                      child: ShowLanguagesWidget(languages: languages),
+                      height: 70,
+                      child: ShowLanguagesWidget(
+                        languages: languages,
+                        isEditing:
+                            isEditing, // Truyền giá trị isEditing xuống ShowLanguagesWidget
+                        deleteLanguage: _deleteLanguage, // Truyền hàm _deleteLanguage xuống ShowLanguagesWidget
+                      ),
                     ),
                   ],
                 ),
@@ -423,22 +381,25 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(220, 10, 0, 5),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: IconButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return PopUpEducationEditWidget(
-                                _addNewEducation, _deleteEducation, " ", 0, 0);
-                          },
-                        );
-                      },
-                      icon: const Icon(Icons.add,
-                          size: 26, color: Color(0xFF406AFF)),
+                Visibility(
+                  visible: isEditing, // Hiển thị khi isEditing là true
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(220, 10, 0, 5),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return PopUpEducationEditWidget(_addNewEducation,
+                                  _deleteEducation, " ", 0, 0);
+                            },
+                          );
+                        },
+                        icon: const Icon(Icons.add,
+                            size: 26, color: Color(0xFF406AFF)),
+                      ),
                     ),
                   ),
                 ),
@@ -452,24 +413,25 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Color.fromARGB(
-                              255, 190, 190, 192), // Set border color
-                          width: 1, // Set border width
+                          color: Color.fromARGB(244, 212, 221, 253),
+                          width: 2,
                         ),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       height: 80,
                       child: ShowSchoolWidget(
-                          educationList: educationList,
-                          deleteSchool: _deleteEducation,
-                          addNewEducation: _addNewEducation),
+                        educationList: educationList,
+                        deleteSchool: _deleteEducation,
+                        addNewEducation: _addNewEducation,
+                        isEditing: isEditing,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 0),
+              padding: const EdgeInsets.fromLTRB(20, 15, 10, 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -481,107 +443,108 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     ),
                     textAlign: TextAlign.left,
                   ),
-                  IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return PopUpProjectWidget(_addNewProject,
-                              _deleteProject, '', null, null, '', const []);
-                        },
-                      );
-                    },
-                    icon: const Icon(Icons.add,
-                        size: 26, color: Color(0xFF406AFF)),
+                  Visibility(
+                    visible: isEditing, // Hiển thị khi isEditing là true
+                    child: IconButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return PopUpProjectWidget(_addNewProject,
+                                _deleteProject, '', null, null, '', const []);
+                          },
+                        );
+                      },
+                      icon: const Icon(Icons.add,
+                          size: 26, color: Color(0xFF406AFF)),
+                    ),
                   ),
                 ],
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-            //   child: SingleChildScrollView(
-            //     child: Column(
-            //       children: [
-            //         SizedBox(
-            //           height: 200,
-            //           child: ShowProjectStudentWidget(
-            //               userStudent: widget.user.studentUser!,
-            //               deleteProject: _deleteProject,
-            //               addNewProject: _addNewProject),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 210,
+                      child: ShowProjectStudentWidget(
+                        userStudent: widget.user.studentUser!,
+                        deleteProject: _deleteProject,
+                        addNewProject: _addNewProject,
+                        isEditing: isEditing,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
             Align(
-              alignment: Alignment.topRight,
+              alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: FadeTransition(
-                  opacity: const AlwaysStoppedAnimation(1),
-                  child: MaterialButton(
-                    onPressed: () {
-                      print(
-                          "Techstack: $_selectedTechStackId - $_selectedTechStack");
-                      for (var i = 0; i < _selectedSkills.length; i++) {
-                        print(
-                            "SkillSet: ${_selectedSkillSet[i].id} - ${_selectedSkillSet[i].name}");
-                      }
-                      for (var i = 0; i < languages.length; i++) {
-                        print(
-                            "Language: ${languages[i].languageName} - ${languages[i].level}");
-                      }
+                child: Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.center, // Đặt các nút vào giữa
+                  children: [
+                    FadeTransition(
+                      opacity: const AlwaysStoppedAnimation(1),
+                      child: MaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            isEditing = !isEditing;
+                          });
+                        },
+                        height: 45,
+                        color: Color(0xFF4DBE3FF),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: const Text(
+                          "Edit",
+                          style: TextStyle(
+                              color: Color(0xFF406AFF), fontSize: 16.0),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    FadeTransition(
+                      opacity: const AlwaysStoppedAnimation(1),
+                      child: MaterialButton(
+                        onPressed: () {
+                          int studentId = widget.user.studentUser!.id!;
 
-                      if (_selectedTechStackId != 0 &&
-                          _selectedSkillsId.isNotEmpty) {
-                        widget.user.studentUser = StudentUser(
-                          id: widget.user.id!,
-                          userId: widget.user.id!,
-                          techStackId: _selectedTechStackId,
-                          skillSet: _selectedSkillSet ?? [],
-                          languages: languages ?? [],
-                          education: educationList ?? [],
-                          experience: [],
-                        );
-                        ControllerRoute(context)
-                            .navigateToProfileInputStudent2(widget.user);
-                      } else {
-                        //show dialog to choose techstack and skillset
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                                  title: _selectedSkillsId.isEmpty
-                                      ? const Text('Skillset is empty')
-                                      : const Text('Techstack is empty'),
-                                  content: _selectedSkillsId.isEmpty
-                                      ? const Text(
-                                          'Please choose at least one skillset')
-                                      : const Text('Please choose a techstack'),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                ));
-                      }
-                      // ControllerRoute(context)
-                      //     .navigateToProfileInputStudent2(widget.user);
-                    },
-                    height: 45,
-                    color: Color(0xFF406AFF),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                          widget.user.studentUser = StudentUser(
+                            id: studentId,
+                            techStack: TechStack(
+                                id: _selectedTechStackId,
+                                name: _selectedTechStack),
+                            skillSet: _selectedSkillSet,
+                            languages: languages,
+                            education: educationList,
+                            experience: widget.user.studentUser?.experience,
+                          );
+                          InputProfileViewModel(context)
+                              .putProfileStudent(widget.user);
+                        },
+                        height: 45,
+                        color: Color(0xFF406AFF),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 45),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: const Text(
+                          "Save",
+                          style: TextStyle(color: Colors.white, fontSize: 16.0),
+                        ),
+                      ),
                     ),
-                    child: const Text(
-                      "Next",
-                      style: TextStyle(color: Colors.white, fontSize: 16.0),
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ),
@@ -593,12 +556,22 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
 }
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar({super.key});
+  final User? user;
+  const _AppBar(this.user, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => SwitchAccountView(user!)));
+        },
+      ),
       title: const Text('Student Hub',
           style: TextStyle(
               color: Color.fromARGB(255, 0, 0, 0),

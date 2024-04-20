@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/project_company_viewModel.dart';
@@ -76,7 +77,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
                 } else if (project.hasData && project.data!.isEmpty) {
                   return Center(
                       child: Text(
-                          "\t\tWelcome, ${widget.user.fullname} \nYou no have jobs"));
+                          "\t\tWelcome, ${widget.user.fullname}!. You no have jobs", style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.bold)));
                 } else {
                   return ListView.builder(
                     itemCount: project.data!.length,

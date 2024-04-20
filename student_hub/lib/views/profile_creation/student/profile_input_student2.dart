@@ -164,7 +164,7 @@ class _ProfileInputStudent2State extends State<ProfileInputStudent2> {
                       child: ShowProjectStudentWidget(
                           userStudent: widget.user.studentUser!,
                           deleteProject: _deleteProject,
-                          addNewProject: _addNewProject),
+                          addNewProject: _addNewProject, isEditing: true,),
                     ),
                   ],
                 ),

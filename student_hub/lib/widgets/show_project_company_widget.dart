@@ -130,7 +130,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                   alignment: Alignment.center,
                   child: Text('Remove posting',
                       style: GoogleFonts.poppins(
-                          color: Colors.black, fontSize: 15)),
+                          color: Color.fromARGB(255, 250, 55, 87), fontSize: 15, fontWeight: FontWeight.bold)),
                 ),
                 onPressed: () {
                   _confirmDeletion(context, widget);

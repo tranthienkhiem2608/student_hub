@@ -4,7 +4,6 @@ import 'package:student_hub/views/auth/chooserole_view.dart';
 import 'package:student_hub/views/auth/forgort_password_view.dart';
 import 'package:student_hub/views/profile_creation/company/edit_profile.dart';
 import 'package:student_hub/views/profile_creation/student/edit_profile_student.dart';
-import 'package:student_hub/views/profile_creation/student/edit_project_student.dart';
 import 'package:student_hub/views/profile_creation/student/home_view.dart';
 import 'package:student_hub/views/profile_creation/student/profile_input_student1.dart';
 import 'package:student_hub/views/profile_creation/student/profile_input_student2.dart';
@@ -66,13 +65,6 @@ class ControllerRoute {
     );
   }
 
-  void navigateToEditProjectInputStudent(User studentUser) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => EditProjectInputStudent(studentUser)),
-    );
-  }
 
   void navigateToProfileInputStudent1(User user) {
     Navigator.push(

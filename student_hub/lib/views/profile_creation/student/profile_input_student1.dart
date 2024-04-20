@@ -556,7 +556,10 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       height: 120,
-                      child: ShowLanguagesWidget(languages: languages),
+                      child: ShowLanguagesWidget(
+                          languages: languages,
+                          isEditing: true,
+                          deleteLanguage: _deleteLanguage),
                     ),
                   ],
                 ),
@@ -616,7 +619,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                       child: ShowSchoolWidget(
                           educationList: educationList,
                           deleteSchool: _deleteEducation,
-                          addNewEducation: _addNewEducation),
+                          addNewEducation: _addNewEducation, isEditing: true,),
                     ),
                   ],
                 ),
