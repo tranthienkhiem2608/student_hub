@@ -98,4 +98,19 @@ class ProjectCompany {
     }
     return projects;
   }
+
+  factory ProjectCompany.fromMapProposalProject(Map<String, dynamic> map) {
+    return ProjectCompany(
+      id: map['id'],
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      companyId: map['companyId'],
+      projectScopeFlag: map['projectScopeFlag'],
+      title: map['title'],
+      description: map['description'],
+      numberOfStudents: map['numberOfStudents'],
+      typeFlag: map['typeFlag'],
+    );
+  }
 }

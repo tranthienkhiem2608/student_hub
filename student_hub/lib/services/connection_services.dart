@@ -7,10 +7,10 @@ import 'package:http/http.dart' as http;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-final String _baseUrl =
-    Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://localhost:4400';
+// final String _baseUrl =
+//     Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://localhost:4400';
 
-// const String _baseUrl = 'https://api.studenthub.dev';
+const String _baseUrl = 'https://api.studenthub.dev';
 // _baseUrl for local server
 
 class ConnectionService {
@@ -110,6 +110,26 @@ class ConnectionService {
       'Content-Type': 'application/json',
     };
     var response = await client.delete(url, headers: headers);
+    if (response.statusCode == 200) {
+      print("Connect server successful");
+      return response.body;
+    } else {
+      print("Connect server failed");
+      return response.body;
+      //throw exception and catch it in UI
+    }
+  }
+
+  Future<dynamic> patch(String api, dynamic object) async {
+    var url = Uri.parse(_baseUrl + api);
+    var payload = json.encode(object);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+    var response = await client.patch(url, headers: headers, body: payload);
     if (response.statusCode == 200) {
       print("Connect server successful");
       return response.body;

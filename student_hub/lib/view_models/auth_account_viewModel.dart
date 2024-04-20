@@ -24,8 +24,8 @@ class AuthAccountViewModel {
       MaterialPageRoute(builder: (context) => SwitchAccountView(user)),
     );
     prefs.getInt('role') == 0
-        ? ControllerRoute(context).navigateToHomeScreen(true, user)
-        : ControllerRoute(context).navigateToHomeScreen(false, user);
+        ? ControllerRoute(context).navigateToHomeScreen(false, user, 1)
+        : ControllerRoute(context).navigateToHomeScreen(false, user, 1);
   }
 
   Future<void> showAccountList(User accounts) async {
@@ -91,7 +91,7 @@ class AuthAccountViewModel {
                   ? ControllerRoute(context)
                       .navigateToProfileInputCompany(userResponse)
                   : ControllerRoute(context)
-                      .navigateToHomeScreen(false, userResponse);
+                      .navigateToHomeScreen(false, userResponse, 1);
             } else if (role == 0) {
               print('USER RESPONSE');
 
@@ -101,7 +101,7 @@ class AuthAccountViewModel {
                   ? ControllerRoute(context)
                       .navigateToProfileInputStudent1(userResponse)
                   : ControllerRoute(context)
-                      .navigateToHomeScreen(true, userResponse);
+                      .navigateToHomeScreen(false, userResponse, 1);
             }
           } else {
             // ControllerRoute(context).navigateToHomeScreen(false, userResponse);
@@ -115,7 +115,7 @@ class AuthAccountViewModel {
                   ? ControllerRoute(context)
                       .navigateToProfileInputCompany(userResponse)
                   : ControllerRoute(context)
-                      .navigateToHomeScreen(false, userResponse);
+                      .navigateToHomeScreen(false, userResponse, 1);
             } else if (role == 0) {
               print('Switch Account2');
 
@@ -123,7 +123,7 @@ class AuthAccountViewModel {
                   ? ControllerRoute(context)
                       .navigateToProfileInputStudent1(userResponse)
                   : ControllerRoute(context)
-                      .navigateToHomeScreen(true, userResponse);
+                      .navigateToHomeScreen(false, userResponse, 1);
             }
           }
         }
@@ -188,8 +188,6 @@ class AuthAccountViewModel {
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var token = prefs.get('token');
-      var payload = {'authorization': token};
       var response = await ConnectionService().postLogout('/api/auth/logout');
       var responseDecode = jsonDecode(response);
       if (responseDecode != null) {

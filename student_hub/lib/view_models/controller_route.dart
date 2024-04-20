@@ -62,7 +62,7 @@ class ControllerRoute {
   void navigateToEditProfileInputCompany(User user) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EditProfile()),
+      MaterialPageRoute(builder: (context) => EditProfile(user: user)),
     );
   }
 
@@ -135,22 +135,33 @@ class ControllerRoute {
     );
   }
 
-  void navigateToHomeScreen(bool? showAlert, User? user) async {
+  void navigateToHomeScreen(
+      bool? showAlert, User? user, int? pageDefault) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? role = prefs.getInt('role');
-    if (role == 0) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage(showAlert: true, user: user)),
-      );
-    } else if (role == 1) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage(showAlert: false, user: user)),
-      );
-    }
+    print(role);
+    // if (role == 0) {
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => HomePage(showAlert: true, user: user)),
+    //   );
+    // } else if (role == 1) {
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(
+    //         builder: (context) => HomePage(showAlert: false, user: user)),
+    //   );
+    // }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => HomePage(
+                showAlert: showAlert!,
+                user: user,
+                pageDefault: pageDefault,
+              )),
+    );
   }
 
   void toSwitchAccountView(User user) {}

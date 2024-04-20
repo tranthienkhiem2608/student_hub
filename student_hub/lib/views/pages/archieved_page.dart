@@ -86,8 +86,9 @@ class _ArchivedPageState extends State<ArchivedPage>
                     itemBuilder: (context, index) {
                       print(project.data![index].title);
                       print(project.data![index].description);
-                      if (project.data![index].typeFlag == null ||
-                          project.data![index].typeFlag == 0) {
+                      if (project.data![index].typeFlag == 1 ||
+                          project.data![index].typeFlag == 0 ||
+                          project.data![index].typeFlag == null) {
                         return const SizedBox.shrink();
                       }
                       return GestureDetector(
@@ -110,6 +111,7 @@ class _ArchivedPageState extends State<ArchivedPage>
                           labels: ['Proposals', 'Messages', 'Hired'],
                           showOptionsIcon: true,
                           onProjectDeleted: _handleProjectDeleted,
+                          user: widget.user,
                         ),
                       );
                     },

@@ -85,7 +85,8 @@ class _WorkingPageState extends State<WorkingPage> with WidgetsBindingObserver {
                       print(project.data![index].title);
                       print(project.data![index].description);
                       if (project.data![index].typeFlag == null ||
-                          project.data![index].typeFlag == 1) {
+                          project.data![index].typeFlag == 2 ||
+                          project.data![index].typeFlag == 0) {
                         return const SizedBox.shrink();
                       }
                       return GestureDetector(
@@ -108,6 +109,7 @@ class _WorkingPageState extends State<WorkingPage> with WidgetsBindingObserver {
                           labels: ['Proposals', 'Messages', 'Hired'],
                           showOptionsIcon: true,
                           onProjectDeleted: _handleProjectDeleted,
+                          user: widget.user,
                         ),
                       );
                     },

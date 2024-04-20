@@ -108,7 +108,9 @@ class _DashboardPageState extends State<DashboardPage> {
           role == 0
               ? const AllProjectsPageStudent()
               : AllProjectsPage(
-                  user: widget.user, fetchProjectData: fetchDataProject()),
+                  user: widget.user,
+                  fetchProjectDataFunction: fetchDataProject,
+                ),
           WorkingPage(user: widget.user, fetchProjectData: fetchDataProject()),
           ArchivedPage(user: widget.user, fetchProjectData: fetchDataProject()),
         ]),

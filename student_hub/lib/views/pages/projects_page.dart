@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/proposal.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/project_company_viewModel.dart';
+import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:student_hub/views/browse_project/project_search.dart';
 import 'package:student_hub/views/browse_project/project_saved.dart';
 import 'package:student_hub/widgets/project_list_widget.dart';
 
 class ProjectsPage extends StatefulWidget {
-  const ProjectsPage({Key? key}) : super(key: key);
+  final User? user;
+  const ProjectsPage(this.user, {super.key});
 
   @override
   _ProjectsPageState createState() => _ProjectsPageState();
@@ -97,7 +102,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       ),
                       onChanged: (newValue) {
                         filterProjects(newValue);
-                        updateSuggestions(newValue);
                       },
                     ),
                     SizedBox(height: 10),
@@ -121,6 +125,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                     builder: (context) => SearchProject(
                                       searchResults: filteredProjects,
                                       allProjects: filteredProjects,
+                                      studentId: widget.user!.studentUser!.id!,
+                                      user: widget.user!,
                                     ),
                                   ),
                                 ).then((value) {
@@ -168,9 +174,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           prefixIcon: Icon(Icons.search),
                           border: OutlineInputBorder(
                             //color
-                          
-                            borderRadius: BorderRadius.circular(50),
 
+                            borderRadius: BorderRadius.circular(50),
                           ),
                         ),
                       ),
@@ -188,6 +193,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
                             favoriteProjects: filteredProjects
                                 .where((project) => project.isFavorite)
                                 .toList(),
+                            studentId: widget.user!.studentUser!.id!,
+                            user: widget.user!,
                           ),
                         ),
                       );
@@ -198,16 +205,48 @@ class _ProjectsPageState extends State<ProjectsPage> {
             ),
           ),
         ),
-        body: TabBarView(
-          children: [
-            ProjectList(key: Key('allProjects'), projects: filteredProjects),
-          ],
+        body: FutureBuilder<List<ProjectCompany>>(
+          future: allProjects,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              return TabBarView(
+                children: [
+                  ProjectList(
+                    key: Key('allProjects'),
+                    projects: snapshot.data!,
+                    studentId: widget.user!.studentUser!.id!,
+                    user: widget.user!,
+                  ),
+                ],
+              );
+            }
+          },
         ),
       ),
     );
   }
 
   Future<List<ProjectCompany>> fetchAllProjects() async {
-    return await ProjectCompanyViewModel(context).getAllProjectsData();
+    List<ProjectCompany> projectTmp =
+        await ProjectCompanyViewModel(context).getAllProjectsData();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getInt('role') == 1) {
+      return projectTmp;
+    }
+    List<Proposal> proposals = await ProposalViewModel(context)
+        .getProposalById(widget.user!.studentUser!.id!);
+    //check if projectId have in proposal will remove from project list
+    for (int i = 0; i < projectTmp.length; i++) {
+      for (int j = 0; j < proposals.length; j++) {
+        if (projectTmp[i].id == proposals[j].projectId) {
+          projectTmp.removeAt(i);
+        }
+      }
+    }
+    return projectTmp;
   }
 }

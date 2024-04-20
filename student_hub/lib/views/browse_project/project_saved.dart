@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
 
 class FavoriteProjectsPage extends StatelessWidget {
   final List<ProjectCompany> favoriteProjects;
+  final int studentId;
+  final User user;
 
-  const FavoriteProjectsPage({Key? key, required this.favoriteProjects})
+  const FavoriteProjectsPage(
+      {Key? key,
+      required this.favoriteProjects,
+      required this.studentId,
+      required this.user})
       : super(key: key);
 
   @override
@@ -180,8 +187,11 @@ class FavoriteProjectsPage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  ProjectDetailPage(project: project),
+                              builder: (context) => ProjectDetailPage(
+                                project: project,
+                                studentId: studentId,
+                                user: user,
+                              ),
                             ),
                           );
                         },

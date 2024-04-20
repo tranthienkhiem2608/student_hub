@@ -2,13 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/browse_project/submit_proposal.dart';
 
-class ProjectDetailPage extends StatelessWidget {
+class ProjectDetailPage extends StatefulWidget {
   final ProjectCompany project;
+  final int studentId;
+  final User user;
 
-  const ProjectDetailPage({Key? key, required this.project}) : super(key: key);
+  const ProjectDetailPage(
+      {Key? key,
+      required this.project,
+      required this.studentId,
+      required this.user})
+      : super(key: key);
 
+  @override
+  _ProjectDetailPageState createState() => _ProjectDetailPageState();
+}
+
+class _ProjectDetailPageState extends State<ProjectDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +82,7 @@ class ProjectDetailPage extends StatelessWidget {
                             FontWeight.bold), // Thay đổi màu cho phần này
                   ),
                   TextSpan(
-                    text: project.title,
+                    text: widget.project.title,
                     style: GoogleFonts.poppins(color: Color(0xFF406AFF)),
                   ),
                 ],
@@ -94,7 +107,7 @@ class ProjectDetailPage extends StatelessWidget {
                 ),
                 ListView(
                   shrinkWrap: true,
-                  children: project.description!.split('\n').map((item) {
+                  children: widget.project.description!.split('\n').map((item) {
                     return Padding(
                       padding: const EdgeInsets.only(left: 20, top: 0),
                       child: Row(
@@ -134,7 +147,7 @@ class ProjectDetailPage extends StatelessWidget {
                     fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${_getProjectDurationText(ProjectDuration.values[project.projectScopeFlag ?? 0])}',
+                '${_getProjectDurationText(ProjectDuration.values[widget.project.projectScopeFlag ?? 0])}',
                 style: GoogleFonts.poppins(fontSize: 15),
               ),
             ),
@@ -152,7 +165,7 @@ class ProjectDetailPage extends StatelessWidget {
                     fontSize: 16, fontWeight: FontWeight.bold),
               ),
               subtitle: Text(
-                '${project.numberOfStudents} students',
+                '${widget.project.numberOfStudents} students',
                 style: GoogleFonts.poppins(fontSize: 15.5),
               ),
             ),
@@ -161,13 +174,7 @@ class ProjectDetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    // Xử lý khi nút "Apply Now" được nhấn
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ApplyPage()),
-                    );
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF4DBE3FF),
                     padding: const EdgeInsets.symmetric(
@@ -187,7 +194,11 @@ class ProjectDetailPage extends StatelessWidget {
                     // Xử lý khi nút "Apply Now" được nhấn
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ApplyPage()),
+                      MaterialPageRoute(
+                          builder: (context) => ApplyPage(
+                              project: widget.project,
+                              studentId: widget.studentId,
+                              user: widget.user)),
                     );
                   },
                   style: ElevatedButton.styleFrom(

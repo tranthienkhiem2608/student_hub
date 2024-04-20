@@ -1,7 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/proposal.dart';
+import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/proposal_viewModel.dart';
 
-class ApplyPage extends StatelessWidget {
+class ApplyPage extends StatefulWidget {
+  final ProjectCompany project;
+  final int studentId;
+  final User user;
+
+  const ApplyPage(
+      {Key? key,
+      required this.project,
+      required this.studentId,
+      required this.user})
+      : super(key: key);
+
+  @override
+  _ApplyPageState createState() => _ApplyPageState();
+}
+
+class _ApplyPageState extends State<ApplyPage> {
+  String coverLetter = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,6 +79,10 @@ class ApplyPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.0),
               ),
               child: TextFormField(
+                onChanged: (value) {
+                  // Xử lý khi người dùng nhập vào
+                  coverLetter = value;
+                },
                 decoration: InputDecoration(
                   hintText: 'Enter project description',
                   hintStyle: GoogleFonts.poppins(
@@ -75,7 +100,7 @@ class ApplyPage extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // Xử lý khi nút "Apply Now" được nhấn
+                    // Xử lý khi nút "Cancel" được nhấn
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF4DBE3FF),
@@ -91,7 +116,15 @@ class ApplyPage extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Proposal proposal = Proposal(
+                        studentId: widget.studentId,
+                        projectId: widget.project.id,
+                        coverLetter: coverLetter);
+
+                    ProposalViewModel(context)
+                        .postSendApply(proposal, widget.user);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF406AFF),
                     padding: const EdgeInsets.symmetric(
