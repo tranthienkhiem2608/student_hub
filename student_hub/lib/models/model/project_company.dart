@@ -111,6 +111,15 @@ class ProjectCompany {
       description: map['description'],
       numberOfStudents: map['numberOfStudents'],
       typeFlag: map['typeFlag'],
+      countProposal: map['countProposals'],
     );
+  }
+
+  static List<ProjectCompany> fromListMapProposalProject(List<dynamic> list) {
+    List<ProjectCompany> projects = [];
+    for (var project in list) {
+      projects.add(ProjectCompany.fromMapProposalProject(project));
+    }
+    return projects;
   }
 }

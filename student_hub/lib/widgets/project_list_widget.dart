@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
 
 class ProjectList extends StatefulWidget {
@@ -64,6 +65,7 @@ class _ProjectListState extends State<ProjectList> {
             itemCount: widget.projects.length,
             itemBuilder: (context, index) {
               ProjectCompany project = widget.projects[index];
+              project.isFavorite == false;
               List<String> expectations = project.description!.split('\n');
               String firstExpectation =
                   expectations.isNotEmpty ? expectations.first : '';
@@ -115,22 +117,6 @@ class _ProjectListState extends State<ProjectList> {
                           ),
                         ),
                       ),
-                      // IconButton(
-                      //   iconSize: 30,
-                      //   icon: Icon(
-                      //     project.isFavorite
-                      //         ? Icons.bookmark_added
-                      //         : Icons.bookmark_add_outlined,
-                      //     color: project.isFavorite
-                      //         ? Color.fromARGB(255, 250, 55, 87)
-                      //         : null,
-                      //   ),
-                      //   onPressed: () {
-                      //     setState(() {
-                      //       project.isFavorite = !project.isFavorite;
-                      //     });
-                      //   },
-                      // ),
                       FutureBuilder<int>(
                         future: SharedPreferences.getInstance()
                             .then((prefs) => prefs.getInt('role') ?? 0),
@@ -142,18 +128,30 @@ class _ProjectListState extends State<ProjectList> {
                               return IconButton(
                                 iconSize: 30,
                                 icon: Icon(
-                                  project.isFavorite
+                                  project.isFavorite == true
                                       ? Icons.bookmark_added
                                       : Icons.bookmark_add_outlined,
-                                  color: project.isFavorite
+                                  color: project.isFavorite == true
                                       ? Color.fromARGB(255, 250, 55, 87)
                                       : null,
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    project.isFavorite = !project.isFavorite;
-                                    
-                                  });
+                                onPressed: () async {
+                                  // Toggle favorite status
+                                  bool newFavoriteStatus = !project.isFavorite;
+                                  bool success =
+                                      await ProposalViewModel(context)
+                                          .setFavorite(
+                                    widget.studentId,
+                                    project.id!,
+                                    newFavoriteStatus ? 0 : 1,
+                                  );
+
+                                  if (success) {
+                                    // If the API call was successful, update the UI
+                                    setState(() {
+                                      project.isFavorite = newFavoriteStatus;
+                                    });
+                                  }
                                 },
                               );
                             } else {

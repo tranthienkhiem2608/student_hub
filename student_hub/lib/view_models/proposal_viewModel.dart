@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/services/connection_services.dart';
@@ -81,6 +82,56 @@ class ProposalViewModel {
         return proposals;
       } else {
         print("Failed get proposal");
+        print(responseDecode);
+      }
+    } catch (e) {
+      print(e);
+    }
+    return [];
+  }
+
+  Future<bool> setFavorite(
+      int studentId, int projectId, int disableFlag) async {
+    print('setFavorite');
+    String url = '/api/favoriteProject/$studentId';
+    try {
+      var object = {'projectId': projectId, 'disableFlag': disableFlag};
+      var response = await ConnectionService().patch(url, object);
+      var responseDecode = jsonDecode(response);
+      if (responseDecode != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+        return true;
+      } else {
+        print("Failed");
+        print(responseDecode);
+      }
+    } catch (e) {
+      print(e);
+    }
+    return false;
+  }
+
+  Future<List<ProjectCompany>> getListFavoriteProject(int studentId) async {
+    print('getListFavorite');
+    try {
+      var response =
+          await ConnectionService().get('/api/favoriteProject/$studentId', {});
+      var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(responseDecode['result']);
+        print(response);
+        List<ProjectCompany> projects = [];
+        for (var project in responseDecode['result']) {
+          projects
+              .add(ProjectCompany.fromMapProposalProject(project['project']));
+        }
+        return projects;
+      } else {
+        print("Failed");
         print(responseDecode);
       }
     } catch (e) {

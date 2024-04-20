@@ -121,19 +121,6 @@ class ControllerRoute {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? role = prefs.getInt('role');
     print(role);
-    // if (role == 0) {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => HomePage(showAlert: true, user: user)),
-    //   );
-    // } else if (role == 1) {
-    //   Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => HomePage(showAlert: false, user: user)),
-    //   );
-    // }
     Navigator.push(
       context,
       MaterialPageRoute(

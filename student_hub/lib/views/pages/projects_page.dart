@@ -181,23 +181,39 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       ),
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.bookmark_rounded),
-                    color: Color.fromARGB(255, 250, 55, 87),
-                    iconSize: 30,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FavoriteProjectsPage(
-                            favoriteProjects: filteredProjects
-                                .where((project) => project.isFavorite)
-                                .toList(),
-                            studentId: widget.user!.studentUser!.id!,
-                            user: widget.user!,
-                          ),
-                        ),
-                      );
+                  FutureBuilder<int>(
+                    future: SharedPreferences.getInstance()
+                        .then((prefs) => prefs.getInt('role') ?? 0),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<int> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        if (snapshot.hasData && snapshot.data == 0) {
+                          return IconButton(
+                            icon: Icon(Icons.bookmark_rounded),
+                            color: Color.fromARGB(255, 250, 55, 87),
+                            iconSize: 30,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FavoriteProjectsPage(
+                                    favoriteProjects: filteredProjects
+                                        .where((project) => project.isFavorite)
+                                        .toList(),
+                                    studentId: widget.user!.studentUser!.id!,
+                                    user: widget.user!,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return SizedBox
+                              .shrink(); // Return an empty widget if role is not 0
+                        }
+                      } else {
+                        return CircularProgressIndicator(); // Show a loading spinner while waiting for the future to complete
+                      }
                     },
                   ),
                 ],

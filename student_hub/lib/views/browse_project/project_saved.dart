@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:path/path.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/controller_route.dart';
+import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
 
-class FavoriteProjectsPage extends StatelessWidget {
+class FavoriteProjectsPage extends StatefulWidget {
   final List<ProjectCompany> favoriteProjects;
   final int studentId;
   final User user;
@@ -16,11 +19,31 @@ class FavoriteProjectsPage extends StatelessWidget {
       required this.studentId,
       required this.user})
       : super(key: key);
+  @override
+  _FavoriteProjectsPageState createState() => _FavoriteProjectsPageState();
+}
+
+class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
+  Future<List<ProjectCompany>>? favoriteList;
+
+  Future<List<ProjectCompany>> fetchListFavoriteProjects(
+      BuildContext context, int studentId) async {
+    List<ProjectCompany> projectList =
+        await ProposalViewModel(context).getListFavoriteProject(studentId);
+    return projectList;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back), // Use any icon you like
+          onPressed: () {
+            ControllerRoute(context)
+                .navigateToHomeScreen(false, widget.user, 0);
+          },
+        ),
         title: Text('Student Hub',
             style: GoogleFonts.poppins(
                 // Apply the Poppins font
@@ -50,17 +73,26 @@ class FavoriteProjectsPage extends StatelessWidget {
           ),
         ),
       ),
-      body: favoriteProjects.isNotEmpty
-          ? Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-              child: ListView.separated(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+        child: FutureBuilder<List<ProjectCompany>>(
+          future: favoriteList =
+              fetchListFavoriteProjects(context, widget.studentId),
+          builder: (context, project) {
+            if (project.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (project.hasError) {
+              return Text('Error: ${project.error}');
+            } else if (project.hasData && project.data!.isEmpty) {
+              return Center(child: Text("You have no favorite projects."));
+            } else {
+              return ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount: favoriteProjects.length,
-                separatorBuilder: (context, index) => const SizedBox(),
+                itemCount: project.data!.length,
                 itemBuilder: (context, index) {
-                  ProjectCompany project = favoriteProjects[index];
-
+                  project.data![index].isFavorite = true;
                   return Container(
                       margin: const EdgeInsets.symmetric(vertical: 10.0),
                       padding: const EdgeInsets.fromLTRB(15, 0, 10, 5),
@@ -86,7 +118,7 @@ class FavoriteProjectsPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 8),
-                            Text('${project.title}',
+                            Text('${project.data![index].title}',
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
                                     color: Color(0xFF406AFF),
@@ -98,7 +130,8 @@ class FavoriteProjectsPage extends StatelessWidget {
                           children: [
                             SizedBox(height: 3),
                             Text(
-                              timeAgo(DateTime.parse(project.createdAt!)),
+                              timeAgo(DateTime.parse(
+                                  project.data![index].createdAt!.toString())),
                               style: GoogleFonts.poppins(
                                   height: 1.0,
                                   fontSize: 13,
@@ -112,8 +145,11 @@ class FavoriteProjectsPage extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              project.description?.isNotEmpty ?? false
-                                  ? project.description!.split('\n').first
+                              project.data![index].description?.isNotEmpty ??
+                                      false
+                                  ? project.data![index].description!
+                                      .split('\n')
+                                      .first
                                   : '',
                               style: GoogleFonts.poppins(),
                             ),
@@ -128,7 +164,10 @@ class FavoriteProjectsPage extends StatelessWidget {
                                 ),
                                 SizedBox(width: 5),
                                 Text(
-                                  '${_getProjectDurationText(ProjectDuration.values[project.projectScopeFlag ?? 0])}',
+                                  _getProjectDurationText(ProjectDuration
+                                          .values[
+                                      project.data![index].projectScopeFlag ??
+                                          0]),
                                   style: GoogleFonts.poppins(
                                       height: 1.0, fontSize: 12),
                                 ),
@@ -144,7 +183,7 @@ class FavoriteProjectsPage extends StatelessWidget {
                                 ),
                                 SizedBox(width: 5),
                                 Text(
-                                  '${project.numberOfStudents} students',
+                                  '${project.data![index].numberOfStudents} students',
                                   style: GoogleFonts.poppins(
                                       height: 1.0, fontSize: 12),
                                 ),
@@ -153,14 +192,14 @@ class FavoriteProjectsPage extends StatelessWidget {
                             SizedBox(height: 5),
                             Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.assignment,
                                   color: Colors.grey,
                                   size: 18,
                                 ),
                                 SizedBox(width: 5),
                                 Text(
-                                  '${project.proposals != null ? project.proposals : 0} proposals',
+                                  '${project.data![index].countProposal != null ? project.data![index].countProposal : 0} proposals',
                                   style: GoogleFonts.poppins(
                                       height: 1.0, fontSize: 12),
                                 ),
@@ -171,16 +210,31 @@ class FavoriteProjectsPage extends StatelessWidget {
                         trailing: IconButton(
                           iconSize: 30,
                           icon: Icon(
-                            project.isFavorite
+                            project.data![index].isFavorite == true
                                 ? Icons.bookmark_added
                                 : Icons.bookmark_add_outlined,
-                            color: project.isFavorite
+                            color: project.data![index].isFavorite == true
                                 ? Color.fromARGB(255, 250, 55, 87)
                                 : null,
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             // Toggle favorite status
-                            project.isFavorite = !project.isFavorite;
+                            bool newFavoriteStatus =
+                                !project.data![index].isFavorite;
+                            bool success =
+                                await ProposalViewModel(context).setFavorite(
+                              widget.studentId,
+                              project.data![index].id!,
+                              newFavoriteStatus ? 0 : 1,
+                            );
+
+                            if (success) {
+                              // If the API call was successful, update the UI
+                              setState(() {
+                                project.data![index].isFavorite =
+                                    newFavoriteStatus;
+                              });
+                            }
                           },
                         ),
                         onTap: () {
@@ -188,24 +242,20 @@ class FavoriteProjectsPage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) => ProjectDetailPage(
-                                project: project,
-                                studentId: studentId,
-                                user: user,
+                                project: project.data![index],
+                                studentId: widget.studentId,
+                                user: widget.user,
                               ),
                             ),
                           );
                         },
                       ));
                 },
-              ),
-            )
-          : Center(
-              child: Text(
-                'You have no favorite projects.',
-                style: GoogleFonts.poppins(
-                    fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ),
+              );
+            }
+          },
+        ),
+      ),
     );
   }
 }
