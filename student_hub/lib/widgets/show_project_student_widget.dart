@@ -29,9 +29,9 @@ class ShowProjectStudentWidget extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(
               color: Color.fromARGB(244, 212, 221, 253),
-              width: 2, // Màu và độ dày của border
+              width: 2, 
             ),
-            borderRadius: BorderRadius.circular(10.0), // Độ cong của border
+            borderRadius: BorderRadius.circular(10.0), 
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +42,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w600,
                     color: Color(0xFF406AFF),
-                    fontSize: 18, // Đổi màu của văn bản thành màu xanh
+                    fontSize: 18, 
                   ),
                 ),
                 // Các phần khác của ListTile
@@ -50,7 +50,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
                   '${DateFormat('MM-yyyy').format(userStudent.experience![index].startMonth!)} - ${DateFormat('MM-yyyy').format(userStudent.experience![index].endMonth!)}, \nDuration: ${(userStudent.experience![index].duration)} days',
                   style: GoogleFonts.poppins(
                     fontStyle: FontStyle.italic,
-                    fontSize: 12, // Đổi chữ thành dạng italic
+                    fontSize: 12, 
                   ),
                 ),
 

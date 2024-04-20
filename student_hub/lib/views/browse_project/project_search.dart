@@ -140,6 +140,7 @@ class _SearchProjectState extends State<SearchProject> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
+                SizedBox(height: 10),
                 Text(
                   'Filter by',
                   style: GoogleFonts.poppins(

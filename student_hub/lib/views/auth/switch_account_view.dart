@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
 
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/widgets/add_account_widget.dart';
 import 'package:student_hub/models/company_user.dart';
 
@@ -213,7 +214,8 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                   alignment: Alignment.centerLeft,
                   child: TextButton.icon(
                     onPressed: () {
-                      // Settings button pressed
+                      ControllerRoute(context)
+                            .navigateToEditProfileInputStudent(widget.user);
                     },
                     icon: Image.asset(
                       'assets/icons/setting.jpg', // Đường dẫn của hình ảnh
