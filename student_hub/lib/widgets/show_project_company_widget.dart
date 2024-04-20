@@ -306,9 +306,7 @@ void _confirmDeletion(BuildContext context, ShowProjectCompanyWidget widget) {
               ProjectCompanyViewModel(context)
                   .deleteProject(widget.projectCompany.id!)
                   .then((value) {
-                Navigator.of(context).pop();
-                ControllerRoute(context).navigateToHomeScreen(
-                    false, widget.user, 1); // Close dialog
+                Navigator.of(context).pop(); // Close dialog
                 if (widget.onProjectDeleted != null) {
                   widget
                       .onProjectDeleted!(); // Trigger project deleted callback
