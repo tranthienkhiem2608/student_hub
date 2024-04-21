@@ -243,7 +243,6 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
                             MaterialPageRoute(
                               builder: (context) => ProjectDetailPage(
                                 project: project.data![index],
-                                studentId: widget.studentId,
                                 user: widget.user,
                               ),
                             ),

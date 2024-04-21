@@ -8,7 +8,7 @@ import 'package:student_hub/view_models/proposal_viewModel.dart';
 class ApplyPage extends StatefulWidget {
   final ProjectCompany project;
   final int studentId;
-  final User user;
+  final User? user;
 
   const ApplyPage(
       {Key? key,
@@ -123,7 +123,7 @@ class _ApplyPageState extends State<ApplyPage> {
                         coverLetter: coverLetter);
 
                     ProposalViewModel(context)
-                        .postSendApply(proposal, widget.user);
+                        .postSendApply(proposal, widget.user!);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF406AFF),

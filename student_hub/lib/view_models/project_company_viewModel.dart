@@ -49,10 +49,14 @@ class ProjectCompanyViewModel {
   }
 
   // get all projects /api/project
-  Future<List<ProjectCompany>> getAllProjectsData() async {
+  Future<List<ProjectCompany>> getAllProjectsData(
+      int page, int itemsPerPage) async {
     print('Get All Projects Data');
+    print('Page: $page');
+    print('Items per page: $itemsPerPage');
     try {
-      var response = await ConnectionService().get('/api/project', {});
+      var response = await ConnectionService()
+          .get('/api/project?page=$page&limit=$itemsPerPage', {});
       var responseDecode = jsonDecode(response);
       if (responseDecode['result'] != null) {
         print("Connected to the server successfully");

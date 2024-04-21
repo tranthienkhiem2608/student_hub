@@ -76,7 +76,7 @@ class ProjectCompany {
 
   factory ProjectCompany.fromMapAllProject(Map<String, dynamic> map) {
     return ProjectCompany(
-      id: map['projectId'],
+      id: map['id'],
       createdAt: map['createdAt'],
       updatedAt: map['updatedAt'],
       deletedAt: map['deletedAt'],

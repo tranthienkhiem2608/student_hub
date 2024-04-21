@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
 
 class SearchProject extends StatefulWidget {
   final List<ProjectCompany> searchResults;
-  final int studentId;
   final User user;
 
   const SearchProject({
     Key? key,
     required this.searchResults,
-    required this.studentId,
     required this.user,
     required List<ProjectCompany> allProjects,
   }) : super(key: key);
@@ -69,8 +69,8 @@ class _SearchProjectState extends State<SearchProject> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ProjectDetailPage(
-            project: project, studentId: widget.studentId, user: widget.user),
+        builder: (context) =>
+            ProjectDetailPage(project: project, user: widget.user),
       ),
     );
   }
@@ -445,20 +445,54 @@ class _SearchProjectState extends State<SearchProject> {
                                     ),
                                   ),
                                 ),
-                                IconButton(
-                                  iconSize: 30,
-                                  icon: Icon(
-                                    project.isFavorite
-                                        ? Icons.bookmark_added
-                                        : Icons.bookmark_add_outlined,
-                                    color: project.isFavorite
-                                        ? Color.fromARGB(255, 250, 55, 87)
-                                        : null,
-                                  ),
-                                  onPressed: () {
-                                    setState(() {
-                                      project.isFavorite = !project.isFavorite;
-                                    });
+                                FutureBuilder<int>(
+                                  future: SharedPreferences.getInstance().then(
+                                      (prefs) => prefs.getInt('role') ?? 0),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot<int> snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (snapshot.hasData &&
+                                          snapshot.data == 0) {
+                                        return IconButton(
+                                          iconSize: 30,
+                                          icon: Icon(
+                                            project.isFavorite == true
+                                                ? Icons.bookmark_added
+                                                : Icons.bookmark_add_outlined,
+                                            color: project.isFavorite == true
+                                                ? Color.fromARGB(
+                                                    255, 250, 55, 87)
+                                                : null,
+                                          ),
+                                          onPressed: () async {
+                                            // Toggle favorite status
+                                            bool newFavoriteStatus =
+                                                !project.isFavorite;
+                                            bool success =
+                                                await ProposalViewModel(context)
+                                                    .setFavorite(
+                                              widget.user.studentUser!.id!,
+                                              project.id!,
+                                              newFavoriteStatus ? 0 : 1,
+                                            );
+
+                                            if (success) {
+                                              // If the API call was successful, update the UI
+                                              setState(() {
+                                                project.isFavorite =
+                                                    newFavoriteStatus;
+                                              });
+                                            }
+                                          },
+                                        );
+                                      } else {
+                                        return SizedBox
+                                            .shrink(); // Return an empty widget if role is not 0
+                                      }
+                                    } else {
+                                      return CircularProgressIndicator(); // Show a loading spinner while waiting for the future to complete
+                                    }
                                   },
                                 ),
                               ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
@@ -7,14 +8,9 @@ import 'package:student_hub/views/browse_project/submit_proposal.dart';
 
 class ProjectDetailPage extends StatefulWidget {
   final ProjectCompany project;
-  final int studentId;
   final User user;
 
-  const ProjectDetailPage(
-      {Key? key,
-      required this.project,
-      required this.studentId,
-      required this.user})
+  const ProjectDetailPage({Key? key, required this.project, required this.user})
       : super(key: key);
 
   @override
@@ -173,47 +169,77 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF4DBE3FF),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  child: Text(
-                    "Save project",
-                    style: GoogleFonts.poppins(
-                        color: Color(0xFF406AFF), fontSize: 16.0),
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    // Xử lý khi nút "Apply Now" được nhấn
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ApplyPage(
-                              project: widget.project,
-                              studentId: widget.studentId,
-                              user: widget.user)),
-                    );
+                FutureBuilder<int>(
+                  future: SharedPreferences.getInstance()
+                      .then((prefs) => prefs.getInt('role') ?? 0),
+                  builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData && snapshot.data == 0) {
+                        return ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF4DBE3FF),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          child: Text(
+                            "Save project",
+                            style: GoogleFonts.poppins(
+                                color: Color(0xFF406AFF), fontSize: 16.0),
+                          ),
+                        );
+                      } else {
+                        return SizedBox
+                            .shrink(); // Return an empty widget if role is not 0
+                      }
+                    } else {
+                      return CircularProgressIndicator(); // Show a loading spinner while waiting for the future to complete
+                    }
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF406AFF),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 25),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  child: Text(
-                    "Apply now",
-                    style: GoogleFonts.poppins(
-                        color: Colors.white, fontSize: 16.0),
-                  ),
+                ),
+                FutureBuilder<int>(
+                  future: SharedPreferences.getInstance()
+                      .then((prefs) => prefs.getInt('role') ?? 0),
+                  builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (snapshot.hasData && snapshot.data == 0) {
+                        return ElevatedButton(
+                          onPressed: () {
+                            // Xử lý khi nút "Apply Now" được nhấn
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ApplyPage(
+                                      project: widget.project,
+                                      studentId: widget.user.studentUser!.id!,
+                                      user: widget.user)),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF406AFF),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 25),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          child: Text(
+                            "Apply now",
+                            style: GoogleFonts.poppins(
+                                color: Colors.white, fontSize: 16.0),
+                          ),
+                        );
+                      } else {
+                        return SizedBox
+                            .shrink(); // Return an empty widget if role is not 0
+                      }
+                    } else {
+                      return CircularProgressIndicator(); // Show a loading spinner while waiting for the future to complete
+                    }
+                  },
                 ),
               ],
             ),

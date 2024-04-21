@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/project_company.dart';
@@ -20,22 +21,61 @@ class ProjectsPage extends StatefulWidget {
 
 class _ProjectsPageState extends State<ProjectsPage> {
   late Future<List<ProjectCompany>> allProjects;
+  List<ProjectCompany> projectsList = [];
   List<ProjectCompany> filteredProjects = [];
   List<String> suggestions = [];
+  int itemsPerPage = 5;
+  int currentPage = 1;
+  bool isLoading = false;
+  bool hasMoreData = true;
+  final scrollController = ScrollController();
 
   final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _initializeData();
+    // _initializeData();
     setState(() {
-      allProjects = fetchAllProjects();
+      allProjects = fetchAllProjects(currentPage, itemsPerPage);
+    });
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            setState(() {
+              // Your state change here
+              loadMoreData();
+            });
+          });
+        }
+      }
     });
   }
 
+  void loadMoreData() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+
+      // Fetch the next page of data
+      List<ProjectCompany> newProjects =
+          await fetchAllProjects(currentPage, itemsPerPage);
+
+      // Update the state with the new data
+      setState(() {
+        isLoading = false;
+        projectsList.addAll(newProjects);
+        currentPage++;
+        hasMoreData = newProjects.length == itemsPerPage;
+      });
+    }
+  }
+
   Future<void> _initializeData() async {
-    List<ProjectCompany> projects = await fetchAllProjects();
+    List<ProjectCompany> projects =
+        await fetchAllProjects(currentPage, itemsPerPage);
     setState(() {
       // Assuming you're using this in a StatefulWidget
       filteredProjects = projects;
@@ -44,7 +84,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   }
 
   void filterProjects(String query) async {
-    final projects = await fetchAllProjects();
+    final projects = await fetchAllProjects(currentPage, itemsPerPage);
     setState(() {
       if (query.isNotEmpty) {
         filteredProjects = projects
@@ -59,7 +99,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   }
 
   void updateSuggestions(String query) async {
-    final projects = await fetchAllProjects();
+    final projects = await fetchAllProjects(currentPage, itemsPerPage);
     setState(() {
       if (query.isNotEmpty) {
         final uniqueSuggestions = projects
@@ -125,7 +165,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
                                     builder: (context) => SearchProject(
                                       searchResults: filteredProjects,
                                       allProjects: filteredProjects,
-                                      studentId: widget.user!.studentUser!.id!,
                                       user: widget.user!,
                                     ),
                                   ),
@@ -229,13 +268,15 @@ class _ProjectsPageState extends State<ProjectsPage> {
             } else if (snapshot.hasError) {
               return Center(child: Text('Error: ${snapshot.error}'));
             } else {
+              projectsList = snapshot.data!;
               return TabBarView(
                 children: [
                   ProjectList(
                     key: Key('allProjects'),
-                    projects: snapshot.data!,
-                    studentId: widget.user!.studentUser!.id!,
+                    projects: projectsList,
                     user: widget.user!,
+                    fetchAllProjects: fetchAllProjects,
+                    scrollController: scrollController,
                   ),
                 ],
               );
@@ -246,9 +287,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
     );
   }
 
-  Future<List<ProjectCompany>> fetchAllProjects() async {
-    List<ProjectCompany> projectTmp =
-        await ProjectCompanyViewModel(context).getAllProjectsData();
+  Future<List<ProjectCompany>> fetchAllProjects(
+      int currentPage, int itemsPerPage) async {
+    List<ProjectCompany> projectTmp = await ProjectCompanyViewModel(context)
+        .getAllProjectsData(currentPage, itemsPerPage);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getInt('role') == 1) {
       return projectTmp;
@@ -256,13 +298,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
     List<Proposal> proposals = await ProposalViewModel(context)
         .getProposalById(widget.user!.studentUser!.id!);
     //check if projectId have in proposal will remove from project list
-    for (int i = 0; i < projectTmp.length; i++) {
-      for (int j = 0; j < proposals.length; j++) {
-        if (projectTmp[i].id == proposals[j].projectId) {
-          projectTmp.removeAt(i);
-        }
-      }
-    }
+    projectTmp.removeWhere((project) =>
+        proposals.any((proposal) => proposal.projectId == project.id));
     return projectTmp;
   }
 }
