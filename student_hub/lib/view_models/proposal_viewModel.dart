@@ -78,7 +78,7 @@ class ProposalViewModel {
         print("Connect server successful");
         print(response);
         List<Proposal> proposals =
-            Proposal.fromListMapProposalStudent(responseDecode['result']);
+            Proposal.fromListMapProposalStudentShow(responseDecode['result']);
         return proposals;
       } else {
         print("Failed get proposal");
@@ -138,5 +138,25 @@ class ProposalViewModel {
       print(e);
     }
     return [];
+  }
+
+  Future<void> setStatusFlagProject(Proposal proposal) async {
+    print('setStatusFlagProject');
+    var payload = proposal.toMapProposalOffer();
+    try {
+      var response = await ConnectionService()
+          .patch('/api/proposal/${proposal.id}', payload);
+      var responseDecode = jsonDecode(response);
+      if (responseDecode != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+      } else {
+        print("Failed");
+        print(responseDecode);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

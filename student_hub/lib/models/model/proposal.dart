@@ -33,8 +33,14 @@ class Proposal {
       'projectId': projectId,
       'studentId': studentId,
       'coverLetter': coverLetter,
-      'statusFlag': 1,
-      'disableFlag': 1,
+    };
+  }
+
+  Map<String, dynamic> toMapProposalOffer() {
+    return {
+      'coverLetter': coverLetter,
+      'statusFlag': statusFlag,
+      'disableFlag': disableFlag,
     };
   }
 
@@ -79,6 +85,21 @@ class Proposal {
       coverLetter: map['coverLetter'],
       statusFlag: map['statusFlag'],
       disableFlag: map['disableFlag'],
+      studentUser: StudentUser.fromMapStudentProposal(map['student']),
+    );
+  }
+
+  factory Proposal.fromMapProposalStudentUserShow(Map<String, dynamic> map) {
+    return Proposal(
+      id: map['id'],
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      projectId: map['projectId'],
+      studentId: map['studentId'],
+      coverLetter: map['coverLetter'],
+      statusFlag: map['statusFlag'],
+      disableFlag: map['disableFlag'],
       projectCompany: ProjectCompany.fromMapProposalProject(map['project']),
     );
   }
@@ -94,6 +115,14 @@ class Proposal {
     List<Proposal> proposals = [];
     for (var item in list) {
       proposals.add(Proposal.fromMapProposalStudentUser(item));
+    }
+    return proposals;
+  }
+
+  static List<Proposal> fromListMapProposalStudentShow(List<dynamic> list) {
+    List<Proposal> proposals = [];
+    for (var item in list) {
+      proposals.add(Proposal.fromMapProposalStudentUserShow(item));
     }
     return proposals;
   }

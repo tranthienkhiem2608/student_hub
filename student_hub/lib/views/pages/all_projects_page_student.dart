@@ -18,6 +18,8 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
     with WidgetsBindingObserver {
   late final PageController _pageController;
   late Future<List<Proposal>> futureProjects;
+  late int lenghtActiveProposal = 0;
+  late int lenghtSubmittedProposal = 0;
 
   @override
   void initState() {
@@ -25,6 +27,27 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
     _pageController = PageController()..addListener(_onPageChange);
     setState(() {
       futureProjects = widget.fetchProjectDataFunction();
+      countProposal();
+      print(lenghtActiveProposal);
+      print(lenghtSubmittedProposal);
+    });
+  }
+
+  void countProposal() async {
+    List<Proposal> proposals = await widget.fetchProjectDataFunction();
+    int tempActiveProposal = 0;
+    int tempSubmittedProposal = 0;
+    for (var proposal in proposals) {
+      if (proposal.statusFlag == 1) {
+        tempActiveProposal++;
+      }
+      if (proposal.statusFlag == 0) {
+        tempSubmittedProposal++;
+      }
+    }
+    setState(() {
+      lenghtActiveProposal = tempActiveProposal;
+      lenghtSubmittedProposal = tempSubmittedProposal;
     });
   }
 
@@ -59,7 +82,7 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
           width: double.infinity,
           padding: EdgeInsets.all(12),
           child: Text(
-            "Active Proposal (0)",
+            "Active Proposal ($lenghtActiveProposal)",
             style:
                 GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
           ),
@@ -124,7 +147,7 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
           width: double.infinity,
           padding: EdgeInsets.all(12),
           child: Text(
-            "Submitted proposal (0)",
+            "Submitted proposal ($lenghtSubmittedProposal)",
             style:
                 GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold),
           ),

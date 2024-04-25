@@ -62,7 +62,7 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
                   DetailPage(projectCompany: widget.projectCompany),
                   MessagePage(),
                   HiredPage(
-                    hiredStudents: hiredStudents,
+                    projectCompany: widget.projectCompany,
                   ),
                 ],
               ),

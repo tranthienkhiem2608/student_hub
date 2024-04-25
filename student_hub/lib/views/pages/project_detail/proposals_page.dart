@@ -40,31 +40,12 @@ class _ProposalsPageState extends State<ProposalsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> entries = <String>[
-      'Truong Le',
-      'Hung Tran',
-      'Quan Nguyen'
-    ];
-    final List<int> listTime = <int>[1, 2, 4];
-    final List<String> listTechStack = <String>[
-      'Frontend engineer',
-      'Backend engineer',
-      'Fullstack'
-    ];
-    final List<String> listLevel = <String>['Excellent', 'Good', 'Good'];
-    final List<String> listDescription = <String>[
-      'I am a student at HCMUT',
-      'I am a student at HCMUT',
-      'I am a student at HCMUT'
-    ];
-    final List<String> listStatus = <String>[
-      'Hire',
-      'Send hire offer',
-      'Send hire offer'
-    ];
     return Visibility(
       replacement: Center(
-        child: Text("\t\tYou no have jobs", style: GoogleFonts.poppins(),),
+        child: Text(
+          "\t\tYou no have jobs",
+          style: GoogleFonts.poppins(),
+        ),
       ),
       visible: widget.projectCompany.proposals!.isNotEmpty,
       child: Padding(
@@ -88,13 +69,13 @@ class _ProposalsPageState extends State<ProposalsPage> {
                     itemBuilder: (context, index) {
                       print(proposal.data![index].id);
                       print(proposal.data![index].coverLetter);
-
-                      return GestureDetector(
-                        child: ShowStudentProposalsWidget(
-                          proposal: proposal.data![index],
-                          hireStudent: _hireStudent,
-                        ),
-                      );
+                      if (proposal.data![index].statusFlag != 3) {
+                        return GestureDetector(
+                          child: ShowStudentProposalsWidget(
+                            proposal: proposal.data![index],
+                          ),
+                        );
+                      }
                     },
                   );
                 }

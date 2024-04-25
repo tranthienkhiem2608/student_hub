@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:student_hub/models/model/education.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/student_user.dart';
+import 'package:student_hub/view_models/proposal_viewModel.dart';
 
 class ShowStudentProposalsWidget extends StatefulWidget {
   Proposal proposal;
-  Function hireStudent;
 
   ShowStudentProposalsWidget({
     required this.proposal,
-    required this.hireStudent,
   });
 
   @override
@@ -20,6 +19,7 @@ class ShowStudentProposalsWidget extends StatefulWidget {
 class _ShowStudentProposalsWidgetState
     extends State<ShowStudentProposalsWidget> {
   bool isHireOfferSent = false;
+  bool isSendMessage = false;
   late StudentUser studentRegistered;
 
   String getText() {
@@ -101,154 +101,181 @@ class _ShowStudentProposalsWidgetState
             ),
           ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              width: 180,
-              height: 45,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  padding:
-                      MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(5)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: Colors.black),
+        widget.proposal.statusFlag != 3
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 180,
+                    height: 45,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        isSendMessage == false
+                            ? setState(() {
+                                isSendMessage = true;
+                                widget.proposal.statusFlag = 1;
+                                ProposalViewModel(context)
+                                    .setStatusFlagProject(widget.proposal);
+                              })
+                            : setState(() {
+                                widget.proposal.statusFlag = 1;
+                                ProposalViewModel(context)
+                                    .setStatusFlagProject(widget.proposal);
+                              });
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            EdgeInsets.all(5)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: Colors.black),
+                          ),
+                        ),
+                        elevation: MaterialStateProperty.all<double>(5),
+                        shadowColor:
+                            MaterialStateProperty.all<Color>(Colors.black),
+                      ),
+                      child: Text("Message  ",
+                          style:
+                              TextStyle(color: Colors.black, fontSize: 16.0)),
                     ),
                   ),
-                  elevation: MaterialStateProperty.all<double>(5),
-                  shadowColor: MaterialStateProperty.all<Color>(Colors.black),
-                ),
-                child: Text("Message  ",
-                    style: TextStyle(color: Colors.black, fontSize: 16.0)),
-              ),
-            ),
-            Container(
-              width: 180,
-              height: 45,
-              child: ElevatedButton(
-                onPressed: widget.proposal.statusFlag == 1
-                    ? () {
-                        if (widget.proposal.statusFlag == 1) {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Hired offer"),
-                                  ],
-                                ),
-                                content: Text(
-                                    "Do you really want to send hired offer for student to do this project?"),
-                                actions: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Container(
-                                        width: 120,
-                                        height: 40,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          style: ButtonStyle(
-                                            shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                                side: BorderSide(
-                                                    color: Colors.black),
+                  Container(
+                    width: 180,
+                    height: 45,
+                    child: ElevatedButton(
+                      onPressed: (widget.proposal.statusFlag == 0 ||
+                              widget.proposal.statusFlag == 1)
+                          ? () {
+                              if (widget.proposal.statusFlag == 0 ||
+                                  widget.proposal.statusFlag == 1) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text("Hired offer"),
+                                        ],
+                                      ),
+                                      content: Text(
+                                          "Do you really want to send hired offer for student to do this project?"),
+                                      actions: <Widget>[
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Container(
+                                              width: 120,
+                                              height: 40,
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                style: ButtonStyle(
+                                                  shape:
+                                                      MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                      side: BorderSide(
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
+                                                ),
+                                                child: const Text("Cancel",
+                                                    style: TextStyle(
+                                                        color: Colors.black)),
                                               ),
                                             ),
-                                          ),
-                                          child: const Text("Cancel",
-                                              style: TextStyle(
-                                                  color: Colors.black)),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                          width:
-                                              10), // Add a little space between the buttons
-                                      Container(
-                                        width: 120,
-                                        height: 40,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              widget.proposal.statusFlag = 0;
-                                            });
-                                            // Handle send action here
-                                            Navigator.of(context).pop();
-                                          },
-                                          style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Colors.blue),
-                                            shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                              RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
+                                            SizedBox(
+                                                width:
+                                                    10), // Add a little space between the buttons
+                                            Container(
+                                              width: 120,
+                                              height: 40,
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    widget.proposal.statusFlag =
+                                                        2;
+                                                    ProposalViewModel(context)
+                                                        .setStatusFlagProject(
+                                                            widget.proposal);
+                                                  });
+                                                  // Handle send action here
+                                                  Navigator.of(context).pop();
+                                                },
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all<
+                                                          Color>(Colors.blue),
+                                                  shape:
+                                                      MaterialStateProperty.all<
+                                                          RoundedRectangleBorder>(
+                                                    RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                                child: const Text("Send",
+                                                    style: TextStyle(
+                                                        color: Colors.white)),
                                               ),
                                             ),
-                                          ),
-                                          child: const Text("Send",
-                                              style: TextStyle(
-                                                  color: Colors.white)),
+                                          ],
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        } else {
-                          // Handle hire action here
-                          onPressed() =>
-                              isHireOfferSent || widget.proposal.statusFlag != 2
-                                  ? null
-                                  : widget.hireStudent(widget.proposal);
-                        }
-                      }
-                    : null,
-                style: ButtonStyle(
-                  backgroundColor: widget.proposal.statusFlag == 0
-                      ? MaterialStateProperty.all<Color>(Colors.grey)
-                      : (widget.proposal.statusFlag == 2
-                          ? MaterialStateProperty.all<Color>(Colors.greenAccent)
-                          : MaterialStateProperty.all<Color>(
-                              Color(0xFF69cde0))),
-                  padding:
-                      MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(5)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: Colors.black),
+                                      ],
+                                    );
+                                  },
+                                );
+                              } else {
+                                // Handle hire action here
+                              }
+                            }
+                          : null,
+                      style: ButtonStyle(
+                        backgroundColor: widget.proposal.statusFlag == 2
+                            ? MaterialStateProperty.all<Color>(Colors.grey)
+                            : (widget.proposal.statusFlag == 2
+                                ? MaterialStateProperty.all<Color>(
+                                    Colors.greenAccent)
+                                : MaterialStateProperty.all<Color>(
+                                    Color(0xFF69cde0))),
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            EdgeInsets.all(5)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: Colors.black),
+                          ),
+                        ),
+                        elevation: MaterialStateProperty.all<double>(5),
+                        shadowColor:
+                            MaterialStateProperty.all<Color>(Colors.black),
+                      ),
+                      child: Text(
+                        widget.proposal.statusFlag == 2
+                            ? "Send hired offer"
+                            : "Hire",
+                        style: TextStyle(color: Colors.black, fontSize: 16.0),
+                      ),
                     ),
                   ),
-                  elevation: MaterialStateProperty.all<double>(5),
-                  shadowColor: MaterialStateProperty.all<Color>(Colors.black),
-                ),
-                child: Text(
-                  widget.proposal.statusFlag == 0
-                      ? "Already sent"
-                      : (widget.proposal.statusFlag == 2
-                          ? "Hire"
-                          : "Send hired offer"),
-                  style: TextStyle(color: Colors.black, fontSize: 16.0),
-                ),
-              ),
-            ),
-          ],
-        ),
+                ],
+              )
+            : SizedBox.shrink(),
       ],
     );
   }

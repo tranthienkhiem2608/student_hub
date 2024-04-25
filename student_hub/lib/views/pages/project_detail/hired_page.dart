@@ -1,82 +1,89 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/student_registered.dart';
-class HiredPage extends StatelessWidget {
-  final List<StudentRegistered>? hiredStudents;
+import 'package:student_hub/view_models/proposal_viewModel.dart';
+import 'package:student_hub/widgets/show_student_proposals_widget.dart';
 
-  const HiredPage({this.hiredStudents});
+class HiredPage extends StatefulWidget {
+  final ProjectCompany projectCompany;
+  HiredPage({super.key, required this.projectCompany});
+
+  @override
+  _HiredPageState createState() => _HiredPageState();
+}
+
+class _HiredPageState extends State<HiredPage> {
+  List<Proposal>? proposalsItems;
+  late Future<List<Proposal>> futureProposal;
+
+  @override
+  void initState() {
+    super.initState();
+    // companyId = widget.user!.companyUser!.id!;
+    setState(() {
+      // Update your state here
+      futureProposal = fetchDataProposalStudent();
+    });
+    //print projectList;
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Display the hired students
     return Visibility(
-      replacement: const Center(
-        child: Text("\t\tYou no have student hired yet!"),
+      replacement: Center(
+        child: Text(
+          "\t\tYou no have students hired",
+          style: GoogleFonts.poppins(),
+        ),
       ),
-      visible: hiredStudents != null && hiredStudents!.isNotEmpty,
+      visible: widget.projectCompany.proposals!.isNotEmpty,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const Divider(),
           const Padding(padding: EdgeInsets.only(bottom: 10)),
           Expanded(
-            child: ListView.separated(
-              itemCount: hiredStudents?.length ?? 0,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    // Navigate to the student's profile
-                  },
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/user_img.png',
-                            width: 80,
-                            height: 80,
+            child: FutureBuilder<List<Proposal>>(
+              future: futureProposal = fetchDataProposalStudent(),
+              builder: (context, proposal) {
+                if (proposal.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (proposal.hasError) {
+                  return Text('Error: ${proposal.error}');
+                } else {
+                  return ListView.builder(
+                    itemCount: proposal.data!.length,
+                    itemBuilder: (context, index) {
+                      print(proposal.data![index].id);
+                      print(proposal.data![index].coverLetter);
+                      if (proposal.data![index].statusFlag == 3) {
+                        return GestureDetector(
+                          child: ShowStudentProposalsWidget(
+                            proposal: proposal.data![index],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(hiredStudents![index].student.user.fullName),
-                                Text(hiredStudents![index].student.techStack),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5, top: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(hiredStudents![index].student.techStack),
-                            Text(hiredStudents![index].student.techStack),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 5, top: 10, bottom: 10),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            hiredStudents![index].introductionStudent,
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const Divider();
+                        );
+                      }
+                    },
+                  );
+                }
               },
             ),
           ),
         ]),
       ),
     );
+  }
+
+  Future<List<Proposal>> fetchDataProposalStudent() async {
+    // lấy dữ liệu từ server
+    if (widget.projectCompany != null && widget.projectCompany.id != null) {
+      return await ProposalViewModel(context)
+          .getProposalByProject(widget.projectCompany.id!);
+    }
+    return [];
   }
 }
