@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/project_detail/detail_page.dart';
 import 'package:student_hub/views/pages/project_detail/hired_page.dart';
@@ -14,8 +15,10 @@ import '../../models/student_registered.dart';
 
 class HireStudentScreen extends StatefulWidget {
   final ProjectCompany projectCompany;
+  final User user;
 
-  const HireStudentScreen({super.key, required this.projectCompany});
+  const HireStudentScreen(
+      {super.key, required this.projectCompany, required this.user});
   @override
   _HireStudentScreenState createState() => _HireStudentScreenState();
 }
@@ -64,11 +67,15 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  ProposalsPage(projectCompany: widget.projectCompany),
+                  ProposalsPage(
+                    projectCompany: widget.projectCompany,
+                    user: widget.user,
+                  ),
                   DetailPage(projectCompany: widget.projectCompany),
-                  MessagePage(),
+                  MessagePage(widget.projectCompany, widget.user, checkFlag: 1),
                   HiredPage(
                     projectCompany: widget.projectCompany,
+                    user: widget.user,
                   ),
                 ],
               ),

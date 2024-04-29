@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/views/auth/chooserole_view.dart';
 import 'package:student_hub/views/auth/forgort_password_view.dart';
+import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
 import 'package:student_hub/views/profile_creation/company/edit_profile.dart';
 import 'package:student_hub/views/profile_creation/student/edit_profile_student.dart';
 import 'package:student_hub/views/profile_creation/student/home_view.dart';
@@ -65,7 +67,6 @@ class ControllerRoute {
     );
   }
 
-
   void navigateToProfileInputStudent1(User user) {
     Navigator.push(
       context,
@@ -89,14 +90,13 @@ class ControllerRoute {
     );
   }
 
-    void navigateToEditProfileInputStudent(User studentUser) {
+  void navigateToEditProfileInputStudent(User studentUser) {
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => EditProfileInputStudent(studentUser)),
     );
   }
-
 
   void navigateToWelcomeView(User companyUser, String fullName) {
     Navigator.push(
@@ -143,5 +143,20 @@ class ControllerRoute {
     );
   }
 
-  void toSwitchAccountView(User user) {}
+  void navigateToChatRoom(int senderId, int receiverId, int projectId,
+      String senderName, String receiverName, User user, int flagCheck) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ChatRoom(
+                senderId: senderId,
+                receiverId: receiverId,
+                projectId: projectId,
+                senderName: senderName,
+                receiverName: receiverName,
+                user: user,
+                flagCheck: flagCheck,
+              )),
+    );
+  }
 }

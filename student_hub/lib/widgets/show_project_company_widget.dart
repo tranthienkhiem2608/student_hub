@@ -7,6 +7,7 @@ import 'package:student_hub/view_models/controller_route.dart';
 
 import 'package:student_hub/view_models/project_company_viewModel.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
+import 'package:student_hub/view_models/proposal_viewModel.dart';
 
 class ShowProjectCompanyWidget extends StatefulWidget {
   final List<String> quantities;
@@ -37,7 +38,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
   String timeAgo(DateTime date) {
     final Duration diff = DateTime.now().difference(date);
 
-    if (diff.inSeconds < 60) {
+    if (diff.inSeconds <= 0) {
+      return 'Just now';
+    } else if (diff.inSeconds < 60 && diff.inSeconds > 0) {
       return '${diff.inSeconds} seconds ago';
     } else if (diff.inMinutes < 60) {
       return '${diff.inMinutes} minutes ago';
@@ -159,7 +162,10 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                           fontWeight: FontWeight.bold)),
                 ),
                 onPressed: () {
+                  widget.projectCompany.typeFlag = 1;
                   // Handle start working this project
+                  ProposalViewModel(context)
+                      .setStartWorking(widget.projectCompany, widget.user!);
                 },
               ),
             ],

@@ -51,4 +51,9 @@ class User {
   factory User.fromMapUserForCompany(Map<String, dynamic> map) => User(
         companyUser: CompanyUser.fromMapCompanyUser(map['result']),
       );
+
+  factory User.fromMapUserChat(Map<String, dynamic> map) => User(
+        id: map['id'],
+        fullname: map['fullname'],
+      );
 }

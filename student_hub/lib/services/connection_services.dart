@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // final String _baseUrl =
 //     Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://localhost:4400';
 
-final String _baseUrl = 'https://api.studenthub.dev';
+const String _baseUrl = 'https://api.studenthub.dev';
 // _baseUrl for local server
 
 class ConnectionService {
@@ -64,12 +64,14 @@ class ConnectionService {
   Future<dynamic> postAuth(String api, dynamic payload) async {
     try {
       var url = Uri.parse(_baseUrl + api);
+      print(url);
       var headers = {
         'accept': '*/*', // 'application/json
         'Content-Type': 'application/json',
       };
 
       var body = json.encode(payload);
+      print(body);
       var response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 200 || response.statusCode == 201) {
         print("Connect server successful");

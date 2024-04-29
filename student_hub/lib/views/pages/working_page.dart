@@ -8,10 +8,10 @@ import 'package:student_hub/widgets/show_project_company_widget.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class WorkingPage extends StatefulWidget {
-  final User user;
-  final Future<List<ProjectCompany>> fetchProjectData;
   const WorkingPage(
-      {super.key, required this.user, required this.fetchProjectData});
+      {super.key, required this.user, required this.fetchProjectDataFunction});
+  final User user;
+  final Future<List<ProjectCompany>> Function() fetchProjectDataFunction;
   @override
   _WorkingPageState createState() => _WorkingPageState();
 }
@@ -22,7 +22,7 @@ class _WorkingPageState extends State<WorkingPage> with WidgetsBindingObserver {
 
   void _handleProjectDeleted() {
     setState(() {
-      futureProjects = widget.fetchProjectData;
+      futureProjects = widget.fetchProjectDataFunction();
     });
   }
 
@@ -33,7 +33,7 @@ class _WorkingPageState extends State<WorkingPage> with WidgetsBindingObserver {
     // companyId = widget.user!.companyUser!.id!;
     setState(() {
       // Update your state here
-      futureProjects = widget.fetchProjectData;
+      futureProjects = widget.fetchProjectDataFunction();
     });
     //print projectList;
   }
@@ -51,7 +51,7 @@ class _WorkingPageState extends State<WorkingPage> with WidgetsBindingObserver {
         if (mounted) {
           setState(() {
             // Update your state here
-            futureProjects = widget.fetchProjectData;
+            futureProjects = widget.fetchProjectDataFunction();
           });
         }
       }
@@ -104,7 +104,8 @@ class _WorkingPageState extends State<WorkingPage> with WidgetsBindingObserver {
                             context,
                             MaterialPageRoute(
                               builder: (context) => HireStudentScreen(
-                                  projectCompany: project.data![index]),
+                                  projectCompany: project.data![index],
+                                  user: widget.user),
                             ),
                           );
                         },

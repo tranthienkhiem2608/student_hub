@@ -159,4 +159,25 @@ class ProposalViewModel {
       print(e);
     }
   }
+
+  Future<void> setStartWorking(ProjectCompany projectCompany, User user) async {
+    print('setStartWorking');
+    var payload = projectCompany.toMapProjectCompany();
+    try {
+      var response = await ConnectionService()
+          .patch('/api/project/${projectCompany.id}', payload);
+      var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+        Navigator.pop(context);
+      } else {
+        print("Failed");
+        print(responseDecode);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 }

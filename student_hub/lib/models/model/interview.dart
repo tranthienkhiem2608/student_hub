@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
 
-class Interview{
-  int id;
-  String title;
-  DateTime startDate;
-  TimeOfDay startTime;
-  DateTime endDate;
-  TimeOfDay endTime;
-  String disableFlag;
+class Interview {
+  int? id;
+  String? createAt;
+  String? updateAt;
+  String? deleteAt;
+  String? title;
+  DateTime? startDate;
+  DateTime? endDate;
+  String? disableFlag;
 
   Interview({
-    required this.id,
-    required this.title,
-    required this.startDate,
-    required this.startTime,
-    required this.endDate,
-    required this.endTime,
-    required this.disableFlag,
+    this.id,
+    this.createAt,
+    this.updateAt,
+    this.deleteAt,
+    this.title,
+    this.startDate,
+    this.endDate,
+    this.disableFlag,
   });
 
   Map<String, dynamic> toMapInterview() {
@@ -24,9 +26,7 @@ class Interview{
       'id': id,
       'title': title,
       'startDate': startDate,
-      'startTime': startTime,
       'endDate': endDate,
-      'endTime': endTime,
       'disableFlag': disableFlag,
     };
   }
@@ -34,11 +34,12 @@ class Interview{
   factory Interview.fromMapInterview(Map<String, dynamic> map) {
     return Interview(
       id: map['id'],
+      createAt: map['createAt'],
+      updateAt: map['updateAt'],
+      deleteAt: map['deleteAt'],
       title: map['title'],
-      startDate: map['startDate'],
-      startTime: map['startTime'],
-      endDate: map['endDate'],
-      endTime: map['endTime'],
+      startDate: map['startTime'],
+      endDate: map['endTime'],
       disableFlag: map['disableFlag'],
     );
   }

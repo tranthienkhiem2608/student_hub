@@ -106,7 +106,8 @@ class _ArchivedPageState extends State<ArchivedPage>
                             context,
                             MaterialPageRoute(
                               builder: (context) => HireStudentScreen(
-                                  projectCompany: project.data![index]),
+                                  projectCompany: project.data![index],
+                                  user: widget.user),
                             ),
                           );
                         },

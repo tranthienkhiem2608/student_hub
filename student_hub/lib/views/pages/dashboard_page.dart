@@ -126,7 +126,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   user: widget.user,
                   fetchProjectDataFunction: fetchDataProject,
                 ),
-          WorkingPage(user: widget.user, fetchProjectData: fetchDataProject()),
+          WorkingPage(
+              user: widget.user, fetchProjectDataFunction: fetchDataProject),
           ArchivedPage(user: widget.user, fetchProjectData: fetchDataProject()),
         ]),
       ),

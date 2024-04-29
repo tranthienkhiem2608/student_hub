@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:student_hub/models/model/message.dart';
+import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/models/user_chat_model.dart';
+import 'package:student_hub/view_models/messages_viewModel.dart';
+
 import 'package:student_hub/views/pages/chat_screen/chat_page.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class MessagePage extends StatefulWidget {
-  const MessagePage({super.key});
+  const MessagePage(this.projectCompany, this.user,
+      {required this.checkFlag, super.key});
+  final int checkFlag;
+  final ProjectCompany? projectCompany;
+  final User? user;
 
   @override
   State<MessagePage> createState() => _MessagePageState();
@@ -17,11 +26,12 @@ class _MessagePageState extends State<MessagePage>
     with TickerProviderStateMixin {
   late TabController tabController;
   int currentTabIndex = 0;
-  List<User> filteredUsers = [];
+  List<Message> filteredUsers = [];
   List<String> suggestions = []; // For search suggestions
   final TextEditingController _searchController = TextEditingController();
+  List<Message> messages = [];
 
-  final List<User> allUsers = [
+  final List<UserChat> allUsers = [
     addison,
     angel,
     deanna,
@@ -35,6 +45,12 @@ class _MessagePageState extends State<MessagePage>
 
   @override
   void initState() {
+    super.initState();
+    fetchMessages().then((value) {
+      setState(() {
+        messages.addAll(value);
+      });
+    });
     tabController =
         TabController(length: 3, vsync: this); // Initialize tab controller
     tabController.addListener(() {
@@ -43,9 +59,7 @@ class _MessagePageState extends State<MessagePage>
       });
     });
 
-    super.initState();
-    filteredUsers.addAll(allUsers);
-    suggestions = allUsers.map((user) => user.name).toList();
+    filteredUsers.addAll(messages);
   }
 
   @override
@@ -54,16 +68,22 @@ class _MessagePageState extends State<MessagePage>
     super.dispose();
   }
 
+  Future<List<Message>> fetchMessages() async {
+    List<Message> messages = await MessagesViewModel().getLastMessage();
+    return messages;
+  }
+
   void filterUsers(String query) {
     setState(() {
       if (query.isNotEmpty) {
-        filteredUsers = allUsers
-            .where(
-                (user) => user.name.toLowerCase().contains(query.toLowerCase()))
+        filteredUsers = messages
+            .where((user) => user.sender!.fullname!
+                .toLowerCase()
+                .contains(query.toLowerCase()))
             .toList();
       } else {
         filteredUsers.clear();
-        filteredUsers.addAll(allUsers);
+        filteredUsers.addAll(messages);
       }
       updateSuggestions(query);
     });
@@ -125,12 +145,12 @@ class _MessagePageState extends State<MessagePage>
                         child: ListView.builder(
                           shrinkWrap: true,
                           physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: suggestions.length,
+                          itemCount: messages.length,
                           itemBuilder: (BuildContext context, int index) {
                             // Assuming 'suggestions' is a list of User objects (if not, adjust accordingly)
                             final selectedUserName = suggestions[index];
-                            final user = allUsers.firstWhere(
-                                (user) => user.name == selectedUserName);
+                            final user = messages.firstWhere((user) =>
+                                user.sender!.fullname == selectedUserName);
 
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -141,22 +161,31 @@ class _MessagePageState extends State<MessagePage>
                                       color: Colors.lightBlue, width: 1.0),
                                   // Customize color and width
                                 ),
-                                leading: CircleAvatar(
+                                leading: const CircleAvatar(
                                   radius: 25,
-                                  backgroundImage: AssetImage(user.avatar),
+                                  backgroundImage: AssetImage(
+                                      'assets/images/avatar_default_img.png'),
                                 ),
-                                title: Text(user.name),
+                                title: Text(user.sender!.fullname!),
                                 onTap: () {
-                                  _searchController.text =
-                                      user.name; // Update search field
-                                  filterUsers(user.name); // Trigger filtering
+                                  _searchController.text = user
+                                      .sender!.fullname!; // Update search field
+                                  filterUsers(user
+                                      .sender!.fullname!); // Trigger filtering
                                   Navigator.pop(
                                       context); // Close the bottom sheet
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          ChatRoom(user: user),
+                                      builder: (context) => ChatRoom(
+                                        senderId: user.sender!.id!,
+                                        receiverId: user.receiver!.id!,
+                                        projectId: user.projectId!,
+                                        senderName: user.sender!.fullname!,
+                                        receiverName: user.receiver!.fullname!,
+                                        user: widget.user!,
+                                        flagCheck: 0,
+                                      ),
                                     ),
                                   );
                                 },
@@ -232,17 +261,17 @@ class _MessagePageState extends State<MessagePage>
             // Show tab view by default
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   // ... (your decoration here)
                   ),
               child: TabBarView(
                 controller: tabController,
                 children: [
-                  ChatPage(),
-                  Center(
+                  ChatPage(user: widget.user!),
+                  const Center(
                     child: Text('Camera'),
                   ),
-                  Center(
+                  const Center(
                     child: Text('Call'),
                   ),
                 ],

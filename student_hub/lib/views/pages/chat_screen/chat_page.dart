@@ -1,8 +1,12 @@
+import 'package:student_hub/models/model/users.dart';
+
 import '../chat_widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatelessWidget {
+  final User user;
   const ChatPage({
+    required this.user,
     Key? key,
   }) : super(key: key);
 
@@ -11,9 +15,11 @@ class ChatPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          RecentChats(),
+          RecentChats(
+            user: user,
+          ),
           SizedBox(height: 20),
-          AllChats(),
+          AllChats(user: user),
         ],
       ),
     );

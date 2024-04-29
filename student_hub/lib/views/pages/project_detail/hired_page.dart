@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/proposal.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/models/student_registered.dart';
 import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:student_hub/widgets/show_student_proposals_widget.dart';
@@ -10,7 +11,8 @@ import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class HiredPage extends StatefulWidget {
   final ProjectCompany projectCompany;
-  HiredPage({super.key, required this.projectCompany});
+  final User user;
+  HiredPage({super.key, required this.projectCompany, required this.user});
 
   @override
   _HiredPageState createState() => _HiredPageState();
@@ -67,6 +69,7 @@ class _HiredPageState extends State<HiredPage> {
                         return GestureDetector(
                           child: ShowStudentProposalsWidget(
                             proposal: proposal.data![index],
+                            user: widget.user,
                           ),
                         );
                       }

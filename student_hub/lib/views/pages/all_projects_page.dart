@@ -100,7 +100,9 @@ class _AllProjectsPageState extends State<AllProjectsPage>
                             context,
                             MaterialPageRoute(
                               builder: (context) => HireStudentScreen(
-                                  projectCompany: project.data![index]),
+                                projectCompany: project.data![index],
+                                user: widget.user,
+                              ),
                             ),
                           );
                         },

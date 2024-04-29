@@ -69,7 +69,9 @@ class _ProjectListState extends State<ProjectList> {
   String timeAgo(DateTime date) {
     final Duration diff = DateTime.now().difference(date);
 
-    if (diff.inSeconds < 60) {
+    if (diff.inSeconds <= 0) {
+      return 'Just now';
+    } else if (diff.inSeconds < 60 && diff.inSeconds > 0) {
       return '${diff.inSeconds} seconds ago';
     } else if (diff.inMinutes < 60) {
       return '${diff.inMinutes} minutes ago';
@@ -114,7 +116,7 @@ class _ProjectListState extends State<ProjectList> {
                 List<String> expectations = project.description!.split('\n');
                 String firstExpectation =
                     expectations.isNotEmpty ? expectations.first : '';
-                if (project.typeFlag == 1 || project.typeFlag == 0) {
+                if (project.typeFlag == 1 || project.typeFlag == 2) {
                   return const SizedBox.shrink();
                 }
                 return Container(

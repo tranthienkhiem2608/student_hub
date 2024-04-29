@@ -4,11 +4,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:student_hub/app_theme.dart';
 import 'package:student_hub/models/message_model.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class RecentChats extends StatelessWidget {
+  final User user;
   const RecentChats({
+    required this.user,
     Key? key,
   }) : super(key: key);
 
@@ -54,7 +57,15 @@ class RecentChats extends StatelessWidget {
                         onTap: () {
                           Navigator.push(context,
                               CupertinoPageRoute(builder: (context) {
-                            return ChatRoom(user: recentChat.sender);
+                            return ChatRoom(
+                              senderId: user.id!,
+                              receiverId: 276, //Co the tao ra bug
+                              projectId: 632,
+                              senderName: user.fullname!,
+                              receiverName: recentChat.sender.name,
+                              user: user,
+                              flagCheck: 0,
+                            );
                           }));
                         },
                         child: Column(

@@ -86,7 +86,7 @@ class ProjectCompany {
       description: map['description'],
       numberOfStudents: map['numberOfStudents'],
       typeFlag: map['typeFlag'],
-      countProposal: map['countProposals'],
+      countProposal: map['countProposals'] ?? 0,
       isFavorite: map['isFavorite'] ?? false,
     );
   }
