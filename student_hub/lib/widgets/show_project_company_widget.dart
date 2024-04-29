@@ -5,6 +5,7 @@ import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 
 import 'package:student_hub/view_models/project_company_viewModel.dart';
+import 'package:student_hub/view_models/proposal_viewModel.dart';
 
 class ShowProjectCompanyWidget extends StatefulWidget {
   final List<String> quantities;
@@ -35,7 +36,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
   String timeAgo(DateTime date) {
     final Duration diff = DateTime.now().difference(date);
 
-    if (diff.inSeconds < 60) {
+    if (diff.inSeconds <= 0) {
+      return 'Just now';
+    } else if (diff.inSeconds < 60 && diff.inSeconds > 0) {
       return '${diff.inSeconds} seconds ago';
     } else if (diff.inMinutes < 60) {
       return '${diff.inMinutes} minutes ago';
@@ -130,7 +133,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                   alignment: Alignment.center,
                   child: Text('Remove posting',
                       style: GoogleFonts.poppins(
-                          color: Color.fromARGB(255, 250, 55, 87), fontSize: 15, fontWeight: FontWeight.bold)),
+                          color: Color.fromARGB(255, 250, 55, 87),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold)),
                 ),
                 onPressed: () {
                   _confirmDeletion(context, widget);
@@ -147,7 +152,10 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                           fontWeight: FontWeight.bold)),
                 ),
                 onPressed: () {
+                  widget.projectCompany.typeFlag = 1;
                   // Handle start working this project
+                  ProposalViewModel(context)
+                      .setStartWorking(widget.projectCompany, widget.user!);
                 },
               ),
             ],

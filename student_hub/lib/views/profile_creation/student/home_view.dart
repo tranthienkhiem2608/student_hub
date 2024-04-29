@@ -86,7 +86,11 @@ class _HomePageState extends State<HomePage> {
     _pages = [
       ProjectsPage(widget.user!),
       DashboardPage(widget.user!),
-      const MessagePage(),
+      MessagePage(
+        null,
+        widget.user,
+        checkFlag: 0,
+      ),
       AlertPage(),
     ];
     if (widget.showAlert == true) {

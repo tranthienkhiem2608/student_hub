@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:student_hub/models/model/education.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/student_user.dart';
+import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/view_models/proposal_viewModel.dart';
 
 class ShowStudentProposalsWidget extends StatefulWidget {
   Proposal proposal;
+  User user;
 
   ShowStudentProposalsWidget({
     required this.proposal,
+    required this.user,
   });
 
   @override
@@ -110,18 +114,35 @@ class _ShowStudentProposalsWidgetState
                     height: 45,
                     child: ElevatedButton(
                       onPressed: () {
+                        print(isSendMessage);
                         isSendMessage == false
                             ? setState(() {
                                 isSendMessage = true;
                                 widget.proposal.statusFlag = 1;
-                                ProposalViewModel(context)
-                                    .setStatusFlagProject(widget.proposal);
+                                // ProposalViewModel(context)
+                                //     .setStatusFlagProject(widget.proposal);
+                                ControllerRoute(context).navigateToChatRoom(
+                                    widget.user.id!,
+                                    widget.proposal.studentUser!.userId!,
+                                    widget.proposal.projectId!,
+                                    widget.user.fullname!,
+                                    widget.proposal.studentUser!.user!,
+                                    widget.user,
+                                    1);
                               })
                             : setState(() {
-                                widget.proposal.statusFlag = 1;
-                                ProposalViewModel(context)
-                                    .setStatusFlagProject(widget.proposal);
+                                // ProposalViewModel(context)
+                                //     .setStatusFlagProject(widget.proposal);
+                                ControllerRoute(context).navigateToChatRoom(
+                                    widget.user.id!,
+                                    widget.proposal.studentUser!.userId!,
+                                    widget.proposal.projectId!,
+                                    widget.user.fullname!,
+                                    widget.proposal.studentUser!.user!,
+                                    widget.user,
+                                    1);
                               });
+                        print(isSendMessage);
                       },
                       style: ButtonStyle(
                         backgroundColor:

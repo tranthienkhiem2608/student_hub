@@ -1,7 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:student_hub/app_theme.dart';
+import 'package:student_hub/models/model/message.dart';
+import 'package:student_hub/services/socket_services.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-Container buildChatComposer() {
+Container buildChatComposer(
+    IO.Socket _socket, int _projectId, int senderId, int receiverId) {
+  String message = '';
+  final TextEditingController _controller = TextEditingController();
   return Container(
     padding: EdgeInsets.symmetric(horizontal: 20),
     color: Colors.white,
@@ -37,6 +45,10 @@ Container buildChatComposer() {
                 ),
                 Expanded(
                   child: TextField(
+                    controller: _controller,
+                    onChanged: (value) {
+                      message = value;
+                    },
                     decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Type your message ...',
@@ -52,16 +64,58 @@ Container buildChatComposer() {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 16,
         ),
         CircleAvatar(
-          backgroundColor: MyTheme.kAccentColor,
-          child: const Icon(
-            Icons.send,
-            color: Colors.white,
-          ),
-        )
+            backgroundColor: MyTheme.kAccentColor,
+            child: IconButton(
+              icon: const Icon(Icons.send),
+              color: Colors.white,
+              onPressed: () {
+                var messageData = {
+                  "projectId": _projectId,
+                  "content": message,
+                  "messageFlag": 0,
+                  "senderId": senderId,
+                  "receiverId": receiverId
+                };
+                var data = jsonEncode(messageData);
+                print('Data to send: $data');
+                try {
+                  print('Trying to send message...');
+                  if (_socket.connected) {
+                    _socket.emit('SEND_MESSAGE', {
+                      "content": message,
+                      "projectId": _projectId,
+                      "senderId": senderId,
+                      "receiverId": receiverId,
+                      "messageFlag": 0
+                    });
+                    print('Message sent');
+                  } else {
+                    _socket.onConnect((_) {
+                      _socket.emit('SEND_MESSAGE', {
+                        "content": message,
+                        "projectId": _projectId,
+                        "senderId": senderId,
+                        "receiverId": receiverId,
+                        "messageFlag": 0
+                      });
+                      print('Connected to server and message sent');
+                    });
+                  }
+                  //clear text field
+                  message = '';
+                  _controller.clear();
+                  _socket.on('RECEIVE_MESSAGE',
+                      (data) => print('Message received: $data'));
+                  print('finished');
+                } catch (e) {
+                  print('Error: $e');
+                }
+              },
+            ))
       ],
     ),
   );

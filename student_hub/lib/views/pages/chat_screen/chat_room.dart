@@ -1,19 +1,93 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 import 'package:student_hub/app_theme.dart';
-import 'package:student_hub/models/user_chat_model.dart';
+import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/views/pages/chat_widgets/composer.dart';
 import 'package:student_hub/views/pages/chat_widgets/conversation.dart';
 import 'package:student_hub/widgets/schedule_interview_dialog.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatRoom extends StatefulWidget {
-  const ChatRoom({Key? key, required this.user}) : super(key: key);
+  final int senderId;
+  final int receiverId;
+  final int projectId;
+  final String senderName;
+  final String receiverName;
+  final User user;
+  final int flagCheck;
+  const ChatRoom(
+      {super.key,
+      required this.senderId,
+      required this.receiverId,
+      required this.projectId,
+      required this.senderName,
+      required this.receiverName,
+      required this.user,
+      required this.flagCheck});
 
   @override
   _ChatRoomState createState() => _ChatRoomState();
-  final User user;
 }
 
 class _ChatRoomState extends State<ChatRoom> {
+  static const String _socketUrl = 'https://api.studenthub.dev';
+
+  late IO.Socket socket;
+
+  @override
+  void initState() {
+    super.initState();
+    connect();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    socket.disconnect();
+  }
+
+  void connect() {
+    socket = IO.io(
+        _socketUrl,
+        OptionBuilder()
+            .setTransports(['websocket']) // for Flutter or Dart VM
+            .disableAutoConnect() // disable auto-connection
+            .build());
+    SharedPreferences.getInstance().then((prefs) {
+      String token = prefs.getString('token')!;
+      print("Token: $token");
+      socket.io.options?['extraHeaders'] = {
+        'Authorization': 'Bearer $token',
+      };
+      socket.io.options?['query'] = {'project_id': widget.projectId};
+      print('query: ${socket.io.options?['query']}');
+      //print all url to connect socket
+      print(socket.io.uri);
+      socket.connect();
+      // socket.onConnect((data) {
+      //   print('connected');
+      //   print(socket.connected); // print here
+      // });
+
+      socket.on('RECEIVE_MESSAGE', (data) {
+        print("Chat room: $data");
+      });
+      socket.on('NOTI_1', (data) {
+        print(data);
+      });
+
+      socket.on('ERROR', (data) {
+        print(data);
+      });
+
+      socket.onConnectError(
+          (data) => print('Error connection: ${data.toString()}'));
+      socket.onError((data) => print('Error connection: ${data.toString()}'));
+    });
+  }
+
   void _showOptions(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -30,17 +104,17 @@ class _ChatRoomState extends State<ChatRoom> {
                 alignment: WrapAlignment.center,
                 children: <Widget>[
                   ListTile(
-                    leading: Icon(Icons.schedule_send),
-                    title: Text('Schedule an interview'),
+                    leading: const Icon(Icons.schedule_send),
+                    title: const Text('Schedule an interview'),
                     onTap: () {
                       Navigator.of(context).pop();
                       _showScheduleInterviewDialog(context);
                     },
                   ),
-                  Divider(),
+                  const Divider(),
                   ListTile(
-                    leading: Icon(Icons.cancel_outlined),
-                    title: Text('Cancel'),
+                    leading: const Icon(Icons.cancel_outlined),
+                    title: const Text('Cancel'),
                     onTap: () {
                       Navigator.of(context).pop();
                     },
@@ -71,24 +145,40 @@ class _ChatRoomState extends State<ChatRoom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
+        leading: widget.flagCheck == 0
+            ? IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  ControllerRoute(context)
+                      .navigateToHomeScreen(false, widget.user, 2);
+                },
+              )
+            : IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+        backgroundColor: const Color(0xFFaaeefa).withOpacity(0.5),
+        toolbarHeight: 80,
         centerTitle: false,
         title: Row(
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 30,
               backgroundImage: AssetImage(
-                widget.user.avatar,
+                'assets/images/avatar_default_img.png',
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.user.name,
+                  widget.receiverName,
                   style: MyTheme.chatSenderName,
                 ),
                 Text(
@@ -101,7 +191,7 @@ class _ChatRoomState extends State<ChatRoom> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.more_horiz_rounded),
+            icon: const Icon(Icons.more_horiz_rounded),
             onPressed: () {
               _showOptions(context);
             },
@@ -109,7 +199,7 @@ class _ChatRoomState extends State<ChatRoom> {
         ],
         elevation: 0,
       ),
-      backgroundColor: MyTheme.kPrimaryColor,
+      backgroundColor: Colors.white,
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).unfocus();
@@ -118,18 +208,23 @@ class _ChatRoomState extends State<ChatRoom> {
           children: [
             Expanded(
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(),
                 ),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(),
-                  child: Conversation(user: widget.user),
+                  child: Conversation(
+                      senderId: widget.senderId,
+                      receiverId: widget.receiverId,
+                      projectId: widget.projectId,
+                      socket: socket),
                 ),
               ),
             ),
-            buildChatComposer()
+            buildChatComposer(
+                socket, widget.projectId, widget.senderId, widget.receiverId),
           ],
         ),
       ),

@@ -27,7 +27,7 @@ class Notification {
       'title': title,
       'receiverId': receiverId.toMapUser(),
       'senderId': senderId.toMapUser(),
-      'messageId': messageId.toMapMessage(),
+      'messageId': messageId.toMapSendMessage(),
       'content': content,
     };
   }
@@ -43,6 +43,4 @@ class Notification {
       content: map['content'],
     );
   }
-
-
 }

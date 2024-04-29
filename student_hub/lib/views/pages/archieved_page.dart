@@ -79,7 +79,9 @@ class _ArchivedPageState extends State<ArchivedPage>
                 } else if (project.hasData && project.data!.isEmpty) {
                   return Center(
                       child: Text(
-                          "\t\tWelcome, ${widget.user.fullname}!. You no archived in progress", style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.bold)));
+                          "\t\tWelcome, ${widget.user.fullname}!. You no archived in progress",
+                          style: GoogleFonts.poppins(
+                              fontSize: 15, fontWeight: FontWeight.bold)));
                 } else {
                   return ListView.builder(
                     itemCount: project.data!.length,
@@ -97,7 +99,8 @@ class _ArchivedPageState extends State<ArchivedPage>
                             context,
                             MaterialPageRoute(
                               builder: (context) => HireStudentScreen(
-                                  projectCompany: project.data![index]),
+                                  projectCompany: project.data![index],
+                                  user: widget.user),
                             ),
                           );
                         },

@@ -276,7 +276,9 @@ String _getProjectDurationText(ProjectDuration duration) {
 String timeAgo(DateTime date) {
   final Duration diff = DateTime.now().difference(date);
 
-  if (diff.inSeconds < 60) {
+  if (diff.inSeconds <= 0) {
+    return 'Just now';
+  } else if (diff.inSeconds < 60 && diff.inSeconds > 0) {
     return '${diff.inSeconds} seconds ago';
   } else if (diff.inMinutes < 60) {
     return '${diff.inMinutes} minutes ago';

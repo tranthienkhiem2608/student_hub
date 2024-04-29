@@ -34,7 +34,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
             icon: Container(
               // Add a Container as the parent
               padding: const EdgeInsets.all(8.0), // Padding for spacing
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 255, 255, 255),
                 shape: BoxShape.circle,
               ),
