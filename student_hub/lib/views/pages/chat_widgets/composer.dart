@@ -10,7 +10,8 @@ import 'package:student_hub/services/socket_services.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 Container buildChatComposer(
-    IO.Socket _socket, int _projectId, int senderId, int receiverId) {
+    IO.Socket _socket, int _projectId, int senderId, int receiverId, BuildContext context) {
+      final isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
   String message = '';
   final TextEditingController _controller = TextEditingController();
   return Container(
@@ -68,11 +69,11 @@ Container buildChatComposer(
             ),
           ),
         ),
-        const const SizedBox(
+        const SizedBox(
           width: 16,
         ),
         CircleAvatar(
-            backgroundColor: MyTheme.kAccentColor,
+            backgroundColor: Color(0xFF406AFF),
             child: IconButton(
               icon: const Icon(Icons.send),
               color: Colors.white,

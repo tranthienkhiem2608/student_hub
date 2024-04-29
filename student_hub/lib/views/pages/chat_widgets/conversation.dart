@@ -11,7 +11,7 @@ import 'package:student_hub/view_models/messages_viewModel.dart';
 import 'package:student_hub/models/user_chat_model.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
-class Conversation extends StatelessWidget {
+class Conversation extends StatefulWidget {
   const Conversation({
     Key? key,
     required this.senderId,
@@ -132,9 +132,13 @@ class _ConversationState extends State<Conversation> {
                               maxWidth:
                                   MediaQuery.of(context).size.width * 0.6),
                           decoration: BoxDecoration(
-                              color: isMe
-                                  ? MyTheme.kAccentColor
-                                  : Colors.grey[200],
+                              color: isDarkMode
+                              ? isMe
+                                  ? Color(0xFF406AFF)
+                                  : Color.fromARGB(255, 66, 66, 66)
+                              : isMe
+                                  ? Color(0xFF406AFF)
+                                  : Color.fromARGB(255, 228, 228, 228),
                               borderRadius: BorderRadius.only(
                                 topLeft: const Radius.circular(16),
                                 topRight: const Radius.circular(16),
@@ -143,8 +147,12 @@ class _ConversationState extends State<Conversation> {
                               )),
                           child: Text(
                             messages[index].content!,
-                            style: MyTheme.bodyTextMessage.copyWith(
-                                color: isMe ? Colors.white : Colors.grey[800]),
+                            style: GoogleFonts.poppins(
+                            color: isDarkMode
+                                ? Colors.white
+                                : isMe
+                                    ? Colors.white
+                                    : Colors.black),
                           ),
                         ),
                       ],

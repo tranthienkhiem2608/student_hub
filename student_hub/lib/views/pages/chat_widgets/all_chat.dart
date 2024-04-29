@@ -100,9 +100,9 @@ class _AllChatsState extends State<AllChats> {
                               Text(
                                 allChat.project!.title!,
                                 style: MyTheme.bodyText1.copyWith(
-                                  color: MyTheme.bodyText2.color,
-                                fontWeight: FontWeight.w600,
                                 color: isDarkMode ? Colors.white : Colors.black,
+                                fontWeight: FontWeight.w600,
+                                
                                 ),
                               ),
                               Text(

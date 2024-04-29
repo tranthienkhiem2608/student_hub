@@ -166,16 +166,10 @@ class _ChatRoomState extends State<ChatRoom> {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          color: isDarkMode ? Colors.white : Color(0xFF242526),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
         leading: widget.flagCheck == 0
             ? IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: Icon(Icons.arrow_back_ios),
+                color: isDarkMode ? Colors.white : Color(0xFF242526),
                 onPressed: () {
                   Navigator.of(context).pop();
                   ControllerRoute(context)
@@ -183,12 +177,12 @@ class _ChatRoomState extends State<ChatRoom> {
                 },
               )
             : IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: Icon(Icons.arrow_back_ios),
+                color: isDarkMode ? Colors.white : Color(0xFF242526),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
-        backgroundColor: const Color(0xFFaaeefa).withOpacity(0.5),
         toolbarHeight: 80,
         centerTitle: false,
         backgroundColor:
@@ -247,6 +241,7 @@ class _ChatRoomState extends State<ChatRoom> {
         },
         child: Column(
           children: [
+            Container(height: 10, color: isDarkMode ? Color(0xFF212121) : Colors.white,),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -265,7 +260,7 @@ class _ChatRoomState extends State<ChatRoom> {
               ),
             ),
             buildChatComposer(
-                socket, widget.projectId, widget.senderId, widget.receiverId),
+                socket, widget.projectId, widget.senderId, widget.receiverId, context),
           ],
         ),
       ),
