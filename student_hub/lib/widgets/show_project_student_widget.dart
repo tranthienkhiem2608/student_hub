@@ -1,10 +1,12 @@
 // show_school_widget.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/widgets/pop_up_project_widget.dart';
 
-import 'package:intl/intl.dart'; // Import the intl package
+import 'package:intl/intl.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart'; // Import the intl package
 
 class ShowProjectStudentWidget extends StatelessWidget {
   final StudentUser userStudent;
@@ -22,6 +24,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
         _addNewProject = addNewProject;
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return ListView.builder(
       itemCount: userStudent.experience?.length,
       itemBuilder: (ctx, index) {
@@ -53,6 +56,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontStyle: FontStyle.italic,
                     fontSize: 12,
+                    color: isDarkMode ? const Color.fromARGB(255, 214, 214, 214) : Colors.black,
                   ),
                 ),
 
@@ -108,7 +112,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
                   child: Text(
                     userStudent.experience![index].description!,
                     style: GoogleFonts.poppins(
-                        color: Color(0xFF777B8A),
+                        color: isDarkMode ? Colors.white : Color(0xFF777B8A),
                         fontSize: 14 // Màu sắc của văn bản
                         ),
                   ),
@@ -123,6 +127,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
+                      color: isDarkMode ? Colors.white : Colors.black,
                     ),
                   ),
                 ),

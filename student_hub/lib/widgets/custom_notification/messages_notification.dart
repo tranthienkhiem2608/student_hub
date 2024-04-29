@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class MessagesNotification extends StatefulWidget {
   const MessagesNotification({Key? key}) : super(key: key);
@@ -10,15 +13,19 @@ class MessagesNotification extends StatefulWidget {
 class _MessagesNotificationState extends State<MessagesNotification> {
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Column(
       children: <Widget>[
         Row(
           children: <Widget>[
-            const CircleAvatar(
+            CircleAvatar(
                 radius: 25,
-                backgroundColor: Colors.black,
-                child: Icon(Icons.accessibility_new_outlined, color: Colors.white, size: 30,)
-            ),
+                backgroundColor: isDarkMode ? Colors.white : Colors.black,
+                child: Icon(
+                  Icons.accessibility_new_outlined,
+                  color: isDarkMode ? Colors.black : Colors.white,
+                  size: 30,
+                )),
             SizedBox(width: 10),
             Container(
               width: MediaQuery.of(context).size.width * 0.75,
@@ -28,27 +35,34 @@ class _MessagesNotificationState extends State<MessagesNotification> {
                 children: <Widget>[
                   Text(
                     'Alex Jor"',
-                    style: TextStyle(color: Colors.black.withOpacity(0.7), fontSize: 14.0, fontWeight: FontWeight.bold),
+                    style: GoogleFonts.poppins(
+                        color: isDarkMode ? Colors.white : Colors.black,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold),
                   ),
                   Text(
                     'How are you doing?"',
-                    style: TextStyle(color: Colors.black.withOpacity(0.7), fontSize: 14.0),
+                    style: GoogleFonts.poppins(
+                        color: isDarkMode ? Color.fromARGB(255, 213, 213, 213) : Color.fromARGB(255, 72, 72, 72),
+                        fontSize: 13.0,
+                        fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: 5),
                   Text(
                     '6/6/2024',
-                    style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 13.0),
+                    style: GoogleFonts.poppins(
+                        color: isDarkMode ? Color.fromARGB(255, 213, 213, 213) : Color.fromARGB(255, 72, 72, 72),
+                        fontSize: 13.0,
+                        fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
             ),
-
           ],
         ),
         SizedBox(height: 10),
         Divider(),
       ],
     );
-
   }
 }

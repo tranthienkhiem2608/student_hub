@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/widgets/add_account_widget.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class ShowAccountWidget extends StatefulWidget {
   final User _companyUser;
@@ -41,6 +44,7 @@ class _ShowAccountWidgetState extends State<ShowAccountWidget> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return ListView.builder(
       itemCount: widget._companyUser.role!.length == 1
           ? widget._companyUser.role!.length + 1
@@ -64,16 +68,16 @@ class _ShowAccountWidgetState extends State<ShowAccountWidget> {
                   : 'assets/icons/company_account.png'),
               title: Text(
                 widget._companyUser.fullname!,
-                style: const TextStyle(
+                style: GoogleFonts.poppins(
                   fontSize: 20,
-                  color: Colors.black,
+                  color: isDarkMode ? Colors.white : Colors.black,
                 ),
               ),
               subtitle: Text(
                 widget._companyUser.role?[index] == 0 ? 'Student' : 'Company',
-                style: const TextStyle(
+                style: GoogleFonts.poppins(
                   fontSize: 15,
-                  color: Colors.black,
+                  color: isDarkMode ? Colors.white : Colors.black,
                 ),
               ),
               trailing: role == widget._companyUser.role![index]

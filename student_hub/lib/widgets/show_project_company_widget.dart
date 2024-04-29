@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 
 import 'package:student_hub/view_models/project_company_viewModel.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class ShowProjectCompanyWidget extends StatefulWidget {
   final List<String> quantities;
@@ -59,7 +61,10 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
   }
 
   void _showOptions(BuildContext context) {
+    bool isDarkMode =
+        Provider.of<DarkModeProvider>(context, listen: false).isDarkMode;
     showModalBottomSheet(
+        backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
         context: context,
         isScrollControlled: true,
         shape: const RoundedRectangleBorder(
@@ -74,7 +79,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                   alignment: Alignment.center,
                   child: Text('View proposals',
                       style: GoogleFonts.poppins(
-                          color: Colors.black, fontSize: 15)),
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view proposals
@@ -85,7 +91,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                   alignment: Alignment.center,
                   child: Text('View messages',
                       style: GoogleFonts.poppins(
-                          color: Colors.black, fontSize: 15)),
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view messages
@@ -96,7 +103,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                   alignment: Alignment.center,
                   child: Text('View hired',
                       style: GoogleFonts.poppins(
-                          color: Colors.black, fontSize: 15)),
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view hired
@@ -108,7 +116,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                   alignment: Alignment.center,
                   child: Text('View job posting',
                       style: GoogleFonts.poppins(
-                          color: Colors.black, fontSize: 15)),
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle view job posting
@@ -119,7 +128,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                   alignment: Alignment.center,
                   child: Text('Edit posting',
                       style: GoogleFonts.poppins(
-                          color: Colors.black, fontSize: 15)),
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          fontSize: 15)),
                 ),
                 onPressed: () {
                   // Handle edit posting
@@ -130,7 +140,9 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                   alignment: Alignment.center,
                   child: Text('Remove posting',
                       style: GoogleFonts.poppins(
-                          color: Color.fromARGB(255, 250, 55, 87), fontSize: 15, fontWeight: FontWeight.bold)),
+                          color: Color.fromARGB(255, 250, 55, 87),
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold)),
                 ),
                 onPressed: () {
                   _confirmDeletion(context, widget);
@@ -157,22 +169,26 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: isDarkMode ? Color(0xFF2f2f2f) : Colors.white,
         border: Border.all(
-          color: Color.fromARGB(255, 220, 220, 247),
-          width: 1, // Màu và độ dày của border
+          color: isDarkMode
+              ? Color.fromARGB(255, 60, 60, 60)
+              : Color.fromARGB(255, 228, 228, 233),
+          width: 1,
         ),
         borderRadius: BorderRadius.circular(20.0),
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(244, 194, 207, 252).withOpacity(0.25),
+            color:
+                isDarkMode ? Color(0xFF212121) : Colors.grey.withOpacity(0.25),
             spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(0, 9),
+            blurRadius: 6,
+            offset: Offset(0, 3), // changes position of shadow
           ),
         ],
       ),
@@ -209,7 +225,10 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 )),
             trailing: widget.showOptionsIcon
                 ? IconButton(
-                    icon: Icon(Icons.more_horiz_rounded),
+                    icon: Icon(
+                      Icons.more_horiz_rounded,
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
                     padding: EdgeInsets.only(bottom: 35),
                     onPressed: () {
                       _showOptions(context);
@@ -222,8 +241,13 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Students are looking for: ',
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.w600)),
+                Text(
+                  'Students are looking for: ',
+                  style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    color: isDarkMode ? Colors.white : Colors.black,
+                  ),
+                ),
                 ListView(
                   shrinkWrap: true,
                   children: widget.projectCompany.description!
@@ -238,14 +262,19 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                             margin: EdgeInsets.only(top: 8),
                             width: 5,
                             height: 5,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.black,
+                              color: isDarkMode ? Colors.white : Colors.black,
                             ),
                           ),
                           const SizedBox(width: 10),
                           Expanded(
-                              child: Text(item, style: GoogleFonts.poppins())),
+                              child: Text(item,
+                                  style: GoogleFonts.poppins(
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ))),
                         ],
                       ),
                     );
@@ -262,7 +291,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 child: Text(quantity.toString(),
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
-                        fontSize: 13, fontWeight: FontWeight.w500)),
+                        fontSize: 13, fontWeight: FontWeight.w500, color: isDarkMode ? Colors.white : Colors.black,)),
               );
             }).toList(),
           ),
@@ -273,7 +302,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 child: Text(label,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
-                        fontSize: 12, fontWeight: FontWeight.w500)),
+                        fontSize: 12, fontWeight: FontWeight.w500, color: isDarkMode ? Colors.white : Colors.black,)),
               );
             }).toList(),
           ),

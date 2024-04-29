@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/views/auth/switch_account_view.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class WelcomeScreen extends StatefulWidget {
   final User companyUser;
@@ -46,9 +48,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
       appBar: _AppBar(_animationController, widget.companyUser),
-      backgroundColor: Colors.white,
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
       body: SafeArea(
         child: _Body(
             animationController: _animationController,
@@ -74,26 +77,34 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios),
+        color: isDarkMode ? Colors.white : Color(0xFF242526),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       title: Text('Student Hub',
           style: GoogleFonts.poppins(
               // Apply the Poppins font
-              color: Color.fromARGB(255, 0, 0, 0),
+              color: isDarkMode ? Colors.white : Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor:
+          isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
       actions: <Widget>[
         IconButton(
             icon: Container(
               // Add a Container as the parent
               padding: const EdgeInsets.all(8.0), // Padding for spacing
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
                 shape: BoxShape.circle,
               ),
               child: ColorFiltered(
                 colorFilter: ColorFilter.mode(
-                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                    isDarkMode ? Colors.white : Colors.black, BlendMode.srcIn),
                 child: Image.asset('assets/icons/user_ic.png',
                     width: 25, height: 25),
               ),
@@ -277,6 +288,7 @@ class _AnimatedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 80, 20, 5),
       child: Align(
@@ -291,6 +303,9 @@ class _AnimatedText extends StatelessWidget {
             children: [
               TextSpan(
                 text: "Welcome, ",
+                style: GoogleFonts.poppins(
+                  color: isDarkMode ? Colors.white : Colors.black,
+                ),
               ),
               TextSpan(
                 text: "${companyUser.fullname}",
@@ -301,6 +316,9 @@ class _AnimatedText extends StatelessWidget {
               ),
               TextSpan(
                 text: " !",
+                style: GoogleFonts.poppins(
+                  color: isDarkMode ? Colors.white : Colors.black,
+                ),
               ),
             ],
           ),
@@ -315,6 +333,7 @@ class _DescriptionText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
       child: Align(
@@ -324,6 +343,7 @@ class _DescriptionText extends StatelessWidget {
           style: GoogleFonts.poppins(
             fontSize: 16,
             fontWeight: FontWeight.w400,
+            color: isDarkMode ? Colors.white : Colors.black,
           ),
           textAlign: TextAlign.center,
         ),

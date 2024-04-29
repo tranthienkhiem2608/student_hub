@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:student_hub/models/model/users.dart';
@@ -10,6 +11,7 @@ import 'package:student_hub/views/pages/alert_page.dart';
 import 'package:student_hub/views/pages/dashboard_page.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class HomePage extends StatefulWidget {
   final User? user;
@@ -34,27 +36,27 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AppBar(
       automaticallyImplyLeading: false,
       title: Text('Student Hub',
           style: GoogleFonts.poppins(
               // Apply the Poppins font
-              color: Color.fromARGB(255, 0, 0, 0),
+              color: isDarkMode ? Colors.white : Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
       actions: <Widget>[
         IconButton(
           icon: Container(
             // Add a Container as the parent
             padding: const EdgeInsets.all(8.0), // Padding for spacing
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 255),
               shape: BoxShape.circle,
             ),
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                  isDarkMode ? Colors.white : Colors.black, BlendMode.srcIn),
               child: Image.asset('assets/icons/user_ic.png',
                   width: 25, height: 25),
             ),
@@ -107,7 +109,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
       appBar: _AppBar(user: widget.user!),
       body: PageView(
         controller: _navController.controller,
@@ -120,7 +124,7 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            color: const Color(0xFF406AFF),
+            color: isDarkMode ? Color.fromARGB(255, 20, 20, 20) : Color(0xFF406AFF),
             borderRadius: BorderRadius.circular(32),
           ),
           child: Padding(
@@ -131,7 +135,7 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.transparent,
               activeColor: Color(0xFF406AFF),
               iconSize: 24,
-              tabBackgroundColor: Color.fromARGB(244, 255, 255, 255),
+              tabBackgroundColor: isDarkMode ? Color(0xFF2f2f2f) : Colors.white,
               tabs: [
                 GButton(
                   icon: Icons.home_rounded,
@@ -139,7 +143,7 @@ class _HomePageState extends State<HomePage> {
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
-                    color: Color(0xFF406AFF), // Màu chữ
+                    color: isDarkMode ? Colors.white : Color(0xFF406AFF),
                     fontWeight: FontWeight.w500,
                   ),
                   iconColor: Colors.white,
@@ -150,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
-                    color: Color(0xFF406AFF),
+                    color: isDarkMode ? Colors.white : Color(0xFF406AFF),
                     fontWeight: FontWeight.w500, // Màu chữ
                   ),
                   iconColor: Colors.white,
@@ -161,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
-                    color: Color(0xFF406AFF), // Màu chữ
+                    color: isDarkMode ? Colors.white : Color(0xFF406AFF),
                     fontWeight: FontWeight.w500,
                   ),
                   iconColor: Colors.white,
@@ -172,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
-                    color: Color(0xFF406AFF), // Màu chữ
+                    color: isDarkMode ? Colors.white : Color(0xFF406AFF),
                     fontWeight: FontWeight.w500,
                   ),
                   iconColor: Colors.white,

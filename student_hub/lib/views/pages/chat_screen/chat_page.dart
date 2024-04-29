@@ -12,6 +12,7 @@ class ChatPage extends StatelessWidget {
       child: Column(
         children: [
           RecentChats(),
+          SizedBox(height: 20),
           AllChats(),
         ],
       ),

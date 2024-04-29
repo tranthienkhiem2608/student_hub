@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/language.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class ShowLanguagesWidget extends StatelessWidget {
   final List<Language> languages;
@@ -35,6 +37,7 @@ class ShowLanguagesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return ListView.builder(
       itemCount: languages.length,
       itemBuilder: (context, index) {
@@ -43,7 +46,7 @@ class ShowLanguagesWidget extends StatelessWidget {
 
         return Padding(
           padding: const EdgeInsets.fromLTRB(
-              20, 5, 15, 5), // Điều chỉnh giá trị padding
+              20, 10, 15, 5), // Điều chỉnh giá trị padding
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment
@@ -55,6 +58,7 @@ class ShowLanguagesWidget extends StatelessWidget {
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
               ),

@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/post_project/post_screen_3.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class PostScreen2 extends StatefulWidget {
   const PostScreen2({super.key, required this.project, required this.user});
@@ -97,27 +99,37 @@ class _PostScreen2State extends State<PostScreen2>
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
+        backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            color: isDarkMode ? Colors.white : Color(0xFF242526),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: Text('Student Hub',
               style: GoogleFonts.poppins(
                   // Apply the Poppins font
-                  color: Color.fromARGB(255, 0, 0, 0),
+                  color: isDarkMode ? Colors.white : Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.bold)),
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor:
+              isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
           actions: <Widget>[
             IconButton(
               icon: Container(
                 // Add a Container as the parent
                 padding: const EdgeInsets.all(8.0), // Padding for spacing
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
                   shape: BoxShape.circle,
                 ),
                 child: ColorFiltered(
                   colorFilter: ColorFilter.mode(
-                      Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                      isDarkMode ? Colors.white : Colors.black,
+                      BlendMode.srcIn),
                   child: Image.asset('assets/icons/user_ic.png',
                       width: 25, height: 25),
                 ),
@@ -126,7 +138,6 @@ class _PostScreen2State extends State<PostScreen2>
             )
           ],
         ),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -167,8 +178,12 @@ class _PostScreen2State extends State<PostScreen2>
                                         0xFF406AFF)), // Thay đổi màu cho phần này
                               ),
                               TextSpan(
-                                text: "Estimate the scope of your job",
-                              ),
+                                  text: "Estimate the scope of your job",
+                                  style: GoogleFonts.poppins(
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : Colors.black,
+                                  )),
                             ],
                           ),
                         ),
@@ -203,7 +218,9 @@ class _PostScreen2State extends State<PostScreen2>
                             child: Text(
                               "Consider the size of your project and the timeline",
                               style: GoogleFonts.poppins(
-                                color: Color.fromARGB(255, 103, 107, 119),
+                                color: isDarkMode
+                                    ? const Color.fromARGB(255, 209, 209, 209)
+                                    : Color.fromARGB(255, 103, 107, 119),
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.normal,
                               ),
@@ -245,7 +262,7 @@ class _PostScreen2State extends State<PostScreen2>
                               style: GoogleFonts.poppins(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                                color: isDarkMode ? Colors.white : Colors.black,
                               ),
                             ),
                             SizedBox(height: 10),
@@ -273,16 +290,35 @@ class _PostScreen2State extends State<PostScreen2>
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
                               title: Text('Less than 1 month',
-                                  style: GoogleFonts.poppins(fontSize: 15)),
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 15,
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : Colors.black,
+                                  )),
                               value: ProjectDuration
                                   .lessThanOneMonth, // Use enum value
                               groupValue: selectedDuration,
+                              overlayColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFF406AFF)),
+                              activeColor: Color(0xFF406AFF),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Color(
+                                      0xFF406AFF); // Màu khi radio được chọn
+                                }
+                                return isDarkMode
+                                    ? Colors.white
+                                    : Colors
+                                        .black; // Màu khi radio không được chọn
+                              }),
                               onChanged: (value) {
                                 setState(() {
                                   selectedDuration = value;
                                 });
                               },
-                               activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -304,16 +340,35 @@ class _PostScreen2State extends State<PostScreen2>
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
                               title: Text('1 to 3 months',
-                                  style: GoogleFonts.poppins(fontSize: 15)),
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 15,
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : Colors.black,
+                                  )),
                               value: ProjectDuration
                                   .oneToThreeMonths, // Use enum value
                               groupValue: selectedDuration,
+                              overlayColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFF406AFF)),
+                              activeColor: Color(0xFF406AFF),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Color(
+                                      0xFF406AFF); // Màu khi radio được chọn
+                                }
+                                return isDarkMode
+                                    ? Colors.white
+                                    : Colors
+                                        .black; // Màu khi radio không được chọn
+                              }),
                               onChanged: (value) {
                                 setState(() {
                                   selectedDuration = value;
                                 });
                               },
-                               activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -335,16 +390,35 @@ class _PostScreen2State extends State<PostScreen2>
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
                               title: Text('3 to 6 months',
-                                  style: GoogleFonts.poppins(fontSize: 15)),
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 15,
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : Colors.black,
+                                  )),
                               value: ProjectDuration
                                   .threeToSixMonths, // Use enum value
                               groupValue: selectedDuration,
+                              overlayColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFF406AFF)),
+                              activeColor: Color(0xFF406AFF),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Color(
+                                      0xFF406AFF); // Màu khi radio được chọn
+                                }
+                                return isDarkMode
+                                    ? Colors.white
+                                    : Colors
+                                        .black; // Màu khi radio không được chọn
+                              }),
                               onChanged: (value) {
                                 setState(() {
                                   selectedDuration = value;
                                 });
                               },
-                               activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -366,16 +440,35 @@ class _PostScreen2State extends State<PostScreen2>
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
                               title: Text('More than 6 months',
-                                  style: GoogleFonts.poppins(fontSize: 15)),
+                                  style: GoogleFonts.poppins(
+                                    fontSize: 15,
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : Colors.black,
+                                  )),
                               value: ProjectDuration
                                   .moreThanSixMonth, // Use enum value
                               groupValue: selectedDuration,
+                              overlayColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFF406AFF)),
+                              activeColor: Color(0xFF406AFF),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Color(
+                                      0xFF406AFF); // Màu khi radio được chọn
+                                }
+                                return isDarkMode
+                                    ? Colors.white
+                                    : Colors
+                                        .black; // Màu khi radio không được chọn
+                              }),
                               onChanged: (value) {
                                 setState(() {
                                   selectedDuration = value;
                                 });
                               },
-                              activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -410,7 +503,7 @@ class _PostScreen2State extends State<PostScreen2>
                           style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black,
+                            color: isDarkMode ? Colors.white : Colors.black,
                           ),
                         ),
                         SizedBox(height: 10),
@@ -435,6 +528,9 @@ class _PostScreen2State extends State<PostScreen2>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      style: GoogleFonts.poppins(
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       onChanged: (value) {
                         numberOfStudents = value; // Update state on changes
                       },
@@ -442,17 +538,19 @@ class _PostScreen2State extends State<PostScreen2>
                           TextInputType.number, // Ensure numeric keyboard
                       cursorColor: Color(0xFF406AFF),
                       decoration: InputDecoration(
-                        
-                        contentPadding: EdgeInsets.symmetric(vertical: 17.0, horizontal: 20.0),
-                        hintText: 'Enter the number', 
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 17.0, horizontal: 20.0),
+                        hintText: 'Enter the number',
                         hintStyle: GoogleFonts.poppins(
-                          color: Color(0xFF777B8A),
+                          color: isDarkMode
+                              ? Color.fromARGB(255, 171, 171, 171)
+                              : Colors.grey,
                           fontSize: 14.0,
                         ),
                         // Adjust hint
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFF777B8A), width: 1),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF777B8A), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: const TextStyle(
@@ -460,8 +558,8 @@ class _PostScreen2State extends State<PostScreen2>
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFF777B8A), width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF777B8A), width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),

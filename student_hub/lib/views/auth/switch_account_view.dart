@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
 
@@ -7,6 +8,7 @@ import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/widgets/add_account_widget.dart';
 import 'package:student_hub/models/company_user.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class SwitchAccountView extends StatefulWidget {
   final User user;
@@ -47,14 +49,13 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
 class _SwitchAccountViewState extends State<SwitchAccountView> {
   late SharedPreferences prefs;
+  static const String darkModeKey = 'switchAccountDarkMode';
   int? role;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      initPrefs();
-    });
+    initPrefs();
   }
 
   Future<void> initPrefs() async {
@@ -66,36 +67,40 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          color: isDarkMode ? Colors.white : Color(0xFF242526),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text('Student Hub',
             style: GoogleFonts.poppins(
                 // Apply the Poppins font
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: isDarkMode ? Colors.white : Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
         actions: <Widget>[
           IconButton(
-            icon: Container(
-              // Add a Container as the parent
-              padding: const EdgeInsets.all(8.0), // Padding for spacing
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
-                shape: BoxShape.circle,
-              ),
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
-                child: Image.asset('assets/icons/user_ic.png',
-                    width: 25, height: 25),
-              ),
+            icon: Icon(
+              isDarkMode
+                  ? Icons.light_mode
+                  : Icons
+                      .dark_mode, // Thay đổi biểu tượng dựa vào trạng thái chế độ
+              color: isDarkMode ? Colors.white : Colors.black,
             ),
-            onPressed: () {},
-          )
+            onPressed: () {
+              Provider.of<DarkModeProvider>(context, listen: false)
+                  .toggleDarkMode();
+            }, // Gọi hàm khi nút được nhấn
+          ),
         ],
       ),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
       body: Column(
         children: <Widget>[
           // If there are no accounts, show AddAccountWidget, else show a dropdown list of accounts
@@ -117,7 +122,9 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                               padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
                               child: Text("Switch account  ",
                                   style: GoogleFonts.poppins(
-                                      color: Colors.black,
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black,
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold)),
                             ),
@@ -125,8 +132,12 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                               angle: -90 *
                                   3.14159 /
                                   180, // Convert degrees to radians
-                              child: const Icon(Icons.arrow_back_ios,
-                                  color: Colors.black, size: 18.0),
+                              child: Icon(Icons.arrow_back_ios,
+                                  color: isDarkMode
+                                      ? Colors.white
+                                      : Colors
+                                          .black, // Đổi màu dựa trên trạng thái dark mode
+                                  size: 18.0),
                             ),
                           ],
                         ),
@@ -136,7 +147,9 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                           height: 100,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Colors.grey[200],
+                            color: isDarkMode
+                                          ? Color.fromARGB(255, 90, 90, 90)!
+                                          : Colors.grey[200]!,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(0.0),
@@ -166,7 +179,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                               "${role == 0 ? 'Student' : 'Company'}",
                               textAlign: TextAlign.center, // Căn giữa văn bản
                               style: GoogleFonts.poppins(
-                                color: Colors.black,
+                                color: isDarkMode ? Colors.white : Colors.black,
                                 fontSize: 15.0,
                               ),
                             ),
@@ -182,31 +195,36 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
             // Set the padding you want
           ),
           Container(
-            color: Color.fromARGB(255, 255, 255, 255),
+            color: isDarkMode ? Color(0xFF212121) : Colors.white,
             child: Column(
               children: <Widget>[
                 Align(
                   alignment: Alignment.centerLeft,
                   child: TextButton.icon(
                     onPressed: () {
-                      print('Techstack: ${widget.user.studentUser!.techStack!.name}');
-                      print('Skillset: ${widget.user.studentUser!.skillSet!.map((e) => e.name)}');
-                      print('Language: ${widget.user.studentUser!.languages!.map((e) => e.languageName)}');
-                      print('Education: ${widget.user.studentUser!.education!.map((e) => e.schoolName)}');
+                      print(
+                          'Techstack: ${widget.user.studentUser!.techStack!.name}');
+                      print(
+                          'Skillset: ${widget.user.studentUser!.skillSet!.map((e) => e.name)}');
+                      print(
+                          'Language: ${widget.user.studentUser!.languages!.map((e) => e.languageName)}');
+                      print(
+                          'Education: ${widget.user.studentUser!.education!.map((e) => e.schoolName)}');
                       // skillset in experience
-                      print('Skillset in experience: ${widget.user.studentUser!.experience!.map((e) => e.skillSet!.map((e) => e.name))}');
-                       AuthAccountViewModel(context).userProfile(widget.user);
-                       
+                      print(
+                          'Skillset in experience: ${widget.user.studentUser!.experience!.map((e) => e.skillSet!.map((e) => e.name))}');
+                      AuthAccountViewModel(context).userProfile(widget.user);
                     },
                     icon: Image.asset(
                       'assets/icons/profile.jpg',
+                      color: isDarkMode ? Colors.white : Colors.black,
                       width: 28.0,
                       height: 28.0,
                     ),
                     label: Text(
                       'Profiles',
                       style: GoogleFonts.poppins(
-                        color: Colors.black,
+                        color: isDarkMode ? Colors.white : Colors.black,
                         fontSize: 20.0,
                         fontWeight: FontWeight.w600,
                       ),
@@ -226,13 +244,13 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                     },
                     icon: Image.asset(
                       'assets/icons/setting.jpg', // Đường dẫn của hình ảnh
-                      // Màu của biểu tượng (nếu cần)
+                      color: isDarkMode ? Colors.white : Colors.black,
                       width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
                       height: 28.0, // Chiều cao của biểu tượng (nếu cần)
                     ),
                     label: Text('Settings',
                         style: GoogleFonts.poppins(
-                            color: Colors.black,
+                            color: isDarkMode ? Colors.white : Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600)),
                   ),
@@ -250,13 +268,13 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                     },
                     icon: Image.asset(
                       'assets/icons/logout.jpg', // Đường dẫn của hình ảnh
-                      // Màu của biểu tượng (nếu cần)
+                      color: isDarkMode ? Colors.white : Colors.black,
                       width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
                       height: 28.0, // Chiều cao của biểu tượng (nếu cần)
                     ),
                     label: Text('Log out',
                         style: GoogleFonts.poppins(
-                            color: Colors.black,
+                            color: isDarkMode ? Colors.white : Colors.black,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600)),
                   ),

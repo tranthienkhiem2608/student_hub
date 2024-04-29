@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
@@ -37,7 +38,7 @@ class _AddAccountWidgetState extends State<AddAccountWidget> {
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor:
-                const Color(0xFFdce8e8), // Set the background color you want
+                Color(0xFF4DBE3FF), // Set the background color you want
           ),
           onPressed: () {
             prefs.setInt('role', role == 0 ? 1 : 0);
@@ -57,13 +58,14 @@ class _AddAccountWidgetState extends State<AddAccountWidget> {
                       .navigateToProfileInputStudent1(widget.user);
             }
           },
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Icon(Icons.add, size: 34, color: Colors.black),
+              Icon(Icons.add, size: 34, color: Color(0xFF406AFF)),
               SizedBox(width: 10),
               Text('Add new account',
-                  style: TextStyle(fontSize: 21, color: Colors.black)),
+                  style: GoogleFonts.poppins(
+                      fontSize: 20, color: Color(0xFF406AFF), fontWeight: FontWeight.w500)),
             ],
           ),
         ),

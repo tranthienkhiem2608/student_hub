@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/proposal.dart';
@@ -10,6 +11,7 @@ import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:student_hub/views/browse_project/project_search.dart';
 import 'package:student_hub/views/browse_project/project_saved.dart';
 import 'package:student_hub/widgets/project_list_widget.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class ProjectsPage extends StatefulWidget {
   final User? user;
@@ -188,13 +190,15 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return DefaultTabController(
       length: 1,
       child: Scaffold(
+        backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(kToolbarHeight + 20),
           child: Container(
-            padding: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: 15),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Row(
@@ -205,16 +209,28 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       onTap: () {
                         showSearchBottomSheet(context);
                       },
-                      child: TextField(
-                        enabled: false,
-                        decoration: InputDecoration(
-                          hintText: 'Search for projects...',
-                          hintStyle: GoogleFonts.poppins(),
-                          prefixIcon: Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            //color
-
-                            borderRadius: BorderRadius.circular(50),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: isDarkMode ? Colors.white : Colors.black,// Choose your border color
+                            width: 1.0, // Choose the border width
+                          ),
+                          borderRadius: BorderRadius.circular(
+                              50.0), // Adjust the border radius as needed
+                        ),
+                        child: TextField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            hintText: 'Search for projects...',
+                            hintStyle: GoogleFonts.poppins(
+                              color: isDarkMode ? Color.fromARGB(255, 98, 98, 98) : Colors.black,
+                            ),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: isDarkMode ? Colors.white : Colors.black,
+                            ),
+                            border: InputBorder
+                                .none, // Remove default border of TextField
                           ),
                         ),
                       ),

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
 import 'package:student_hub/widgets/show_project_company_widget.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class ArchivedPage extends StatefulWidget {
   final User user;
@@ -60,6 +62,7 @@ class _ArchivedPageState extends State<ArchivedPage>
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Padding(
       padding: const EdgeInsets.all(10),
       child: Column(
@@ -79,7 +82,13 @@ class _ArchivedPageState extends State<ArchivedPage>
                 } else if (project.hasData && project.data!.isEmpty) {
                   return Center(
                       child: Text(
-                          "\t\tWelcome, ${widget.user.fullname}!. You no archived in progress", style: GoogleFonts.poppins(fontSize: 15, fontWeight: FontWeight.bold)));
+                        textAlign: TextAlign.center,
+                          "\t\tWelcome, ${widget.user.fullname}!. You no archived in progress",
+                          style: GoogleFonts.poppins(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          )));
                 } else {
                   return ListView.builder(
                     itemCount: project.data!.length,

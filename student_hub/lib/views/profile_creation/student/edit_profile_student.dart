@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/components/loadingUI.dart';
 import 'package:student_hub/models/model/education.dart';
 import 'package:student_hub/models/model/experience.dart';
@@ -15,6 +16,7 @@ import 'package:student_hub/views/profile_creation/company/profile_input.dart';
 import 'package:student_hub/widgets/pop_up_education_widget.dart';
 import 'package:student_hub/widgets/pop_up_project_widget.dart';
 import 'package:student_hub/widgets/show_project_student_widget.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import 'package:student_hub/widgets/show_school_widget.dart';
 import 'package:student_hub/widgets/show_languages_widget.dart';
@@ -161,32 +163,42 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
   List<Education> educationList = [];
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          color: isDarkMode ? Colors.white : Color(0xFF242526),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text('Student Hub',
             style: GoogleFonts.poppins(
                 // Apply the Poppins font
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: isDarkMode ? Colors.white : Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor:
+            isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
         actions: <Widget>[
           IconButton(
             icon: Container(
               // Add a Container as the parent
               padding: const EdgeInsets.all(8.0), // Padding for spacing
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
                 shape: BoxShape.circle,
               ),
               child: ColorFiltered(
                 colorFilter: ColorFilter.mode(
-                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                    isDarkMode ? Colors.white : Colors.black, BlendMode.srcIn),
                 child: Image.asset('assets/icons/user_ic.png',
                     width: 25, height: 25),
               ),
             ),
+
             onPressed: () {},
           )
         ],
@@ -217,6 +229,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     style: GoogleFonts.poppins(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
+                      color: isDarkMode ? Colors.white : Colors.black,
                     ),
                     textAlign: TextAlign.left,
                   ),
@@ -230,7 +243,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                           : "No Techstack selected", // Nếu không có Techstack được chọn
                       style: GoogleFonts.poppins(
                         fontSize: 15,
-                        color: Color.fromARGB(255, 126, 126, 126),
+                        color: isDarkMode ? Color.fromARGB(255, 200, 200, 200) : Color.fromARGB(255, 126, 126, 126),
                       ),
                       textAlign: TextAlign.left,
                       overflow: TextOverflow
@@ -252,6 +265,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                       style: GoogleFonts.poppins(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
+                        color: isDarkMode ? Colors.white : Colors.black,
                       ),
                     ),
                   ),
@@ -280,8 +294,8 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                             Text(
                               "No Skillset selected", // Hiển thị thông báo nếu không có Skillset nào được chọn
                               style: GoogleFonts.poppins(
-                                fontSize: 13,
-                                color: Colors.grey,
+                                fontSize: 15,
+                                color: isDarkMode ? Color.fromARGB(255, 200, 200, 200) : Color.fromARGB(255, 126, 126, 126),
                               ),
                             ),
                         ],
@@ -302,6 +316,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                       style: GoogleFonts.poppins(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
+                        color: isDarkMode ? Colors.white : Colors.black,
                       ),
                     ),
                   ),
@@ -377,6 +392,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                       style: GoogleFonts.poppins(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
+                        color: isDarkMode ? Colors.white : Colors.black,
                       ),
                     ),
                   ),
@@ -440,6 +456,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     style: GoogleFonts.poppins(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
+                      color: isDarkMode ? Colors.white : Colors.black,
                     ),
                     textAlign: TextAlign.left,
                   ),

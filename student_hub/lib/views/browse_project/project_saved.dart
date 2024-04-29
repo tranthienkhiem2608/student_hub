@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class FavoriteProjectsPage extends StatefulWidget {
   final List<ProjectCompany> favoriteProjects;
@@ -35,22 +37,25 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back), // Use any icon you like
+          icon: const Icon(Icons.arrow_back_ios),
+          color: isDarkMode ? Colors.white : Color(0xFF242526),
           onPressed: () {
-            ControllerRoute(context)
-                .navigateToHomeScreen(false, widget.user, 0);
+            Navigator.pop(context);
           },
         ),
         title: Text('Student Hub',
             style: GoogleFonts.poppins(
                 // Apply the Poppins font
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: isDarkMode ? Colors.white : Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor:
+            isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
         actions: <Widget>[],
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(30.0),
@@ -97,15 +102,15 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
                       margin: const EdgeInsets.symmetric(vertical: 10.0),
                       padding: const EdgeInsets.fromLTRB(15, 0, 10, 5),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isDarkMode ? Color(0xFF2f2f2f) : Colors.white,
                         border: Border.all(
-                          color: Color.fromARGB(255, 228, 228, 233),
+                          color: isDarkMode ? Color.fromARGB(255, 60, 60, 60) : Color.fromARGB(255, 228, 228, 233),
                           width: 1,
                         ),
                         borderRadius: BorderRadius.circular(20.0),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.25),
+                            color: isDarkMode ? Color(0xFF212121) : Colors.grey.withOpacity(0.25),
                             spreadRadius: 1,
                             blurRadius: 6,
                             offset: Offset(0, 3), // changes position of shadow
@@ -142,7 +147,7 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
                             Text(
                               'Students are looking for',
                               style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
                             ),
                             Text(
                               project.data![index].description?.isNotEmpty ??
@@ -151,7 +156,7 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
                                       .split('\n')
                                       .first
                                   : '',
-                              style: GoogleFonts.poppins(),
+                              style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,),
                             ),
                             const SizedBox(height: 15),
                             const SizedBox(height: 5),
@@ -169,7 +174,7 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
                                       project.data![index].projectScopeFlag ??
                                           0]),
                                   style: GoogleFonts.poppins(
-                                      height: 1.0, fontSize: 12),
+                                      height: 1.0, fontSize: 12, color: isDarkMode ? Colors.white : Colors.black,),
                                 ),
                               ],
                             ),
@@ -185,7 +190,7 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
                                 Text(
                                   '${project.data![index].numberOfStudents} students',
                                   style: GoogleFonts.poppins(
-                                      height: 1.0, fontSize: 12),
+                                      height: 1.0, fontSize: 12, color: isDarkMode ? Colors.white : Colors.black,),
                                 ),
                               ],
                             ),
@@ -201,7 +206,7 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
                                 Text(
                                   '${project.data![index].countProposal != null ? project.data![index].countProposal : 0} proposals',
                                   style: GoogleFonts.poppins(
-                                      height: 1.0, fontSize: 12),
+                                      height: 1.0, fontSize: 12, color: isDarkMode ? Colors.white : Colors.black,),
                                 ),
                               ],
                             ),

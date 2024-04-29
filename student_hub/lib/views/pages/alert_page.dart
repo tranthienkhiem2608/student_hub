@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 import '../../widgets/custom_notification/invited_notification.dart';
 import '../../widgets/custom_notification/messages_notification.dart';
@@ -14,18 +17,20 @@ class AlertPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return  SafeArea(
       child: Scaffold(
+        backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'New',
-                  style: TextStyle(color: Color(0xFF0c9bab), fontSize: 20.0, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(height: 10),
@@ -48,11 +53,11 @@ class AlertPage extends StatelessWidget {
                 },
               ),
               SizedBox(height: 20),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Today',
-                  style: TextStyle(color: Color(0xFF0c9bab), fontSize: 20.0, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(height: 10),
@@ -75,11 +80,11 @@ class AlertPage extends StatelessWidget {
                 },
               ),
               SizedBox(height: 20),
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Oldest',
-                  style: TextStyle(color: Color(0xFF0c9bab), fontSize: 20.0, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(height: 10),

@@ -1,8 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/views/homescreen/welcome_view.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => DarkModeProvider(isDarkMode: addAuthorizationToSocket()),
+      child: MyApp(),
+    ),
+  );
+}
+
+bool addAuthorizationToSocket() {
+  SharedPreferences.getInstance().then((prefs) {
+    bool isDarkMode = prefs.getBool('isDarkMode')!;
+    print("Darkmode: $isDarkMode");
+
+    return isDarkMode;
+  });
+  return false;
 }
 
 class MyApp extends StatelessWidget {

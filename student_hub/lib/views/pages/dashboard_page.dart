@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/proposal.dart';
@@ -10,6 +11,7 @@ import 'package:student_hub/views/pages/all_projects_page.dart';
 import 'package:student_hub/views/pages/archieved_page.dart';
 import 'package:student_hub/views/pages/working_page.dart';
 import 'package:student_hub/views/post_project/post_screen_1.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 import 'all_projects_page_student.dart';
 
@@ -60,10 +62,14 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
         appBar: AppBar(
+          backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
+
           automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,7 +77,7 @@ class _DashboardPageState extends State<DashboardPage> {
               Text(
                 role == 0 ? 'Your Projects' : 'Your Jobs',
                 style: GoogleFonts.poppins(
-                    color: Colors.black,
+                    color: Color(0xFF406AFF),
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
@@ -99,9 +105,10 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           bottom: TabBar(
             indicatorColor: const Color(0xFF406AFF),
-            labelColor: const Color.fromARGB(255, 0, 0, 0),
+            labelColor: isDarkMode ? Colors.white : Colors.black,
             labelStyle: GoogleFonts.poppins(fontWeight: FontWeight.bold),
-            unselectedLabelColor: Colors.black,
+            unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
+            dividerColor: isDarkMode ? const Color.fromARGB(255, 47, 47, 47) : Colors.white,
             tabs: const [
               Tab(text: 'All Projects'),
               Tab(text: 'Working'),

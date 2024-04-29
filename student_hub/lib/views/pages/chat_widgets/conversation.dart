@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/app_theme.dart';
 import 'package:student_hub/models/message_model.dart';
 
 import 'package:student_hub/models/user_chat_model.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class Conversation extends StatelessWidget {
   const Conversation({
@@ -14,6 +17,7 @@ class Conversation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return ListView.builder(
         reverse: true,
         itemCount: messages.length,
@@ -21,7 +25,7 @@ class Conversation extends StatelessWidget {
           final message = messages[index];
           bool isMe = message.sender.id == currentUser.id;
           return Container(
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 17),
             child: Column(
               children: [
                 Row(
@@ -42,7 +46,13 @@ class Conversation extends StatelessWidget {
                       constraints: BoxConstraints(
                           maxWidth: MediaQuery.of(context).size.width * 0.6),
                       decoration: BoxDecoration(
-                          color: isMe ? MyTheme.kAccentColor : Colors.grey[200],
+                          color: isDarkMode
+                              ? isMe
+                                  ? Color(0xFF406AFF)
+                                  : Color.fromARGB(255, 66, 66, 66)
+                              : isMe
+                                  ? Color(0xFF406AFF)
+                                  : Color.fromARGB(255, 228, 228, 228),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(16),
                             topRight: Radius.circular(16),
@@ -51,8 +61,12 @@ class Conversation extends StatelessWidget {
                           )),
                       child: Text(
                         messages[index].text,
-                        style: MyTheme.bodyTextMessage.copyWith(
-                            color: isMe ? Colors.white : Colors.grey[800]),
+                        style: GoogleFonts.poppins(
+                            color: isDarkMode
+                                ? Colors.white
+                                : isMe
+                                    ? Colors.white
+                                    : Colors.black),
                       ),
                     ),
                   ],
@@ -69,19 +83,25 @@ class Conversation extends StatelessWidget {
                         ),
                       Icon(
                         Icons.done_all,
-                        size: 20,
-                        color: MyTheme.bodyTextTime.color,
+                        size: 17,
+                        color: Color.fromARGB(255, 146, 146, 146),
                       ),
                       SizedBox(
                         width: 8,
                       ),
                       Text(
                         message.time,
-                        style: MyTheme.bodyTextTime,
-                      )
+                        style: GoogleFonts.poppins(
+                          color: Color.fromARGB(255, 146, 146, 146),
+                          fontSize: 12,
+                        ),
+                      ),
                     ],
                   ),
-                )
+                ),
+                SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           );

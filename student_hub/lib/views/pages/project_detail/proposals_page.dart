@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/student_registered.dart';
@@ -6,6 +7,7 @@ import 'package:student_hub/widgets/show_student_proposals_widget.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class ProposalsPage extends StatefulWidget {
   final ProjectCompany projectCompany;
@@ -40,11 +42,12 @@ class _ProposalsPageState extends State<ProposalsPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Visibility(
       replacement: Center(
         child: Text(
           "\t\tYou no have jobs",
-          style: GoogleFonts.poppins(),
+          style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,),
         ),
       ),
       visible: widget.projectCompany.proposals!.isNotEmpty,

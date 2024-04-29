@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/user_chat_model.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_page.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({super.key});
@@ -174,7 +177,9 @@ class _MessagePageState extends State<MessagePage>
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight + 20),
         child: Container(
@@ -185,23 +190,37 @@ class _MessagePageState extends State<MessagePage>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Flexible(
-                  child: InkWell(
-                    onTap: () {
-                      showSearchBottomSheet(context);
-                    },
-                    child: TextField(
-                      enabled: false,
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        hintText: 'Search chats...',
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50),
+                    child: InkWell(
+                      onTap: () {
+                        showSearchBottomSheet(context);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: isDarkMode ? Colors.white : Colors.black,// Choose your border color
+                            width: 1.0, // Choose the border width
+                          ),
+                          borderRadius: BorderRadius.circular(
+                              50.0), // Adjust the border radius as needed
+                        ),
+                        child: TextField(
+                          enabled: false,
+                          decoration: InputDecoration(
+                            hintText: 'Search for chats...',
+                            hintStyle: GoogleFonts.poppins(
+                              color: isDarkMode ? Color.fromARGB(255, 98, 98, 98) : Colors.black,
+                            ),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: isDarkMode ? Colors.white : Colors.black,
+                            ),
+                            border: InputBorder
+                                .none, // Remove default border of TextField
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
               ],
             ),
           ),
@@ -237,6 +256,7 @@ class _MessagePageState extends State<MessagePage>
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
+         backgroundColor: Color(0xFF406AFF),
         child: Icon(
           currentTabIndex == 0
               ? Icons.message_outlined

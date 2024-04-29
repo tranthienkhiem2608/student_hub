@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; // Thêm thư viện google_fonts
 
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 import 'package:student_hub/models/model/company_user.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/input_profile_viewModel.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class ProfileInput extends StatefulWidget {
   final User user;
@@ -22,26 +24,34 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios),
+        color: isDarkMode ? Colors.white : Color(0xFF242526),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       title: Text('Student Hub',
           style: GoogleFonts.poppins(
               // Apply the Poppins font
-              color: Color.fromARGB(255, 0, 0, 0),
+              color: isDarkMode ? Colors.white : Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor:
+          isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
       actions: <Widget>[
         IconButton(
           icon: Container(
             // Add a Container as the parent
             padding: const EdgeInsets.all(8.0), // Padding for spacing
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 255),
               shape: BoxShape.circle,
             ),
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                  isDarkMode ? Colors.white : Colors.black, BlendMode.srcIn),
               child: Image.asset('assets/icons/user_ic.png',
                   width: 25, height: 25),
             ),
@@ -111,9 +121,10 @@ class _LoginPageState extends State<ProfileInput>
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
+        backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
         appBar: const _AppBar(),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -174,7 +185,9 @@ class _LoginPageState extends State<ProfileInput>
                           'Tell us about your company and you will be', // Dòng trên
                           textAlign: TextAlign.center, // Căn giữa
                           style: GoogleFonts.poppins(
-                            color: Color(0xFF777B8A),
+                            color: isDarkMode
+                                ? Color.fromARGB(255, 168, 171, 185)
+                                : Color(0xFF777B8A),
                             fontSize: 14.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -183,7 +196,9 @@ class _LoginPageState extends State<ProfileInput>
                           'on your way connect with high-skilled students', // Dòng dưới
                           textAlign: TextAlign.center, // Căn giữa
                           style: GoogleFonts.poppins(
-                            color: Color(0xFF777B8A),
+                            color: isDarkMode
+                                ? Color.fromARGB(255, 168, 171, 185)
+                                : Color(0xFF777B8A),
                             fontSize: 14.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -220,7 +235,10 @@ class _LoginPageState extends State<ProfileInput>
                             Text(
                               'How many people are in your company?',
                               style: GoogleFonts.poppins(
-                                  fontSize: 15.5, fontWeight: FontWeight.w600),
+                                  fontSize: 15.5,
+                                  fontWeight: FontWeight.w600,
+                                  color:
+                                      isDarkMode ? Colors.white : Colors.black),
                             ),
                             SizedBox(height: 10),
                           ],
@@ -247,10 +265,29 @@ class _LoginPageState extends State<ProfileInput>
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
                               title: Text('It\'s just me',
-                                  style: GoogleFonts.poppins(fontSize: 14)),
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black)),
                               dense: true,
                               value: 100,
                               groupValue: _selectedValue,
+                              overlayColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFF406AFF)),
+                              activeColor: Color(0xFF406AFF),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Color(
+                                      0xFF406AFF); // Màu khi radio được chọn
+                                }
+                                return isDarkMode
+                                    ? Colors.white
+                                    : Colors
+                                        .black; // Màu khi radio không được chọn
+                              }),
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
@@ -258,8 +295,7 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 0;
                                 });
                               },
-                              activeColor:
-                                  Color(0xFF406AFF), // Thay đổi màu ở đây
+                              // Thay đổi màu ở đây
                             ),
                           ),
                         ),
@@ -281,10 +317,29 @@ class _LoginPageState extends State<ProfileInput>
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
                               title: Text('2-9 employees',
-                                  style: GoogleFonts.poppins(fontSize: 14)),
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black)),
                               dense: true,
                               value: 200,
                               groupValue: _selectedValue,
+                              overlayColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFF406AFF)),
+                              activeColor: Color(0xFF406AFF),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Color(
+                                      0xFF406AFF); // Màu khi radio được chọn
+                                }
+                                return isDarkMode
+                                    ? Colors.white
+                                    : Colors
+                                        .black; // Màu khi radio không được chọn
+                              }),
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
@@ -292,8 +347,7 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 1;
                                 });
                               },
-                              activeColor:
-                                  Color(0xFF406AFF), // Thay đổi màu ở đây
+                              // Thay đổi màu ở đây
                             ),
                           ),
                         ),
@@ -315,10 +369,29 @@ class _LoginPageState extends State<ProfileInput>
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
                               title: Text('10-99 employees',
-                                  style: GoogleFonts.poppins(fontSize: 14)),
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black)),
                               dense: true,
                               value: 300,
                               groupValue: _selectedValue,
+                              overlayColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFF406AFF)),
+                              activeColor: Color(0xFF406AFF),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Color(
+                                      0xFF406AFF); // Màu khi radio được chọn
+                                }
+                                return isDarkMode
+                                    ? Colors.white
+                                    : Colors
+                                        .black; // Màu khi radio không được chọn
+                              }),
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
@@ -326,7 +399,6 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 2;
                                 });
                               },
-                              activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -348,10 +420,29 @@ class _LoginPageState extends State<ProfileInput>
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
                               title: Text('100-1000 employees',
-                                  style: GoogleFonts.poppins(fontSize: 14)),
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black)),
                               dense: true,
                               value: 400,
                               groupValue: _selectedValue,
+                              overlayColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFF406AFF)),
+                              activeColor: Color(0xFF406AFF),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Color(
+                                      0xFF406AFF); // Màu khi radio được chọn
+                                }
+                                return isDarkMode
+                                    ? Colors.white
+                                    : Colors
+                                        .black; // Màu khi radio không được chọn
+                              }),
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
@@ -359,7 +450,6 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 3;
                                 });
                               },
-                              activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -381,10 +471,29 @@ class _LoginPageState extends State<ProfileInput>
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
                               title: Text('More than 1000 employees',
-                                  style: GoogleFonts.poppins(fontSize: 14)),
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 14,
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black)),
                               dense: true,
                               value: 500,
                               groupValue: _selectedValue,
+                              overlayColor: MaterialStateProperty.all<Color>(
+                                  Color(0xFF406AFF)),
+                              activeColor: Color(0xFF406AFF),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                if (states.contains(MaterialState.selected)) {
+                                  return Color(
+                                      0xFF406AFF); // Màu khi radio được chọn
+                                }
+                                return isDarkMode
+                                    ? Colors.white
+                                    : Colors
+                                        .black; // Màu khi radio không được chọn
+                              }),
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
@@ -393,7 +502,6 @@ class _LoginPageState extends State<ProfileInput>
                                   _size = 4;
                                 });
                               },
-                              activeColor: Color(0xFF406AFF),
                             ),
                           ),
                         ),
@@ -418,11 +526,15 @@ class _LoginPageState extends State<ProfileInput>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      style: GoogleFonts.poppins(
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       onChanged: (value) {
                         _companyName = value;
                       },
-                      cursorColor: Colors.black,
+                      cursorColor: Color(0xFF406AFF),
                       decoration: InputDecoration(
+                        
                         contentPadding: const EdgeInsets.all(0.0),
                         hintText: 'Your company name',
                         labelStyle: GoogleFonts.poppins(
@@ -431,17 +543,21 @@ class _LoginPageState extends State<ProfileInput>
                           fontWeight: FontWeight.w400,
                         ),
                         hintStyle: GoogleFonts.poppins(
-                          color: const Color.fromARGB(255, 110, 110, 110),
+                          color: isDarkMode
+                              ? Color.fromARGB(255, 160, 160, 160)
+                              : const Color.fromARGB(255, 110, 110, 110),
                           fontSize: 14.0,
                         ),
-                        prefixIcon: const Icon(
+                        prefixIcon: Icon(
                           Iconsax.building,
-                          color: Colors.black,
+                          color: isDarkMode ? Colors.white : Colors.black,
                           size: 18,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(244, 48, 48, 49),
+                          borderSide: BorderSide(
+                              color: isDarkMode
+                                  ? Color.fromARGB(255, 91, 91, 91)
+                                  : Color.fromARGB(244, 48, 48, 49),
                               width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -450,8 +566,8 @@ class _LoginPageState extends State<ProfileInput>
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(244, 48, 48, 49), width: 1),
+                          borderSide: BorderSide(
+                              color: isDarkMode ? Color.fromARGB(244, 141, 141, 141) : Color.fromARGB(244, 48, 48, 49), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -475,15 +591,20 @@ class _LoginPageState extends State<ProfileInput>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      style: GoogleFonts.poppins(
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       onChanged: (value) {
                         _website = value;
                       },
-                      cursorColor: Colors.black,
+                      cursorColor: Color(0xFF406AFF),
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
                         hintText: 'Your company website!',
                         hintStyle: GoogleFonts.poppins(
-                          color: const Color.fromARGB(255, 110, 110, 110),
+                          color: isDarkMode
+                              ? Color.fromARGB(255, 160, 160, 160)
+                              : const Color.fromARGB(255, 110, 110, 110),
                           fontSize: 14.0,
                         ),
                         labelStyle: const TextStyle(
@@ -491,14 +612,16 @@ class _LoginPageState extends State<ProfileInput>
                           fontSize: 14.0,
                           fontWeight: FontWeight.w400,
                         ),
-                        prefixIcon: const Icon(
+                        prefixIcon: Icon(
                           Iconsax.link,
-                          color: Colors.black,
+                          color: isDarkMode ? Colors.white : Colors.black,
                           size: 18,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(244, 48, 48, 49),
+                          borderSide: BorderSide(
+                              color: isDarkMode
+                                  ? Color.fromARGB(255, 91, 91, 91)
+                                  : Color.fromARGB(244, 48, 48, 49),
                               width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -507,8 +630,8 @@ class _LoginPageState extends State<ProfileInput>
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(244, 48, 48, 49), width: 1),
+                          borderSide: BorderSide(
+                              color: isDarkMode ? Color.fromARGB(244, 141, 141, 141) :Color.fromARGB(244, 48, 48, 49), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -532,10 +655,13 @@ class _LoginPageState extends State<ProfileInput>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      style: GoogleFonts.poppins(
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       onChanged: (value) {
                         _description = value;
                       },
-                      cursorColor: Colors.black,
+                      cursorColor: Color(0xFF406AFF),
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 40.0,
@@ -548,17 +674,21 @@ class _LoginPageState extends State<ProfileInput>
                           fontWeight: FontWeight.w400,
                         ),
                         hintStyle: GoogleFonts.poppins(
-                          color: const Color.fromARGB(255, 110, 110, 110),
+                          color: isDarkMode
+                              ? Color.fromARGB(255, 160, 160, 160)
+                              : const Color.fromARGB(255, 110, 110, 110),
                           fontSize: 14.0,
                         ),
-                        prefixIcon: const Icon(
+                        prefixIcon: Icon(
                           Iconsax.note_add,
-                          color: Colors.black,
+                          color: isDarkMode ? Colors.white : Colors.black,
                           size: 18,
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(244, 48, 48, 49),
+                          borderSide: BorderSide(
+                              color: isDarkMode
+                                  ? Color.fromARGB(255, 91, 91, 91)
+                                  : Color.fromARGB(244, 48, 48, 49),
                               width: 0.8),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -567,8 +697,8 @@ class _LoginPageState extends State<ProfileInput>
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(244, 48, 48, 49), width: 1),
+                          borderSide: BorderSide(
+                              color: isDarkMode ? Color.fromARGB(244, 141, 141, 141) : Color.fromARGB(244, 48, 48, 49), width: 1),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
