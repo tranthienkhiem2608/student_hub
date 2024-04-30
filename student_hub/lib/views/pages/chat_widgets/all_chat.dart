@@ -100,18 +100,16 @@ class _AllChatsState extends State<AllChats> {
                               Text(
                                 allChat.project!.title!,
                                 style: MyTheme.bodyText1.copyWith(
-                                color: isDarkMode ? Colors.white : Colors.black,
-                                fontWeight: FontWeight.w600,
-                                
+                                  color: MyTheme.bodyText2.color,
                                 ),
                               ),
                               Text(
                                 allChat.content!,
                                 style: GoogleFonts.poppins(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 151, 151, 151),
-                              ),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 151, 151, 151),
+                                ),
                               ),
                             ],
                           ),
