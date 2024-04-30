@@ -133,12 +133,12 @@ class _ConversationState extends State<Conversation> {
                                   MediaQuery.of(context).size.width * 0.6),
                           decoration: BoxDecoration(
                               color: isDarkMode
-                              ? isMe
-                                  ? Color(0xFF406AFF)
-                                  : Color.fromARGB(255, 66, 66, 66)
-                              : isMe
-                                  ? Color(0xFF406AFF)
-                                  : Color.fromARGB(255, 228, 228, 228),
+                                  ? isMe
+                                      ? Color(0xFF406AFF)
+                                      : Color.fromARGB(255, 66, 66, 66)
+                                  : isMe
+                                      ? Color(0xFF406AFF)
+                                      : Color.fromARGB(255, 228, 228, 228),
                               borderRadius: BorderRadius.only(
                                 topLeft: const Radius.circular(16),
                                 topRight: const Radius.circular(16),
@@ -148,11 +148,11 @@ class _ConversationState extends State<Conversation> {
                           child: Text(
                             messages[index].content!,
                             style: GoogleFonts.poppins(
-                            color: isDarkMode
-                                ? Colors.white
-                                : isMe
+                                color: isDarkMode
                                     ? Colors.white
-                                    : Colors.black),
+                                    : isMe
+                                        ? Colors.white
+                                        : Colors.black),
                           ),
                         ),
                       ],
@@ -168,11 +168,6 @@ class _ConversationState extends State<Conversation> {
                             const SizedBox(
                               width: 40,
                             ),
-                          // Icon(
-                          //   Icons.done_all,
-                          //   size: 20,
-                          //   color: MyTheme.bodyTextTime.color,
-                          // ),
                           const SizedBox(
                             width: 8,
                           ),

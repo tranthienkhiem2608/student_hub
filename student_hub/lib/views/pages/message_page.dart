@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -5,11 +7,13 @@ import 'package:student_hub/models/model/message.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/models/user_chat_model.dart';
+import 'package:student_hub/services/socket_services.dart';
 import 'package:student_hub/view_models/messages_viewModel.dart';
 
 import 'package:student_hub/views/pages/chat_screen/chat_page.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class MessagePage extends StatefulWidget {
   const MessagePage(this.projectCompany, this.user,
@@ -30,6 +34,8 @@ class _MessagePageState extends State<MessagePage>
   List<String> suggestions = []; // For search suggestions
   final TextEditingController _searchController = TextEditingController();
   List<Message> messages = [];
+  late IO.Socket socket;
+  Timer? _timer;
 
   final List<UserChat> allUsers = [
     addison,
@@ -60,12 +66,21 @@ class _MessagePageState extends State<MessagePage>
     });
 
     filteredUsers.addAll(messages);
+    connect();
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());
   }
 
   @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
+    socket.disconnect();
+  }
+
+  void connect() {
+    socket = SocketService().connectSocket();
+    print('url: ${socket.io.uri.toString()}');
+    socket.connect();
   }
 
   Future<List<Message>> fetchMessages() async {
@@ -219,37 +234,41 @@ class _MessagePageState extends State<MessagePage>
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Flexible(
-                    child: InkWell(
-                      onTap: () {
-                        showSearchBottomSheet(context);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: isDarkMode ? Colors.white : Colors.black,// Choose your border color
-                            width: 1.0, // Choose the border width
-                          ),
-                          borderRadius: BorderRadius.circular(
-                              50.0), // Adjust the border radius as needed
+                  child: InkWell(
+                    onTap: () {
+                      showSearchBottomSheet(context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: isDarkMode
+                              ? Colors.white
+                              : Colors.black, // Choose your border color
+                          width: 1.0, // Choose the border width
                         ),
-                        child: TextField(
-                          enabled: false,
-                          decoration: InputDecoration(
-                            hintText: 'Search for chats...',
-                            hintStyle: GoogleFonts.poppins(
-                              color: isDarkMode ? Color.fromARGB(255, 98, 98, 98) : Colors.black,
-                            ),
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: isDarkMode ? Colors.white : Colors.black,
-                            ),
-                            border: InputBorder
-                                .none, // Remove default border of TextField
+                        borderRadius: BorderRadius.circular(
+                            50.0), // Adjust the border radius as needed
+                      ),
+                      child: TextField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                          hintText: 'Search for chats...',
+                          hintStyle: GoogleFonts.poppins(
+                            color: isDarkMode
+                                ? Color.fromARGB(255, 98, 98, 98)
+                                : Colors.black,
                           ),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          ),
+                          border: InputBorder
+                              .none, // Remove default border of TextField
                         ),
                       ),
                     ),
                   ),
+                ),
               ],
             ),
           ),
@@ -267,7 +286,7 @@ class _MessagePageState extends State<MessagePage>
               child: TabBarView(
                 controller: tabController,
                 children: [
-                  ChatPage(user: widget.user!),
+                  ChatPage(user: widget.user!, socket: socket), // Chat page
                   const Center(
                     child: Text('Camera'),
                   ),
@@ -285,7 +304,7 @@ class _MessagePageState extends State<MessagePage>
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-         backgroundColor: Color(0xFF406AFF),
+        backgroundColor: Color(0xFF406AFF),
         child: Icon(
           currentTabIndex == 0
               ? Icons.message_outlined

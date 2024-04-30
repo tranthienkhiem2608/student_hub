@@ -27,12 +27,6 @@ class Experience {
     this.updatedAt,
     this.duration,
   });
-  // Duration get duration {
-  //   if (startMonth != null && endMonth != null) {
-  //     return endMonth!.difference(startMonth!);
-  //   }
-  //   return Duration();
-  // }
 
   Map<String, dynamic> toMapExperience() {
     return {
@@ -48,9 +42,6 @@ class Experience {
   }
 
   factory Experience.fromMapExperience(Map<String, dynamic> map) {
-    String startMonthString = "01-${map['startMonth']}";
-    String endMonthString = "01-${map['endMonth']}";
-
     return Experience(
       studentId: map['studentId'],
       id: map['id'],

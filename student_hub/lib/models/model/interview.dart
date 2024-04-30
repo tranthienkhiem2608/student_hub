@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Interview {
   int? id;
   String? createAt;
@@ -9,6 +7,7 @@ class Interview {
   DateTime? startDate;
   DateTime? endDate;
   String? disableFlag;
+  int? meetingRoomId;
 
   Interview({
     this.id,
@@ -19,6 +18,7 @@ class Interview {
     this.startDate,
     this.endDate,
     this.disableFlag,
+    this.meetingRoomId,
   });
 
   Map<String, dynamic> toMapInterview() {
@@ -28,6 +28,7 @@ class Interview {
       'startDate': startDate,
       'endDate': endDate,
       'disableFlag': disableFlag,
+      'meetingRoomId': meetingRoomId,
     };
   }
 
@@ -41,6 +42,7 @@ class Interview {
       startDate: map['startTime'],
       endDate: map['endTime'],
       disableFlag: map['disableFlag'],
+      meetingRoomId: map['meetingRoomId'],
     );
   }
 }

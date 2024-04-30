@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/app_theme.dart';
 import 'package:student_hub/models/model/message.dart';
 import 'package:student_hub/models/model/users.dart';
@@ -10,10 +11,14 @@ import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/view_models/messages_viewModel.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class AllChats extends StatefulWidget {
   final User user;
-  const AllChats({required this.user, Key? key}) : super(key: key);
+  final IO.Socket socket;
+
+  const AllChats({required this.user, required this.socket, Key? key})
+      : super(key: key);
 
   @override
   _AllChatsState createState() => _AllChatsState();
@@ -21,6 +26,7 @@ class AllChats extends StatefulWidget {
 
 class _AllChatsState extends State<AllChats> {
   List<Message> messages = [];
+  late Message newMess;
 
   @override
   void initState() {
@@ -29,7 +35,63 @@ class _AllChatsState extends State<AllChats> {
       setState(() {
         messages.addAll(value);
       });
+      setStateForMessUnRead(messages);
     });
+    widget.socket.onConnect((data) {
+      print("Connected: ${widget.socket.connected}");
+      print("Data: $data");
+    });
+    print("SOCKET: ${widget.socket.connected}");
+    print('User ID: NOTI_${widget.user.id}');
+    widget.socket.on('NOTI_${widget.user.id}', (data) {
+      print("Content: $data");
+      setState(() {
+        newMess = Message.fromNewMessage(data);
+        for (int i = 0; i < messages.length; i++) {
+          if (newMess.senderId == messages[i].sender!.id &&
+              newMess.projectId == messages[i].project!.id) {
+            messages[i].checkRead = true;
+            messages[i].content = newMess.content;
+            messages[i].createAt = newMess.createAt;
+            saveSenderUnRead(newMess.senderId!, newMess.projectId!);
+            break;
+          }
+        }
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    widget.socket.off('NOTI_${widget.user.id}');
+    super.dispose();
+  }
+
+  void saveSenderUnRead(int senderId, int projectId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> unReadList = prefs.getStringList('unReadList') ?? [];
+    //check if senderId is already in the list
+    print('Sender ID: $unReadList');
+    String senderIdString = "$senderId/$projectId";
+    if (!unReadList.contains(senderIdString)) {
+      unReadList.add(senderIdString);
+      prefs.setStringList('unReadList', unReadList);
+    }
+  }
+
+  void setStateForMessUnRead(List<Message> messages) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> unReadList = prefs.getStringList('unReadList') ?? [];
+    print('Unread List: $unReadList');
+    print('Messages: $messages');
+    for (int i = 0; i < messages.length; i++) {
+      String senderIdString =
+          "${messages[i].sender!.id}/${messages[i].project!.id}";
+      if (unReadList.contains(senderIdString)) {
+        print(senderIdString);
+        messages[i].checkRead = true;
+      }
+    }
   }
 
   Future<List<Message>> fetchMessages() async {
@@ -77,7 +139,19 @@ class _AllChatsState extends State<AllChats> {
                           width: 20,
                         ),
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            allChat.checkRead = false;
+                            //remove senderId from unReadList
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            List<String> unReadList =
+                                prefs.getStringList('unReadList') ?? [];
+                            String senderIdString =
+                                "${allChat.sender!.id}/${allChat.project!.id}";
+                            if (unReadList.contains(senderIdString)) {
+                              unReadList.remove(senderIdString);
+                              prefs.setStringList('unReadList', unReadList);
+                            }
                             ControllerRoute(context).navigateToChatRoom(
                                 allChat.receiver!.id!,
                                 allChat.sender!.id!,
@@ -104,7 +178,10 @@ class _AllChatsState extends State<AllChats> {
                                 ),
                               ),
                               Text(
-                                allChat.content!,
+                                allChat.content!.split(' ').take(5).join(' ') +
+                                    (allChat.content!.split(' ').length > 5
+                                        ? '...'
+                                        : ''),
                                 style: GoogleFonts.poppins(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
@@ -127,7 +204,14 @@ class _AllChatsState extends State<AllChats> {
                               DateFormat('hh:mm a')
                                   .format(DateTime.parse(allChat.createAt!)),
                               style: MyTheme.bodyTextTime,
-                            )
+                            ),
+                            allChat.checkRead == true
+                                ? const Icon(
+                                    Icons.circle_notifications,
+                                    color: Colors.blue,
+                                    size: 10,
+                                  )
+                                : Container(),
                           ],
                         ),
                       ],
@@ -173,7 +257,7 @@ class _AllChatsState extends State<AllChats> {
                                 ),
                               ),
                               Text(
-                                'You: ${allChat.content!}',
+                                'You: ${allChat.content!.split(' ').take(5).join(' ') + (allChat.content!.split(' ').length > 5 ? '...' : '')}',
                                 style: MyTheme.bodyText1,
                               ),
                             ],
