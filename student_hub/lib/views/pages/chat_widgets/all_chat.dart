@@ -257,7 +257,7 @@ class _AllChatsState extends State<AllChats> {
                                 ),
                               ),
                               Text(
-                                'You: ${allChat.content!.split(' ').take(5).join(' ') + (allChat.content!.split(' ').length > 5 ? '...' : '')}',
+                                'You: ${allChat.content!.split(' ').take(4).join(' ') + (allChat.content!.split(' ').length > 4 ? '...' : '')}',
                                 style: MyTheme.bodyText1,
                               ),
                             ],

@@ -75,6 +75,7 @@ class _MessagePageState extends State<MessagePage>
     _searchController.dispose();
     super.dispose();
     socket.disconnect();
+    _timer?.cancel();
   }
 
   void connect() {
@@ -93,8 +94,8 @@ class _MessagePageState extends State<MessagePage>
       if (query.isNotEmpty) {
         filteredUsers = messages
             .where((user) => user.sender!.fullname!
-                .toLowerCase()
-                .contains(query.toLowerCase()))
+            .toLowerCase()
+            .contains(query.toLowerCase()))
             .toList();
       } else {
         filteredUsers.clear();
@@ -165,7 +166,7 @@ class _MessagePageState extends State<MessagePage>
                             // Assuming 'suggestions' is a list of User objects (if not, adjust accordingly)
                             final selectedUserName = suggestions[index];
                             final user = messages.firstWhere((user) =>
-                                user.sender!.fullname == selectedUserName);
+                            user.sender!.fullname == selectedUserName);
 
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -281,8 +282,8 @@ class _MessagePageState extends State<MessagePage>
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               decoration: const BoxDecoration(
-                  // ... (your decoration here)
-                  ),
+                // ... (your decoration here)
+              ),
               child: TabBarView(
                 controller: tabController,
                 children: [
@@ -309,8 +310,8 @@ class _MessagePageState extends State<MessagePage>
           currentTabIndex == 0
               ? Icons.message_outlined
               : currentTabIndex == 1
-                  ? Icons.camera_alt
-                  : Icons.call,
+              ? Icons.camera_alt
+              : Icons.call,
           color: Colors.white,
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/view_models/controller_route.dart';
+import 'package:student_hub/views/pages/chat_screen/video_conference_page.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -211,8 +212,14 @@ class _Content extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () {
                       // Handle button press
-                      ControllerRoute(context)
-                          .navigateToLoginView(); //role company
+                      // ControllerRoute(context)
+                      //     .navigateToLoginView(); //role company
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const VideoConferencePage(
+                                conferenceID: 'conferenceID')),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF406AFF),
