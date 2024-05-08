@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/users.dart';
-import 'package:student_hub/models/project_company.dart';
+import 'package:student_hub/models/not_use/project_company.dart';
 import 'package:student_hub/widgets/show_project_company_widget.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
@@ -47,12 +47,14 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
         tempSubmittedProposal++;
       }
     }
-    if (mounted) { // Kiểm tra xem widget còn mounted hay không
-    setState(() {
-      lenghtActiveProposal = tempActiveProposal;
-      lenghtSubmittedProposal = tempSubmittedProposal;
-    });
-  };
+    if (mounted) {
+      // Kiểm tra xem widget còn mounted hay không
+      setState(() {
+        lenghtActiveProposal = tempActiveProposal;
+        lenghtSubmittedProposal = tempSubmittedProposal;
+      });
+    }
+    ;
   }
 
   @override
@@ -88,8 +90,11 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
           padding: EdgeInsets.all(12),
           child: Text(
             "Active Proposal ($lenghtActiveProposal)",
-            style:
-                GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: isDarkMode ? Colors.white : Colors.black,
+            ),
           ),
         ),
         Expanded(
@@ -111,9 +116,13 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
                       } else if (proposal.hasError) {
                         return Text('Error: ${proposal.error}');
                       } else if (proposal.hasData && proposal.data!.isEmpty) {
-                        return  Center(
+                        return Center(
                             child: Text(
-                                "\t\tYou no have active proposal yet.", style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,),));
+                          "\t\tYou no have active proposal yet.",
+                          style: GoogleFonts.poppins(
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          ),
+                        ));
                       } else {
                         return ListView.builder(
                           itemCount: proposal.data!.length,
@@ -153,8 +162,11 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
           padding: EdgeInsets.all(12),
           child: Text(
             "Submitted proposal ($lenghtSubmittedProposal)",
-            style:
-                GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: isDarkMode ? Colors.white : Colors.black,
+            ),
           ),
         ),
         Expanded(
@@ -178,7 +190,11 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
                       } else if (proposal.hasData && proposal.data!.isEmpty) {
                         return Center(
                             child: Text(
-                                "\t\tYou no have active proposal yet.", style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,),));
+                          "\t\tYou no have active proposal yet.",
+                          style: GoogleFonts.poppins(
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          ),
+                        ));
                       } else {
                         return ListView.builder(
                           itemCount: proposal.data!.length,

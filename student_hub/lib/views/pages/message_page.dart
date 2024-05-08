@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/message.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
-import 'package:student_hub/models/user_chat_model.dart';
+import 'package:student_hub/models/not_use/user_chat_model.dart';
 import 'package:student_hub/services/socket_services.dart';
 import 'package:student_hub/view_models/messages_viewModel.dart';
 
@@ -67,7 +67,7 @@ class _MessagePageState extends State<MessagePage>
 
     filteredUsers.addAll(messages);
     connect();
-    _timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());
+    // _timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());
   }
 
   @override
@@ -94,8 +94,8 @@ class _MessagePageState extends State<MessagePage>
       if (query.isNotEmpty) {
         filteredUsers = messages
             .where((user) => user.sender!.fullname!
-            .toLowerCase()
-            .contains(query.toLowerCase()))
+                .toLowerCase()
+                .contains(query.toLowerCase()))
             .toList();
       } else {
         filteredUsers.clear();
@@ -166,7 +166,7 @@ class _MessagePageState extends State<MessagePage>
                             // Assuming 'suggestions' is a list of User objects (if not, adjust accordingly)
                             final selectedUserName = suggestions[index];
                             final user = messages.firstWhere((user) =>
-                            user.sender!.fullname == selectedUserName);
+                                user.sender!.fullname == selectedUserName);
 
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -282,8 +282,8 @@ class _MessagePageState extends State<MessagePage>
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20),
               decoration: const BoxDecoration(
-                // ... (your decoration here)
-              ),
+                  // ... (your decoration here)
+                  ),
               child: TabBarView(
                 controller: tabController,
                 children: [
@@ -310,8 +310,8 @@ class _MessagePageState extends State<MessagePage>
           currentTabIndex == 0
               ? Icons.message_outlined
               : currentTabIndex == 1
-              ? Icons.camera_alt
-              : Icons.call,
+                  ? Icons.camera_alt
+                  : Icons.call,
           color: Colors.white,
         ),
       ),

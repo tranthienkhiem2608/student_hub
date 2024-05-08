@@ -1,4 +1,4 @@
-import 'package:student_hub/models/user_chat_model.dart';
+import 'package:student_hub/models/not_use/user_chat_model.dart';
 
 class Message {
   final UserChat sender;

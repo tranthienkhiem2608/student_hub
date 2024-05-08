@@ -1,6 +1,6 @@
 //import model for student user
-import '../models/project_student.dart';
-import '../models/user.dart';
+import 'project_student.dart';
+import 'user.dart';
 
 class StudentUser {
   User user;
@@ -55,8 +55,6 @@ class StudentUser {
     );
   }
 }
-
-
 
 List<StudentUser> userList = [
   StudentUser(

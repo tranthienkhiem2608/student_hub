@@ -5,19 +5,40 @@ import 'package:student_hub/models/model/message.dart';
 import 'package:student_hub/services/connection_services.dart';
 
 class MessagesViewModel {
-  Future<List<Message>> getMessagesByProject(int projectId) async {
-    print('getMessagesByProject');
+  // Future<List<Message>> getMessagesByProject(int projectId) async {
+  //   print('getMessagesByProject');
+  //   try {
+  //     var response =
+  //         await ConnectionService().get('/api/message/$projectId', {});
+  //     var responseDecode = jsonDecode(response);
+  //     if (responseDecode['result'] != null) {
+  //       print("Connected to the server successfully");
+  //       print("Connect server successful");
+  //       print(response);
+  //       List<Message> messages =
+  //           Message.formListMapMessage(responseDecode['result']);
+  //       return messages;
+  //     } else {
+  //       print("Failed");
+  //       print(responseDecode);
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   return [];
+  // }
+
+  Future<void> sendMessage(Message message) async {
+    print('sendMessage');
+    var payload = message.toMapSendMessage();
     try {
       var response =
-          await ConnectionService().get('/api/message/$projectId', {});
+          await ConnectionService().post('/api/message/sendMessage', payload);
       var responseDecode = jsonDecode(response);
-      if (responseDecode['result'] != null) {
+      if (responseDecode != null) {
         print("Connected to the server successfully");
         print("Connect server successful");
         print(response);
-        List<Message> messages =
-            Message.formListMapMessage(responseDecode['result']);
-        return messages;
       } else {
         print("Failed");
         print(responseDecode);
@@ -25,7 +46,6 @@ class MessagesViewModel {
     } catch (e) {
       print(e);
     }
-    return [];
   }
 
   Future<List<Message>> getAllOldMessages(int projectId, int receiverId) async {

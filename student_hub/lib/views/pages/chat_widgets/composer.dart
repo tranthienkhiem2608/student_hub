@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:student_hub/app_theme.dart';
+import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/messages_viewModel.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 import 'package:student_hub/models/model/message.dart';
 import 'package:student_hub/services/socket_services.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:zego_uikit_prebuilt_video_conference/zego_uikit_prebuilt_video_conference.dart';
 
-Container buildChatComposer(
-    IO.Socket _socket, int _projectId, int senderId, int receiverId, BuildContext context) {
-      final isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
+Container buildChatComposer(IO.Socket _socket, int _projectId, int senderId,
+    int receiverId, BuildContext context) {
+  final isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
   String message = '';
   final TextEditingController _controller = TextEditingController();
   return Container(
@@ -35,7 +38,9 @@ Container buildChatComposer(
             padding: EdgeInsets.symmetric(horizontal: 14),
             height: 60,
             decoration: BoxDecoration(
-              color: isDarkMode ? Color.fromARGB(255, 58, 58, 58) : Colors.grey[200],
+              color: isDarkMode
+                  ? Color.fromARGB(255, 58, 58, 58)
+                  : Colors.grey[200],
               borderRadius: BorderRadius.circular(30),
             ),
             child: Row(
@@ -49,7 +54,8 @@ Container buildChatComposer(
                 ),
                 Expanded(
                   child: TextField(
-                    style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black),
+                    style: GoogleFonts.poppins(
+                        color: isDarkMode ? Colors.white : Colors.black),
                     controller: _controller,
                     onChanged: (value) {
                       message = value;
@@ -78,47 +84,27 @@ Container buildChatComposer(
               icon: const Icon(Icons.send),
               color: Colors.white,
               onPressed: () {
-                var messageData = {
-                  "projectId": _projectId,
-                  "content": message,
-                  "messageFlag": 0,
-                  "senderId": senderId,
-                  "receiverId": receiverId
-                };
-                var data = jsonEncode(messageData);
-                print('Data to send: $data');
-                try {
-                  print('Trying to send message...');
-                  if (_socket.connected) {
-                    _socket.emit('SEND_MESSAGE', {
-                      "content": message,
-                      "projectId": _projectId,
-                      "senderId": senderId,
-                      "receiverId": receiverId,
-                      "messageFlag": 0
-                    });
-                    print('Message sent');
-                  } else {
-                    _socket.onConnect((_) {
-                      _socket.emit('SEND_MESSAGE', {
-                        "content": message,
-                        "projectId": _projectId,
-                        "senderId": senderId,
-                        "receiverId": receiverId,
-                        "messageFlag": 0
-                      });
-                      print('Connected to server and message sent');
-                    });
-                  }
-                  //clear text field
-                  message = '';
-                  _controller.clear();
-                  _socket.on('RECEIVE_MESSAGE',
-                      (data) => print('Message received: $data'));
-                  print('finished');
-                } catch (e) {
-                  print('Error: $e');
-                }
+                Message sendMessage = Message(
+                  projectId: _projectId,
+                  content: message,
+                  messageFlag: 0,
+                  sender: User(id: senderId),
+                  receiver: User(id: receiverId),
+                );
+                MessagesViewModel().sendMessage(sendMessage);
+
+                print('Trying to send message...');
+                // if (_socket.connected) {
+                //   print('Message sent');
+                // } else {
+                //   _socket.onConnect((_) {
+                //     print('Connected to server and message sent');
+                //   });
+                // }
+                //clear text field
+                message = '';
+                _controller.clear();
+                print('finished');
               },
             ))
       ],

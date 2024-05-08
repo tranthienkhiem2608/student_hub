@@ -11,7 +11,7 @@ import 'package:student_hub/views/pages/project_detail/hired_page.dart';
 import 'package:student_hub/views/pages/project_detail/proposals_page.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
-import '../../models/student_registered.dart';
+import '../../models/not_use/student_registered.dart';
 
 class HireStudentScreen extends StatefulWidget {
   final ProjectCompany projectCompany;
@@ -53,7 +53,9 @@ class _HireStudentScreenState extends State<HireStudentScreen> {
             TabBar(
               indicatorColor: Color(0xFF406AFF),
               labelColor: Color(0xFF406AFF),
-              dividerColor: isDarkMode ? const Color.fromARGB(255, 47, 47, 47) : Colors.white,
+              dividerColor: isDarkMode
+                  ? const Color.fromARGB(255, 47, 47, 47)
+                  : Colors.white,
               labelStyle: GoogleFonts.poppins(
                   fontSize: 13, fontWeight: FontWeight.bold),
               unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
@@ -95,35 +97,35 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AppBar(
       leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          color: isDarkMode ? Colors.white : Color(0xFF242526),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        icon: const Icon(Icons.arrow_back_ios),
+        color: isDarkMode ? Colors.white : Color(0xFF242526),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       title: Text('Student Hub',
-            style: GoogleFonts.poppins(
-                // Apply the Poppins font
-                color: isDarkMode ? Colors.white : Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold)),
-        backgroundColor:
-            isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
-        actions: <Widget>[
-          IconButton(
-            icon: Container(
-              // Add a Container as the parent
-              padding: const EdgeInsets.all(8.0), // Padding for spacing
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-              ),
-              child: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                    isDarkMode ? Colors.white : Colors.black, BlendMode.srcIn),
-                child: Image.asset('assets/icons/user_ic.png',
-                    width: 25, height: 25),
-              ),
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
+              color: isDarkMode ? Colors.white : Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold)),
+      backgroundColor:
+          isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
+      actions: <Widget>[
+        IconButton(
+          icon: Container(
+            // Add a Container as the parent
+            padding: const EdgeInsets.all(8.0), // Padding for spacing
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
             ),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  isDarkMode ? Colors.white : Colors.black, BlendMode.srcIn),
+              child: Image.asset('assets/icons/user_ic.png',
+                  width: 25, height: 25),
+            ),
+          ),
           onPressed: () {},
         )
       ],

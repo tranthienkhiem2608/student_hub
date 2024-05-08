@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:student_hub/app_theme.dart';
-import 'package:student_hub/models/message_model.dart';
+import 'package:student_hub/models/not_use/message_model.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';

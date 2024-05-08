@@ -1,11 +1,28 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:student_hub/constant/const_key.dart';
+import 'package:student_hub/models/model/interview.dart';
+import 'package:student_hub/models/model/meetingRoom.dart';
+import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/interview_viewModel.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class ScheduleInterviewDialog extends StatefulWidget {
-  const ScheduleInterviewDialog({super.key});
+  final User user;
+  final int projectId;
+  final int receiverId;
+  Interview? interview;
+  ScheduleInterviewDialog(
+      {Key? key,
+      required this.user,
+      required this.projectId,
+      required this.receiverId,
+      this.interview})
+      : super(key: key);
 
   @override
   _ScheduleInterviewDialogState createState() =>
@@ -17,11 +34,31 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
   TimeOfDay? _selectedTimeStart;
   DateTime? _selectedDateEnd;
   TimeOfDay? _selectedTimeEnd;
+  // final ValueNotifier<String> _titleController = ValueNotifier<String>('');
+  late TextEditingController _titleController;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(text: widget.interview?.title);
+    //format date and time
+    if (widget.interview != null) {
+      if (widget.interview != null) {
+        _selectedDateStart =
+            DateTime.parse(widget.interview!.startTime.toString());
+        _selectedTimeStart = TimeOfDay.fromDateTime(_selectedDateStart!);
+        _selectedDateEnd = DateTime.parse(widget.interview!.endTime.toString());
+        _selectedTimeEnd = TimeOfDay.fromDateTime(_selectedDateEnd!);
+      }
+    }
+  }
 
   void _showDatePicker(String dateType) {
     showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: dateType == 'start'
+          ? _selectedDateStart ?? DateTime.now()
+          : _selectedDateEnd ?? DateTime.now(),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
     ).then((value) {
@@ -42,7 +79,9 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
   void _showTimePicker(String timeType) {
     showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: timeType == 'start'
+          ? _selectedTimeStart ?? TimeOfDay.now()
+          : _selectedTimeEnd ?? TimeOfDay.now(),
     ).then((value) {
       if (value == null) {
         return;
@@ -135,6 +174,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
               ),
               SizedBox(height: 10),
               TextFormField(
+                controller: _titleController,
                 style:
                     TextStyle(color: isDarkMode ? Colors.white : Colors.black),
                 cursorColor: Color(0xFF406AFF),
@@ -192,10 +232,10 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                           ? Color.fromARGB(255, 205, 205, 205)
                           : Color.fromARGB(255, 66, 66, 66),
                     ),
-                    
                   ), // Add your DatePicker widget here
                   IconButton(
-                    icon: const Icon(Icons.access_time, color: Color(0xFF406AFF)),
+                    icon:
+                        const Icon(Icons.access_time, color: Color(0xFF406AFF)),
                     onPressed: () async {
                       _showTimePicker('start');
                     },
@@ -219,7 +259,9 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                     _selectedDateEnd == null
                         ? 'No Date Chosen'
                         : DateFormat.yMd().format(_selectedDateEnd!),
-                    style: GoogleFonts.poppins(fontSize: 13, color: isDarkMode
+                    style: GoogleFonts.poppins(
+                      fontSize: 13,
+                      color: isDarkMode
                           ? Color.fromARGB(255, 205, 205, 205)
                           : Color.fromARGB(255, 66, 66, 66),
                     ),
@@ -235,13 +277,16 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                     _selectedTimeEnd == null
                         ? 'No Time Chosen'
                         : _selectedTimeEnd?.format(context) ?? '',
-                    style: GoogleFonts.poppins(fontSize: 13, color: isDarkMode
+                    style: GoogleFonts.poppins(
+                      fontSize: 13,
+                      color: isDarkMode
                           ? Color.fromARGB(255, 205, 205, 205)
                           : Color.fromARGB(255, 66, 66, 66),
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.access_time, color: Color(0xFF406AFF)),
+                    icon:
+                        const Icon(Icons.access_time, color: Color(0xFF406AFF)),
                     onPressed: () {
                       _showTimePicker('end');
                     },
@@ -257,10 +302,12 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                           _selectedTimeEnd != null
                       ? 'Duration: ${calculateDuration(_selectedDateStart!, _selectedTimeStart!, _selectedDateEnd!, _selectedTimeEnd!)}'
                       : 'No duration selected',
-                  style: GoogleFonts.poppins(fontSize: 13, color: isDarkMode
-                          ? Color.fromARGB(255, 205, 205, 205)
-                          : Color.fromARGB(255, 66, 66, 66),
-                    ),
+                  style: GoogleFonts.poppins(
+                    fontSize: 13,
+                    color: isDarkMode
+                        ? Color.fromARGB(255, 205, 205, 205)
+                        : Color.fromARGB(255, 66, 66, 66),
+                  ),
                 ),
               ),
               SizedBox(height: 30),
@@ -268,7 +315,6 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   ElevatedButton(
-                    
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
@@ -278,7 +324,6 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
-                          
                         ),
                       ),
                     ),
@@ -287,9 +332,91 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      setState(() {});
-                      // Handle send action here
-                      Navigator.of(context).pop();
+                      if (_titleController.text.isEmpty ||
+                          _selectedDateStart == null ||
+                          _selectedTimeStart == null ||
+                          _selectedDateEnd == null ||
+                          _selectedTimeEnd == null) {
+                        //show dialog
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text('Error'),
+                              content: const Text(
+                                  'Please fill in all fields before sending the invite'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                        return;
+                      }
+                      widget.interview != null
+                          ? () {
+                              print('update');
+                              widget.interview!.title = _titleController.text;
+                              widget.interview!.startTime = DateTime(
+                                _selectedDateStart!.year,
+                                _selectedDateStart!.month,
+                                _selectedDateStart!.day,
+                                _selectedTimeStart!.hour,
+                                _selectedTimeStart!.minute,
+                              );
+                              widget.interview!.endTime = DateTime(
+                                _selectedDateEnd!.year,
+                                _selectedDateEnd!.month,
+                                _selectedDateEnd!.day,
+                                _selectedTimeEnd!.hour,
+                                _selectedTimeEnd!.minute,
+                              );
+                              // Handle send action here
+                              print(widget.interview!.toMapInterviewUpdate());
+                              InterviewViewModel()
+                                  .updateScheduleInterviews(widget.interview!);
+                              Navigator.of(context).pop();
+                            }()
+                          : () {
+                              String meetingCode = base64Encode(utf8.encode(
+                                  '${_titleController.text}-${widget.user.id}-${widget.projectId}-${widget.receiverId}'));
+                              widget.interview = Interview(
+                                title: _titleController.text,
+                                content:
+                                    "${widget.user.fullname} want to schedule a meeting",
+                                startTime: DateTime(
+                                  _selectedDateStart!.year,
+                                  _selectedDateStart!.month,
+                                  _selectedDateStart!.day,
+                                  _selectedTimeStart!.hour,
+                                  _selectedTimeStart!.minute,
+                                ),
+                                endTime: DateTime(
+                                  _selectedDateEnd!.year,
+                                  _selectedDateEnd!.month,
+                                  _selectedDateEnd!.day,
+                                  _selectedTimeEnd!.hour,
+                                  _selectedTimeEnd!.minute,
+                                ),
+                                projectId: widget.projectId,
+                                senderId: widget.user.id,
+                                receiverId: widget.receiverId,
+                                meetingRoom: MeetingRoom(
+                                    // meeting_room_id: appId.toString(),
+                                    meeting_room_id: meetingCode,
+                                    meeting_room_code: meetingCode),
+                              );
+                              // Handle send action here
+                              print(widget.interview!.toMapInterview());
+                              InterviewViewModel()
+                                  .postScheduleInterviews(widget.interview!);
+                              Navigator.of(context).pop();
+                            }();
                     },
                     style: ButtonStyle(
                       backgroundColor:
@@ -300,8 +427,11 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                         ),
                       ),
                     ),
-                    child: Text("Send Invite",
-                        style: GoogleFonts.poppins(color: Colors.white)),
+                    child: widget.interview == null
+                        ? Text("Send Invite",
+                            style: GoogleFonts.poppins(color: Colors.white))
+                        : Text("Edit Invite",
+                            style: GoogleFonts.poppins(color: Colors.white)),
                   ),
                 ],
               ),

@@ -1,6 +1,6 @@
-import 'package:student_hub/models/student_registered.dart';
+import 'package:student_hub/models/not_use/student_registered.dart';
 
-class ProjectCompany{
+class ProjectCompany {
   final String projectName;
   final DateTime creationTime;
   final String description;
@@ -23,7 +23,8 @@ class ProjectCompany{
       'description': description,
       'duration': duration,
       'studentRequired': studentRequired,
-      'studentRegistered': studentRegistered.map((e) => e.toMapStudentRegistered()).toList(),
+      'studentRegistered':
+          studentRegistered.map((e) => e.toMapStudentRegistered()).toList(),
     };
   }
 
@@ -34,7 +35,8 @@ class ProjectCompany{
       description: map['description'],
       duration: map['duration'],
       studentRequired: map['studentRequired'],
-      studentRegistered: List<StudentRegistered>.from(map['studentRegistered'].map((e) => StudentRegistered.fromMapStudentRegistered(e))),
+      studentRegistered: List<StudentRegistered>.from(map['studentRegistered']
+          .map((e) => StudentRegistered.fromMapStudentRegistered(e))),
     );
   }
 }

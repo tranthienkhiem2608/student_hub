@@ -127,7 +127,9 @@ class _ChatRoomState extends State<ChatRoom> {
         });
   }
 
-  void _showScheduleInterviewDialog(BuildContext ctx) {
+  void _showScheduleInterviewDialog(
+    BuildContext ctx,
+  ) {
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -137,8 +139,12 @@ class _ChatRoomState extends State<ChatRoom> {
         builder: (BuildContext context) {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
-            return const SingleChildScrollView(
-              child: ScheduleInterviewDialog(),
+            return SingleChildScrollView(
+              child: ScheduleInterviewDialog(
+                  user: widget.user,
+                  projectId: widget.projectId,
+                  receiverId: widget.receiverId,
+                  interview: null),
             );
           });
         });
@@ -205,13 +211,28 @@ class _ChatRoomState extends State<ChatRoom> {
           ],
         ),
         actions: [
-          IconButton(
-            icon: Icon(
-              Icons.more_horiz_rounded,
-              color: isDarkMode ? Colors.white : Colors.black,
-            ),
-            onPressed: () {
-              _showOptions(context);
+          FutureBuilder<int>(
+            future: SharedPreferences.getInstance()
+                .then((prefs) => prefs.getInt('role') ?? 0),
+            builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData && snapshot.data != 0) {
+                  return IconButton(
+                    icon: Icon(
+                      Icons.more_horiz_rounded,
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                    onPressed: () {
+                      _showOptions(context);
+                    },
+                  );
+                } else {
+                  return SizedBox
+                      .shrink(); // Return an empty widget if role is not 0
+                }
+              } else {
+                return CircularProgressIndicator(); // Show a loading spinner while waiting for the future to complete
+              }
             },
           ),
         ],
@@ -241,6 +262,7 @@ class _ChatRoomState extends State<ChatRoom> {
                       senderId: widget.senderId,
                       receiverId: widget.receiverId,
                       projectId: widget.projectId,
+                      user: widget.user,
                       socket: socket),
                 ),
               ),

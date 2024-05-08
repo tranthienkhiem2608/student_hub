@@ -7,7 +7,7 @@ import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/widgets/add_account_widget.dart';
-import 'package:student_hub/models/company_user.dart';
+import 'package:student_hub/models/not_use/company_user.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class SwitchAccountView extends StatefulWidget {
@@ -83,7 +83,8 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                 color: isDarkMode ? Colors.white : Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
-        backgroundColor: isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
+        backgroundColor:
+            isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -148,8 +149,8 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: isDarkMode
-                                          ? Color.fromARGB(255, 90, 90, 90)!
-                                          : Colors.grey[200]!,
+                                ? Color.fromARGB(255, 90, 90, 90)!
+                                : Colors.grey[200]!,
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(0.0),

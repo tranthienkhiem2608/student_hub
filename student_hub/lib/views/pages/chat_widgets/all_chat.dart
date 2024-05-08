@@ -48,12 +48,12 @@ class _AllChatsState extends State<AllChats> {
       setState(() {
         newMess = Message.fromNewMessage(data);
         for (int i = 0; i < messages.length; i++) {
-          if (newMess.senderId == messages[i].sender!.id &&
+          if (newMess.sender!.id == messages[i].sender!.id &&
               newMess.projectId == messages[i].project!.id) {
             messages[i].checkRead = true;
             messages[i].content = newMess.content;
             messages[i].createAt = newMess.createAt;
-            saveSenderUnRead(newMess.senderId!, newMess.projectId!);
+            saveSenderUnRead(newMess.sender!.id, newMess.projectId!);
             break;
           }
         }
@@ -67,7 +67,7 @@ class _AllChatsState extends State<AllChats> {
     super.dispose();
   }
 
-  void saveSenderUnRead(int senderId, int projectId) async {
+  void saveSenderUnRead(int? senderId, int projectId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> unReadList = prefs.getStringList('unReadList') ?? [];
     //check if senderId is already in the list
@@ -257,7 +257,7 @@ class _AllChatsState extends State<AllChats> {
                                 ),
                               ),
                               Text(
-                                'You: ${allChat.content!.split(' ').take(4).join(' ') + (allChat.content!.split(' ').length > 4 ? '...' : '')}',
+                                'You: ${allChat.content!.split(' ').take(3).join(' ') + (allChat.content!.split(' ').length > 3 ? '...' : '')}',
                                 style: MyTheme.bodyText1,
                               ),
                             ],

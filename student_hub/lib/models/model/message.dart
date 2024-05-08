@@ -6,14 +6,11 @@ import 'package:student_hub/models/model/interview.dart';
 class Message {
   int? id;
   String? createAt;
-  int? senderId;
-  int? receiverId;
   int? projectId;
   User? sender;
   User? receiver;
   String? content;
   int? messageFlag;
-  Interview? interviewId;
   ProjectCompany? project;
   int? messageId;
   bool? checkRead = false;
@@ -23,14 +20,11 @@ class Message {
   Message({
     this.id,
     this.createAt,
-    this.senderId,
-    this.receiverId,
     this.projectId,
     this.sender,
     this.receiver,
     this.content,
     this.messageFlag,
-    this.interviewId,
     this.project,
     this.messageId,
     this.checkRead,
@@ -40,11 +34,11 @@ class Message {
 
   Map<String, dynamic> toMapSendMessage() {
     return {
+      'projectId': projectId,
       'content': content,
-      'projectId': project,
       'messageFlag': messageFlag,
-      'senderId': sender,
-      'receiverId': receiver,
+      'senderId': sender!.id,
+      'receiverId': receiver!.id,
     };
   }
 
@@ -53,9 +47,9 @@ class Message {
       id: map['id'],
       createAt: map['createdAt'],
       content: map['content'],
-      senderId: map['sender']['id'],
-      receiverId: map['receiver']['id'],
-      interviewId: map['interview'] == null
+      sender: User.fromMapUserChat(map['sender']),
+      receiver: User.fromMapUserChat(map['receiver']),
+      interview: map['interview'] == null
           ? null
           : Interview.fromMapInterview(map['interview']),
       project: map['project'] == null
@@ -74,19 +68,22 @@ class Message {
 
   factory Message.fromNewMessage(Map<String, dynamic> map) {
     return Message(
+      id: map['notification']['message']['id'],
       content: map['notification']['message']['content'],
-      senderId: map['notification']['message']['senderId'],
-      receiverId: map['notification']['message']['receiverId'],
+      sender: User.fromMapUserChat(map['notification']['sender']),
+      receiver: User.fromMapUserChat(map['notification']['receiver']),
       projectId: map['notification']['message']['projectId'],
       createAt: map['notification']['message']['createdAt'],
       messageFlag: map['messageFlag'],
       messageId: map['notification']['messageId'],
-      interview: map['notification']['interview'] == null
+      interview: map['notification']['message']['interview'] == null
           ? null
-          : Interview.fromMapInterview(map['notification']['interview']),
-      meetingRoom: map['notification']['meetingRoom'] == null
+          : Interview.fromMapInterview(
+              map['notification']['message']['interview']),
+      meetingRoom: map['notification']['message']['interview'] == null
           ? null
-          : MeetingRoom.fromMapMeetingRoom(map['notification']['meetingRoom']),
+          : MeetingRoom.fromMapMeetingRoom(
+              map['notification']['message']['interview']['meetingRoom']),
     );
   }
 
@@ -97,7 +94,7 @@ class Message {
       content: map['content'],
       sender: User.fromMapUserChat(map['sender']),
       receiver: User.fromMapUserChat(map['receiver']),
-      interviewId: map['interview'] == null
+      interview: map['interview'] == null
           ? null
           : Interview.fromMapInterview(map['interview']),
       project: map['project'] == null
