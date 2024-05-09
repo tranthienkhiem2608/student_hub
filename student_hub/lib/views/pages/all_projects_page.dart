@@ -99,6 +99,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
                               builder: (context) => HireStudentScreen(
                                 projectCompany: project.data![index],
                                 user: widget.user,
+                                initialTabIndex: 0,
                               ),
                             ),
                           );

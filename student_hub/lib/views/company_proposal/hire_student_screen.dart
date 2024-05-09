@@ -11,79 +11,93 @@ import 'package:student_hub/views/pages/project_detail/hired_page.dart';
 import 'package:student_hub/views/pages/project_detail/proposals_page.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
-import '../../models/not_use/student_registered.dart';
-
 class HireStudentScreen extends StatefulWidget {
   final ProjectCompany projectCompany;
   final User user;
+  final int initialTabIndex;
 
   const HireStudentScreen(
-      {super.key, required this.projectCompany, required this.user});
+      {Key? key,
+      required this.projectCompany,
+      required this.user,
+      required this.initialTabIndex})
+      : super(key: key);
+
   @override
   _HireStudentScreenState createState() => _HireStudentScreenState();
 }
 
-class _HireStudentScreenState extends State<HireStudentScreen> {
-  List<StudentRegistered> hiredStudents = []; // để tạm thời
+class _HireStudentScreenState extends State<HireStudentScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 4, vsync: this);
+    _tabController.index = widget.initialTabIndex; // Set initial index
+  }
 
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        backgroundColor:
-            isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
-        appBar: _AppBar(),
-        body: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.fromLTRB(15, 5, 5, 0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  widget.projectCompany.title!,
-                  style: GoogleFonts.poppins(
-                      fontSize: 19,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF406AFF)),
+    return Scaffold(
+      backgroundColor:
+          isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
+      appBar: _AppBar(),
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.fromLTRB(15, 5, 5, 0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                widget.projectCompany.title!,
+                style: GoogleFonts.poppins(
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF406AFF),
                 ),
               ),
             ),
-            TabBar(
-              indicatorColor: Color(0xFF406AFF),
-              labelColor: Color(0xFF406AFF),
-              dividerColor: isDarkMode
-                  ? const Color.fromARGB(255, 47, 47, 47)
-                  : Colors.white,
-              labelStyle: GoogleFonts.poppins(
-                  fontSize: 13, fontWeight: FontWeight.bold),
-              unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
-              tabs: [
-                Tab(text: 'Proposals'),
-                Tab(text: 'Details'),
-                Tab(text: 'Messages'),
-                Tab(text: 'Hired'),
+          ),
+          TabBar(
+            controller: _tabController,
+            indicatorColor: Color(0xFF406AFF),
+            labelColor: Color(0xFF406AFF),
+            dividerColor: isDarkMode
+                ? const Color.fromARGB(255, 47, 47, 47)
+                : Colors.white,
+            labelStyle: GoogleFonts.poppins(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
+            unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
+            tabs: const [
+              Tab(text: 'Proposals'),
+              Tab(text: 'Details'),
+              Tab(text: 'Messages'),
+              Tab(text: 'Hired'),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                ProposalsPage(
+                  projectCompany: widget.projectCompany,
+                  user: widget.user,
+                ),
+                DetailPage(projectCompany: widget.projectCompany),
+                MessagePage(widget.projectCompany, widget.user, checkFlag: 1),
+                HiredPage(
+                  projectCompany: widget.projectCompany,
+                  user: widget.user,
+                ),
               ],
             ),
-            Expanded(
-              child: TabBarView(
-                children: [
-                  ProposalsPage(
-                    projectCompany: widget.projectCompany,
-                    user: widget.user,
-                  ),
-                  DetailPage(projectCompany: widget.projectCompany),
-                  MessagePage(widget.projectCompany, widget.user, checkFlag: 1),
-                  HiredPage(
-                    projectCompany: widget.projectCompany,
-                    user: widget.user,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

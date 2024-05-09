@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_hub/models/model/proposal.dart';
+import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/views/auth/chooserole_view.dart';
 import 'package:student_hub/views/auth/forgort_password_view.dart';
+import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
+import 'package:student_hub/views/pages/message_page.dart';
+import 'package:student_hub/views/pages/project_detail/detail_page.dart';
+import 'package:student_hub/views/pages/project_detail/hired_page.dart';
+import 'package:student_hub/views/pages/project_detail/proposals_page.dart';
 import 'package:student_hub/views/profile_creation/company/edit_profile.dart';
 import 'package:student_hub/views/profile_creation/student/edit_profile_student.dart';
 import 'package:student_hub/views/profile_creation/student/home_view.dart';
@@ -156,6 +161,19 @@ class ControllerRoute {
                 receiverName: receiverName,
                 user: user,
                 flagCheck: flagCheck,
+              )),
+    );
+  }
+
+  void navigateToTabHireStudentScreen(
+      ProjectCompany projectCompany, User user, int tabIndex) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => HireStudentScreen(
+                projectCompany: projectCompany,
+                user: user,
+                initialTabIndex: tabIndex,
               )),
     );
   }

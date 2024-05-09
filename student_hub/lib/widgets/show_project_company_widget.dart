@@ -6,6 +6,7 @@ import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 
 import 'package:student_hub/view_models/project_company_viewModel.dart';
+import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 import 'package:student_hub/view_models/proposal_viewModel.dart';
 
@@ -86,7 +87,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                           fontSize: 15)),
                 ),
                 onPressed: () {
-                  // Handle view proposals
+                  ControllerRoute(context).navigateToTabHireStudentScreen(
+                      widget.projectCompany, widget.user!, 0);
                 },
               ),
               TextButton(
@@ -98,7 +100,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                           fontSize: 15)),
                 ),
                 onPressed: () {
-                  // Handle view messages
+                  ControllerRoute(context).navigateToTabHireStudentScreen(
+                      widget.projectCompany, widget.user!, 2);
                 },
               ),
               TextButton(
@@ -110,7 +113,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                           fontSize: 15)),
                 ),
                 onPressed: () {
-                  // Handle view hired
+                  ControllerRoute(context).navigateToTabHireStudentScreen(
+                      widget.projectCompany, widget.user!, 3);
                 },
               ),
               Divider(),
@@ -123,7 +127,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                           fontSize: 15)),
                 ),
                 onPressed: () {
-                  // Handle view job posting
+                  ControllerRoute(context).navigateToTabHireStudentScreen(
+                      widget.projectCompany, widget.user!, 1);
                 },
               ),
               TextButton(
