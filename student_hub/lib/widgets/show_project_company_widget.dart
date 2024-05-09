@@ -129,7 +129,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               TextButton(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('Achieve project',
+                  child: Text('Archieve project',
                       style: GoogleFonts.poppins(
                           color: isDarkMode ? Colors.white : Colors.black,
                           fontSize: 15)),
