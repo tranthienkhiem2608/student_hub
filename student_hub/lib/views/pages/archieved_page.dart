@@ -9,10 +9,10 @@ import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class ArchivedPage extends StatefulWidget {
   final User user;
-  final Future<List<ProjectCompany>> fetchProjectData;
+  final Future<List<ProjectCompany>> Function() fetchProjectDataFunction;
 
   const ArchivedPage(
-      {super.key, required this.user, required this.fetchProjectData});
+      {super.key, required this.user, required this.fetchProjectDataFunction});
   @override
   _ArchivedPageState createState() => _ArchivedPageState();
 }
@@ -24,7 +24,7 @@ class _ArchivedPageState extends State<ArchivedPage>
 
   void _handleProjectDeleted() {
     setState(() {
-      futureProjects = widget.fetchProjectData;
+      futureProjects = widget.fetchProjectDataFunction();
     });
   }
 
@@ -35,9 +35,8 @@ class _ArchivedPageState extends State<ArchivedPage>
     // companyId = widget.user!.companyUser!.id!;
     setState(() {
       // Update your state here
-      futureProjects = widget.fetchProjectData;
+      futureProjects = widget.fetchProjectDataFunction();
     });
-    //print projectList;
   }
 
   @override
@@ -53,7 +52,7 @@ class _ArchivedPageState extends State<ArchivedPage>
         if (mounted) {
           setState(() {
             // Update your state here
-            futureProjects = widget.fetchProjectData;
+            futureProjects = widget.fetchProjectDataFunction();
           });
         }
       }
@@ -82,7 +81,7 @@ class _ArchivedPageState extends State<ArchivedPage>
                 } else if (project.hasData && project.data!.isEmpty) {
                   return Center(
                       child: Text(
-                        textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
                           "\t\tWelcome, ${widget.user.fullname}!. You no archived in progress",
                           style: GoogleFonts.poppins(
                             fontSize: 15,
@@ -93,8 +92,6 @@ class _ArchivedPageState extends State<ArchivedPage>
                   return ListView.builder(
                     itemCount: project.data!.length,
                     itemBuilder: (context, index) {
-                      print(project.data![index].title);
-                      print(project.data![index].description);
                       if (project.data![index].typeFlag == 1 ||
                           project.data![index].typeFlag == 0 ||
                           project.data![index].typeFlag == null) {

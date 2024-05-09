@@ -69,7 +69,6 @@ class _DashboardPageState extends State<DashboardPage> {
         backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
         appBar: AppBar(
           backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
-
           automaticallyImplyLeading: false,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -108,7 +107,9 @@ class _DashboardPageState extends State<DashboardPage> {
             labelColor: isDarkMode ? Colors.white : Colors.black,
             labelStyle: GoogleFonts.poppins(fontWeight: FontWeight.bold),
             unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
-            dividerColor: isDarkMode ? const Color.fromARGB(255, 47, 47, 47) : Colors.white,
+            dividerColor: isDarkMode
+                ? const Color.fromARGB(255, 47, 47, 47)
+                : Colors.white,
             tabs: const [
               Tab(text: 'All Projects'),
               Tab(text: 'Working'),
@@ -128,7 +129,8 @@ class _DashboardPageState extends State<DashboardPage> {
                 ),
           WorkingPage(
               user: widget.user, fetchProjectDataFunction: fetchDataProject),
-          ArchivedPage(user: widget.user, fetchProjectData: fetchDataProject()),
+          ArchivedPage(
+              user: widget.user, fetchProjectDataFunction: fetchDataProject),
         ]),
       ),
     );

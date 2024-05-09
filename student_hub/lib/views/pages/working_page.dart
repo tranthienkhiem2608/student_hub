@@ -35,7 +35,6 @@ class _WorkingPageState extends State<WorkingPage> with WidgetsBindingObserver {
       // Update your state here
       futureProjects = widget.fetchProjectDataFunction();
     });
-    //print projectList;
   }
 
   @override
@@ -80,7 +79,7 @@ class _WorkingPageState extends State<WorkingPage> with WidgetsBindingObserver {
                 } else if (project.hasData && project.data!.isEmpty) {
                   return Center(
                       child: Text(
-                        textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
                           "\t\tWelcome, ${widget.user.fullname}!. You no working in progress",
                           style: GoogleFonts.poppins(
                             fontSize: 15,
@@ -91,8 +90,6 @@ class _WorkingPageState extends State<WorkingPage> with WidgetsBindingObserver {
                   return ListView.builder(
                     itemCount: project.data!.length,
                     itemBuilder: (context, index) {
-                      print(project.data![index].title);
-                      print(project.data![index].description);
                       if (project.data![index].typeFlag == null ||
                           project.data![index].typeFlag == 2 ||
                           project.data![index].typeFlag == 0) {

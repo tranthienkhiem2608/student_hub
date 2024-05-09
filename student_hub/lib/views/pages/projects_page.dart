@@ -26,7 +26,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   List<ProjectCompany> projectsList = [];
   List<ProjectCompany> filteredProjects = [];
   List<String> suggestions = [];
-  int itemsPerPage = 5;
+  static const int itemsPerPage = 5;
   int currentPage = 1;
   bool isLoading = false;
   bool hasMoreData = true;
@@ -212,7 +212,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       child: Container(
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: isDarkMode ? Colors.white : Colors.black,// Choose your border color
+                            color: isDarkMode
+                                ? Colors.white
+                                : Colors.black, // Choose your border color
                             width: 1.0, // Choose the border width
                           ),
                           borderRadius: BorderRadius.circular(
@@ -223,7 +225,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           decoration: InputDecoration(
                             hintText: 'Search for projects...',
                             hintStyle: GoogleFonts.poppins(
-                              color: isDarkMode ? Color.fromARGB(255, 98, 98, 98) : Colors.black,
+                              color: isDarkMode
+                                  ? Color.fromARGB(255, 98, 98, 98)
+                                  : Colors.black,
                             ),
                             prefixIcon: Icon(
                               Icons.search,

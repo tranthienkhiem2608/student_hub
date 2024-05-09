@@ -129,6 +129,21 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               TextButton(
                 child: Align(
                   alignment: Alignment.center,
+                  child: Text('Achieve project',
+                      style: GoogleFonts.poppins(
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          fontSize: 15)),
+                ),
+                onPressed: () {
+                  widget.projectCompany.typeFlag = 2;
+                  // Handle achieve project
+                  ProposalViewModel(context)
+                      .setStartWorking(widget.projectCompany, widget.user!);
+                },
+              ),
+              TextButton(
+                child: Align(
+                  alignment: Alignment.center,
                   child: Text('Edit posting',
                       style: GoogleFonts.poppins(
                           color: isDarkMode ? Colors.white : Colors.black,
@@ -297,7 +312,10 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 child: Text(quantity.toString(),
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
-                        fontSize: 13, fontWeight: FontWeight.w500, color: isDarkMode ? Colors.white : Colors.black,)),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    )),
               );
             }).toList(),
           ),
@@ -308,7 +326,10 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 child: Text(label,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.poppins(
-                        fontSize: 12, fontWeight: FontWeight.w500, color: isDarkMode ? Colors.white : Colors.black,)),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    )),
               );
             }).toList(),
           ),

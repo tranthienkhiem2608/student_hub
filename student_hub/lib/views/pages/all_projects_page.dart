@@ -80,7 +80,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
                 } else if (project.hasData && project.data!.isEmpty) {
                   return Center(
                       child: Text(
-                        textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
                           "\t\tWelcome, ${widget.user.fullname}!. You no have jobs",
                           style: GoogleFonts.poppins(
                             fontSize: 15,
@@ -91,9 +91,6 @@ class _AllProjectsPageState extends State<AllProjectsPage>
                   return ListView.builder(
                     itemCount: project.data!.length,
                     itemBuilder: (context, index) {
-                      print(project.data![index].title);
-                      print(project.data![index].description);
-
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
