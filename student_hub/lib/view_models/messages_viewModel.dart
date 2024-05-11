@@ -57,7 +57,7 @@ class MessagesViewModel {
       if (responseDecode['result'] != null) {
         print("Connected to the server successfully");
         print("Connect server successful");
-        print(response);
+        // print(response);
         List<Message> messages =
             Message.formListMapMessage(responseDecode['result']);
         return messages;
@@ -91,5 +91,25 @@ class MessagesViewModel {
       print(e);
     }
     return [];
+  }
+
+  Future<void> setReadMess(int notificationId) async {
+    print('setReadMess');
+    print(notificationId);
+    try {
+      var response = await ConnectionService()
+          .patch('/api/notification/readNoti/$notificationId', {});
+      var responseDecode = jsonDecode(response);
+      if (responseDecode != null) {
+        print("Set Connected to the server successfully");
+        print("Connect server successful");
+        print(response);
+      } else {
+        print("Failed");
+        print(responseDecode);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

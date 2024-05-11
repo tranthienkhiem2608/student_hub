@@ -46,15 +46,15 @@ class _ChatRoomState extends State<ChatRoom> {
 
   @override
   void dispose() {
-    super.dispose();
     socket.disconnect();
+    // socket.dispose();
+    super.dispose();
   }
 
   void connect() {
     socket = SocketService().connectSocket();
     socket.io.options?['query'] = {'project_id': widget.projectId};
     print('query: ${socket.io.options?['query']}');
-    //print all url to connect socket
     print(socket.io.uri);
     socket.connect();
 

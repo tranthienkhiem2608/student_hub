@@ -1,4 +1,5 @@
 import 'package:student_hub/models/model/meetingRoom.dart';
+import 'package:student_hub/models/model/notification.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/models/model/interview.dart';
@@ -6,6 +7,10 @@ import 'package:student_hub/models/model/interview.dart';
 class Message {
   int? id;
   String? createAt;
+  String? updateAt;
+  String? deletedAt;
+  int? senderId;
+  int? receiverId;
   int? projectId;
   User? sender;
   User? receiver;
@@ -14,12 +19,19 @@ class Message {
   ProjectCompany? project;
   int? messageId;
   bool? checkRead = false;
+  String? typeNotifyFlag;
+  String? notifyFlag;
   Interview? interview;
   MeetingRoom? meetingRoom;
+  Notify? notification;
 
   Message({
     this.id,
     this.createAt,
+    this.updateAt,
+    this.deletedAt,
+    this.senderId,
+    this.receiverId,
     this.projectId,
     this.sender,
     this.receiver,
@@ -28,8 +40,11 @@ class Message {
     this.project,
     this.messageId,
     this.checkRead,
+    this.notifyFlag,
+    this.typeNotifyFlag,
     this.interview,
     this.meetingRoom,
+    this.notification,
   });
 
   Map<String, dynamic> toMapSendMessage() {
@@ -44,6 +59,7 @@ class Message {
 
   factory Message.fromMapMessage(Map<String, dynamic> map) {
     return Message(
+      // notifyFlag: map['notifyFlag'] ?? 1,
       id: map['id'],
       createAt: map['createdAt'],
       content: map['content'],
@@ -68,6 +84,8 @@ class Message {
 
   factory Message.fromNewMessage(Map<String, dynamic> map) {
     return Message(
+      notifyFlag: map['notification']['notifyFlag'],
+      typeNotifyFlag: map['notification']['typeNotifyFlag'],
       id: map['notification']['message']['id'],
       content: map['notification']['message']['content'],
       sender: User.fromMapUserChat(map['notification']['sender']),
@@ -100,6 +118,9 @@ class Message {
       project: map['project'] == null
           ? null
           : ProjectCompany.fromMapAllProject(map['project']),
+      notification: map['notifications'] == null
+          ? null
+          : Notify.fromMapNoteLastMessage(map['notifications']),
     );
   }
 
@@ -109,5 +130,20 @@ class Message {
       messages.add(Message.fromMapLastMessage(message));
     }
     return messages;
+  }
+
+  factory Message.fromMapNote(Map<String, dynamic> map) {
+    return Message(
+      id: map['id'],
+      createAt: map['createdAt'],
+      content: map['content'],
+      senderId: map['senderId'],
+      receiverId: map['receiverId'],
+      projectId: map['projectId'],
+      messageFlag: map['messageFlag'],
+      interview: map['interview'] == null
+          ? null
+          : Interview.fromMapInterview(map['interview']),
+    );
   }
 }

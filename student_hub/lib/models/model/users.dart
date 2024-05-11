@@ -56,7 +56,7 @@ class User {
         id: map['id'],
         fullname: map['fullname'],
       );
-  factory User.fromMapUserNotification(Map<String, dynamic> map) => User(
+  factory User.fromMapUserNotify(Map<String, dynamic> map) => User(
         id: map['id'],
         fullname: map['fullname'],
         email: map['email'],

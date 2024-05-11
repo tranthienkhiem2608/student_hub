@@ -9,6 +9,7 @@ import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/project_detail/detail_page.dart';
 import 'package:student_hub/views/pages/project_detail/hired_page.dart';
 import 'package:student_hub/views/pages/project_detail/proposals_page.dart';
+import 'package:student_hub/views/pages/chat_screen/video_conference_page.dart';
 import 'package:student_hub/views/profile_creation/company/edit_profile.dart';
 import 'package:student_hub/views/profile_creation/student/edit_profile_student.dart';
 import 'package:student_hub/views/profile_creation/student/home_view.dart';
@@ -175,6 +176,15 @@ class ControllerRoute {
                 user: user,
                 initialTabIndex: tabIndex,
               )),
+    );
+  }
+
+  void navigateToVideoRoom(User user, String meetingCode) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              VideoConferencePage(conferenceID: meetingCode, user: user)),
     );
   }
 }

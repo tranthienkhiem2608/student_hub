@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/services/socket_services.dart';
 import 'package:student_hub/view_models/nav_bottom_controller.dart';
 import 'package:student_hub/views/auth/switch_account_view.dart';
 import 'package:student_hub/views/pages/alert_page.dart';
@@ -12,6 +13,7 @@ import 'package:student_hub/views/pages/dashboard_page.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class HomePage extends StatefulWidget {
   final User? user;
@@ -45,7 +47,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
               color: isDarkMode ? Colors.white : Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
+      backgroundColor:
+          isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
       actions: <Widget>[
         IconButton(
           icon: Container(
@@ -79,10 +82,12 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 class _HomePageState extends State<HomePage> {
   late List<Widget> _pages;
   late BottomNavController _navController;
+  late IO.Socket socket;
 
   @override
   void initState() {
     super.initState();
+    socket = connect();
     _navController = BottomNavController(pageDefault: widget.pageDefault!);
 
     _pages = [
@@ -92,8 +97,9 @@ class _HomePageState extends State<HomePage> {
         null,
         widget.user,
         checkFlag: 0,
+        socket: socket,
       ),
-      AlertPage(),
+      AlertPage(widget.user, socket),
     ];
     if (widget.showAlert == true) {
       Future.delayed(Duration.zero, () {
@@ -103,12 +109,21 @@ class _HomePageState extends State<HomePage> {
           text:
               'Welcome to StudentHub, a marketplace to connect Student <> Real-world projects',
           title: 'Welcome',
-          // showConfirmBtn: true,
-          // customAsset: 'assets/alerts/success.gif',
           confirmBtnText: 'Next',
         );
       });
     }
+  }
+
+  IO.Socket connect() {
+    IO.Socket socket = SocketService().connectSocket();
+    return socket;
+  }
+
+  @override
+  void dispose() {
+    socket.disconnect();
+    super.dispose();
   }
 
   @override
@@ -128,7 +143,9 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            color: isDarkMode ? Color.fromARGB(255, 20, 20, 20) : Color(0xFF406AFF),
+            color: isDarkMode
+                ? Color.fromARGB(255, 20, 20, 20)
+                : Color(0xFF406AFF),
             borderRadius: BorderRadius.circular(32),
           ),
           child: Padding(

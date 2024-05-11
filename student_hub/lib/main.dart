@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/views/homescreen/welcome_view.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp(
@@ -34,7 +35,25 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: WelcomePage(),
+      home: FutureBuilder(
+        // Request the camera permission when the app starts
+        future: requestCameraPermission(),
+        builder: (context, snapshot) {
+          // Show the WelcomePage when permission is granted
+          if (snapshot.connectionState == ConnectionState.done) {
+            return WelcomePage();
+          }
+          // Show a loading spinner while waiting for permission
+          return CircularProgressIndicator();
+        },
+      ),
     );
+  }
+
+  Future<void> requestCameraPermission() async {
+    var status = await Permission.camera.status;
+    if (!status.isGranted) {
+      await Permission.camera.request();
+    }
   }
 }

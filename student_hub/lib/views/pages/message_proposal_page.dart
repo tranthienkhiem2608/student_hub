@@ -15,19 +15,18 @@ import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class MessagePage extends StatefulWidget {
-  const MessagePage(this.projectCompany, this.user,
-      {required this.checkFlag, required this.socket, super.key});
+class MessageProposalPage extends StatefulWidget {
+  const MessageProposalPage(this.projectCompany, this.user,
+      {required this.checkFlag, super.key});
   final int checkFlag;
   final ProjectCompany? projectCompany;
   final User? user;
-  final IO.Socket socket;
 
   @override
-  State<MessagePage> createState() => _MessagePageState();
+  State<MessageProposalPage> createState() => _MessageProposalPageState();
 }
 
-class _MessagePageState extends State<MessagePage>
+class _MessageProposalPageState extends State<MessageProposalPage>
     with TickerProviderStateMixin {
   late TabController tabController;
   int currentTabIndex = 0;
@@ -35,8 +34,8 @@ class _MessagePageState extends State<MessagePage>
   List<String> suggestions = []; // For search suggestions
   final TextEditingController _searchController = TextEditingController();
   List<Message> messages = [];
-  // late IO.Socket socket;
-  // late Timer? _timer;
+  late IO.Socket socket;
+  late Timer? _timer;
 
   final List<UserChat> allUsers = [
     addison,
@@ -67,22 +66,22 @@ class _MessagePageState extends State<MessagePage>
     });
 
     filteredUsers.addAll(messages);
-    // connect();
-    // _timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());
+    connect();
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());
   }
 
   @override
   void dispose() {
     _searchController.dispose();
-    // _timer?.cancel();
-    // socket.disconnect();
+    _timer?.cancel();
+    socket.disconnect();
     super.dispose();
   }
 
-  // void connect() {
-  //   socket = SocketService().connectSocket();
-  //   socket.connect();
-  // }
+  void connect() {
+    socket = SocketService().connectSocket();
+    socket.connect();
+  }
 
   Future<List<Message>> fetchMessages() async {
     List<Message> messages = await MessagesViewModel().getLastMessage();
@@ -284,8 +283,7 @@ class _MessagePageState extends State<MessagePage>
               decoration: const BoxDecoration(
                   // ... (your decoration here)
                   ),
-              child: ChatPage(
-                  user: widget.user!, socket: widget.socket), // Chat page
+              child: ChatPage(user: widget.user!, socket: socket!), // Chat page
             ),
           )
         ],
