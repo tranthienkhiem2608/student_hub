@@ -15,7 +15,8 @@ void main() {
 
 bool addAuthorizationToSocket() {
   SharedPreferences.getInstance().then((prefs) {
-    bool isDarkMode = prefs.getBool('isDarkMode')!;
+    bool isDarkMode =
+        prefs.containsKey('isDarkMode') ? prefs.getBool('isDarkMode')! : false;
     print("Darkmode: $isDarkMode");
 
     return isDarkMode;

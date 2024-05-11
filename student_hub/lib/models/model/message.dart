@@ -1,3 +1,4 @@
+import 'package:student_hub/models/model/meetingRoom.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/models/model/interview.dart';
@@ -15,7 +16,9 @@ class Message {
   Interview? interviewId;
   ProjectCompany? project;
   int? messageId;
-  bool? checkRead;
+  bool? checkRead = false;
+  Interview? interview;
+  MeetingRoom? meetingRoom;
 
   Message({
     this.id,
@@ -31,6 +34,8 @@ class Message {
     this.project,
     this.messageId,
     this.checkRead,
+    this.interview,
+    this.meetingRoom,
   });
 
   Map<String, dynamic> toMapSendMessage() {
@@ -69,12 +74,19 @@ class Message {
 
   factory Message.fromNewMessage(Map<String, dynamic> map) {
     return Message(
-      content: map['content'],
-      senderId: map['senderId'],
-      receiverId: map['receiverId'],
-      createAt: DateTime.now().toString(),
+      content: map['notification']['message']['content'],
+      senderId: map['notification']['message']['senderId'],
+      receiverId: map['notification']['message']['receiverId'],
+      projectId: map['notification']['message']['projectId'],
+      createAt: map['notification']['message']['createdAt'],
       messageFlag: map['messageFlag'],
-      messageId: map['messageId'],
+      messageId: map['notification']['messageId'],
+      interview: map['notification']['interview'] == null
+          ? null
+          : Interview.fromMapInterview(map['notification']['interview']),
+      meetingRoom: map['notification']['meetingRoom'] == null
+          ? null
+          : MeetingRoom.fromMapMeetingRoom(map['notification']['meetingRoom']),
     );
   }
 

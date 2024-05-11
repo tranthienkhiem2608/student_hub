@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:student_hub/app_theme.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/services/socket_services.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/views/pages/chat_widgets/composer.dart';
 import 'package:student_hub/views/pages/chat_widgets/conversation.dart';
@@ -35,8 +36,6 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  static const String _socketUrl = 'https://api.studenthub.dev';
-
   late IO.Socket socket;
 
   @override
@@ -52,43 +51,27 @@ class _ChatRoomState extends State<ChatRoom> {
   }
 
   void connect() {
-    socket = IO.io(
-        _socketUrl,
-        OptionBuilder()
-            .setTransports(['websocket']) // for Flutter or Dart VM
-            .disableAutoConnect() // disable auto-connection
-            .build());
-    SharedPreferences.getInstance().then((prefs) {
-      String token = prefs.getString('token')!;
-      print("Token: $token");
-      socket.io.options?['extraHeaders'] = {
-        'Authorization': 'Bearer $token',
-      };
-      socket.io.options?['query'] = {'project_id': widget.projectId};
-      print('query: ${socket.io.options?['query']}');
-      //print all url to connect socket
-      print(socket.io.uri);
-      socket.connect();
-      // socket.onConnect((data) {
-      //   print('connected');
-      //   print(socket.connected); // print here
-      // });
+    socket = SocketService().connectSocket();
+    socket.io.options?['query'] = {'project_id': widget.projectId};
+    print('query: ${socket.io.options?['query']}');
+    //print all url to connect socket
+    print(socket.io.uri);
+    socket.connect();
 
-      socket.on('RECEIVE_MESSAGE', (data) {
-        print("Chat room: $data");
-      });
-      socket.on('NOTI_1', (data) {
-        print(data);
-      });
-
-      socket.on('ERROR', (data) {
-        print(data);
-      });
-
-      socket.onConnectError(
-          (data) => print('Error connection: ${data.toString()}'));
-      socket.onError((data) => print('Error connection: ${data.toString()}'));
+    socket.on('RECEIVE_MESSAGE', (data) {
+      print("Chat room: $data");
     });
+    socket.on('NOTI_${widget.user.id}', (data) {
+      print(data);
+    });
+
+    socket.on('ERROR', (data) {
+      print(data);
+    });
+
+    socket.onConnectError(
+        (data) => print('Error connection: ${data.toString()}'));
+    socket.onError((data) => print('Error connection: ${data.toString()}'));
   }
 
   void _showOptions(BuildContext context) {
@@ -241,7 +224,10 @@ class _ChatRoomState extends State<ChatRoom> {
         },
         child: Column(
           children: [
-            Container(height: 10, color: isDarkMode ? Color(0xFF212121) : Colors.white,),
+            Container(
+              height: 10,
+              color: isDarkMode ? Color(0xFF212121) : Colors.white,
+            ),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -259,8 +245,8 @@ class _ChatRoomState extends State<ChatRoom> {
                 ),
               ),
             ),
-            buildChatComposer(
-                socket, widget.projectId, widget.senderId, widget.receiverId, context),
+            buildChatComposer(socket, widget.projectId, widget.senderId,
+                widget.receiverId, context),
           ],
         ),
       ),
