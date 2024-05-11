@@ -98,14 +98,22 @@ class _ConversationState extends State<Conversation> {
                       children: [
                         Text(
                           "${DateFormat('yyyy-MM-dd').format(DateTime.parse(messages[index + 1].createAt!))} AT ${DateFormat('hh:mm a').format(DateTime.parse(message.createAt!))}",
-                          style: MyTheme.bodyTextTime,
+                          style: GoogleFonts.poppins(
+                          color: Color.fromARGB(255, 146, 146, 146),
+                          fontSize: 12,
+                        ),
+
                         ),
                       ],
                     )
                   : Text(
                       DateFormat('hh:mm a')
                           .format(DateTime.parse(message.createAt!)),
-                      style: MyTheme.bodyTextTime,
+                      style: GoogleFonts.poppins(
+                          color: Color.fromARGB(255, 146, 146, 146),
+                          fontSize: 12,
+                        ),
+
                     ),
               Container(
                 margin: const EdgeInsets.only(top: 10),
