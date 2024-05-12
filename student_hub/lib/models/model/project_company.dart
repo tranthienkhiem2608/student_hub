@@ -16,6 +16,7 @@ class ProjectCompany {
   int? countMessages;
   int? countHired;
   bool isFavorite;
+  int? status;
 
   ProjectCompany({
     this.id,
@@ -33,6 +34,7 @@ class ProjectCompany {
     this.countMessages,
     this.countHired,
     this.isFavorite = false,
+    this.status,
   });
 
   Map<String, dynamic> toMapProjectCompany() {
@@ -43,6 +45,7 @@ class ProjectCompany {
       'description': description,
       'typeFlag': typeFlag,
       'numberOfStudents': numberOfStudents,
+      'status': status,
     };
   }
 
