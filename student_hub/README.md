@@ -8,9 +8,11 @@ https://youtube.com/playlist?list=PLOLO_k_A82lnogaT9H7bEPGKb10vVMHus&si=hB0ZJMet
 
 # Scoring sheet
 
-https://docs.google.com/document/d/1YDKLOzxPx-NJkjhEwKjSoAWoq4p9QSQN/edit?usp=sharing&ouid=116625689699023547520&rtpof=true&sd=true
+https://drive.google.com/drive/folders/1pzBuVOmn6u-X1pTKjxUn0ZCFfYiPdiAM?usp=sharing
 
 # Report
+
+https://drive.google.com/drive/folders/1pzBuVOmn6u-X1pTKjxUn0ZCFfYiPdiAM?usp=sharing
 
 ## Getting Started
 
