@@ -14,7 +14,8 @@ import 'package:student_hub/widgets/theme/dark_mode.dart';
 class ProjectList extends StatefulWidget {
   final List<ProjectCompany> projects;
   final User user;
-  final Future<List<ProjectCompany>> Function(int, int) fetchAllProjects;
+  final Future<List<ProjectCompany>> Function(
+      int, int, String?, String?, String?, String?) fetchAllProjects;
   ScrollController scrollController;
   ProjectList(
       {Key? key,
@@ -53,8 +54,8 @@ class _ProjectListState extends State<ProjectList> {
       });
 
       // Fetch the next page of data
-      List<ProjectCompany> newProjects =
-          await widget.fetchAllProjects(currentPage, itemsPerPage);
+      List<ProjectCompany> newProjects = await widget.fetchAllProjects(
+          currentPage, itemsPerPage, null, null, null, null);
 
       // Update the state with the new data
       setState(() {
@@ -125,13 +126,17 @@ class _ProjectListState extends State<ProjectList> {
                   decoration: BoxDecoration(
                     color: isDarkMode ? Color(0xFF2f2f2f) : Colors.white,
                     border: Border.all(
-                      color: isDarkMode ? Color.fromARGB(255, 60, 60, 60) : Color.fromARGB(255, 228, 228, 233),
+                      color: isDarkMode
+                          ? Color.fromARGB(255, 60, 60, 60)
+                          : Color.fromARGB(255, 228, 228, 233),
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(20.0),
                     boxShadow: [
                       BoxShadow(
-                        color: isDarkMode ? Color(0xFF212121) : Colors.grey.withOpacity(0.25),
+                        color: isDarkMode
+                            ? Color(0xFF212121)
+                            : Colors.grey.withOpacity(0.25),
                         spreadRadius: 1,
                         blurRadius: 6,
                         offset: Offset(0, 3), // changes position of shadow
@@ -180,8 +185,9 @@ class _ProjectListState extends State<ProjectList> {
                                         : Icons.bookmark_add_outlined,
                                     color: project.isFavorite == true
                                         ? Color.fromARGB(255, 250, 55, 87)
-                                        :  isDarkMode ? Colors.white : Colors.black,
-
+                                        : isDarkMode
+                                            ? Colors.white
+                                            : Colors.black,
                                   ),
                                   onPressed: () async {
                                     // Toggle favorite status
@@ -236,12 +242,16 @@ class _ProjectListState extends State<ProjectList> {
                         const SizedBox(height: 15),
                         Text(
                           'Students are looking for',
-                          style:
-                              GoogleFonts.poppins(fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          ),
                         ),
                         Text(
                           firstExpectation,
-                          style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,),
+                          style: GoogleFonts.poppins(
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          ),
                         ),
                         const SizedBox(height: 15),
                         Row(
@@ -255,7 +265,10 @@ class _ProjectListState extends State<ProjectList> {
                             Text(
                               '${_getProjectDurationText(ProjectDuration.values[project.projectScopeFlag ?? 0])}',
                               style: GoogleFonts.poppins(
-                                  height: 1.0, fontSize: 12, color: isDarkMode ? Colors.white : Colors.black,),
+                                height: 1.0,
+                                fontSize: 12,
+                                color: isDarkMode ? Colors.white : Colors.black,
+                              ),
                             ),
                           ],
                         ),
@@ -271,7 +284,10 @@ class _ProjectListState extends State<ProjectList> {
                             Text(
                               '${project.numberOfStudents} students',
                               style: GoogleFonts.poppins(
-                                  height: 1.0, fontSize: 12, color: isDarkMode ? Colors.white : Colors.black,),
+                                height: 1.0,
+                                fontSize: 12,
+                                color: isDarkMode ? Colors.white : Colors.black,
+                              ),
                             ),
                           ],
                         ),
@@ -287,7 +303,10 @@ class _ProjectListState extends State<ProjectList> {
                             Text(
                               '${project.proposals != null ? project.proposals : 0} proposals',
                               style: GoogleFonts.poppins(
-                                  height: 1.0, fontSize: 12, color: isDarkMode ? Colors.white : Colors.black,),
+                                height: 1.0,
+                                fontSize: 12,
+                                color: isDarkMode ? Colors.white : Colors.black,
+                              ),
                             ),
                           ],
                         ),

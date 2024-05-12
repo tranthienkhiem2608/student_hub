@@ -50,20 +50,22 @@ class Notify {
 
   factory Notify.fromMapNotify(Map<String, dynamic> map) {
     return Notify(
-        id: map['id'],
-        createAt: map['createdAt'],
-        updateAt: map['updatedAt'],
-        deletedAt: map['deletedAt'],
-        notifyFlag: map['notifyFlag'],
-        typeNotifyFlag: map['typeNotifyFlag'],
-        title: map['title'],
-        content: map['content'],
-        receiver: User.fromMapUserNotify(map['receiver']),
-        sender: User.fromMapUserNotify(map['sender']),
-        message: Message.fromMapNote(map['message']),
-        proposal: map['proposal'] == null
-            ? null
-            : Proposal.fromMapProposalStudent(map['proposal']));
+      id: map['id'],
+      createAt: map['createdAt'],
+      updateAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      notifyFlag: map['notifyFlag'],
+      typeNotifyFlag: map['typeNotifyFlag'],
+      title: map['title'],
+      content: map['content'],
+      receiver: User.fromMapUserNotify(map['receiver']),
+      sender: User.fromMapUserNotify(map['sender']),
+      message:
+          map['message'] == null ? null : Message.fromMapNote(map['message']),
+      // proposal: map['proposal'] == null
+      //     ? null
+      //     : Proposal.fromMapProposalStudent(map['proposal'])
+    );
   }
 
   static List<Notify> fromMapListNotify(List<dynamic> list) {

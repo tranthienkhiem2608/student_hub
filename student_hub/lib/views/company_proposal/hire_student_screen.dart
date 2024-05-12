@@ -36,7 +36,8 @@ class _HireStudentScreenState extends State<HireStudentScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
-    _tabController.index = widget.initialTabIndex; // Set initial index
+    _tabController.index = widget.initialTabIndex;
+    print('index: ${_tabController.index}'); // Set initial index
   }
 
   @override

@@ -91,13 +91,21 @@ class ProjectCompanyViewModel {
 
   // get all projects /api/project
   Future<List<ProjectCompany>> getAllProjectsData(
-      int page, int itemsPerPage) async {
+      int? page,
+      int? itemsPerPage,
+      String? title,
+      String? projectScopeFlag,
+      String? numberOfStudents,
+      String? proposalsLessThan) async {
     print('Get All Projects Data');
     print('Page: $page');
     print('Items per page: $itemsPerPage');
     try {
-      var response = await ConnectionService()
-          .get('/api/project?page=$page&limit=$itemsPerPage', {});
+      print(
+          '/api/project?${title != null ? 'title=$title' : ''}${projectScopeFlag != null ? '&projectScopeFlag=$projectScopeFlag' : ''}${numberOfStudents != null ? '&numberOfStudents=$numberOfStudents' : ''}${proposalsLessThan != null ? '&proposalsLessThan=$proposalsLessThan' : ''}${page != null ? '&page=$page' : ''}${itemsPerPage != null ? '&perPage=$itemsPerPage' : ''}');
+      var response = await ConnectionService().get(
+          '/api/project?${title != null ? 'title=$title' : ''}${projectScopeFlag != null ? '&projectScopeFlag=$projectScopeFlag' : ''}${numberOfStudents != null ? '&numberOfStudents=$numberOfStudents' : ''}${proposalsLessThan != null ? '&proposalsLessThan=$proposalsLessThan' : ''}${page != null ? '&page=$page' : ''}${itemsPerPage != null ? '&perPage=$itemsPerPage' : ''}',
+          {});
       var responseDecode = jsonDecode(response);
       if (responseDecode['result'] != null) {
         print("Connected to the server successfully");

@@ -178,8 +178,8 @@ class _AllChatsState extends State<AllChats> {
                                 ),
                               ),
                               Text(
-                                allChat.content!.split(' ').take(5).join(' ') +
-                                    (allChat.content!.split(' ').length > 5
+                                allChat.content!.split(' ').take(4).join(' ') +
+                                    (allChat.content!.split(' ').length > 4
                                         ? '...'
                                         : ''),
                                 style: GoogleFonts.poppins(

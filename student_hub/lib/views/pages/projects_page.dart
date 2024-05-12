@@ -26,7 +26,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   List<ProjectCompany> projectsList = [];
   List<ProjectCompany> filteredProjects = [];
   List<String> suggestions = [];
-  static const int itemsPerPage = 5;
+  static const int itemsPerPage = 10;
   int currentPage = 1;
   bool isLoading = false;
   bool hasMoreData = true;
@@ -39,7 +39,8 @@ class _ProjectsPageState extends State<ProjectsPage> {
     super.initState();
     // _initializeData();
     setState(() {
-      allProjects = fetchAllProjects(currentPage, itemsPerPage);
+      allProjects =
+          fetchAllProjects(currentPage, itemsPerPage, null, null, null, null);
     });
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
@@ -60,48 +61,50 @@ class _ProjectsPageState extends State<ProjectsPage> {
       setState(() {
         isLoading = true;
       });
+      List<ProjectCompany> newProjects = await fetchAllProjects(
+          ++currentPage, itemsPerPage, null, null, null, null);
 
       // Fetch the next page of data
-      List<ProjectCompany> newProjects =
-          await fetchAllProjects(currentPage, itemsPerPage);
 
+      print('Current Page: $currentPage');
       // Update the state with the new data
       setState(() {
         isLoading = false;
         projectsList.addAll(newProjects);
-        currentPage++;
+        print('Current Page: $currentPage');
         hasMoreData = newProjects.length == itemsPerPage;
       });
     }
   }
 
   Future<void> _initializeData() async {
-    List<ProjectCompany> projects =
-        await fetchAllProjects(currentPage, itemsPerPage);
+    List<ProjectCompany> projects = await fetchAllProjects(
+        currentPage, itemsPerPage, null, null, null, null);
     setState(() {
       // Assuming you're using this in a StatefulWidget
-      filteredProjects = projects;
       suggestions = projects.map((project) => project.title!).toList();
     });
   }
 
-  void filterProjects(String query) async {
-    final projects = await fetchAllProjects(currentPage, itemsPerPage);
-    setState(() {
-      if (query.isNotEmpty) {
-        filteredProjects = projects
-            .where((project) =>
-                project.title!.toLowerCase().contains(query.toLowerCase()))
-            .toList();
-      } else {
-        filteredProjects = projects;
-      }
-      updateSuggestions(query);
-    });
-  }
+  // void filterProjects(String query) async {
+  //   final projects = await fetchAllProjects(
+  //       currentPage, itemsPerPage, null, null, null, null);
+  //   setState(() {
+  //     if (query.isNotEmpty) {
+  //       filteredProjects = projects
+  //           .where((project) =>
+  //               project.title!.toLowerCase().contains(query.toLowerCase()))
+  //           .toList();
+  //     } else {
+  //       filteredProjects = projects;
+  //     }
+  //     updateSuggestions(query);
+  //   });
+  // }
 
   void updateSuggestions(String query) async {
-    final projects = await fetchAllProjects(currentPage, itemsPerPage);
+    final projects = await fetchAllProjects(
+        currentPage, itemsPerPage, null, null, null, null);
     setState(() {
       if (query.isNotEmpty) {
         final uniqueSuggestions = projects
@@ -142,9 +145,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
-                      onChanged: (newValue) {
-                        filterProjects(newValue);
-                      },
+                      onChanged: (newValue) {},
                     ),
                     SizedBox(height: 10),
                     if (suggestions.isNotEmpty)
@@ -159,14 +160,12 @@ class _ProjectsPageState extends State<ProjectsPage> {
                               title: Text(suggestions[index]),
                               onTap: () {
                                 _searchController.text = suggestions[index];
-                                filterProjects(suggestions[index]);
                                 Navigator.pop(context);
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => SearchProject(
                                       searchResults: filteredProjects,
-                                      allProjects: filteredProjects,
                                       user: widget.user!,
                                     ),
                                   ),
@@ -205,37 +204,50 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Flexible(
-                    child: InkWell(
-                      onTap: () {
-                        showSearchBottomSheet(context);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: isDarkMode
-                                ? Colors.white
-                                : Colors.black, // Choose your border color
-                            width: 1.0, // Choose the border width
-                          ),
-                          borderRadius: BorderRadius.circular(
-                              50.0), // Adjust the border radius as needed
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: isDarkMode
+                              ? Colors.white
+                              : Colors.black, // Choose your border color
+                          width: 1.0, // Choose the border width
                         ),
-                        child: TextField(
-                          enabled: false,
-                          decoration: InputDecoration(
-                            hintText: 'Search for projects...',
-                            hintStyle: GoogleFonts.poppins(
-                              color: isDarkMode
-                                  ? Color.fromARGB(255, 98, 98, 98)
-                                  : Colors.black,
+                        borderRadius: BorderRadius.circular(
+                            50.0), // Adjust the border radius as needed
+                      ),
+                      child: TextField(
+                        controller: _searchController,
+                        onChanged: (newValue) {
+                          _searchController.text = newValue;
+                        },
+                        onSubmitted: (value) {
+                          print('Search for: $filteredProjects');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SearchProject(
+                                searchResults: filteredProjects,
+                                user: widget.user!,
+                                searchQuery: _searchController.text,
+                              ),
                             ),
-                            prefixIcon: Icon(
-                              Icons.search,
-                              color: isDarkMode ? Colors.white : Colors.black,
-                            ),
-                            border: InputBorder
-                                .none, // Remove default border of TextField
+                          ).then((value) {
+                            _initializeData();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Enter title or keyword to search',
+                          hintStyle: GoogleFonts.poppins(
+                            color: isDarkMode
+                                ? Color.fromARGB(255, 98, 98, 98)
+                                : Colors.black,
                           ),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          ),
+                          border: InputBorder
+                              .none, // Remove default border of TextField
                         ),
                       ),
                     ),
@@ -308,9 +320,15 @@ class _ProjectsPageState extends State<ProjectsPage> {
   }
 
   Future<List<ProjectCompany>> fetchAllProjects(
-      int currentPage, int itemsPerPage) async {
+      int currentPage,
+      int itemsPerPage,
+      String? title,
+      String? projectScopeFlag,
+      String? numberOfStudents,
+      String? proposalsLessThan) async {
     List<ProjectCompany> projectTmp = await ProjectCompanyViewModel(context)
-        .getAllProjectsData(currentPage, itemsPerPage);
+        .getAllProjectsData(currentPage, itemsPerPage, title, projectScopeFlag,
+            numberOfStudents, proposalsLessThan);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getInt('role') == 1) {
       return projectTmp;
