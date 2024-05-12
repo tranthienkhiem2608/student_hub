@@ -20,6 +20,9 @@ class ProjectCompanyViewModel {
     print('Post Project');
     var payload = project.toMapProjectCompany();
 
+    // Add typeFlag to payload
+    payload['typeFlag'] = 0;
+
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
 
