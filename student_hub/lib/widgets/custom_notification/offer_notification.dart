@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/notification.dart';
+import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/controller_route.dart';
+import 'package:student_hub/view_models/messages_viewModel.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class OfferNotify extends StatefulWidget {
   Notify notify;
-  OfferNotify(this.notify, {Key? key}) : super(key: key);
+  User user;
+  OfferNotify(this.notify, this.user, {Key? key}) : super(key: key);
 
   @override
   _OfferNotifyState createState() => _OfferNotifyState();
@@ -83,24 +87,59 @@ class _OfferNotifyState extends State<OfferNotify> {
                       Container(
                         width: 150,
                         height: 40,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            // Handle send action here
-                            // Navigator.of(context).pop();
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                Color(0xFF406AFF)),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                          ),
-                          child: Text("View offer",
-                              style: GoogleFonts.poppins(color: Colors.white)),
-                        ),
+                        child: widget.notify.proposal!.statusFlag == 2
+                            ? () {
+                                print(widget.notify.proposal!.statusFlag);
+                                return ElevatedButton(
+                                  onPressed: () {
+                                    // Handle send action here
+                                    // Navigator.of(context).pop();
+                                    MessagesViewModel()
+                                        .setReadMess(widget.notify.id!);
+                                    ControllerRoute(context)
+                                        .navigateToOfferDetail(
+                                            widget.notify, widget.user);
+                                  },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Color(0xFF406AFF)),
+                                    shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                    ),
+                                  ),
+                                  child: Text("View offer",
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.white)),
+                                );
+                              }()
+                            : widget.notify.proposal!.statusFlag == 3
+                                ? () {
+                                    print(widget.notify.proposal!.statusFlag);
+                                    return Text(
+                                      'Offer was accepted',
+                                      style: GoogleFonts.poppins(
+                                          color: const Color.fromARGB(
+                                              255, 0, 255, 0),
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.w500),
+                                    );
+                                  }()
+                                : () {
+                                    print(widget.notify.proposal!.statusFlag);
+                                    return Text(
+                                      'Offer was declined',
+                                      style: GoogleFonts.poppins(
+                                          color: const Color.fromARGB(
+                                              255, 255, 38, 74),
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.w500),
+                                    );
+                                  }(),
                       ),
                     ],
                   ),
@@ -108,7 +147,6 @@ class _OfferNotifyState extends State<OfferNotify> {
               ],
             ),
             SizedBox(height: 10),
-            Divider(),
           ],
         ),
       ),

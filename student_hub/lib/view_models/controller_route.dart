@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:student_hub/models/model/notification.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/views/auth/chooserole_view.dart';
 import 'package:student_hub/views/auth/forgort_password_view.dart';
+import 'package:student_hub/views/browse_project/offer_detail.dart';
 import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
 import 'package:student_hub/views/pages/message_page.dart';
@@ -196,6 +198,17 @@ class ControllerRoute {
       MaterialPageRoute(
           builder: (context) => EditProject(
                 project: project,
+              )),
+    );
+  }
+
+  void navigateToOfferDetail(Notify notify, User user) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => OfferDetail(
+                notifyOffer: notify,
+                user: user,
               )),
     );
   }

@@ -82,12 +82,10 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 class _HomePageState extends State<HomePage> {
   late List<Widget> _pages;
   late BottomNavController _navController;
-  late IO.Socket socket;
 
   @override
   void initState() {
     super.initState();
-    socket = connect();
     _navController = BottomNavController(pageDefault: widget.pageDefault!);
 
     _pages = [
@@ -97,9 +95,8 @@ class _HomePageState extends State<HomePage> {
         null,
         widget.user,
         checkFlag: 0,
-        socket: socket,
       ),
-      AlertPage(widget.user, socket),
+      AlertPage(widget.user),
     ];
     if (widget.showAlert == true) {
       Future.delayed(Duration.zero, () {
@@ -115,14 +112,10 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  IO.Socket connect() {
-    IO.Socket socket = SocketService().connectSocket();
-    return socket;
-  }
+
 
   @override
   void dispose() {
-    socket.disconnect();
     super.dispose();
   }
 

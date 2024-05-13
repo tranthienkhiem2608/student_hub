@@ -103,6 +103,50 @@ class StudentUser {
           ? List<Education>.from(
               map['educations'].map((e) => Education.fromMapEducation(e)))
           : null,
+      languages: map['languages'] != null
+          ? List<Language>.from(
+              map['languages'].map((e) => Language.fromMapLanguage(e)))
+          : null,
+      experience: map['experiences'] != null
+          ? List<Experience>.from(
+              map['experiences'].map((e) => Experience.fromMapExperience(e)))
+          : null,
+      skillSet: map['skillSets'] != null
+          ? List<SkillSets>.from(
+              map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e)))
+          : null,
+    );
+  }
+  factory StudentUser.fromMapStudentProposalNotify(Map<String, dynamic> map) {
+    return StudentUser(
+      id: map['id'],
+      createAt: map['createAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      userId: map['userId'],
+      techStackId: map['techStackId'],
+      file: FileCV(
+        resume: map['resume'],
+        transcript: map['transcript'],
+      ),
+      user: map['user'] == null ? null : map['user']['fullname'],
+      techStack: TechStack.fromMapTechStack(map['techStack']),
+      education: map['educations'] != null
+          ? List<Education>.from(
+              map['educations'].map((e) => Education.fromMapEducation(e)))
+          : null,
+      skillSet: map['skillSets'] != null
+          ? List<SkillSets>.from(
+              map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e)))
+          : null,
+      languages: map['languages'] != null
+          ? List<Language>.from(
+              map['languages'].map((e) => Language.fromMapLanguage(e)))
+          : null,
+      experience: map['experiences'] != null
+          ? List<Experience>.from(
+              map['experiences'].map((e) => Experience.fromMapExperience(e)))
+          : null,
     );
   }
 }

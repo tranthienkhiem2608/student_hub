@@ -35,8 +35,9 @@ class _HireStudentScreenState extends State<HireStudentScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-    _tabController.index = widget.initialTabIndex;
+    _tabController = TabController(
+        length: 4, vsync: this, initialIndex: widget.initialTabIndex);
+
     print('index: ${_tabController.index}'); // Set initial index
   }
 
@@ -65,6 +66,7 @@ class _HireStudentScreenState extends State<HireStudentScreen>
               ),
             ),
             TabBar(
+              controller: _tabController,
               indicatorColor: Color(0xFF406AFF),
               labelColor: Color(0xFF406AFF),
               dividerColor: isDarkMode
@@ -82,6 +84,7 @@ class _HireStudentScreenState extends State<HireStudentScreen>
             ),
             Expanded(
               child: TabBarView(
+                controller: _tabController,
                 children: [
                   ProposalsPage(
                     projectCompany: widget.projectCompany,

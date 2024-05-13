@@ -18,10 +18,6 @@ class ChatPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          RecentChats(
-            user: user,
-          ),
-          SizedBox(height: 20),
           AllChats(user: user, socket: socket),
         ],
       ),

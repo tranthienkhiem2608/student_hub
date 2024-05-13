@@ -12,16 +12,16 @@ import 'package:student_hub/view_models/messages_viewModel.dart';
 
 import 'package:student_hub/views/pages/chat_screen/chat_page.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
+import 'package:student_hub/views/pages/chat_widgets/schedule_interview_page.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class MessagePage extends StatefulWidget {
   const MessagePage(this.projectCompany, this.user,
-      {required this.checkFlag, required this.socket, super.key});
+      {required this.checkFlag, super.key});
   final int checkFlag;
   final ProjectCompany? projectCompany;
   final User? user;
-  final IO.Socket socket;
 
   @override
   State<MessagePage> createState() => _MessagePageState();
@@ -35,8 +35,8 @@ class _MessagePageState extends State<MessagePage>
   List<String> suggestions = []; // For search suggestions
   final TextEditingController _searchController = TextEditingController();
   List<Message> messages = [];
-  // late IO.Socket socket;
-  // late Timer? _timer;
+  late IO.Socket socket;
+  late Timer? _timer;
 
   final List<UserChat> allUsers = [
     addison,
@@ -53,6 +53,7 @@ class _MessagePageState extends State<MessagePage>
   @override
   void initState() {
     super.initState();
+    connect();
     fetchMessages().then((value) {
       setState(() {
         messages.addAll(value);
@@ -67,22 +68,21 @@ class _MessagePageState extends State<MessagePage>
     });
 
     filteredUsers.addAll(messages);
-    // connect();
-    // _timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());
   }
 
   @override
   void dispose() {
     _searchController.dispose();
-    // _timer?.cancel();
-    // socket.disconnect();
+    _timer?.cancel();
+    socket.disconnect();
     super.dispose();
   }
 
-  // void connect() {
-  //   socket = SocketService().connectSocket();
-  //   socket.connect();
-  // }
+  void connect() {
+    socket = SocketService().connectSocket();
+    socket.connect();
+  }
 
   Future<List<Message>> fetchMessages() async {
     List<Message> messages = await MessagesViewModel().getLastMessage();
@@ -223,86 +223,40 @@ class _MessagePageState extends State<MessagePage>
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
-    return Scaffold(
-      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight + 20),
-        child: Container(
-          padding: EdgeInsets.only(top: 20),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  child: InkWell(
-                    onTap: () {
-                      showSearchBottomSheet(context);
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: isDarkMode
-                              ? Colors.white
-                              : Colors.black, // Choose your border color
-                          width: 1.0, // Choose the border width
-                        ),
-                        borderRadius: BorderRadius.circular(
-                            50.0), // Adjust the border radius as needed
-                      ),
-                      child: TextField(
-                        enabled: false,
-                        decoration: InputDecoration(
-                          hintText: 'Search for chats...',
-                          hintStyle: GoogleFonts.poppins(
-                            color: isDarkMode
-                                ? Color.fromARGB(255, 98, 98, 98)
-                                : Colors.black,
-                          ),
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: isDarkMode ? Colors.white : Colors.black,
-                          ),
-                          border: InputBorder
-                              .none, // Remove default border of TextField
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        backgroundColor:
+            isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
+        body: Column(
+          children: <Widget>[
+            TabBar(
+              indicatorColor: Color(0xFF406AFF),
+              labelColor: Color(0xFF406AFF),
+              dividerColor: isDarkMode
+                  ? const Color.fromARGB(255, 47, 47, 47)
+                  : Colors.white,
+              labelStyle: GoogleFonts.poppins(
+                  fontSize: 13, fontWeight: FontWeight.bold),
+              unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
+              tabs: [
+                Tab(text: 'All Chats'),
+                Tab(text: 'Schedule interview'),
               ],
             ),
-          ),
-        ),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            // Show tab view by default
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              decoration: const BoxDecoration(
-                  // ... (your decoration here)
-                  ),
-              child: ChatPage(
-                  user: widget.user!, socket: widget.socket), // Chat page
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0), // adjust the value as needed
+                child: TabBarView(
+                  children: [
+                    ChatPage(user: widget.user!, socket: socket),
+                    ScheduleInterviewPage(user: widget.user!),
+                  ],
+                ),
+              ),
             ),
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        backgroundColor: Color(0xFF406AFF),
-        child: Icon(
-          currentTabIndex == 0
-              ? Icons.message_outlined
-              : currentTabIndex == 1
-                  ? Icons.camera_alt
-                  : Icons.call,
-          color: Colors.white,
+          ],
         ),
       ),
     );

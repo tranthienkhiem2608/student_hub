@@ -17,9 +17,9 @@ import '../../widgets/custom_notification/submitted_notification.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class AlertPage extends StatefulWidget {
-  const AlertPage(this.user, this.socket, {super.key});
+  const AlertPage(this.user, {super.key});
   final User? user;
-  final IO.Socket socket;
+  // final IO.Socket socket;
 
   @override
   State<AlertPage> createState() => _AlertPageState();
@@ -27,14 +27,14 @@ class AlertPage extends StatefulWidget {
 
 class _AlertPageState extends State<AlertPage> {
   List<Notify> notifications = [];
-  // late IO.Socket socket;
+  late IO.Socket socket;
   late Notify newNotify;
-  // late Timer? timer;
+  late Timer? timer;
 
   @override
   void initState() {
     super.initState();
-    // connect();
+    connect();
     fetchNotify(widget.user!.id!).then((value) {
       if (mounted) {
         setState(() {
@@ -45,9 +45,9 @@ class _AlertPageState extends State<AlertPage> {
       }
     });
 
-    print("SOCKET note: ${widget.socket.connected}");
+    print("SOCKET note: ${socket.connected}");
     print('User ID note: NOTI_${widget.user!.id}');
-    widget.socket.on('NOTI_${widget.user!.id}', (data) {
+    socket.on('NOTI_${widget.user!.id}', (data) {
       print('New Notification: $data');
       if (mounted) {
         setState(() {
@@ -57,20 +57,20 @@ class _AlertPageState extends State<AlertPage> {
         });
       }
     });
-    // timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());
+    timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());
   }
 
-  // void connect() {
-  //   socket = SocketService().connectSocket();
-  //   socket.connect();
-  // }
+  void connect() {
+    socket = SocketService().connectSocket();
+    socket.connect();
+  }
 
-  // @override
-  // void dispose() {
-  //   timer?.cancel();
-  //   // socket.disconnect();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    timer?.cancel();
+    socket.disconnect();
+    super.dispose();
+  }
 
   Future<List<Notify>> fetchNotify(int userId) async {
     List<Notify> messList = await NotifyViewModel().getAllNotifications(userId);
@@ -91,7 +91,6 @@ class _AlertPageState extends State<AlertPage> {
             itemBuilder: (BuildContext context, int index) {
               final notify = notifications[index];
               final now = DateTime.now();
-              print("now:$now");
               final createdAt = DateTime.parse(notify.createAt!);
               final previousCreatedAt = index > 0
                   ? DateTime.parse(notifications[index - 1].createAt!)
@@ -159,7 +158,7 @@ class _AlertPageState extends State<AlertPage> {
                             : notify.typeNotifyFlag == "1"
                                 ? InvitedNotify(notify, widget.user!)
                                 : notify.typeNotifyFlag == "0"
-                                    ? OfferNotify(notify)
+                                    ? OfferNotify(notify, widget.user!)
                                     : Container(),
                   ),
                 ],
