@@ -40,8 +40,6 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
   late TextfieldTagsController<String> _textfieldTagsController;
   late double _distanceToField;
   String _selectedTechStack = '';
-  String _resume = '';
-  String _transcript = '';
   final List<String> _selectedSkills = [];
   final List<int> _selectedSkillsId = [];
   int _selectedTechStackId = 0;
@@ -62,9 +60,6 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
 
     _selectedTechStack = widget.user.studentUser?.techStack?.name ?? '';
     _selectedTechStackId = widget.user.studentUser?.techStack?.id ?? 0;
-
-    _resume = widget.user.studentUser?.file?.resume ?? '';
-    _transcript = widget.user.studentUser?.file?.transcript ?? '';
 
     // Initialize _selectedSkills with user's existing skillset data
     _selectedSkills.addAll(
@@ -314,83 +309,6 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                 ],
               ),
             ),
-
-            //////////////////////////////////////////////////////////////////////////////////
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "studentprofileinput4_ProfileEdit9".tr(),
-                    style: GoogleFonts.poppins(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                  SizedBox(
-                      width:
-                          10), // Khoảng cách giữa chữ "Techstack" và thông tin
-                  Expanded(
-                    child: Text(
-                      _resume.isNotEmpty
-                          ? _resume // Hiển thị Techstack đã chọn
-                          : "studentprofileinput4_ProfileEdit11".tr(), // Nếu không có Techstack được chọn
-                      style: GoogleFonts.poppins(
-                        fontSize: 15,
-                        color: isDarkMode
-                            ? Color.fromARGB(255, 200, 200, 200)
-                            : Color.fromARGB(255, 126, 126, 126),
-                      ),
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow
-                          .ellipsis, // Đảm bảo văn bản không tràn ra ngoài
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            //////////////////////////////////////////////////////////////////////////////////
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "studentprofileinput4_ProfileEdit10".tr(),
-                    style: GoogleFonts.poppins(
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                  SizedBox( 
-                      width:
-                          10), // Khoảng cách giữa chữ "Techstack" và thông tin
-                  Expanded(
-                    child: Text(
-                      _transcript.isNotEmpty
-                          ? _transcript // Hiển thị Techstack đã chọn
-                          : "studentprofileinput4_ProfileEdit12".tr(), // Nếu không có Techstack được chọn
-                      style: GoogleFonts.poppins(
-                        fontSize: 15,
-                        color: isDarkMode
-                            ? Color.fromARGB(255, 200, 200, 200)
-                            : Color.fromARGB(255, 126, 126, 126),
-                      ),
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow
-                          .ellipsis, // Đảm bảo văn bản không tràn ra ngoài
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            //////////////////////////////////////////////////////////////////////////////////
-
             Row(
               children: [
                 Padding(
@@ -584,73 +502,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
               ),
             ),
             SizedBox(height: 10),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.center, // Đặt các nút vào giữa
-                  children: [
-                    FadeTransition(
-                      opacity: const AlwaysStoppedAnimation(1),
-                      child: MaterialButton(
-                        onPressed: () {
-                          setState(() {
-                            isEditing = !isEditing;
-                          });
-                        },
-                        height: 45,
-                        color: Color(0xFF4DBE3FF),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Text(
-                          "companyprofileedit_ProfileCreation1".tr(),
-                          style: TextStyle(
-                              color: Color(0xFF406AFF), fontSize: 16.0),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    FadeTransition(
-                      opacity: const AlwaysStoppedAnimation(1),
-                      child: MaterialButton(
-                        onPressed: () {
-                          int studentId = widget.user.studentUser!.id!;
-
-                          widget.user.studentUser = StudentUser(
-                            id: studentId,
-                            techStack: TechStack(
-                                id: _selectedTechStackId,
-                                name: _selectedTechStack),
-                            skillSet: _selectedSkillSet,
-                            languages: languages,
-                            education: educationList,
-                            experience: widget.user.studentUser?.experience,
-                          );
-                          InputProfileViewModel(context)
-                              .putProfileStudent(widget.user);
-                        },
-                        height: 45,
-                        color: Color(0xFF406AFF),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 45),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Text(
-                          "companyprofileedit_ProfileCreation4".tr(),
-                          style: TextStyle(color: Colors.white, fontSize: 16.0),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            
           ],
         ),
       ),

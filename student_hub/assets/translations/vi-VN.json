@@ -208,6 +208,10 @@
     "studentprofileinput4_ProfileEdit6": "Dự án",
     "studentprofileinput4_ProfileEdit7": "Vai trò trống",
     "studentprofileinput4_ProfileEdit8": "Công nghệ trống",
+    "studentprofileinput4_ProfileEdit9": "CV",
+    "studentprofileinput4_ProfileEdit10": "Bảng điểm",
+    "studentprofileinput4_ProfileEdit11": "CV trống",
+    "studentprofileinput4_ProfileEdit12": "Bảng điểm trống",
 
     "projectpost1_project1": "1 /4  ",
     "projectpost1_project2": "Bắt đầu với tiêu đề ấn tượng",
@@ -337,7 +341,7 @@
 
     "studentdashboard_student1": "Dự án của bạn",
     "studentdashboard_student2": "Dự án",
-    "studentdashboard_student3": "Đang xử lý",
+    "studentdashboard_student3": "Đang làm",
     "studentdashboard_student4": "Đã lưu",
     "studentdashboard_student5": "Đề xuất hoạt động ",
     "studentdashboard_student6": "Đề xuất đã gửi ",

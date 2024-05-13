@@ -19,6 +19,8 @@ class FileCV {
     this.transcript,
   });
 
+  
+
   Map<String, dynamic> toMapFileResume() {
     return {
       'id': null,
