@@ -95,27 +95,6 @@ class _SearchProjectState extends State<SearchProject> {
     return projectTmp;
   }
 
-  Future<List<ProjectCompany>> fetchAllProjects(
-      int currentPage,
-      int itemsPerPage,
-      String? title,
-      String? projectScopeFlag,
-      String? numberOfStudents,
-      String? proposalsLessThan) async {
-    List<ProjectCompany> projectTmp = await ProjectCompanyViewModel(context)
-        .getAllProjectsData(currentPage, itemsPerPage, title, projectScopeFlag,
-            numberOfStudents, proposalsLessThan);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getInt('role') == 1) {
-      return projectTmp;
-    }
-    List<Proposal> proposals = await ProposalViewModel(context)
-        .getProposalById(widget.user!.studentUser!.id!);
-    //check if projectId have in proposal will remove from project list
-    projectTmp.removeWhere((project) =>
-        proposals.any((proposal) => proposal.projectId == project.id));
-    return projectTmp;
-  }
 
   @override
   void initState() {

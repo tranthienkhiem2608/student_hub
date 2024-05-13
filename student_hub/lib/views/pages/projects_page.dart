@@ -83,7 +83,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
         currentPage, itemsPerPage, null, null, null, null);
     setState(() {
       // Assuming you're using this in a StatefulWidget
+      if(mounted){
       suggestions = projects.map((project) => project.title!).toList();
+
+      }
     });
   }
 
