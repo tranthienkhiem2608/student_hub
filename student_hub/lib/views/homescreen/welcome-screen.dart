@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -260,7 +261,7 @@ class _Content extends StatelessWidget {
           child: FadeTransition(
             opacity: fadeAnimation,
             child:
-                _AnimatedButton(text: 'Get started!', companyUser: companyUser),
+                _AnimatedButton(text: 'welcome_welcomecompany3'.tr(), companyUser: companyUser),
           ),
         ),
 
@@ -302,7 +303,7 @@ class _AnimatedText extends StatelessWidget {
             ),
             children: [
               TextSpan(
-                text: "Welcome, ",
+                text: "welcome_welcomecompany2".tr(),
                 style: GoogleFonts.poppins(
                   color: isDarkMode ? Colors.white : Colors.black,
                 ),
@@ -339,7 +340,7 @@ class _DescriptionText extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Let's start with your first project post.",
+          "welcome_welcomecompany1".tr(),
           style: GoogleFonts.poppins(
             fontSize: 16,
             fontWeight: FontWeight.w400,

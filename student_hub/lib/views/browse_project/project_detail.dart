@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +67,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Project Details',
+              'projectpost4_project2'.tr(),
               style: GoogleFonts.poppins(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -83,7 +84,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                 ),
                 children: [
                   TextSpan(
-                    text: 'Project name: ',
+                    text: 'projectpost4_project3'.tr(),
                     style: GoogleFonts.poppins(
                         fontWeight:
                             FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,), // Thay đổi màu cho phần này
@@ -106,7 +107,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                     SizedBox(height: 10),
                     SizedBox(width: 12),
                     Text(
-                      'Student are looking for:',
+                      'projectpost3_project3'.tr(),
                       style: GoogleFonts.poppins(
                           fontSize: 16, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
                     ),
@@ -149,7 +150,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                 child: Icon(Icons.watch_later_outlined, size: 25, color: isDarkMode ? Colors.white : Colors.black,),
               ),
               title: Text(
-                'Project scope:',
+                'projectpost4_project4'.tr(),
                 style: GoogleFonts.poppins(
                     fontSize: 16, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
               ),
@@ -167,12 +168,12 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                 child: Icon(Icons.people_alt_outlined, size: 25, color: isDarkMode ? Colors.white : Colors.black,),
               ),
               title: Text(
-                'Student required:',
+                'projectpost4_project5'.tr(),
                 style: GoogleFonts.poppins(
                     fontSize: 16, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
               ),
               subtitle: Text(
-                '${widget.project.numberOfStudents} students',
+                '${widget.project.numberOfStudents} ${'projectpost4_project6'.tr()}',
                 style: GoogleFonts.poppins(fontSize: 15.5, color: isDarkMode ? Colors.white : Colors.black,),
               ),
             ),
@@ -197,7 +198,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                             ),
                           ),
                           child: Text(
-                            "Save project",
+                            "projectpost4_project11".tr(),
                             style: GoogleFonts.poppins(
                                 color: Color(0xFF406AFF), fontSize: 16.0),
                           ),
@@ -238,7 +239,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                             ),
                           ),
                           child: Text(
-                            "Apply now",
+                            "projectpost4_project12".tr(),
                             style: GoogleFonts.poppins(
                                 color: Colors.white, fontSize: 16.0),
                           ),
@@ -265,12 +266,12 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
 String _getProjectDurationText(ProjectDuration duration) {
   switch (duration) {
     case ProjectDuration.lessThanOneMonth:
-      return 'Less than 1 month';
+      return 'projectlist_company5'.tr();
     case ProjectDuration.oneToThreeMonths:
-      return '1 to 3 months';
+      return 'projectlist_company6'.tr();
     case ProjectDuration.threeToSixMonths:
-      return '3 to 6 months';
+      return 'projectlist_company7'.tr();
     case ProjectDuration.moreThanSixMonth:
-      return 'More than 6 months';
+      return 'projectlist_company8'.tr();
   }
 }

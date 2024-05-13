@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -172,13 +173,13 @@ class _PostScreen2State extends State<PostScreen2>
                             ),
                             children: [
                               TextSpan(
-                                text: '2 /4  ',
+                                text: 'projectpost2_project1'.tr(),
                                 style: GoogleFonts.poppins(
                                     color: Color(
                                         0xFF406AFF)), // Thay đổi màu cho phần này
                               ),
                               TextSpan(
-                                  text: "Estimate the scope of your job",
+                                  text: "projectpost2_project2".tr(),
                                   style: GoogleFonts.poppins(
                                     color: isDarkMode
                                         ? Colors.white
@@ -216,7 +217,7 @@ class _PostScreen2State extends State<PostScreen2>
                         children: [
                           Expanded(
                             child: Text(
-                              "Consider the size of your project and the timeline",
+                              "projectpost2_project3".tr(),
                               style: GoogleFonts.poppins(
                                 color: isDarkMode
                                     ? const Color.fromARGB(255, 209, 209, 209)
@@ -258,7 +259,7 @@ class _PostScreen2State extends State<PostScreen2>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'How long will your project take?',
+                              'projectpost2_project4'.tr(),
                               style: GoogleFonts.poppins(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -289,7 +290,7 @@ class _PostScreen2State extends State<PostScreen2>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
-                              title: Text('Less than 1 month',
+                              title: Text('projectpost2_project5'.tr(),
                                   style: GoogleFonts.poppins(
                                     fontSize: 15,
                                     color: isDarkMode
@@ -339,7 +340,7 @@ class _PostScreen2State extends State<PostScreen2>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
-                              title: Text('1 to 3 months',
+                              title: Text('projectpost2_project6'.tr(),
                                   style: GoogleFonts.poppins(
                                     fontSize: 15,
                                     color: isDarkMode
@@ -389,7 +390,7 @@ class _PostScreen2State extends State<PostScreen2>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
-                              title: Text('3 to 6 months',
+                              title: Text('projectpost2_project7'.tr(),
                                   style: GoogleFonts.poppins(
                                     fontSize: 15,
                                     color: isDarkMode
@@ -439,7 +440,7 @@ class _PostScreen2State extends State<PostScreen2>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<ProjectDuration>(
-                              title: Text('More than 6 months',
+                              title: Text('projectpost2_project8'.tr(),
                                   style: GoogleFonts.poppins(
                                     fontSize: 15,
                                     color: isDarkMode
@@ -499,7 +500,7 @@ class _PostScreen2State extends State<PostScreen2>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'How many students do you want for this project?',
+                          'projectpost2_project9'.tr(),
                           style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -540,7 +541,7 @@ class _PostScreen2State extends State<PostScreen2>
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 17.0, horizontal: 20.0),
-                        hintText: 'Enter the number',
+                        hintText: 'projectpost2_project11'.tr(),
                         hintStyle: GoogleFonts.poppins(
                           color: isDarkMode
                               ? Color.fromARGB(255, 171, 171, 171)
@@ -622,7 +623,7 @@ class _PostScreen2State extends State<PostScreen2>
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Text(
-                            "Next",
+                            "projectpost2_project10".tr(),
                             style: GoogleFonts.poppins(
                                 // Thay đổi TextStyle này
                                 color: Colors.white,

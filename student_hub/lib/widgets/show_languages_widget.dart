@@ -25,6 +25,14 @@ class ShowLanguagesWidget extends StatelessWidget {
         return Colors.red;
       case 'Advanced':
         return Colors.blue;
+      case 'Bản ngữ':
+        return Colors.green;
+      case 'Trung bình':
+        return Colors.orange;
+      case 'Cơ bản':
+        return Colors.red;
+      case 'Nâng cao':
+        return Colors.blue;
       default:
         return Colors.black;
     }
@@ -71,7 +79,6 @@ class ShowLanguagesWidget extends StatelessWidget {
                   color: backgroundColor,
                   borderRadius: BorderRadius.circular(5),
                 ),
-                
                 child: Text(
                   languages[index].level!,
                   style: TextStyle(
@@ -81,7 +88,6 @@ class ShowLanguagesWidget extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                
               ),
               Visibility(
                 visible: isEditing!,
@@ -97,8 +103,7 @@ class ShowLanguagesWidget extends StatelessWidget {
                         _deleteLanguage(languages[index].languageName!);
                       },
                     ),
-                    SizedBox(
-                        width: 10),
+                    SizedBox(width: 10),
                   ],
                 ),
               ),

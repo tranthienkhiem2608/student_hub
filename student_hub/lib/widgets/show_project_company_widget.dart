@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -40,21 +41,21 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
     final Duration diff = DateTime.now().difference(date);
 
     if (diff.inSeconds <= 0) {
-      return 'Just now';
+      return 'time0'.tr();
     } else if (diff.inSeconds < 60 && diff.inSeconds > 0) {
-      return '${diff.inSeconds} seconds ago';
+      return '${diff.inSeconds} ${'time1'.tr()}';
     } else if (diff.inMinutes < 60) {
-      return '${diff.inMinutes} minutes ago';
+      return '${diff.inMinutes} ${'time2'.tr()}';
     } else if (diff.inHours < 24) {
-      return '${diff.inHours} hours ago';
+      return '${diff.inHours} ${'time3'.tr()}';
     } else if (diff.inDays < 7) {
-      return '${diff.inDays} days ago';
+      return '${diff.inDays} ${'time4'.tr()}';
     } else if (diff.inDays < 30) {
-      return '${(diff.inDays / 7).round()} weeks ago';
+      return '${(diff.inDays / 7).round()} ${'time5'.tr()}';
     } else if (diff.inDays < 365) {
-      return '${(diff.inDays / 30).round()} months ago';
+      return '${(diff.inDays / 30).round()} ${'time6'.tr()}';
     } else {
-      return '${(diff.inDays / 365).round()} years ago';
+      return '${(diff.inDays / 365).round()} ${'time7'.tr()}';
     }
   }
 
@@ -81,7 +82,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               TextButton(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('View proposals',
+                  child: Text('companydashboard_company12'.tr(),
                       style: GoogleFonts.poppins(
                           color: isDarkMode ? Colors.white : Colors.black,
                           fontSize: 15)),
@@ -94,7 +95,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               TextButton(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('View messages',
+                  child: Text('companydashboard_company13'.tr(),
                       style: GoogleFonts.poppins(
                           color: isDarkMode ? Colors.white : Colors.black,
                           fontSize: 15)),
@@ -107,7 +108,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               TextButton(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('View hired',
+                  child: Text('companydashboard_company14'.tr(),
                       style: GoogleFonts.poppins(
                           color: isDarkMode ? Colors.white : Colors.black,
                           fontSize: 15)),
@@ -121,7 +122,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               TextButton(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('View job posting',
+                  child: Text('companydashboard_company15'.tr(),
                       style: GoogleFonts.poppins(
                           color: isDarkMode ? Colors.white : Colors.black,
                           fontSize: 15)),
@@ -134,7 +135,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               TextButton(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('Archieve project',
+                  child: Text('companydashboard_company19'.tr(),
                       style: GoogleFonts.poppins(
                           color: isDarkMode ? Colors.white : Colors.black,
                           fontSize: 15)),
@@ -149,7 +150,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               TextButton(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('Edit posting',
+                  child: Text('companydashboard_company16'.tr(),
                       style: GoogleFonts.poppins(
                           color: isDarkMode ? Colors.white : Colors.black,
                           fontSize: 15)),
@@ -161,7 +162,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               TextButton(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('Remove posting',
+                  child: Text('companydashboard_company17'.tr(),
                       style: GoogleFonts.poppins(
                           color: Color.fromARGB(255, 250, 55, 87),
                           fontSize: 15,
@@ -175,7 +176,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               TextButton(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('Start working this project',
+                  child: Text('companydashboard_company18'.tr(),
                       style: GoogleFonts.poppins(
                           color: Color(0xFF406AFF),
                           fontSize: 15,
@@ -268,7 +269,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Students are looking for: ',
+                  'projectlist_company2'.tr(),
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     color: isDarkMode ? Colors.white : Colors.black,
@@ -352,17 +353,17 @@ void _confirmDeletion(BuildContext context, ShowProjectCompanyWidget widget) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Confirm Deletion'),
-        content: Text('Are you sure you want to delete this project?'),
+        title: Text('companydashboard_company20'.tr()),
+        content: Text('companydashboard_company21'.tr()),
         actions: [
           TextButton(
-            child: Text('Cancel', style: TextStyle(color: Colors.grey)),
+            child: Text('companyprofileedit_ProfileCreation2'.tr(), style: TextStyle(color: Colors.grey)),
             onPressed: () {
               Navigator.of(context).pop(); // Close dialog
             },
           ),
           TextButton(
-            child: Text('Delete', style: TextStyle(color: Colors.red)),
+            child: Text('companyprofileedit_ProfileCreation3'.tr(), style: TextStyle(color: Colors.red)),
             onPressed: () {
               ProjectCompanyViewModel(context)
                   .deleteProject(widget.projectCompany.id!)
@@ -378,7 +379,7 @@ void _confirmDeletion(BuildContext context, ShowProjectCompanyWidget widget) {
 
                 // Show Error Message (Here's one way using a snackbar):
                 ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error deleting project.')));
+                    SnackBar(content: Text('companydashboard_company22'.tr())));
               });
             },
           ),

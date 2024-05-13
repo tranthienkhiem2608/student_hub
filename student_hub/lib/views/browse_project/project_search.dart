@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,21 +44,21 @@ class _SearchProjectState extends State<SearchProject> {
     final Duration diff = DateTime.now().difference(date);
 
     if (diff.inSeconds <= 0) {
-      return 'Just now';
+      return 'time0'.tr();
     } else if (diff.inSeconds < 60 && diff.inSeconds > 0) {
-      return '${diff.inSeconds} seconds ago';
+      return '${diff.inSeconds} ${'time1'.tr()}';
     } else if (diff.inMinutes < 60) {
-      return '${diff.inMinutes} minutes ago';
+      return '${diff.inMinutes} ${'time2'.tr()}';
     } else if (diff.inHours < 24) {
-      return '${diff.inHours} hours ago';
+      return '${diff.inHours} ${'time3'.tr()}';
     } else if (diff.inDays < 7) {
-      return '${diff.inDays} days ago';
+      return '${diff.inDays} ${'time4'.tr()}';
     } else if (diff.inDays < 30) {
-      return '${(diff.inDays / 7).round()} weeks ago';
+      return '${(diff.inDays / 7).round()} ${'time5'.tr()}';
     } else if (diff.inDays < 365) {
-      return '${(diff.inDays / 30).round()} months ago';
+      return '${(diff.inDays / 30).round()} ${'time6'.tr()}';
     } else {
-      return '${(diff.inDays / 365).round()} years ago';
+      return '${(diff.inDays / 365).round()} ${'time4'.tr()}';
     }
   }
 
@@ -150,7 +151,7 @@ class _SearchProjectState extends State<SearchProject> {
               children: [
                 SizedBox(height: 10),
                 Text(
-                  'Filter by',
+                  'projectfilter_project1'.tr(),
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF406AFF),
@@ -159,7 +160,7 @@ class _SearchProjectState extends State<SearchProject> {
                 ),
                 SizedBox(height: 30),
                 Text(
-                  'Project length:',
+                  'projectfilter_project0'.tr(),
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -171,7 +172,7 @@ class _SearchProjectState extends State<SearchProject> {
                       children: [
                         RadioListTile(
                           title: Text(
-                            'Less than one month',
+                            'projectdetail_student5'.tr(),
                             style: GoogleFonts.poppins(fontSize: 15),
                           ),
                           value: 'less_than_one_month',
@@ -192,7 +193,7 @@ class _SearchProjectState extends State<SearchProject> {
                           activeColor: Color(0xFF406AFF),
                         ),
                         RadioListTile(
-                          title: Text('1 to 3 months',
+                          title: Text('projectdetail_student6'.tr(),
                               style: GoogleFonts.poppins(fontSize: 15)),
                           value: 'one_to_three_months',
                           groupValue: projectLength,
@@ -212,7 +213,7 @@ class _SearchProjectState extends State<SearchProject> {
                           activeColor: Color(0xFF406AFF),
                         ),
                         RadioListTile(
-                          title: Text('3 to 6 months',
+                          title: Text('projectdetail_student7'.tr(),
                               style: GoogleFonts.poppins(fontSize: 15)),
                           value: 'three_to_six_months',
                           groupValue: projectLength,
@@ -232,7 +233,7 @@ class _SearchProjectState extends State<SearchProject> {
                           activeColor: Color(0xFF406AFF),
                         ),
                         RadioListTile(
-                          title: Text('More than 6 months',
+                          title: Text('projectdetail_student8'.tr(),
                               style: GoogleFonts.poppins(fontSize: 15)),
                           value: 'more_than_six_months',
                           groupValue: projectLength,
@@ -257,7 +258,7 @@ class _SearchProjectState extends State<SearchProject> {
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Students needed:',
+                  'projectfilter_project6'.tr(),
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -265,7 +266,7 @@ class _SearchProjectState extends State<SearchProject> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Enter number of students',
+                    hintText: 'projectfilter_project9'.tr(),
                     hintStyle: GoogleFonts.poppins(fontSize: 14),
                   ),
                   onChanged: (value) {
@@ -279,7 +280,7 @@ class _SearchProjectState extends State<SearchProject> {
                 ),
                 SizedBox(height: 25),
                 Text(
-                  'Proposals less than:',
+                  'projectfilter_project7'.tr(),
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -287,7 +288,7 @@ class _SearchProjectState extends State<SearchProject> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(
-                    hintText: 'Enter maximum number of proposals',
+                    hintText: 'projectfilter_project10'.tr(),
                     hintStyle: GoogleFonts.poppins(fontSize: 14),
                   ),
                   onChanged: (value) {
@@ -316,7 +317,7 @@ class _SearchProjectState extends State<SearchProject> {
                         ),
                       ),
                       child: Text(
-                        "Save project",
+                        "projectfilter_project11".tr(),
                         style: GoogleFonts.poppins(
                             color: Color(0xFF406AFF), fontSize: 16.0),
                       ),
@@ -335,7 +336,7 @@ class _SearchProjectState extends State<SearchProject> {
                         ),
                       ),
                       child: Text(
-                        "Apply now",
+                        "projectpost4_project12".tr(),
                         style: GoogleFonts.poppins(
                             color: Colors.white, fontSize: 16.0),
                       ),
@@ -373,7 +374,7 @@ class _SearchProjectState extends State<SearchProject> {
                 filterProjects();
               },
               decoration: InputDecoration(
-                hintText: 'Search...',
+                hintText: 'projectlist_project3'.tr(),
                 prefixIcon: Icon(Icons.search),
                 suffixIcon: IconButton(
                   onPressed: () {
@@ -520,7 +521,7 @@ class _SearchProjectState extends State<SearchProject> {
                                 // ),
                                 const SizedBox(height: 15),
                                 Text(
-                                  'Students are looking for',
+                                  'projectlist_company2'.tr(),
                                   style: GoogleFonts.poppins(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -557,7 +558,7 @@ class _SearchProjectState extends State<SearchProject> {
                                     ),
                                     SizedBox(width: 5),
                                     Text(
-                                      '${project.numberOfStudents} students',
+                                      '${project.numberOfStudents} ${'projectlist_company3'.tr()}',
                                       style: GoogleFonts.poppins(
                                           height: 1.0, fontSize: 12),
                                     ),
@@ -573,7 +574,7 @@ class _SearchProjectState extends State<SearchProject> {
                                     ),
                                     SizedBox(width: 5),
                                     Text(
-                                      '${project.proposals != null ? project.proposals : 0} proposals',
+                                      '${project.proposals != null ? project.proposals : 0} ${'projectlist_company4'.tr()}',
                                       style: GoogleFonts.poppins(
                                           height: 1.0, fontSize: 12),
                                     ),
@@ -590,7 +591,7 @@ class _SearchProjectState extends State<SearchProject> {
                     ),
                   )
                 : Center(
-                    child: Text('No projects found.'),
+                    child: Text('projectlist_student0'.tr()),
                   ),
           ),
         ],
@@ -603,12 +604,12 @@ class _SearchProjectState extends State<SearchProject> {
 String _getProjectDurationText(ProjectDuration duration) {
   switch (duration) {
     case ProjectDuration.lessThanOneMonth:
-      return 'Less than 1 month';
+      return 'projectlist_company5'.tr();
     case ProjectDuration.oneToThreeMonths:
-      return '1 to 3 months';
+      return 'projectlist_company6'.tr();
     case ProjectDuration.threeToSixMonths:
-      return '3 to 6 months';
+      return 'projectlist_company7'.tr();
     case ProjectDuration.moreThanSixMonth:
-      return 'More than 6 months';
+      return 'projectlist_company8'.tr();
   }
 }

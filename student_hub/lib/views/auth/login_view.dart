@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; // Import Google Fonts
 
@@ -196,7 +197,7 @@ class _LoginPageState extends State<LoginPage>
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Login with ',
+                          text: 'login_auth0'.tr(),
                           style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: 25.0,
@@ -204,7 +205,7 @@ class _LoginPageState extends State<LoginPage>
                           ),
                         ),
                         TextSpan(
-                          text: 'Student Hub',
+                          text: 'login_auth1'.tr(),
                           style: GoogleFonts.poppins(
                             color: Color(0xFF406AFF),
                             fontSize: 25.0,
@@ -239,7 +240,7 @@ class _LoginPageState extends State<LoginPage>
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(vertical: 18.0),
-                        hintText: 'Username or e-mail',
+                        hintText: 'login_auth5'.tr(),
                         labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 14.0,
@@ -297,7 +298,7 @@ class _LoginPageState extends State<LoginPage>
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(vertical: 18.0),
-                        hintText: 'Password',
+                        hintText: 'login_auth6'.tr(),
                         hintStyle: GoogleFonts.poppins(
                           color: Color(0xFF777B8A),
                           fontSize: 14.0,
@@ -365,7 +366,7 @@ class _LoginPageState extends State<LoginPage>
                                   .navigateToForgotPasswordView();
                             },
                             child: Text(
-                              'Forgot Password?',
+                              'forgotpassword_auth1'.tr(),
                               style: GoogleFonts.poppins(
                                 color: Color.fromARGB(255, 0, 0, 0),
                                 fontSize: 14,
@@ -414,8 +415,8 @@ class _LoginPageState extends State<LoginPage>
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       ),
-                      child: const Text(
-                        "Login",
+                      child: Text(
+                        "login_auth2".tr(),
                         style: TextStyle(color: Colors.white, fontSize: 16.0),
                       ),
                     ),
@@ -441,7 +442,7 @@ class _LoginPageState extends State<LoginPage>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Don\'t have an account?',
+                          'login_auth3'.tr(),
                           style: GoogleFonts.poppins(
                             color: Color(0xFF777B8A),
                             fontSize: 16,
@@ -453,7 +454,7 @@ class _LoginPageState extends State<LoginPage>
                             ControllerRoute(context).navigateToChooseRoleView();
                           },
                           child: Text(
-                            'Sign Up',
+                            'login_auth4'.tr(),
                             style: GoogleFonts.poppins(
                               color: Color(0xFF406AFF),
                               fontSize: 16,

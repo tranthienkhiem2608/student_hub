@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -141,7 +142,7 @@ class _MessagePageState extends State<MessagePage>
                     TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
-                        hintText: 'Search for chats...',
+                        hintText: 'chat_chat1'.tr(),
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
@@ -253,7 +254,7 @@ class _MessagePageState extends State<MessagePage>
                       child: TextField(
                         enabled: false,
                         decoration: InputDecoration(
-                          hintText: 'Search for chats...',
+                          hintText: 'chat_chat1'.tr(),
                           hintStyle: GoogleFonts.poppins(
                             color: isDarkMode
                                 ? Color.fromARGB(255, 98, 98, 98)

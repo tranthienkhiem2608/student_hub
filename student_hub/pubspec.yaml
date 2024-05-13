@@ -61,6 +61,7 @@ dependencies:
   zego_uikit: ^2.22.2
   package_info_plus: ^4.2.0
   zego_express_engine: ^3.13.3
+  easy_localization: ^3.0.6
 
 dependency_overrides:
   wakelock_plus: 1.1.6
@@ -93,6 +94,7 @@ flutter:
     - assets/icons/
     - assets/introduction_animation/
     - assets/alerts/
+    - assets/translations/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -110,12 +112,28 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/FZ Poppins-Regular.ttf
+        - asset: assets/fonts/FZ Poppins-Bold.ttf
+        - asset: assets/fonts/FZ Poppins-Medium.ttf
+        - asset: assets/fonts/FZ Poppins-SemiBold.ttf
+        - asset: assets/fonts/FZ Poppins-Light.ttf
+        - asset: assets/fonts/FZ Poppins-ExtraLight.ttf
+        - asset: assets/fonts/FZ Poppins-Thin.ttf
+        - asset: assets/fonts/FZ Poppins-Black.ttf
+        - asset: assets/fonts/FZ Poppins-ExtraBold.ttf
+        - asset: assets/fonts/FZ Poppins-ExtraBoldItalic.ttf
+        - asset: assets/fonts/FZ Poppins-Italic.ttf
+        - asset: assets/fonts/FZ Poppins-LightItalic.ttf
+        - asset: assets/fonts/FZ Poppins-MediumItalic.ttf
+        - asset: assets/fonts/FZ Poppins-SemiBoldItalic.ttf
+        - asset: assets/fonts/FZ Poppins-ThinItalic.ttf
+        - asset: assets/fonts/FZ Poppins-BlackItalic.ttf
+        - asset: assets/fonts/FZ Poppins-BoldItalic.ttf
+        - asset: assets/fonts/FZ Poppins-ExtraLightItalic.ttf
+        
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

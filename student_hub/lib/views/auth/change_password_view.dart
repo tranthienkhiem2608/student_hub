@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -74,7 +75,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                 alignment: Alignment.center,
                 child: // Replace with your image
                     Text(
-                  "Create new password",
+                  "changepassword_auth1".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -89,7 +90,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  "Your new password must be different from previous used password.",
+                  "changepassword_auth2".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
@@ -104,7 +105,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Password",
+                  "changepassword_auth3".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -121,7 +122,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               decoration: InputDecoration(
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20),
-                hintText: 'Enter your old password',
+                hintText: 'changepassword_auth4'.tr(),
                 hintStyle: GoogleFonts.poppins(
                   color: Color(0xFF777B8A),
                   fontSize: 14.0,
@@ -164,7 +165,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "New Password",
+                  "changepassword_auth5".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -185,14 +186,14 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               decoration: InputDecoration(
                 contentPadding:
                     const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20),
-                errorText: _showPassError ? 'Both password must match' : null,
+                errorText: _showPassError ? 'changepassword_auth6'.tr() : null,
                 errorStyle: GoogleFonts.poppins(color: Colors.red),
                 focusedErrorBorder: OutlineInputBorder(
                   // Change this
                   borderSide: BorderSide(color: Colors.red, width: 1.5),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                hintText: 'Enter your new password',
+                hintText: 'changepassword_auth7'.tr(),
                 hintStyle: GoogleFonts.poppins(
                   color: Color(0xFF777B8A),
                   fontSize: 14.0,
@@ -238,7 +239,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Confirm Password",
+                  "changepassword_auth8".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -266,7 +267,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                   borderSide: BorderSide(color: Colors.red, width: 1.5),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                hintText: 'Confirm your new password',
+                hintText: 'changepassword_auth9'.tr(),
                 hintStyle: GoogleFonts.poppins(
                   color: Color(0xFF777B8A),
                   fontSize: 14.0,
@@ -339,7 +340,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                   ),
 
                   child: Text(
-                    "Reset password",
+                    "changepassword_auth10".tr(),
                     style: GoogleFonts.poppins(
                         color: Colors.white, fontSize: 16.0),
                   ),

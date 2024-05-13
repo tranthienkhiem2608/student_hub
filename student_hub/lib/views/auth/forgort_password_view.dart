@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -78,7 +79,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  "Reset Password",
+                  "forgotpassword_auth6".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
@@ -94,7 +95,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  "Enter the email address associated with your account.",
+                  "forgotpassword_auth2".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.normal,
@@ -122,7 +123,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                         child: Align(
                           alignment: Alignment.topLeft,
                           child: Text(
-                            "Email address",
+                            "forgotpassword_auth4".tr(),
                             style: GoogleFonts.poppins(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
@@ -150,7 +151,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                                 const BorderSide(color: Colors.red, width: 1.5),
                             borderRadius: BorderRadius.circular(10.0),
                           ),
-                          hintText: 'Enter your email',
+                          hintText: 'forgotpassword_auth3'.tr(),
                           hintStyle: GoogleFonts.poppins(
                             color: Colors.grey,
                             fontSize: 14.0,
@@ -218,7 +219,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                                       50.0), // Add border radius here
                                 ),
                                 child: Text(
-                                  'Reset Password',
+                                  'forgotpassword_auth6'.tr(),
                                   style: GoogleFonts.poppins(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,

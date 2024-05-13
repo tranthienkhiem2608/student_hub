@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -54,7 +55,7 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AlertDialog(
       backgroundColor: isDarkMode ? Color(0xFF2f2f2f) : Colors.white,
-      title: Text('Add education',
+      title: Text('popup_education1'.tr(),
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -66,7 +67,7 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
           children: [
             Row(
               children: [
-                Text('Shcool name:',
+                Text('popup_education2'.tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -86,7 +87,7 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
                     },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter school name';
+                        return 'popup_education3'.tr();
                       }
                       return null;
                     },
@@ -98,13 +99,13 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Start year:',
+                Text('popup_education4'.tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
                       color: isDarkMode ? Colors.white : Colors.black,
                     )),
-                Text(_startYear == 0 ? 'Select Year' : _startYear.toString(),
+                Text(_startYear == 0 ? 'popup_education5'.tr() : _startYear.toString(),
                     style: GoogleFonts.poppins(
                         color: isDarkMode
                             ? Color.fromARGB(255, 187, 187, 189)
@@ -173,12 +174,12 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('End year:  ',
+                Text('popup_education6'.tr(),
                     style: GoogleFonts.poppins(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: isDarkMode ? Colors.white : Colors.black)),
-                Text(_endYear == 0 ? 'Select Year' : _endYear.toString(),
+                Text(_endYear == 0 ? 'popup_education7'.tr() : _endYear.toString(),
                     style: GoogleFonts.poppins(
                         color: isDarkMode
                             ? Color.fromARGB(255, 187, 187, 189)
@@ -242,10 +243,10 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
               ],
             ),
             if (showError == true)
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Make sure to fill all the fields',
+                  'popup_language7'.tr(),
                   style: TextStyle(
                     color: Colors.red,
                     fontSize: 14.0,
@@ -261,7 +262,7 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
           style: TextButton.styleFrom(
             backgroundColor: Color.fromARGB(244, 213, 222, 255),
           ),
-          child: Text('Cancel',
+          child: Text('popup_language5'.tr(),
               style: GoogleFonts.poppins(
                   color: Color(0xFF406AFF), fontWeight: FontWeight.w500)),
           onPressed: () {
@@ -274,7 +275,7 @@ class _PopUpEducationWidgetState extends State<PopUpEducationEditWidget> {
           style: TextButton.styleFrom(
             backgroundColor: Color(0xFF406AFF),
           ),
-          child: Text('Add',
+          child: Text('popup_education8'.tr(),
               style: GoogleFonts.poppins(
                   color: Colors.white, fontWeight: FontWeight.w500)),
           onPressed: () {

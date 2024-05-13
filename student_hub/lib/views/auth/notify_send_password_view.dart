@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
@@ -33,7 +34,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
               Align(
             alignment: Alignment.topCenter,
             child: Text(
-              "Check your mail",
+              "forgotpassword_auth8".tr(),
               style: GoogleFonts.poppins(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
@@ -48,7 +49,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
           child: Align(
             alignment: Alignment.topCenter,
             child: Text(
-              "We have sent a password recover instructions to your mail.",
+              "forgotpassword_auth9".tr(),
               style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
@@ -90,7 +91,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Did not receive the email? ',
+                  'forgotpassword_auth10'.tr(),
                   style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16.0,
@@ -101,7 +102,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
                     // Handle resend action here
                     AuthAccountViewModel(context).forgotPassword(widget.email);
                   },
-                  child: const Text('Resend.',
+                  child: Text('forgotpassword_auth11'.tr(),
                       style: TextStyle(
                           color: Color(0xFF406AFF),
                           fontSize: 16.0,

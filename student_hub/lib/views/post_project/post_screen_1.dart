@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -111,13 +112,13 @@ class PostScreen1 extends HookWidget {
                             ),
                             children: [
                               TextSpan(
-                                text: '1 /4  ',
+                                text: 'projectpost1_project1'.tr(),
                                 style: GoogleFonts.poppins(
                                     color: Color(
                                         0xFF406AFF)), // Thay đổi màu cho phần này
                               ),
                               TextSpan(
-                                text: "Let's start with a strong title",
+                                text: "projectpost1_project2".tr(),
                                 style: GoogleFonts.poppins(
                                   color: isDarkMode ? Colors.white : Colors.black,
                                 )
@@ -151,7 +152,7 @@ class PostScreen1 extends HookWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              "This helps your post stand out to the right students. It's the first thing they'll see, so make it impressive!",
+                              "projectpost1_project3".tr(),
                               style: GoogleFonts.poppins(
                                 color: isDarkMode ? const Color.fromARGB(255, 209, 209, 209) : Color.fromARGB(255, 103, 107, 119),
                                 fontSize: 14.0,
@@ -196,7 +197,7 @@ class PostScreen1 extends HookWidget {
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 20.0), // Điều chỉnh khoảng cách nội dung
-                        hintText: 'Your Title Name!',
+                        hintText: 'projectpost1_project5'.tr(),
 
                         hintStyle: GoogleFonts.poppins(
                           color: isDarkMode ? Color.fromARGB(255, 171, 171, 171) : Colors.grey,
@@ -248,7 +249,7 @@ class PostScreen1 extends HookWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Example title:",
+                          "projectpost1_project6".tr(),
                           style: GoogleFonts.poppins(
                             color: Color(0xFF406AFF),
                             fontSize: 17.0,
@@ -296,7 +297,7 @@ class PostScreen1 extends HookWidget {
                                   TextSpan(text: "• ", style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,)), // Bullet point
                                   TextSpan(
                                       text:
-                                          "Build responsive WordPress site with booking/payment functionality",
+                                          "projectpost1_project7".tr(),
                                       style: GoogleFonts.poppins(fontSize: 15, color: isDarkMode ? Colors.white : Colors.black,)),
                                 ],
                               ),
@@ -344,7 +345,7 @@ class PostScreen1 extends HookWidget {
                                   TextSpan(text: "• ", style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,)), // Bullet point
                                   TextSpan(
                                       text:
-                                          "Facebook ad specialist need for product launch",
+                                          "projectpost1_project8".tr(),
                                       style: GoogleFonts.poppins(
                                         fontSize: 15,
                                         color: isDarkMode ? Colors.white : Colors.black,
@@ -398,9 +399,8 @@ class PostScreen1 extends HookWidget {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Text(
-                            "Next",
+                            "projectpost1_project9".tr(),
                             style: GoogleFonts.poppins(
-                                // Thay đổi TextStyle này
                                 color: Colors.white,
                                 fontSize: 16.0),
                           ),

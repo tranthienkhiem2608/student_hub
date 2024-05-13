@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -147,7 +148,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
       title: Padding(
         padding: const EdgeInsets.fromLTRB(0, 5, 10, 10),
         child: Text(
-          'Add project',
+          'popup_project1'.tr(),
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -161,7 +162,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Text('Project name:',
+              child: Text('popup_project2'.tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -175,7 +176,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
               cursorColor: Color(0xFF406AFF),
               controller: _projectNameController,
               decoration: InputDecoration(
-                hintText: 'Enter project name',
+                hintText: 'popup_project3'.tr(),
                 hintStyle: GoogleFonts.poppins(
                   // Sử dụng font Poppins
                   color: Colors.grey,
@@ -190,7 +191,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
             Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text('Start year:',
+                  Text('popup_project4'.tr(),
                       style: GoogleFonts.poppins(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -198,7 +199,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                       )),
                   Text(
                     _timeStart == null
-                        ? 'No Date Chosen'
+                        ? 'popup_project5'.tr()
                         : DateFormat.yM().format(_timeStart!),
                     style:
                         GoogleFonts.poppins(color: Colors.grey, fontSize: 13),
@@ -215,7 +216,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('End year:  ',
+                Text('popup_project6'.tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -223,7 +224,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                     )),
                 Text(
                   _timeEnd == null
-                      ? 'No Date Chosen'
+                      ? 'popup_project5'.tr()
                       : DateFormat.yM().format(_timeEnd!),
                   style: GoogleFonts.poppins(color: Colors.grey, fontSize: 13),
                 ),
@@ -241,7 +242,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                 SizedBox(height: 10),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: Text('Skills:',
+                  child: Text('popup_project7'.tr(),
                       style: GoogleFonts.poppins(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -351,7 +352,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                       letterCase: LetterCase.normal,
                       validator: (String tag) {
                         if (_textfieldTagsController.getTags!.contains(tag)) {
-                          return 'You already entered that';
+                          return 'popup_project11'.tr();
                         }
                         return null;
                       },
@@ -375,7 +376,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                                 ),
                                 hintText: inputFieldValues.tags.isNotEmpty
                                     ? ''
-                                    : "Add your skills",
+                                    : "popup_project8".tr(),
                                 hintStyle: GoogleFonts.poppins(
                                   color: Colors.grey,
                                   fontSize:
@@ -477,7 +478,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
             SizedBox(height: 20),
             Align(
                 alignment: Alignment.centerLeft,
-                child: Text('Project description:',
+                child: Text('popup_project9'.tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
@@ -498,7 +499,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
               cursorColor: Color(0xFF406AFF),
                 controller: _projectDescriptionController,
                 decoration: InputDecoration(
-                  hintText: 'Enter project description',
+                  hintText: 'popup_project10'.tr(),
                   hintStyle: GoogleFonts.poppins(
                     color: Colors.grey,
                     fontSize: 14.0,
@@ -518,7 +519,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
           style: TextButton.styleFrom(
             backgroundColor: Color.fromARGB(244, 213, 222, 255),
           ),
-          child: Text('Cancel',
+          child: Text('popup_language5'.tr(),
               style: GoogleFonts.poppins(
                   color: Color(0xFF406AFF), fontWeight: FontWeight.w500)),
           onPressed: () {
@@ -529,7 +530,7 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
           style: TextButton.styleFrom(
             backgroundColor: Color(0xFF406AFF),
           ),
-          child: Text('Add',
+          child: Text('popup_education8'.tr(),
               style: GoogleFonts.poppins(
                   color: Colors.white, fontWeight: FontWeight.w500)),
           onPressed: () {

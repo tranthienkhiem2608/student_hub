@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -159,13 +160,13 @@ class _PostScreen3State extends State<PostScreen3>
                             ),
                             children: [
                               TextSpan(
-                                text: '3 /4  ',
+                                text: 'projectpost3_project1'.tr(),
                                 style: GoogleFonts.poppins(
                                     color: Color(
                                         0xFF406AFF)), // Thay đổi màu cho phần này
                               ),
                               TextSpan(
-                                  text: "Provide project description",
+                                  text: "projectpost3_project2".tr(),
                                   style: GoogleFonts.poppins(
                                     color: isDarkMode
                                         ? Colors.white
@@ -202,7 +203,7 @@ class _PostScreen3State extends State<PostScreen3>
                         // Add Column to contain heading and list
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Students are looking for: ',
+                          Text('projectpost3_project3'.tr(),
                               style: GoogleFonts.poppins(
                                 fontSize: 16.5,
                                 fontWeight: FontWeight.bold,
@@ -219,9 +220,9 @@ class _PostScreen3State extends State<PostScreen3>
                               fontWeight: FontWeight.normal,
                             ),
                             listItems: [
-                              'Clear expectation about your project or deliverables',
-                              'The skills required for your project',
-                              'Detail about your project',
+                              'projectpost3_project4'.tr(),
+                              'projectpost3_project5'.tr(),
+                              'projectpost3_project6'.tr(),
                             ],
                           ),
                         ],
@@ -256,7 +257,7 @@ class _PostScreen3State extends State<PostScreen3>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Describe your project',
+                                'projectpost3_project7'.tr(),
                                 style: GoogleFonts.poppins(
                                   fontSize: 16.5,
                                   fontWeight: FontWeight.bold,
@@ -306,7 +307,7 @@ class _PostScreen3State extends State<PostScreen3>
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(
                             10.0), // Add padding within the box
-                        hintText: 'Describe your project...',
+                        hintText: 'projectpost3_project8'.tr(),
                         hintStyle: GoogleFonts.poppins(
                           color: isDarkMode
                               ? Color.fromARGB(255, 171, 171, 171)
@@ -379,7 +380,7 @@ class _PostScreen3State extends State<PostScreen3>
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Text(
-                            "Next",
+                            "projectpost3_project9".tr(),
                             style: GoogleFonts.poppins(
                                 // Thay đổi TextStyle này
                                 color: Colors.white,

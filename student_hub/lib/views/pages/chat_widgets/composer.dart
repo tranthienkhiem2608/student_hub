@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -62,7 +63,7 @@ Container buildChatComposer(IO.Socket _socket, int _projectId, int senderId,
                     },
                     decoration: InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Type your message ...',
+                      hintText: 'message_message4'.tr(),
                       hintStyle: TextStyle(color: Colors.grey[500]),
                     ),
                   ),

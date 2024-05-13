@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/project_company.dart';
@@ -47,7 +48,7 @@ class _ProposalsPageState extends State<ProposalsPage> {
     return Visibility(
       replacement: Center(
         child: Text(
-          "\t\tYou no have jobs",
+          "noti1".tr(),
           style: GoogleFonts.poppins(
             color: isDarkMode ? Colors.white : Colors.black,
           ),

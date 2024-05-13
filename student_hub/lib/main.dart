@@ -3,31 +3,40 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/views/homescreen/welcome_view.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  bool isDarkMode = await addAuthorizationToSocket();
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => DarkModeProvider(isDarkMode: addAuthorizationToSocket()),
-      child: MyApp(),
+    EasyLocalization(
+      supportedLocales: [Locale('en', 'US'), Locale('vi', 'VN')],
+      path: 'assets/translations',
+      fallbackLocale: Locale('en', 'US'),
+      child: ChangeNotifierProvider(
+        create: (_) => DarkModeProvider(isDarkMode: isDarkMode),
+        child: MyApp(),
+      ),
     ),
   );
 }
 
-bool addAuthorizationToSocket() {
-  SharedPreferences.getInstance().then((prefs) {
-    bool isDarkMode =
-        prefs.containsKey('isDarkMode') ? prefs.getBool('isDarkMode')! : false;
-    print("Darkmode: $isDarkMode");
-
-    return isDarkMode;
-  });
-  return false;
+Future<bool> addAuthorizationToSocket() async {
+  final prefs = await SharedPreferences.getInstance();
+  bool isDarkMode = prefs.containsKey('isDarkMode') ? prefs.getBool('isDarkMode')! : false;
+  print("Darkmode: $isDarkMode");
+  return isDarkMode;
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       debugShowCheckedModeBanner: false,
       title: "Student Hub",
       theme: ThemeData(

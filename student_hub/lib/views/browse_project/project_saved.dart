@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path/path.dart';
@@ -66,7 +67,7 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  'Saved projects',
+                  'savedproject_page1'.tr(),
                   style: GoogleFonts.poppins(
                     color: Color(0xFF406AFF),
                     fontSize: 22.0,
@@ -91,7 +92,7 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
             } else if (project.hasError) {
               return Text('Error: ${project.error}');
             } else if (project.hasData && project.data!.isEmpty) {
-              return Center(child: Text("You have no favorite projects."));
+              return Center(child: Text("savedproject_page2".tr()));
             } else {
               return ListView.builder(
                 padding: EdgeInsets.zero,
@@ -145,7 +146,7 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
                             ),
                             const SizedBox(height: 15),
                             Text(
-                              'Students are looking for',
+                              'projectlist_company2'.tr(),
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
                             ),
@@ -188,7 +189,7 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
                                 ),
                                 SizedBox(width: 5),
                                 Text(
-                                  '${project.data![index].numberOfStudents} students',
+                                  '${project.data![index].numberOfStudents} ${'projectlist_company3'.tr()}',
                                   style: GoogleFonts.poppins(
                                       height: 1.0, fontSize: 12, color: isDarkMode ? Colors.white : Colors.black,),
                                 ),
@@ -204,7 +205,7 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
                                 ),
                                 SizedBox(width: 5),
                                 Text(
-                                  '${project.data![index].countProposal != null ? project.data![index].countProposal : 0} proposals',
+                                  '${project.data![index].countProposal != null ? project.data![index].countProposal : 0} ${'projectlist_company4'.tr()}',
                                   style: GoogleFonts.poppins(
                                       height: 1.0, fontSize: 12, color: isDarkMode ? Colors.white : Colors.black,),
                                 ),
@@ -268,34 +269,34 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
 String _getProjectDurationText(ProjectDuration duration) {
   switch (duration) {
     case ProjectDuration.lessThanOneMonth:
-      return 'Less than 1 month';
+      return 'projectlist_company5'.tr();
     case ProjectDuration.oneToThreeMonths:
-      return '1 to 3 months';
+      return 'projectlist_company6'.tr();
     case ProjectDuration.threeToSixMonths:
-      return '3 to 6 months';
+      return 'projectlist_company7'.tr();
     case ProjectDuration.moreThanSixMonth:
-      return 'More than 6 months';
+      return 'projectlist_company8'.tr();
   }
 }
 
-String timeAgo(DateTime date) {
-  final Duration diff = DateTime.now().difference(date);
+  String timeAgo(DateTime date) {
+    final Duration diff = DateTime.now().difference(date);
 
-  if (diff.inSeconds <= 0) {
-    return 'Just now';
-  } else if (diff.inSeconds < 60 && diff.inSeconds > 0) {
-    return '${diff.inSeconds} seconds ago';
-  } else if (diff.inMinutes < 60) {
-    return '${diff.inMinutes} minutes ago';
-  } else if (diff.inHours < 24) {
-    return '${diff.inHours} hours ago';
-  } else if (diff.inDays < 7) {
-    return '${diff.inDays} days ago';
-  } else if (diff.inDays < 30) {
-    return '${(diff.inDays / 7).round()} weeks ago';
-  } else if (diff.inDays < 365) {
-    return '${(diff.inDays / 30).round()} months ago';
-  } else {
-    return '${(diff.inDays / 365).round()} years ago';
+    if (diff.inSeconds <= 0) {
+      return 'time0'.tr();
+    } else if (diff.inSeconds < 60 && diff.inSeconds > 0) {
+      return '${diff.inSeconds} ${'time1'.tr()}';
+    } else if (diff.inMinutes < 60) {
+      return '${diff.inMinutes} ${'time2'.tr()}';
+    } else if (diff.inHours < 24) {
+      return '${diff.inHours} ${'time3'.tr()}';
+    } else if (diff.inDays < 7) {
+      return '${diff.inDays} ${'time4'.tr()}';
+    } else if (diff.inDays < 30) {
+      return '${(diff.inDays / 7).round()} ${'time5'.tr()}';
+    } else if (diff.inDays < 365) {
+      return '${(diff.inDays / 30).round()} ${'time6'.tr()}';
+    } else {
+      return '${(diff.inDays / 365).round()} ${'time4'.tr()}';
+    }
   }
-}

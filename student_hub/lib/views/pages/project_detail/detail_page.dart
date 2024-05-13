@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -71,7 +72,7 @@ class _DetailPageState extends State<DetailPage>
                 SizedBox(height: 10),
                 SizedBox(width: 12),
                 Text(
-                  'Student are looking for:',
+                  'projectlist_company2'.tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -122,7 +123,7 @@ class _DetailPageState extends State<DetailPage>
                 ),
               ),
               title: Text(
-                'Project scope:',
+                'projectpost4_project4'.tr(),
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -130,7 +131,7 @@ class _DetailPageState extends State<DetailPage>
                 ),
               ),
               subtitle: Text(
-                '${widget.projectCompany.projectScopeFlag} months',
+                '${widget.projectCompany.projectScopeFlag} ${'time8'.tr()}',
                 style: GoogleFonts.poppins(
                   fontSize: 15,
                   color: isDarkMode ? Colors.white : Colors.black,
@@ -150,7 +151,7 @@ class _DetailPageState extends State<DetailPage>
                 ),
               ),
               title: Text(
-                'Student required:',
+                'projectpost4_project5'.tr(),
                 style: GoogleFonts.poppins(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -158,7 +159,7 @@ class _DetailPageState extends State<DetailPage>
                 ),
               ),
               subtitle: Text(
-                '${widget.projectCompany.numberOfStudents} students',
+                '${widget.projectCompany.numberOfStudents} ${'projectpost4_project6'.tr()}',
                 style: GoogleFonts.poppins(
                   fontSize: 15.5,
                   color: isDarkMode ? Colors.white : Colors.black,

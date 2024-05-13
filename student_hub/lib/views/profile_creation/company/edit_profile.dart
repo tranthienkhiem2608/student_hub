@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
@@ -186,10 +187,10 @@ class _EditProfileState extends State<EditProfile>
                             ),
                             children: [
                               TextSpan(
-                                text: "Welcome to ",
+                                text: "edit_company1".tr(),
                               ),
                               TextSpan(
-                                text: "Student Hub",
+                                text: "edit_company2".tr(),
                                 style: GoogleFonts.poppins(
                                     color: Color(
                                         0xFF406AFF)), // Màu chữ của "Student Hub"
@@ -409,7 +410,7 @@ class _EditProfileState extends State<EditProfile>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'How many people are in your company?',
+                                      'edit_company4'.tr(),
                                       style: GoogleFonts.poppins(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
@@ -446,7 +447,7 @@ class _EditProfileState extends State<EditProfile>
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Current Company Size:',
+                                      'edit_company3'.tr(),
                                       style: GoogleFonts.poppins(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
@@ -507,7 +508,7 @@ class _EditProfileState extends State<EditProfile>
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Text(
-                                "Edit",
+                                "edit_company5".tr(),
                                 style: GoogleFonts.poppins(
                                     color: Color(0xFF406AFF), fontSize: 16.0),
                               ),
@@ -541,7 +542,7 @@ class _EditProfileState extends State<EditProfile>
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Text(
-                                "Submit",
+                                "edit_company6".tr(),
                                 style: GoogleFonts.poppins(
                                     color: Colors.white, fontSize: 16.0),
                               ),
@@ -568,14 +569,14 @@ String _getSizeDescription(int sizeIndex) {
   switch (companySize) {
     // Switch on the enum value
     case CompanySize.justMe:
-      return 'It\'s just me';
+      return 'companyprofileinput_ProfileCreation4'.tr();
     case CompanySize.small:
-      return '2-9 employees'; // Adjust the text as needed
+      return 'companyprofileinput_ProfileCreation5'.tr(); // Adjust the text as needed
     case CompanySize.medium:
-      return '10-99 employees'; // Adjust the text as needed
+      return 'companyprofileinput_ProfileCreation6'.tr(); // Adjust the text as needed
     case CompanySize.large:
-      return '100-1000 employees'; // Adjust the text as needed
+      return 'companyprofileinput_ProfileCreation7'.tr(); // Adjust the text as needed
     case CompanySize.veryLarge:
-      return 'More than 100 employees'; // Adjust the text as needed
+      return 'companyprofileinput_ProfileCreation8'.tr(); // Adjust the text as needed
   }
 }

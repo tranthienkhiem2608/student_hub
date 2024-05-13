@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/widgets/add_account_widget.dart';
 import 'package:student_hub/models/not_use/company_user.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
+import 'package:student_hub/widgets/theme/localization_checker.dart';
 
 class SwitchAccountView extends StatefulWidget {
   final User user;
@@ -87,6 +89,13 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
             isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
         actions: <Widget>[
           IconButton(
+          icon: Icon(Icons.language, color: Color.fromARGB(255, 0, 0, 0)),
+          onPressed: () {
+            LocalizationChecker.changeLanguage(context);
+            
+          }, // Gọi hàm khi nút được nhấn
+        ),
+          IconButton(
             icon: Icon(
               isDarkMode
                   ? Icons.light_mode
@@ -121,7 +130,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.fromLTRB(5, 10, 0, 0),
-                              child: Text("Switch account  ",
+                              child: Text("switchaccount".tr(),
                                   style: GoogleFonts.poppins(
                                       color: isDarkMode
                                           ? Colors.white
@@ -177,7 +186,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
 
                             SizedBox(height: 4), // Khoảng cách giữa hai phần
                             Text(
-                              "${role == 0 ? 'Student' : 'Company'}",
+                              "${role == 0 ? 'student_auth1'.tr() : 'student_auth2'.tr()}",
                               textAlign: TextAlign.center, // Căn giữa văn bản
                               style: GoogleFonts.poppins(
                                 color: isDarkMode ? Colors.white : Colors.black,
@@ -223,7 +232,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                       height: 28.0,
                     ),
                     label: Text(
-                      'Profiles',
+                      'switchaccount1'.tr(),
                       style: GoogleFonts.poppins(
                         color: isDarkMode ? Colors.white : Colors.black,
                         fontSize: 20.0,
@@ -249,7 +258,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                       width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
                       height: 28.0, // Chiều cao của biểu tượng (nếu cần)
                     ),
-                    label: Text('Settings',
+                    label: Text('switchaccount2'.tr(),
                         style: GoogleFonts.poppins(
                             color: isDarkMode ? Colors.white : Colors.black,
                             fontSize: 20.0,
@@ -273,7 +282,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                       width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
                       height: 28.0, // Chiều cao của biểu tượng (nếu cần)
                     ),
-                    label: Text('Log out',
+                    label: Text('switchaccount3'.tr(),
                         style: GoogleFonts.poppins(
                             color: isDarkMode ? Colors.white : Colors.black,
                             fontSize: 20.0,

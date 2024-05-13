@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -97,7 +98,7 @@ class _ChatRoomState extends State<ChatRoom> {
                   ListTile(
                     leading:
                         Icon(Icons.schedule_send, color: Color(0xFF406AFF)),
-                    title: Text('Schedule an interview',
+                    title: Text('message_message2'.tr(),
                         style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -113,7 +114,7 @@ class _ChatRoomState extends State<ChatRoom> {
                       Icons.cancel_outlined,
                       color: Color.fromARGB(255, 255, 38, 74),
                     ),
-                    title: Text('Cancel',
+                    title: Text('message_message3'.tr(),
                         style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -199,7 +200,7 @@ class _ChatRoomState extends State<ChatRoom> {
                   ),
                 ),
                 Text(
-                  'online',
+                  'message_message1'.tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,

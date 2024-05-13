@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; // Import thư viện Google Fonts
 import 'package:student_hub/view_models/controller_route.dart';
@@ -134,19 +135,20 @@ class _ChooseRoleState extends State<ChooseRole>
                           children: [
                             RichText(
                               text: TextSpan(
-                                style: GoogleFonts.poppins(
+                                style: TextStyle(
+                                    fontFamily: 'Poppins',
                                     color: Colors.black,
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.w600),
                                 children: [
-                                  TextSpan(text: 'Join as '),
+                                  TextSpan(text: 'signup_auth0'.tr()),
                                   TextSpan(
-                                      text: 'Company',
+                                      text: 'accountSwitchPage_ProfileCreation1'.tr(),
                                       style:
                                           TextStyle(color: Color(0xFF406AFF))),
-                                  TextSpan(text: ' or '),
+                                  TextSpan(text: 'signup_auth1'.tr()),
                                   TextSpan(
-                                      text: 'Student',
+                                      text: 'accountSwitchPage_ProfileCreation2'.tr(),
                                       style:
                                           TextStyle(color: Color(0xFF406AFF))),
                                 ],
@@ -233,14 +235,14 @@ class _ChooseRoleState extends State<ChooseRole>
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'I am a student',
+                                            'signup_auth2'.tr(),
                                             style: GoogleFonts.poppins(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
-                                            'I\'m find a project & company',
+                                            'signup_auth3'.tr(),
                                             style: GoogleFonts.poppins(
                                               fontSize: 14.5,
                                               fontWeight: FontWeight.normal,
@@ -334,14 +336,14 @@ class _ChooseRoleState extends State<ChooseRole>
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'I\'m a company',
+                                            'signup_auth6'.tr(),
                                             style: GoogleFonts.poppins(
                                               fontSize: 18,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
                                           Text(
-                                            'I\'m find engineer for project',
+                                            'signup_auth7'.tr(),
                                             style: GoogleFonts.poppins(
                                               fontSize: 14.5,
                                               fontWeight: FontWeight.normal,
@@ -410,8 +412,8 @@ class _ChooseRoleState extends State<ChooseRole>
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         title: const Text('Choose your role'),
-                                        content: const Text(
-                                            'Please choose your role'),
+                                        content: Text(
+                                            'signup_auth4'.tr()),
                                         actions: <Widget>[
                                           TextButton(
                                             onPressed: () {
@@ -436,7 +438,7 @@ class _ChooseRoleState extends State<ChooseRole>
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Text(
-                                "Create account",
+                                "signup_auth5".tr(),
                                 style: GoogleFonts.poppins(
                                     // Thay đổi TextStyle này
                                     color: Colors.white,
@@ -457,7 +459,7 @@ class _ChooseRoleState extends State<ChooseRole>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Already have an account?  ',
+                      'signup_auth9'.tr(),
                       style: GoogleFonts.poppins(
                         // Thay đổi TextStyle này
                         color: Color(0xFF777B8A),
@@ -470,7 +472,7 @@ class _ChooseRoleState extends State<ChooseRole>
                         ControllerRoute(context).navigateToLoginView();
                       },
                       child: Text(
-                        'Log in',
+                        'signup_auth10'.tr(),
                         style: GoogleFonts.poppins(
                           // Thay đổi TextStyle này
                           color: Color(0xFF406AFF),

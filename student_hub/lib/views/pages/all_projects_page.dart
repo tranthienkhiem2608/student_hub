@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -81,7 +82,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
                   return Center(
                       child: Text(
                           textAlign: TextAlign.center,
-                          "\t\tWelcome, ${widget.user.fullname}!. You no have jobs",
+                          "${'welcome_welcomecompany2'.tr()} ${widget.user.fullname}!. ${'noti1'.tr()}",
                           style: GoogleFonts.poppins(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -111,7 +112,7 @@ class _AllProjectsPageState extends State<AllProjectsPage>
                             project.data![index].countMessages!.toString(),
                             project.data![index].countHired!.toString()
                           ],
-                          labels: ['Proposals', 'Messages', 'Hired'],
+                          labels: ['companyprojecthired_company1'.tr(), 'companyprojecthired_company3'.tr(), 'companyprojecthired_company4'.tr()],
                           showOptionsIcon: true,
                           onProjectDeleted: _handleProjectDeleted,
                           user: widget.user,

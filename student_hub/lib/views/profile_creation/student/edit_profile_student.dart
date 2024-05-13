@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -211,7 +212,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'Your profile',
+                  'studentprofileinput4_ProfileEdit1'.tr(),
                   style: GoogleFonts.poppins(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
@@ -225,7 +226,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Techstack",
+                    "studentprofileinput4_ProfileEdit2".tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
@@ -240,7 +241,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     child: Text(
                       _selectedTechStack.isNotEmpty
                           ? _selectedTechStack // Hiển thị Techstack đã chọn
-                          : "No Techstack selected", // Nếu không có Techstack được chọn
+                          : "studentprofileinput4_ProfileEdit7".tr(), // Nếu không có Techstack được chọn
                       style: GoogleFonts.poppins(
                         fontSize: 15,
                         color: isDarkMode ? Color.fromARGB(255, 200, 200, 200) : Color.fromARGB(255, 126, 126, 126),
@@ -261,7 +262,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Skillset",
+                      "studentprofileinput4_ProfileEdit3".tr(),
                       style: GoogleFonts.poppins(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -292,7 +293,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                             ),
                           if (_selectedSkills.isEmpty)
                             Text(
-                              "No Skillset selected", // Hiển thị thông báo nếu không có Skillset nào được chọn
+                              "studentprofileinput4_ProfileEdit8".tr(), // Hiển thị thông báo nếu không có Skillset nào được chọn
                               style: GoogleFonts.poppins(
                                 fontSize: 15,
                                 color: isDarkMode ? Color.fromARGB(255, 200, 200, 200) : Color.fromARGB(255, 126, 126, 126),
@@ -312,7 +313,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Languages",
+                      "studentprofileinput4_ProfileEdit4".tr(),
                       style: GoogleFonts.poppins(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -388,7 +389,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Education",
+                      "studentprofileinput4_ProfileEdit5".tr(),
                       style: GoogleFonts.poppins(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -452,7 +453,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Projects",
+                    "studentprofileinput4_ProfileEdit6".tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
@@ -521,8 +522,8 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        child: const Text(
-                          "Edit",
+                        child: Text(
+                          "companyprofileedit_ProfileCreation1".tr(),
                           style: TextStyle(
                               color: Color(0xFF406AFF), fontSize: 16.0),
                         ),
@@ -555,8 +556,8 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        child: const Text(
-                          "Save",
+                        child: Text(
+                          "companyprofileedit_ProfileCreation4".tr(),
                           style: TextStyle(color: Colors.white, fontSize: 16.0),
                         ),
                       ),

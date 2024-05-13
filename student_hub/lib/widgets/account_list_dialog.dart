@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,7 @@ class AccountListDialog extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 110.0),
                 child: Text(
-                  'Switch Accounts',
+                  'switchaccount'.tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -35,33 +36,33 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
   }
 
   final List<String> languages = [
-    'English',
-    'French',
-    'Spanish',
-    'German',
-    'Italian',
-    'Portuguese',
-    'Russian',
-    'Chinese',
-    'Japanese',
-    'Korean',
-    'Arabic',
-    'Hindi',
-    'Bengali',
-    'Urdu',
-    'Turkish',
-    'Vietnamese',
+    'language1'.tr(),
+    'language2'.tr(),
+    'language3'.tr(),
+    'language4'.tr(),
+    'language5'.tr(),
+    'language6'.tr(),
+    'language7'.tr(),
+    'language8'.tr(),
+    'language9'.tr(),
+    'language10'.tr(),
+    'language11'.tr(),
+    'language12'.tr(),
+    'language13'.tr(),
+    'language14'.tr(),
+    'language15'.tr(),
+    'language16'.tr()
     // Add more languages here
   ];
 
-  final List<String> _levels = ['Native', 'Intermediate', 'Basic', 'Advanced'];
+  final List<String> _levels = ['level4'.tr(), 'level2'.tr(), 'level1'.tr(), 'level3'.tr()];
   bool showError = false;
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AlertDialog(
       backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
-      title: Text('Add language',
+      title: Text('popup_language1'.tr(),
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -79,7 +80,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
               padding: const EdgeInsets.only(top: 20), // Khoảng cách dưới cùng
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text('Select Language',
+                child: Text('popup_language2'.tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -94,7 +95,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
               compareFn: (item, selectedItem) => item == selectedItem,
               dropdownBuilder: (context, selectedItem) {
                 return Text(
-                  selectedItem ?? "Select Language",
+                  selectedItem ?? "popup_language2".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     color: Colors.grey,
@@ -119,7 +120,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
                 searchFieldProps: TextFieldProps(
                   cursorColor: Color(0xFF406AFF),
                   decoration: InputDecoration(
-                    hintText: "Search Language",
+                    hintText: "popup_language6".tr(),
                     hintStyle: GoogleFonts.poppins(
                       color: Colors.black,
                     ),
@@ -130,7 +131,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
             SizedBox(height: 30),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text('Select Level',
+              child: Text('popup_language3'.tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -176,7 +177,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Make sure to fill all the fields',
+                  'popup_language7'.tr(),
                   style: GoogleFonts.poppins(
                     color: Colors.red,
                     fontSize: 14.0,
@@ -193,7 +194,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
           style: TextButton.styleFrom(
             backgroundColor: Color.fromARGB(244, 213, 222, 255),
           ),
-          child: Text('Cancel',
+          child: Text('popup_language5'.tr(),
               style: GoogleFonts.poppins(
                   color: Color(0xFF406AFF), fontWeight: FontWeight.w500)),
           onPressed: () {
@@ -206,7 +207,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
           style: TextButton.styleFrom(
             backgroundColor: Color(0xFF406AFF),
           ),
-          child: Text('OK',
+          child: Text('popup_language4'.tr(),
               style: GoogleFonts.poppins(
                   color: Colors.white, fontWeight: FontWeight.w500)),
           onPressed: () {

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -135,7 +136,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
-                        hintText: 'Search for projects...',
+
+                        hintText: 'projectlist_project2'.tr(),
+                        
                         hintStyle: GoogleFonts.poppins(),
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(
@@ -223,7 +226,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         child: TextField(
                           enabled: false,
                           decoration: InputDecoration(
-                            hintText: 'Search for projects...',
+                            hintText: 'projectlist_project2'.tr(),
                             hintStyle: GoogleFonts.poppins(
                               color: isDarkMode
                                   ? Color.fromARGB(255, 98, 98, 98)

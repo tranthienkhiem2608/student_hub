@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -109,7 +110,7 @@ class _AllChatsState extends State<AllChats> {
           child: Row(
             children: [
               Text(
-                'All Chats',
+                'chat_chat3'.tr(),
                 style: GoogleFonts.poppins(
                   fontSize: 19,
                   fontWeight: FontWeight.w600,
@@ -136,7 +137,7 @@ class _AllChatsState extends State<AllChats> {
                               'assets/images/avatar_default_img.png'),
                         ),
                         SizedBox(
-                          width: 20,
+                          width: 10,
                         ),
                         GestureDetector(
                           onTap: () async {
@@ -168,12 +169,15 @@ class _AllChatsState extends State<AllChats> {
                               Text(
                                 allChat.sender!.fullname!,
                                 style: GoogleFonts.poppins(
-                                  fontSize: 18,
+                                  fontSize: 17,
+                                  color: isDarkMode
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
                               ),
                               Text(
                                 allChat.project!.title!,
-                                style: MyTheme.bodyText1.copyWith(
+                                style: GoogleFonts.poppins(
                                   color: MyTheme.bodyText2.color,
                                 ),
                               ),
@@ -183,7 +187,7 @@ class _AllChatsState extends State<AllChats> {
                                         ? '...'
                                         : ''),
                                 style: GoogleFonts.poppins(
-                                  fontSize: 14,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.w600,
                                   color: Color.fromARGB(255, 151, 151, 151),
                                 ),

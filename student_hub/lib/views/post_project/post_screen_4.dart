@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -160,12 +161,12 @@ class _PostScreen4State extends State<PostScreen4>
                 ),
                 children: [
                   TextSpan(
-                    text: '4 /4  ',
+                    text: 'projectpost4_project1'.tr(),
                     style: GoogleFonts.poppins(
                         color: Color(0xFF406AFF)), // Thay đổi màu cho phần này
                   ),
                   TextSpan(
-                    text: "Project details",
+                    text: "projectpost4_project2".tr(),
                     style: GoogleFonts.poppins(
                                   color: isDarkMode ? Colors.white : Colors.black,
                                 )
@@ -184,7 +185,7 @@ class _PostScreen4State extends State<PostScreen4>
                 ),
                 children: [
                   TextSpan(
-                    text: 'Project name: ',
+                    text: 'projectpost4_project3'.tr(),
                     style: GoogleFonts.poppins(
                         fontWeight:
                             FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,), // Thay đổi màu cho phần này
@@ -207,7 +208,7 @@ class _PostScreen4State extends State<PostScreen4>
                     SizedBox(height: 10), // Add spacing between icon and text
                     SizedBox(width: 12), // Add spacing between icon and text
                     Text(
-                      'Student are looking for:',
+                      'projectpost3_project3'.tr(),
                       style: GoogleFonts.poppins(
                           fontSize: 16, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
                     ),
@@ -250,7 +251,7 @@ class _PostScreen4State extends State<PostScreen4>
                 child: Icon(Icons.watch_later_outlined, size: 25, color: isDarkMode ? Colors.white : Colors.black,),
               ),
               title: Text(
-                'Project scope:',
+                'projectpost4_project4'.tr(),
                 style: GoogleFonts.poppins(
                     fontSize: 16, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
               ),
@@ -270,12 +271,12 @@ class _PostScreen4State extends State<PostScreen4>
                 child: Icon(Icons.people_alt_outlined, size: 25, color: isDarkMode ? Colors.white : Colors.black,),
               ),
               title: Text(
-                'Student required:',
+                'projectpost4_project5'.tr(),
                 style: GoogleFonts.poppins(
                     fontSize: 16, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
               ),
               subtitle: Text(
-                '${widget.project.numberOfStudents} students',
+                '${widget.project.numberOfStudents} ${'projectpost4_project6'.tr()}',
                 style: GoogleFonts.poppins(fontSize: 15.5, color: isDarkMode ? Colors.white : Colors.black,),
               ),
             ),
@@ -311,7 +312,7 @@ class _PostScreen4State extends State<PostScreen4>
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Text(
-                        "Post job",
+                        "projectpost4_project9".tr(),
                         style: GoogleFonts.poppins(
                             // Thay đổi TextStyle này
                             color: Colors.white,

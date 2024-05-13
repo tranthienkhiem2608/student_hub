@@ -1,4 +1,5 @@
 // show_school_widget.dart
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -52,7 +53,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
                 ),
                 // Các phần khác của ListTile
                 subtitle: Text(
-                  '${DateFormat('MM-yyyy').format(userStudent.experience![index].startMonth!)} - ${DateFormat('MM-yyyy').format(userStudent.experience![index].endMonth!)}, \nDuration: ${userStudent.experience![index].endMonth!.difference(userStudent.experience![index].startMonth!).inDays} days',
+                  '${DateFormat('MM-yyyy').format(userStudent.experience![index].startMonth!)} - ${DateFormat('MM-yyyy').format(userStudent.experience![index].endMonth!)}, \nDuration: ${userStudent.experience![index].endMonth!.difference(userStudent.experience![index].startMonth!).inDays} ${'time9'.tr()}',
                   style: GoogleFonts.poppins(
                     fontStyle: FontStyle.italic,
                     fontSize: 12,
@@ -123,7 +124,7 @@ class ShowProjectStudentWidget extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Skills',
+                    'popup_project7'.tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,

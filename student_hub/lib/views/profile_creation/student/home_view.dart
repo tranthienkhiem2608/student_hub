@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -143,7 +144,7 @@ class _HomePageState extends State<HomePage> {
               tabs: [
                 GButton(
                   icon: Icons.home_rounded,
-                  text: 'Home',
+                  text: 'home_home1'.tr(),
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
@@ -154,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 GButton(
                   icon: Icons.space_dashboard_rounded,
-                  text: 'Dashboard',
+                  text: 'home_home2'.tr(),
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
@@ -165,7 +166,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 GButton(
                   icon: Icons.message_rounded,
-                  text: 'Message',
+                  text: 'home_home3'.tr(),
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
@@ -176,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 GButton(
                   icon: Icons.notifications_rounded,
-                  text: 'Alert',
+                  text: 'home_home4'.tr(),
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ

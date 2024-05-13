@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart'; // Thêm thư viện google_fonts
 
@@ -150,7 +151,7 @@ class _LoginPageState extends State<ProfileInput>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Welcome to Student Hub',
+                          'companyprofileinput_ProfileCreation0'.tr(),
                           style: GoogleFonts.poppins(
                               color: Color(0xFF406AFF),
                               fontSize: 22.0,
@@ -182,7 +183,7 @@ class _LoginPageState extends State<ProfileInput>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Tell us about your company and you will be', // Dòng trên
+                          'companyprofileinput_ProfileCreation1'.tr(), // Dòng trên
                           textAlign: TextAlign.center, // Căn giữa
                           style: GoogleFonts.poppins(
                             color: isDarkMode
@@ -193,7 +194,7 @@ class _LoginPageState extends State<ProfileInput>
                           ),
                         ),
                         Text(
-                          'on your way connect with high-skilled students', // Dòng dưới
+                          'companyprofileinput_ProfileCreation2'.tr(), // Dòng dưới
                           textAlign: TextAlign.center, // Căn giữa
                           style: GoogleFonts.poppins(
                             color: isDarkMode
@@ -233,7 +234,7 @@ class _LoginPageState extends State<ProfileInput>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'How many people are in your company?',
+                              'companyprofileinput_ProfileCreation3'.tr(),
                               style: GoogleFonts.poppins(
                                   fontSize: 15.5,
                                   fontWeight: FontWeight.w600,
@@ -264,7 +265,7 @@ class _LoginPageState extends State<ProfileInput>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
-                              title: Text('It\'s just me',
+                              title: Text('companyprofileinput_ProfileCreation4'.tr(),
                                   style: GoogleFonts.poppins(
                                       fontSize: 14,
                                       color: isDarkMode
@@ -291,7 +292,7 @@ class _LoginPageState extends State<ProfileInput>
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
-                                  _numberOfEmployees = 'It\'s just me';
+                                  _numberOfEmployees = 'companyprofileinput_ProfileCreation4'.tr();
                                   _size = 0;
                                 });
                               },
@@ -316,7 +317,7 @@ class _LoginPageState extends State<ProfileInput>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
-                              title: Text('2-9 employees',
+                              title: Text('companyprofileinput_ProfileCreation5'.tr(),
                                   style: GoogleFonts.poppins(
                                       fontSize: 14,
                                       color: isDarkMode
@@ -343,7 +344,7 @@ class _LoginPageState extends State<ProfileInput>
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
-                                  _numberOfEmployees = '2-9 employees';
+                                  _numberOfEmployees = 'companyprofileinput_ProfileCreation5'.tr();
                                   _size = 1;
                                 });
                               },
@@ -368,7 +369,7 @@ class _LoginPageState extends State<ProfileInput>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
-                              title: Text('10-99 employees',
+                              title: Text('companyprofileinput_ProfileCreation6'.tr(),
                                   style: GoogleFonts.poppins(
                                       fontSize: 14,
                                       color: isDarkMode
@@ -395,7 +396,7 @@ class _LoginPageState extends State<ProfileInput>
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
-                                  _numberOfEmployees = '10-99 employees';
+                                  _numberOfEmployees = 'companyprofileinput_ProfileCreation6'.tr();
                                   _size = 2;
                                 });
                               },
@@ -419,7 +420,7 @@ class _LoginPageState extends State<ProfileInput>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
-                              title: Text('100-1000 employees',
+                              title: Text('companyprofileinput_ProfileCreation7'.tr(),
                                   style: GoogleFonts.poppins(
                                       fontSize: 14,
                                       color: isDarkMode
@@ -446,7 +447,7 @@ class _LoginPageState extends State<ProfileInput>
                               onChanged: (value) {
                                 setState(() {
                                   _selectedValue = value;
-                                  _numberOfEmployees = '100-1000 employees';
+                                  _numberOfEmployees = 'companyprofileinput_ProfileCreation7'.tr();
                                   _size = 3;
                                 });
                               },
@@ -470,7 +471,7 @@ class _LoginPageState extends State<ProfileInput>
                           child: FadeTransition(
                             opacity: _fadeAnimation,
                             child: RadioListTile<int>(
-                              title: Text('More than 1000 employees',
+                              title: Text('companyprofileinput_ProfileCreation8'.tr(),
                                   style: GoogleFonts.poppins(
                                       fontSize: 14,
                                       color: isDarkMode
@@ -498,7 +499,7 @@ class _LoginPageState extends State<ProfileInput>
                                 setState(() {
                                   _selectedValue = value;
                                   _numberOfEmployees =
-                                      'More than 1000 employees';
+                                      'companyprofileinput_ProfileCreation8'.tr();
                                   _size = 4;
                                 });
                               },
@@ -536,7 +537,7 @@ class _LoginPageState extends State<ProfileInput>
                       decoration: InputDecoration(
                         
                         contentPadding: const EdgeInsets.all(0.0),
-                        hintText: 'Your company name',
+                        hintText: 'companyprofileinput_ProfileCreation9'.tr(),
                         labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 14.0,
@@ -600,7 +601,7 @@ class _LoginPageState extends State<ProfileInput>
                       cursorColor: Color(0xFF406AFF),
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(0.0),
-                        hintText: 'Your company website!',
+                        hintText: 'companyprofileinput_ProfileCreation10'.tr(),
                         hintStyle: GoogleFonts.poppins(
                           color: isDarkMode
                               ? Color.fromARGB(255, 160, 160, 160)
@@ -667,7 +668,7 @@ class _LoginPageState extends State<ProfileInput>
                             vertical: 40.0,
                             horizontal:
                                 20.0), // Khoảng cách giữa đường viền và nội dung
-                        hintText: 'Description',
+                        hintText: 'companyprofileinput_ProfileCreation11'.tr(),
                         labelStyle: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: 14.0,
@@ -762,7 +763,7 @@ class _LoginPageState extends State<ProfileInput>
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Text(
-                            "Continue",
+                            "companyprofileinput_ProfileCreation12".tr(),
                             style: GoogleFonts.poppins(
                                 color: Colors.white, fontSize: 16.0),
                           ),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -89,7 +90,7 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
           width: double.infinity,
           padding: EdgeInsets.all(12),
           child: Text(
-            "Active Proposal ($lenghtActiveProposal)",
+            "${'studentdashboard_student5'.tr()} ($lenghtActiveProposal)",
             style: GoogleFonts.poppins(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -118,7 +119,7 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
                       } else if (proposal.hasData && proposal.data!.isEmpty) {
                         return Center(
                             child: Text(
-                          "\t\tYou no have active proposal yet.",
+                          "studentdashboard_student18".tr(),
                           style: GoogleFonts.poppins(
                             color: isDarkMode ? Colors.white : Colors.black,
                           ),
@@ -161,7 +162,7 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
           width: double.infinity,
           padding: EdgeInsets.all(12),
           child: Text(
-            "Submitted proposal ($lenghtSubmittedProposal)",
+            "${'studentdashboard_student6'.tr()} ($lenghtSubmittedProposal)",
             style: GoogleFonts.poppins(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -190,7 +191,7 @@ class _AllProjectsPageStudentState extends State<AllProjectsPageStudent>
                       } else if (proposal.hasData && proposal.data!.isEmpty) {
                         return Center(
                             child: Text(
-                          "\t\tYou no have active proposal yet.",
+                          "studentdashboard_student17".tr(),
                           style: GoogleFonts.poppins(
                             color: isDarkMode ? Colors.white : Colors.black,
                           ),

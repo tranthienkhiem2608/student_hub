@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +75,7 @@ class _DashboardPageState extends State<DashboardPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                role == 0 ? 'Your Projects' : 'Your Jobs',
+                role == 0 ? 'studentdashboard_student1'.tr() : 'companydashboard_company1'.tr(),
                 style: GoogleFonts.poppins(
                     color: Color(0xFF406AFF),
                     fontSize: 20,
@@ -95,7 +96,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         );
                       },
                       child: Text(
-                        'Post a Job',
+                        'companydashboard_company3'.tr(),
                         style: GoogleFonts.poppins(
                             color: Colors.white, fontWeight: FontWeight.w500),
                       ),
@@ -110,10 +111,10 @@ class _DashboardPageState extends State<DashboardPage> {
             dividerColor: isDarkMode
                 ? const Color.fromARGB(255, 47, 47, 47)
                 : Colors.white,
-            tabs: const [
-              Tab(text: 'All Projects'),
-              Tab(text: 'Working'),
-              Tab(text: 'Archived'),
+            tabs: [
+              Tab(text: 'companydashboard_company4'.tr()),
+              Tab(text: 'studentdashboard_student3'.tr()),
+              Tab(text: 'studentdashboard_student4'.tr()),
             ],
           ),
         ),

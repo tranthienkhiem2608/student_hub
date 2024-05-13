@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -127,7 +128,7 @@ class _ConversationState extends State<Conversation> {
                   ListTile(
                     leading:
                         Icon(Icons.edit_document, color: Color(0xFF406AFF)),
-                    title: Text('Edit Schedule an interview',
+                    title: Text('interview_student1'.tr(),
                         style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -143,7 +144,7 @@ class _ConversationState extends State<Conversation> {
                       Icons.cancel_outlined,
                       color: Color.fromARGB(255, 255, 38, 74),
                     ),
-                    title: Text('Cancel interview',
+                    title: Text('interview_student2'.tr(),
                         style: GoogleFonts.poppins(
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
@@ -304,7 +305,7 @@ class _ConversationState extends State<Conversation> {
                                 ),
                               ),
                               Text(
-                                "Duration: ${message.interview!.duration}",
+                                "${'interview_student3'.tr()}${message.interview!.duration}",
                                 style: GoogleFonts.poppins(
                                   color: isDarkMode
                                       ? Colors.white
@@ -316,7 +317,7 @@ class _ConversationState extends State<Conversation> {
                                 ),
                               ),
                               Text(
-                                "Start time: ${DateFormat('yyyy-MM-dd').format(message.interview!.startTime!)} AT ${DateFormat('hh:mm a').format(message.interview!.startTime!)}",
+                                "${'schedule_schedule13'.tr()}${DateFormat('yyyy-MM-dd').format(message.interview!.startTime!)} ${'schedule_schedule17'.tr()} ${DateFormat('hh:mm a').format(message.interview!.startTime!)}",
                                 style: GoogleFonts.poppins(
                                     color: isDarkMode
                                         ? Colors.white
@@ -325,7 +326,7 @@ class _ConversationState extends State<Conversation> {
                                             : Colors.black),
                               ),
                               Text(
-                                "End time: ${DateFormat('yyyy-MM-dd').format(message.interview!.endTime!)} AT ${DateFormat('hh:mm a').format(message.interview!.endTime!)}",
+                                "${'schedule_schedule14'.tr()}${DateFormat('yyyy-MM-dd').format(message.interview!.endTime!)} ${'schedule_schedule17'.tr()} ${DateFormat('hh:mm a').format(message.interview!.endTime!)}",
                                 style: GoogleFonts.poppins(
                                     color: isDarkMode
                                         ? Colors.white
@@ -366,7 +367,7 @@ class _ConversationState extends State<Conversation> {
                                               ),
                                             ),
                                             child: Text(
-                                              "Join Interview",
+                                              "schedule_schedule19".tr(),
                                               style: GoogleFonts.poppins(
                                                   color: Color(0xFF406AFF),
                                                   fontSize: 16.0),
@@ -396,7 +397,7 @@ class _ConversationState extends State<Conversation> {
                                               CrossAxisAlignment.center,
                                           children: [
                                             Text(
-                                              "Interview has been cancelled",
+                                              "schedule_schedule18".tr(),
                                               style: GoogleFonts.poppins(
                                                 color: const Color.fromARGB(
                                                     255, 255, 38, 74),

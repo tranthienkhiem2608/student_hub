@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -80,7 +81,7 @@ class _WorkingPageState extends State<WorkingPage> with WidgetsBindingObserver {
                   return Center(
                       child: Text(
                           textAlign: TextAlign.center,
-                          "\t\tWelcome, ${widget.user.fullname}!. You no working in progress",
+                          "${'welcome_welcomecompany2'.tr()}${widget.user.fullname}!. ${'welcome_welcomecompany5'.tr()}",
                           style: GoogleFonts.poppins(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,

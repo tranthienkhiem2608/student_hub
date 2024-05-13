@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +75,7 @@ class _ShowAccountWidgetState extends State<ShowAccountWidget> {
                 ),
               ),
               subtitle: Text(
-                widget._companyUser.role?[index] == 0 ? 'Student' : 'Company',
+                widget._companyUser.role?[index] == 0 ? 'accountSwitchPage_ProfileCreation2'.tr() : 'accountSwitchPage_ProfileCreation1'.tr(),
                 style: GoogleFonts.poppins(
                   fontSize: 15,
                   color: isDarkMode ? Colors.white : Colors.black,
