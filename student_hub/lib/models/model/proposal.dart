@@ -103,6 +103,23 @@ class Proposal {
       projectCompany: ProjectCompany.fromMapProposalProject(map['project']),
     );
   }
+
+  factory Proposal.fromMapNotify(Map<String, dynamic> map) {
+    return Proposal(
+      id: map['id'],
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      projectId: map['projectId'],
+      studentId: map['studentId'],
+      coverLetter: map['coverLetter'],
+      statusFlag: map['statusFlag'],
+      disableFlag: map['disableFlag'],
+      studentUser: StudentUser.fromMapStudentProposalNotify(map['student']),
+      projectCompany: ProjectCompany.fromMapProposalNotify(map['project']),
+    );
+  }
+
   static List<Proposal> fromListMapProposalCompany(List<dynamic> list) {
     List<Proposal> proposals = [];
     for (var item in list) {

@@ -4,13 +4,15 @@ A new Flutter project.
 
 # Demo videos
 
-## Phasing 1
+https://youtube.com/playlist?list=PLOLO_k_A82lnogaT9H7bEPGKb10vVMHus&si=hB0ZJMetVPVkYBaB
 
-Demo video: https://youtu.be/0PUITNYwfDU
+# Scoring sheet
 
-## Phasing 2
+https://drive.google.com/drive/folders/1pzBuVOmn6u-X1pTKjxUn0ZCFfYiPdiAM?usp=sharing
 
-Demo video: https://www.youtube.com/watch?v=qQiU5V_y-7U
+# Report
+
+https://drive.google.com/drive/folders/1pzBuVOmn6u-X1pTKjxUn0ZCFfYiPdiAM?usp=sharing
 
 ## Getting Started
 

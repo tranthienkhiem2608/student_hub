@@ -38,6 +38,7 @@ class _ProposalsPageState extends State<ProposalsPage> {
     setState(() {
       // Update your state here
       futureProposal = fetchDataProposalStudent();
+      print("AAA: $futureProposal");
     });
     //print projectList;
   }
@@ -97,6 +98,7 @@ class _ProposalsPageState extends State<ProposalsPage> {
 
   Future<List<Proposal>> fetchDataProposalStudent() async {
     // lấy dữ liệu từ server
+    print("aaa:${widget.projectCompany.id}");
     if (widget.projectCompany != null && widget.projectCompany.id != null) {
       return await ProposalViewModel(context)
           .getProposalByProject(widget.projectCompany.id!);

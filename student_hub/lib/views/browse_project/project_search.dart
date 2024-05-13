@@ -1,22 +1,26 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
+import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/project_company_viewModel.dart';
 import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
 
 class SearchProject extends StatefulWidget {
   final List<ProjectCompany> searchResults;
   final User user;
+  String? searchQuery;
 
-  const SearchProject({
+  SearchProject({
     Key? key,
     required this.searchResults,
     required this.user,
-    required List<ProjectCompany> allProjects,
+    this.searchQuery,
   }) : super(key: key);
 
   @override
@@ -27,12 +31,19 @@ class _SearchProjectState extends State<SearchProject> {
   String? _previousProjectLength;
   int? _previousStudentsNeeded;
   int? _previousProposalsLessThan;
+  static const int itemsPerPage = 10;
+  int currentPage = 1;
+  bool isLoading = false;
+  bool hasMoreData = true;
+  final scrollController = ScrollController();
 
   List<ProjectCompany> filteredProjects = [];
+  List<ProjectCompany> tmpList = [];
   String searchQuery = '';
   int? proposalsLessThan;
   int? studentsNeeded;
   String? projectLength;
+  final TextEditingController _searchQuery = TextEditingController();
   Map<String, bool> radioState = {
     'less_than_one_month': false,
     'one_to_three_months': false,
@@ -62,10 +73,93 @@ class _SearchProjectState extends State<SearchProject> {
     }
   }
 
+  Future<List<ProjectCompany>> fetchAllProjects(
+      int currentPage,
+      int itemsPerPage,
+      String? title,
+      String? projectScopeFlag,
+      String? numberOfStudents,
+      String? proposalsLessThan) async {
+    List<ProjectCompany> projectTmp = await ProjectCompanyViewModel(context)
+        .getAllProjectsData(currentPage, itemsPerPage, title, projectScopeFlag,
+            numberOfStudents, proposalsLessThan);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getInt('role') == 1) {
+      return projectTmp;
+    }
+    List<Proposal> proposals = await ProposalViewModel(context)
+        .getProposalById(widget.user!.studentUser!.id!);
+    //check if projectId have in proposal will remove from project list
+    projectTmp.removeWhere((project) =>
+        proposals.any((proposal) => proposal.projectId == project.id));
+    return projectTmp;
+  }
+
+  Future<List<ProjectCompany>> fetchAllProjects(
+      int currentPage,
+      int itemsPerPage,
+      String? title,
+      String? projectScopeFlag,
+      String? numberOfStudents,
+      String? proposalsLessThan) async {
+    List<ProjectCompany> projectTmp = await ProjectCompanyViewModel(context)
+        .getAllProjectsData(currentPage, itemsPerPage, title, projectScopeFlag,
+            numberOfStudents, proposalsLessThan);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (prefs.getInt('role') == 1) {
+      return projectTmp;
+    }
+    List<Proposal> proposals = await ProposalViewModel(context)
+        .getProposalById(widget.user!.studentUser!.id!);
+    //check if projectId have in proposal will remove from project list
+    projectTmp.removeWhere((project) =>
+        proposals.any((proposal) => proposal.projectId == project.id));
+    return projectTmp;
+  }
+
   @override
   void initState() {
     super.initState();
-    filteredProjects.addAll(widget.searchResults);
+    _searchQuery.text = widget.searchQuery ?? '';
+    fetchAllProjects(
+            currentPage, itemsPerPage, widget.searchQuery, null, null, null)
+        .then((value) => setState(() {
+              tmpList = value;
+              filteredProjects = value;
+            }));
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            setState(() {
+              // Your state change here
+              loadMoreData();
+            });
+          });
+        }
+      }
+    });
+  }
+
+  void loadMoreData() async {
+    if (!isLoading) {
+      setState(() {
+        isLoading = true;
+      });
+      List<ProjectCompany> newProjects = await fetchAllProjects(
+          ++currentPage, itemsPerPage, null, null, null, null);
+
+      // Fetch the next page of data
+
+      print('Current Page: $currentPage');
+      // Update the state with the new data
+      setState(() {
+        isLoading = false;
+        filteredProjects.addAll(newProjects);
+        print('Current Page: $currentPage');
+        hasMoreData = newProjects.length == itemsPerPage;
+      });
+    }
   }
 
   void navigateToProjectDetailPage(ProjectCompany project) {
@@ -83,7 +177,7 @@ class _SearchProjectState extends State<SearchProject> {
       _previousProjectLength = projectLength;
       _previousStudentsNeeded = studentsNeeded;
       _previousProposalsLessThan = proposalsLessThan;
-      filteredProjects = widget.searchResults.where((project) {
+      filteredProjects = tmpList.where((project) {
         bool passProjectLengthFilter = true;
         if (projectLength != null) {
           switch (projectLength) {
@@ -370,8 +464,16 @@ class _SearchProjectState extends State<SearchProject> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
             child: TextField(
+              controller: _searchQuery,
               onChanged: (value) {
-                filterProjects();
+                setState(() {
+                  _searchQuery.text = value;
+                  fetchAllProjects(
+                          currentPage, itemsPerPage, value, null, null, null)
+                      .then((value) => setState(() {
+                            filteredProjects = value;
+                          }));
+                });
               },
               decoration: InputDecoration(
                 hintText: 'projectlist_project3'.tr(),

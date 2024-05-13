@@ -11,6 +11,7 @@ import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:student_hub/views/pages/all_projects_page.dart';
 import 'package:student_hub/views/pages/archieved_page.dart';
 import 'package:student_hub/views/pages/working_page.dart';
+import 'package:student_hub/views/pages/working_page_student.dart';
 import 'package:student_hub/views/post_project/post_screen_1.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
@@ -128,8 +129,12 @@ class _DashboardPageState extends State<DashboardPage> {
                   user: widget.user,
                   fetchProjectDataFunction: fetchDataProject,
                 ),
-          WorkingPage(
-              user: widget.user, fetchProjectDataFunction: fetchDataProject),
+          role == 0
+              ? WorkingPageStudent(
+                  user: widget.user, fetchProjectDataFunction: fetchProposals)
+              : WorkingPage(
+                  user: widget.user,
+                  fetchProjectDataFunction: fetchDataProject),
           ArchivedPage(
               user: widget.user, fetchProjectDataFunction: fetchDataProject),
         ]),

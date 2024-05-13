@@ -1,117 +1,172 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/services/socket_services.dart';
+import 'package:student_hub/view_models/controller_route.dart';
+import 'package:student_hub/view_models/messages_viewModel.dart';
+import 'package:student_hub/view_models/notification_viewModel.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
-
+import 'package:student_hub/models/model/notification.dart';
 import '../../widgets/custom_notification/invited_notification.dart';
 import '../../widgets/custom_notification/messages_notification.dart';
 import '../../widgets/custom_notification/offer_notification.dart';
 import '../../widgets/custom_notification/submitted_notification.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+class AlertPage extends StatefulWidget {
+  const AlertPage(this.user, {super.key});
+  final User? user;
+  // final IO.Socket socket;
 
-class AlertPage extends StatelessWidget {
-  AlertPage({Key? key}) : super(key: key);
-  List newItems = ["Submitted", "Messages"];
-  List todayItems = ["Submitted", "Invited", "Offer", "Messages"];
-  List oldesItems = ["Offer", "Messages"];
+  @override
+  State<AlertPage> createState() => _AlertPageState();
+}
+
+class _AlertPageState extends State<AlertPage> {
+  List<Notify> notifications = [];
+  late IO.Socket socket;
+  late Notify newNotify;
+  late Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+    connect();
+    fetchNotify(widget.user!.id!).then((value) {
+      if (mounted) {
+        setState(() {
+          notifications = value;
+          //sort notification near on top to far
+          notifications.sort((a, b) => b.createAt!.compareTo(a.createAt!));
+        });
+      }
+    });
+
+    print("SOCKET note: ${socket.connected}");
+    print('User ID note: NOTI_${widget.user!.id}');
+    socket.on('NOTI_${widget.user!.id}', (data) {
+      print('New Notification: $data');
+      if (mounted) {
+        setState(() {
+          newNotify = Notify.fromMapNotify(data['notification']);
+          notifications.add(newNotify);
+          notifications.sort((a, b) => b.createAt!.compareTo(a.createAt!));
+        });
+      }
+    });
+    timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());
+  }
+
+  void connect() {
+    socket = SocketService().connectSocket();
+    socket.connect();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    socket.disconnect();
+    super.dispose();
+  }
+
+  Future<List<Notify>> fetchNotify(int userId) async {
+    List<Notify> messList = await NotifyViewModel().getAllNotifications(userId);
+    return messList;
+  }
 
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
-    return  SafeArea(
-      child: Scaffold(
-        backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'New',
-                  style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontSize: 20.0, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 10),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: newItems.length,
-                itemBuilder: (BuildContext context, int index) {
-                  switch (newItems[index]) {
-                    case "Submitted":
-                      return SubmittedNotification();
-                    case "Messages":
-                      return MessagesNotification();
-                    case "Invited":
-                      return InvitedNotification();
-                    case "Offer":
-                      return OfferNotification();
-                    default:
-                      return Container();
-                  }
-                },
-              ),
-              SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Today',
-                  style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontSize: 20.0, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 10),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: todayItems.length,
-                itemBuilder: (BuildContext context, int index) {
-                  switch (todayItems[index]) {
-                    case "Submitted":
-                      return SubmittedNotification();
-                    case "Messages":
-                      return MessagesNotification();
-                    case "Invited":
-                      return InvitedNotification();
-                    case "Offer":
-                      return OfferNotification();
-                    default:
-                      return Container();
-                  }
-                },
-              ),
-              SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Oldest',
-                  style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontSize: 20.0, fontWeight: FontWeight.bold),
-                ),
-              ),
-              SizedBox(height: 10),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: oldesItems.length,
-                itemBuilder: (BuildContext context, int index) {
-                  switch (oldesItems[index]) {
-                    case "Submitted":
-                      return SubmittedNotification();
-                    case "Messages":
-                      return MessagesNotification();
-                    case "Invited":
-                      return InvitedNotification();
-                    case "Offer":
-                      return OfferNotification();
-                    default:
-                      return Container();
-                  }
-                },
-              ),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: 10),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: ScrollPhysics(),
+            itemCount: notifications.length,
+            itemBuilder: (BuildContext context, int index) {
+              final notify = notifications[index];
+              final now = DateTime.now();
+              final createdAt = DateTime.parse(notify.createAt!);
+              final previousCreatedAt = index > 0
+                  ? DateTime.parse(notifications[index - 1].createAt!)
+                  : null;
 
-            ],
+              Widget label;
+              if (DateTime.now().difference(createdAt) <=
+                  const Duration(hours: 4)) {
+                label = Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      'New',
+                      style: GoogleFonts.poppins(
+                          color: Color(0xFF406AFF),
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                );
+              } else {
+                label = Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                      'Other',
+                      style: GoogleFonts.poppins(
+                          color: Color(0xFF406AFF),
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                );
+              }
+
+              return Column(
+                children: <Widget>[
+                  if (index == 0 ||
+                      (index > 0 && previousCreatedAt!.day != createdAt.day))
+                    label,
+                  GestureDetector(
+                    onTap: () async {
+                      (notify.typeNotifyFlag == "1" ||
+                              notify.typeNotifyFlag == "3")
+                          ? () {
+                              MessagesViewModel().setReadMess(notify.id!);
+                              ControllerRoute(context).navigateToChatRoom(
+                                  notify.receiver!.id!,
+                                  notify.sender!.id!,
+                                  notify.message!.projectId!,
+                                  notify.receiver!.fullname!,
+                                  notify.sender!.fullname!,
+                                  widget.user!,
+                                  1);
+                            }()
+                          : null;
+                      print('Type: ${notify.typeNotifyFlag}');
+                    },
+                    child: notify.typeNotifyFlag == "2"
+                        ? SubmittedNotify(notify)
+                        : notify.typeNotifyFlag == "3"
+                            ? MessagesNotify(notify)
+                            : notify.typeNotifyFlag == "1"
+                                ? InvitedNotify(notify, widget.user!)
+                                : notify.typeNotifyFlag == "0"
+                                    ? OfferNotify(notify, widget.user!)
+                                    : Container(),
+                  ),
+                ],
+              );
+            },
           ),
-        ),
+        ],
       ),
-    ),
     );
   }
 }

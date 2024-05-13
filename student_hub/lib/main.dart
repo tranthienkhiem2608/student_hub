@@ -5,6 +5,7 @@ import 'package:student_hub/views/homescreen/welcome_view.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,7 +44,25 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightBlue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: WelcomePage(),
+      home: FutureBuilder(
+        // Request the camera permission when the app starts
+        future: requestCameraPermission(),
+        builder: (context, snapshot) {
+          // Show the WelcomePage when permission is granted
+          if (snapshot.connectionState == ConnectionState.done) {
+            return WelcomePage();
+          }
+          // Show a loading spinner while waiting for permission
+          return CircularProgressIndicator();
+        },
+      ),
     );
+  }
+
+  Future<void> requestCameraPermission() async {
+    var status = await Permission.camera.status;
+    if (!status.isGranted) {
+      await Permission.camera.request();
+    }
   }
 }

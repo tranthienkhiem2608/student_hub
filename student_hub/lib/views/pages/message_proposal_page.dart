@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -13,22 +12,21 @@ import 'package:student_hub/view_models/messages_viewModel.dart';
 
 import 'package:student_hub/views/pages/chat_screen/chat_page.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
-import 'package:student_hub/views/pages/chat_widgets/schedule_interview_page.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-class MessagePage extends StatefulWidget {
-  const MessagePage(this.projectCompany, this.user,
+class MessageProposalPage extends StatefulWidget {
+  const MessageProposalPage(this.projectCompany, this.user,
       {required this.checkFlag, super.key});
   final int checkFlag;
   final ProjectCompany? projectCompany;
   final User? user;
 
   @override
-  State<MessagePage> createState() => _MessagePageState();
+  State<MessageProposalPage> createState() => _MessageProposalPageState();
 }
 
-class _MessagePageState extends State<MessagePage>
+class _MessageProposalPageState extends State<MessageProposalPage>
     with TickerProviderStateMixin {
   late TabController tabController;
   int currentTabIndex = 0;
@@ -54,7 +52,6 @@ class _MessagePageState extends State<MessagePage>
   @override
   void initState() {
     super.initState();
-    connect();
     fetchMessages().then((value) {
       setState(() {
         messages.addAll(value);
@@ -69,6 +66,7 @@ class _MessagePageState extends State<MessagePage>
     });
 
     filteredUsers.addAll(messages);
+    connect();
     _timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());
   }
 
@@ -142,7 +140,7 @@ class _MessagePageState extends State<MessagePage>
                     TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
-                        hintText: 'chat_chat1'.tr(),
+                        hintText: 'Search for chats...',
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
@@ -224,40 +222,85 @@ class _MessagePageState extends State<MessagePage>
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        backgroundColor:
-            isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
-        body: Column(
-          children: <Widget>[
-            TabBar(
-              indicatorColor: Color(0xFF406AFF),
-              labelColor: Color(0xFF406AFF),
-              dividerColor: isDarkMode
-                  ? const Color.fromARGB(255, 47, 47, 47)
-                  : Colors.white,
-              labelStyle: GoogleFonts.poppins(
-                  fontSize: 13, fontWeight: FontWeight.bold),
-              unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
-              tabs: [
-                Tab(text: 'All Chats'),
-                Tab(text: 'Schedule interview'),
+    return Scaffold(
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight + 20),
+        child: Container(
+          padding: EdgeInsets.only(top: 20),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                  child: InkWell(
+                    onTap: () {
+                      showSearchBottomSheet(context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: isDarkMode
+                              ? Colors.white
+                              : Colors.black, // Choose your border color
+                          width: 1.0, // Choose the border width
+                        ),
+                        borderRadius: BorderRadius.circular(
+                            50.0), // Adjust the border radius as needed
+                      ),
+                      child: TextField(
+                        enabled: false,
+                        decoration: InputDecoration(
+                          hintText: 'Search for chats...',
+                          hintStyle: GoogleFonts.poppins(
+                            color: isDarkMode
+                                ? Color.fromARGB(255, 98, 98, 98)
+                                : Colors.black,
+                          ),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          ),
+                          border: InputBorder
+                              .none, // Remove default border of TextField
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0), // adjust the value as needed
-                child: TabBarView(
-                  children: [
-                    ChatPage(user: widget.user!, socket: socket),
-                    ScheduleInterviewPage(user: widget.user!),
-                  ],
-                ),
-              ),
+          ),
+        ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            // Show tab view by default
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              decoration: const BoxDecoration(
+                  // ... (your decoration here)
+                  ),
+              child: ChatPage(user: widget.user!, socket: socket!), // Chat page
             ),
-          ],
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        backgroundColor: Color(0xFF406AFF),
+        child: Icon(
+          currentTabIndex == 0
+              ? Icons.message_outlined
+              : currentTabIndex == 1
+                  ? Icons.camera_alt
+                  : Icons.call,
+          color: Colors.white,
         ),
       ),
     );

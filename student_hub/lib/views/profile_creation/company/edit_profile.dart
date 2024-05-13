@@ -150,7 +150,6 @@ class _EditProfileState extends State<EditProfile>
 
   @override
   Widget build(BuildContext context) {
-    print(_companyProfiles);
     return Scaffold(
         appBar: const _AppBar(),
         backgroundColor: Color.fromARGB(255, 255, 255, 255),

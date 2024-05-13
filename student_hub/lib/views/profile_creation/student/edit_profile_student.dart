@@ -199,7 +199,6 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     width: 25, height: 25),
               ),
             ),
-
             onPressed: () {},
           )
         ],
@@ -244,7 +243,9 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                           : "studentprofileinput4_ProfileEdit7".tr(), // Nếu không có Techstack được chọn
                       style: GoogleFonts.poppins(
                         fontSize: 15,
-                        color: isDarkMode ? Color.fromARGB(255, 200, 200, 200) : Color.fromARGB(255, 126, 126, 126),
+                        color: isDarkMode
+                            ? Color.fromARGB(255, 200, 200, 200)
+                            : Color.fromARGB(255, 126, 126, 126),
                       ),
                       textAlign: TextAlign.left,
                       overflow: TextOverflow
@@ -296,7 +297,9 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                               "studentprofileinput4_ProfileEdit8".tr(), // Hiển thị thông báo nếu không có Skillset nào được chọn
                               style: GoogleFonts.poppins(
                                 fontSize: 15,
-                                color: isDarkMode ? Color.fromARGB(255, 200, 200, 200) : Color.fromARGB(255, 126, 126, 126),
+                                color: isDarkMode
+                                    ? Color.fromARGB(255, 200, 200, 200)
+                                    : Color.fromARGB(255, 126, 126, 126),
                               ),
                             ),
                         ],
@@ -330,30 +333,29 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                       alignment: Alignment.centerRight,
                       child: IconButton(
                         onPressed: () async {
-                      final result = await showDialog<Language>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return PopUpLanguagesWidget(
-                              _addNewLanguage, languages);
-                        },
-                      );
+                          final result = await showDialog<Language>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return PopUpLanguagesWidget(
+                                  _addNewLanguage, languages);
+                            },
+                          );
 
-                      if (result != null) {
-                        setState(() {
-                          languages.add(result);
-                        });
-                      }
-                    },
+                          if (result != null) {
+                            setState(() {
+                              languages.add(result);
+                            });
+                          }
+                        },
                         icon: const Icon(
-                      Icons.add,
-                      size: 26,
-                      color: Color(0xFF406AFF),
-                    ),
+                          Icons.add,
+                          size: 26,
+                          color: Color(0xFF406AFF),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                
               ],
             ),
             Padding(
@@ -375,7 +377,8 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                         languages: languages,
                         isEditing:
                             isEditing, // Truyền giá trị isEditing xuống ShowLanguagesWidget
-                        deleteLanguage: _deleteLanguage, // Truyền hàm _deleteLanguage xuống ShowLanguagesWidget
+                        deleteLanguage:
+                            _deleteLanguage, // Truyền hàm _deleteLanguage xuống ShowLanguagesWidget
                       ),
                     ),
                   ],

@@ -8,10 +8,12 @@ import 'package:student_hub/app_theme.dart';
 import 'package:student_hub/models/model/interview.dart';
 import 'package:student_hub/models/model/message.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/view_models/interview_viewModel.dart';
 import 'package:student_hub/view_models/messages_viewModel.dart';
 
 import 'package:student_hub/models/not_use/user_chat_model.dart';
+import 'package:student_hub/views/pages/chat_screen/video_conference_page.dart';
 import 'package:student_hub/widgets/schedule_interview_dialog.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 
@@ -353,6 +355,13 @@ class _ConversationState extends State<Conversation> {
                                                   .interview!
                                                   .meetingRoom!
                                                   .meeting_room_code);
+                                              ControllerRoute(context)
+                                                  .navigateToVideoRoom(
+                                                      widget.user,
+                                                      message
+                                                          .interview!
+                                                          .meetingRoom!
+                                                          .meeting_room_code!);
                                             },
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor:

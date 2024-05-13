@@ -20,6 +20,9 @@ class ProjectCompanyViewModel {
     print('Post Project');
     var payload = project.toMapProjectCompany();
 
+    // Add typeFlag to payload
+    payload['typeFlag'] = 0;
+
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
 
@@ -48,15 +51,61 @@ class ProjectCompanyViewModel {
     }
   }
 
+  // patch project /api/project/{id}
+  Future<void> patchProject(ProjectCompany project) async {
+    print('Patch Project');
+
+    // Fetch existing project data
+    print(project.id);
+    var existingProjectResponse =
+        await ConnectionService().get('/api/project/${project.id}', {});
+    var existingProjectData = jsonDecode(existingProjectResponse);
+
+    print('Existing project data: $existingProjectData');
+
+    // Prepare the payload
+    var payload = {
+      "projectScopeFlag": project.projectScopeFlag,
+      "title": project.title,
+      "description": project.description,
+      "numberOfStudents": project.numberOfStudents,
+      "typeFlag": existingProjectData['result']['typeFlag'],
+      "status": existingProjectData['result']['status']
+    };
+
+    try {
+      var response = await ConnectionService()
+          .patch('/api/project/${project.id}', payload);
+      var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
+        print("Connected to the server successfully");
+        print(response);
+      } else {
+        print("Failed");
+        print(responseDecode);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   // get all projects /api/project
   Future<List<ProjectCompany>> getAllProjectsData(
-      int page, int itemsPerPage) async {
+      int? page,
+      int? itemsPerPage,
+      String? title,
+      String? projectScopeFlag,
+      String? numberOfStudents,
+      String? proposalsLessThan) async {
     print('Get All Projects Data');
     print('Page: $page');
     print('Items per page: $itemsPerPage');
     try {
-      var response = await ConnectionService()
-          .get('/api/project?page=$page&limit=$itemsPerPage', {});
+      print(
+          '/api/project?${title != null ? 'title=$title' : ''}${projectScopeFlag != null ? '&projectScopeFlag=$projectScopeFlag' : ''}${numberOfStudents != null ? '&numberOfStudents=$numberOfStudents' : ''}${proposalsLessThan != null ? '&proposalsLessThan=$proposalsLessThan' : ''}${page != null ? '&page=$page' : ''}${itemsPerPage != null ? '&perPage=$itemsPerPage' : ''}');
+      var response = await ConnectionService().get(
+          '/api/project?${title != null ? 'title=$title' : ''}${projectScopeFlag != null ? '&projectScopeFlag=$projectScopeFlag' : ''}${numberOfStudents != null ? '&numberOfStudents=$numberOfStudents' : ''}${proposalsLessThan != null ? '&proposalsLessThan=$proposalsLessThan' : ''}${page != null ? '&page=$page' : ''}${itemsPerPage != null ? '&perPage=$itemsPerPage' : ''}',
+          {});
       var responseDecode = jsonDecode(response);
       if (responseDecode['result'] != null) {
         print("Connected to the server successfully");

@@ -33,66 +33,45 @@ class _AllChatsState extends State<AllChats> {
   void initState() {
     super.initState();
     fetchMessages().then((value) {
-      setState(() {
-        messages.addAll(value);
-      });
-      setStateForMessUnRead(messages);
+      if (mounted) {
+        setState(() {
+          messages.addAll(value);
+          messages.sort((a, b) => b.createAt!.compareTo(a.createAt!));
+        });
+      }
     });
-    widget.socket.onConnect((data) {
-      print("Connected: ${widget.socket.connected}");
-      print("Data: $data");
-    });
+    // widget.socket.onConnect((data) {
+    //   print("Connected: ${widget.socket.connected}");
+    //   print("Data: $data");
+    // });
     print("SOCKET: ${widget.socket.connected}");
     print('User ID: NOTI_${widget.user.id}');
     widget.socket.on('NOTI_${widget.user.id}', (data) {
       print("Content: $data");
-      setState(() {
-        newMess = Message.fromNewMessage(data);
-        for (int i = 0; i < messages.length; i++) {
-          if (newMess.sender!.id == messages[i].sender!.id &&
-              newMess.projectId == messages[i].project!.id) {
-            messages[i].checkRead = true;
-            messages[i].content = newMess.content;
-            messages[i].createAt = newMess.createAt;
-            saveSenderUnRead(newMess.sender!.id, newMess.projectId!);
-            break;
+      if (mounted) {
+        setState(() {
+          newMess = Message.fromNewMessage(data);
+          for (int i = 0; i < messages.length; i++) {
+            if (newMess.sender!.id == messages[i].sender!.id &&
+                newMess.projectId == messages[i].project!.id) {
+              messages[i].checkRead = true;
+              messages[i].content = newMess.content;
+              messages[i].createAt = newMess.createAt;
+              messages[i].notification!.notifyFlag = newMess.notifyFlag!;
+              messages[i].notification!.id = newMess.id!;
+              messages.sort((a, b) => b.createAt!.compareTo(a.createAt!));
+              // saveSenderUnRead(newMess.sender!.id, newMess.projectId!);
+              break;
+            }
           }
-        }
-      });
+        });
+      }
     });
   }
 
   @override
   void dispose() {
-    widget.socket.off('NOTI_${widget.user.id}');
     super.dispose();
-  }
-
-  void saveSenderUnRead(int? senderId, int projectId) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> unReadList = prefs.getStringList('unReadList') ?? [];
-    //check if senderId is already in the list
-    print('Sender ID: $unReadList');
-    String senderIdString = "$senderId/$projectId";
-    if (!unReadList.contains(senderIdString)) {
-      unReadList.add(senderIdString);
-      prefs.setStringList('unReadList', unReadList);
-    }
-  }
-
-  void setStateForMessUnRead(List<Message> messages) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> unReadList = prefs.getStringList('unReadList') ?? [];
-    print('Unread List: $unReadList');
-    print('Messages: $messages');
-    for (int i = 0; i < messages.length; i++) {
-      String senderIdString =
-          "${messages[i].sender!.id}/${messages[i].project!.id}";
-      if (unReadList.contains(senderIdString)) {
-        print(senderIdString);
-        messages[i].checkRead = true;
-      }
-    }
   }
 
   Future<List<Message>> fetchMessages() async {
@@ -126,6 +105,11 @@ class _AllChatsState extends State<AllChats> {
             itemCount: messages.length,
             itemBuilder: (context, int index) {
               final allChat = messages[index];
+              if (allChat.notification != null) {
+                print(allChat.notification!.notifyFlag);
+              } else {
+                print("noti: null");
+              }
               if (widget.user.id == allChat.receiver!.id) {
                 return Container(
                     margin: const EdgeInsets.only(top: 20),
@@ -153,14 +137,30 @@ class _AllChatsState extends State<AllChats> {
                               unReadList.remove(senderIdString);
                               prefs.setStringList('unReadList', unReadList);
                             }
-                            ControllerRoute(context).navigateToChatRoom(
-                                allChat.receiver!.id!,
-                                allChat.sender!.id!,
-                                allChat.project!.id!,
-                                allChat.receiver!.fullname!,
-                                allChat.sender!.fullname!,
-                                widget.user,
-                                0);
+                            (allChat.notification != null &&
+                                    allChat.notification!.notifyFlag == '0')
+                                ? () {
+                                    MessagesViewModel()
+                                        .setReadMess(allChat.notification!.id!);
+                                    ControllerRoute(context).navigateToChatRoom(
+                                        allChat.receiver!.id!,
+                                        allChat.sender!.id!,
+                                        allChat.project!.id!,
+                                        allChat.receiver!.fullname!,
+                                        allChat.sender!.fullname!,
+                                        widget.user,
+                                        0);
+                                  }()
+                                : () {
+                                    ControllerRoute(context).navigateToChatRoom(
+                                        allChat.receiver!.id!,
+                                        allChat.sender!.id!,
+                                        allChat.project!.id!,
+                                        allChat.receiver!.fullname!,
+                                        allChat.sender!.fullname!,
+                                        widget.user,
+                                        0);
+                                  }();
                           },
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,8 +182,8 @@ class _AllChatsState extends State<AllChats> {
                                 ),
                               ),
                               Text(
-                                allChat.content!.split(' ').take(5).join(' ') +
-                                    (allChat.content!.split(' ').length > 5
+                                allChat.content!.split(' ').take(4).join(' ') +
+                                    (allChat.content!.split(' ').length > 4
                                         ? '...'
                                         : ''),
                                 style: GoogleFonts.poppins(
@@ -209,11 +209,12 @@ class _AllChatsState extends State<AllChats> {
                                   .format(DateTime.parse(allChat.createAt!)),
                               style: MyTheme.bodyTextTime,
                             ),
-                            allChat.checkRead == true
+                            (allChat.notification != null &&
+                                    allChat.notification!.notifyFlag == '0')
                                 ? const Icon(
                                     Icons.circle_notifications,
                                     color: Colors.blue,
-                                    size: 10,
+                                    size: 12,
                                   )
                                 : Container(),
                           ],
