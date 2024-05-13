@@ -101,36 +101,49 @@ class _InvitedNotifyState extends State<InvitedNotify> {
                           height: 40,
                           child: widget.notify.content != "Interview cancelled"
                               ? () {
-                                  return ElevatedButton(
-                                    onPressed: () {
-                                      // Handle send action here
-                                      // Navigator.of(context).pop();
-                                      ControllerRoute(context)
-                                          .navigateToVideoRoom(
-                                              widget.user,
-                                              widget
-                                                  .notify
-                                                  .message!
-                                                  .interview!
-                                                  .meetingRoom!
-                                                  .meeting_room_code!);
-                                    },
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                              Color(0xFF406AFF)),
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                      ),
-                                    ),
-                                    child: Text("Join",
-                                        style: GoogleFonts.poppins(
-                                            color: Colors.white)),
-                                  );
+                                  return widget
+                                          .notify.message!.interview!.endTime!
+                                          .isAfter(DateTime.now())
+                                      ? ElevatedButton(
+                                          onPressed: () {
+                                            // Handle send action here
+                                            // Navigator.of(context).pop();
+                                            ControllerRoute(context)
+                                                .navigateToVideoRoom(
+                                                    widget.user,
+                                                    widget
+                                                        .notify
+                                                        .message!
+                                                        .interview!
+                                                        .meetingRoom!
+                                                        .meeting_room_code!);
+                                          },
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Color(0xFF406AFF)),
+                                            shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
+                                            ),
+                                          ),
+                                          child: Text("Join",
+                                              style: GoogleFonts.poppins(
+                                                  color: Colors.white)),
+                                        )
+                                      : Text(
+                                          "Interview expired",
+                                          style: GoogleFonts.poppins(
+                                            color: const Color.fromARGB(
+                                                255, 255, 38, 74),
+                                            fontSize: 14.0,
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        );
                                 }()
                               : () {
                                   return Text(

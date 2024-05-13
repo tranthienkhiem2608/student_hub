@@ -87,16 +87,7 @@ class _AllChatsState extends State<AllChats> {
         Container(
           padding: EdgeInsets.only(top: 10),
           child: Row(
-            children: [
-              Text(
-                'chat_chat3'.tr(),
-                style: GoogleFonts.poppins(
-                  fontSize: 19,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF406AFF),
-                ),
-              ),
-            ],
+            children: [],
           ),
         ),
         ListView.builder(
@@ -170,9 +161,8 @@ class _AllChatsState extends State<AllChats> {
                                 allChat.sender!.fullname!,
                                 style: GoogleFonts.poppins(
                                   fontSize: 17,
-                                  color: isDarkMode
-                                      ? Colors.white
-                                      : Colors.black,
+                                  color:
+                                      isDarkMode ? Colors.white : Colors.black,
                                 ),
                               ),
                               Text(

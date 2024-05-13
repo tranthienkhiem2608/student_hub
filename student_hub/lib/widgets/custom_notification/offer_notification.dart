@@ -123,10 +123,12 @@ class _OfferNotifyState extends State<OfferNotify> {
                                     return Text(
                                       'Offer was accepted',
                                       style: GoogleFonts.poppins(
-                                          color: const Color.fromARGB(
-                                              255, 0, 255, 0),
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.w500),
+                                        color: const Color.fromARGB(
+                                            255, 0, 255, 0),
+                                        fontSize: 14.0,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     );
                                   }()
                                 : () {
@@ -134,10 +136,12 @@ class _OfferNotifyState extends State<OfferNotify> {
                                     return Text(
                                       'Offer was declined',
                                       style: GoogleFonts.poppins(
-                                          color: const Color.fromARGB(
-                                              255, 255, 38, 74),
-                                          fontSize: 13.0,
-                                          fontWeight: FontWeight.w500),
+                                        color: const Color.fromARGB(
+                                            255, 255, 38, 74),
+                                        fontSize: 14.0,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     );
                                   }(),
                       ),
