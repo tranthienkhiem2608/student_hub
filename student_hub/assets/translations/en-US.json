@@ -121,7 +121,7 @@
     "companydashboard_company15": "View job posting",
     "companydashboard_company16": "Edit Posting",
     "companydashboard_company17": "Remove Posting",
-    "companydashboard_company18": "Start ưorking this project",
+    "companydashboard_company18": "Start working this project",
     "companydashboard_company19": "Archieve project",
     "companydashboard_company20": "Confirm Deletion",
     "companydashboard_company21": "Are you sure you want to delete this project?",
@@ -214,6 +214,8 @@
     "studentprofileinput4_ProfileEdit10": "Transcript",
     "studentprofileinput4_ProfileEdit11": "No resume selected",
     "studentprofileinput4_ProfileEdit12": "No transcript selected",
+    "studentprofileinput4_ProfileEdit13":"Email",
+    "studentprofileinput4_ProfileEdit14":"Empty",
 
     "projectpost1_project0": "Project Post",
     "projectpost1_project1": "1 /4  ",
@@ -478,6 +480,11 @@
     "hired_page12": "Send hired offer",
     "hired_page13": "Hire",
     "hired_page14": "",
+
+    "status1": "Working",
+    "status2": "Success",
+    "status3": "Failed",
+    "status4": "Unknown",
     
 
     "popup_project1": "Add project",

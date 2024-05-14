@@ -9,6 +9,7 @@ import 'package:student_hub/services/socket_services.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/view_models/messages_viewModel.dart';
 import 'package:student_hub/view_models/notification_viewModel.dart';
+import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 import 'package:student_hub/models/model/notification.dart';
 import '../../widgets/custom_notification/invited_notification.dart';
@@ -149,7 +150,13 @@ class _AlertPageState extends State<AlertPage> {
                                   widget.user!,
                                   1);
                             }()
-                          : null;
+                          : notify.typeNotifyFlag == "2"
+                              ? () {
+                                  MessagesViewModel().setReadMess(notify.id!);
+                                  ControllerRoute(context).navigateToHomeScreen(
+                                      false, widget.user!, 1);
+                                }()
+                              : null;
                       print('Type: ${notify.typeNotifyFlag}');
                     },
                     child: notify.typeNotifyFlag == "2"

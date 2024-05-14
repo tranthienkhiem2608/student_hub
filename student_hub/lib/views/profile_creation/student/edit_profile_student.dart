@@ -68,7 +68,8 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
 
     // Initialize _selectedSkills with user's existing skillset data
     _selectedSkills.addAll(
-        widget.user.studentUser?.skillSet?.map((skill) => skill.name) ?? []);
+        widget.user.studentUser?.skillSet?.map((skill) => skill.name ?? '') ??
+            []);
     // You can also initialize _selectedSkillSet if needed
     _selectedSkillSet.addAll(widget.user.studentUser?.skillSet ?? []);
     // Other initialization code...
@@ -245,7 +246,8 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     child: Text(
                       _selectedTechStack.isNotEmpty
                           ? _selectedTechStack // Hiển thị Techstack đã chọn
-                          : "studentprofileinput4_ProfileEdit7".tr(), // Nếu không có Techstack được chọn
+                          : "studentprofileinput4_ProfileEdit7"
+                              .tr(), // Nếu không có Techstack được chọn
                       style: GoogleFonts.poppins(
                         fontSize: 15,
                         color: isDarkMode
@@ -299,7 +301,8 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                             ),
                           if (_selectedSkills.isEmpty)
                             Text(
-                              "studentprofileinput4_ProfileEdit8".tr(), // Hiển thị thông báo nếu không có Skillset nào được chọn
+                              "studentprofileinput4_ProfileEdit8"
+                                  .tr(), // Hiển thị thông báo nếu không có Skillset nào được chọn
                               style: GoogleFonts.poppins(
                                 fontSize: 15,
                                 color: isDarkMode
@@ -337,7 +340,8 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     child: Text(
                       _resume.isNotEmpty
                           ? _resume // Hiển thị Techstack đã chọn
-                          : "studentprofileinput4_ProfileEdit11".tr(), // Nếu không có Techstack được chọn
+                          : "studentprofileinput4_ProfileEdit11"
+                              .tr(), // Nếu không có Techstack được chọn
                       style: GoogleFonts.poppins(
                         fontSize: 15,
                         color: isDarkMode
@@ -367,14 +371,15 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     ),
                     textAlign: TextAlign.left,
                   ),
-                  SizedBox( 
+                  SizedBox(
                       width:
                           10), // Khoảng cách giữa chữ "Techstack" và thông tin
                   Expanded(
                     child: Text(
                       _transcript.isNotEmpty
                           ? _transcript // Hiển thị Techstack đã chọn
-                          : "studentprofileinput4_ProfileEdit12".tr(), // Nếu không có Techstack được chọn
+                          : "studentprofileinput4_ProfileEdit12"
+                              .tr(), // Nếu không có Techstack được chọn
                       style: GoogleFonts.poppins(
                         fontSize: 15,
                         color: isDarkMode
@@ -633,6 +638,9 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                           );
                           InputProfileViewModel(context)
                               .putProfileStudent(widget.user);
+                          setState(() {
+                            isEditing = !isEditing;
+                          });
                         },
                         height: 45,
                         color: Color(0xFF406AFF),

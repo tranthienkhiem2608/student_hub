@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/views/pages/message_by_projectId_page.dart';
 import 'package:student_hub/views/pages/message_page.dart';
-import 'package:student_hub/views/pages/message_proposal_page.dart';
 import 'package:student_hub/views/pages/project_detail/detail_page.dart';
 import 'package:student_hub/views/pages/project_detail/hired_page.dart';
 import 'package:student_hub/views/pages/project_detail/proposals_page.dart';
@@ -92,8 +92,8 @@ class _HireStudentScreenState extends State<HireStudentScreen>
                     user: widget.user,
                   ),
                   DetailPage(projectCompany: widget.projectCompany),
-                  MessageProposalPage(widget.projectCompany, widget.user,
-                      checkFlag: 1),
+                  MessageByProjectIdPage(
+                      user: widget.user, projectId: widget.projectCompany.id!),
                   HiredPage(
                     projectCompany: widget.projectCompany,
                     user: widget.user,

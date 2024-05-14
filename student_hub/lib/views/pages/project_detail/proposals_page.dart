@@ -5,6 +5,7 @@ import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/models/not_use/student_registered.dart';
+import 'package:student_hub/views/profile_creation/student/proposal_profile.dart';
 import 'package:student_hub/widgets/show_student_proposals_widget.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/view_models/proposal_viewModel.dart';
@@ -59,7 +60,6 @@ class _ProposalsPageState extends State<ProposalsPage> {
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Divider(),
           const Padding(padding: EdgeInsets.only(bottom: 10)),
           Expanded(
             child: FutureBuilder<List<Proposal>>(
@@ -79,9 +79,54 @@ class _ProposalsPageState extends State<ProposalsPage> {
                       print(proposal.data![index].coverLetter);
                       if (proposal.data![index].statusFlag != 3) {
                         return GestureDetector(
-                          child: ShowStudentProposalsWidget(
-                            proposal: proposal.data![index],
-                            user: widget.user,
+                          onTap: () {
+                            Future<Proposal?> proposalStudent =
+                                ProposalViewModel(context)
+                                    .getProposalStudentById(
+                                        proposal.data![index].id!);
+                            proposalStudent.then((value) {
+                              print(
+                                  "Proposal: ${value!.studentUser!.skillSet}");
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProposalProfile(
+                                    value.studentUser!,
+                                    widget.user,
+                                  ),
+                                ),
+                              );
+                            });
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 10.0),
+                            padding: const EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                              color:
+                                  isDarkMode ? Color(0xFF2f2f2f) : Colors.white,
+                              border: Border.all(
+                                color: isDarkMode
+                                    ? Color.fromARGB(255, 60, 60, 60)
+                                    : Color.fromARGB(255, 228, 228, 233),
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(20.0),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: isDarkMode
+                                      ? Color(0xFF212121)
+                                      : Colors.grey.withOpacity(0.25),
+                                  spreadRadius: 1,
+                                  blurRadius: 6,
+                                  offset: Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: ShowStudentProposalsWidget(
+                              proposal: proposal.data![index],
+                              user: widget.user,
+                            ),
                           ),
                         );
                       }

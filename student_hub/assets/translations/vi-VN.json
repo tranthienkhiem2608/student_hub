@@ -216,6 +216,7 @@
     "studentprofileinput4_ProfileEdit10": "Bảng điểm",
     "studentprofileinput4_ProfileEdit11": "CV trống",
     "studentprofileinput4_ProfileEdit12": "Bảng điểm trống",
+    "studentprofileinput4_ProfileEdit14": "Trống",
 
     "projectpost1_project1": "1 /4  ",
     "projectpost1_project2": "Bắt đầu với tiêu đề ấn tượng",
@@ -476,6 +477,11 @@
     "hired_page12": "Gửi đề nghị",
     "hired_page13": "Tuyển",
     "hired_page14": "Sinh viên năm ",
+
+    "status1": "Đang làm",
+    "status2": "Thành công",
+    "status3": "Thất bại",
+    "status4": "Chưa rõ",
 
     "popup_project1": "Thêm dự án",
     "popup_project2": "Tên dự án:",

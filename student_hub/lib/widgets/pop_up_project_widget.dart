@@ -229,8 +229,11 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                   style: GoogleFonts.poppins(color: Colors.grey, fontSize: 13),
                 ),
                 IconButton(
-                  icon: Icon(Icons.calendar_month_sharp,
-                      color: Color(0xFF406AFF), size: 20.0, ),
+                  icon: Icon(
+                    Icons.calendar_month_sharp,
+                    color: Color(0xFF406AFF),
+                    size: 20.0,
+                  ),
                   onPressed: _showEndMonthPicker,
                 ),
               ],
@@ -254,13 +257,13 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
                     skillsSets = await getDataSkillSet(context);
                     if (textEditingValue.text == '') {
                       return Future.value(
-                          skillsSets.map((skillSet) => skillSet.name));
+                          skillsSets.map((skillSet) => skillSet.name ?? ''));
                     }
                     return skillsSets
-                        .where((skillSet) => skillSet.name
+                        .where((skillSet) => skillSet.name!
                             .toLowerCase()
                             .contains(textEditingValue.text.toLowerCase()))
-                        .map((skillSet) => skillSet.name)
+                        .map((skillSet) => skillSet.name ?? '')
                         .toList();
                   },
                   optionsViewBuilder: (context, onSelected, options) {
@@ -494,9 +497,9 @@ class _PopUpProjectWidgetState extends State<PopUpProjectWidget> {
               ),
               child: TextFormField(
                 style: GoogleFonts.poppins(
-                color: isDarkMode ? Colors.white : Colors.black,
-              ),
-              cursorColor: Color(0xFF406AFF),
+                  color: isDarkMode ? Colors.white : Colors.black,
+                ),
+                cursorColor: Color(0xFF406AFF),
                 controller: _projectDescriptionController,
                 decoration: InputDecoration(
                   hintText: 'popup_project10'.tr(),

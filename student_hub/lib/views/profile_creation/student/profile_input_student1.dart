@@ -216,7 +216,7 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                 onChanged: (TechStack? newValue) {
                   setState(() {
                     _selectedTechStack = newValue!.name;
-                    
+
                     print("chosen techstack: $_selectedTechStack");
                     _selectedTechStackId = newValue.id;
                     print("id: $_selectedTechStackId");
@@ -263,13 +263,13 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                 skillsSets = await getDataSkillSet(context);
                 if (textEditingValue.text == '') {
                   return Future.value(
-                      skillsSets.map((skillSet) => skillSet.name));
+                      skillsSets.map((skillSet) => skillSet.name ?? ''));
                 }
                 return skillsSets
-                    .where((skillSet) => skillSet.name
+                    .where((skillSet) => skillSet.name!
                         .toLowerCase()
                         .contains(textEditingValue.text.toLowerCase()))
-                    .map((skillSet) => skillSet.name)
+                    .map((skillSet) => skillSet.name ?? " ")
                     .toList();
               },
               optionsViewBuilder: (context, onSelected, options) {
@@ -308,7 +308,8 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Container(
-                                        margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                        margin: const EdgeInsets.fromLTRB(
+                                            0, 0, 0, 15),
                                         child: Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
@@ -376,8 +377,8 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                             hintText: inputFieldValues.tags.isNotEmpty
                                 ? ''
                                 : "Add your skills",
-                            hintStyle:
-                                GoogleFonts.poppins(fontSize: 13, color: Colors.grey),
+                            hintStyle: GoogleFonts.poppins(
+                                fontSize: 13, color: Colors.grey),
                             errorText: inputFieldValues.error,
                             prefixIconConstraints: BoxConstraints(
                                 maxWidth: _distanceToField * 0.90),
@@ -617,9 +618,11 @@ class _ProfileInputStudent1State extends State<ProfileInputStudent1> {
                       ),
                       height: 170,
                       child: ShowSchoolWidget(
-                          educationList: educationList,
-                          deleteSchool: _deleteEducation,
-                          addNewEducation: _addNewEducation, isEditing: true,),
+                        educationList: educationList,
+                        deleteSchool: _deleteEducation,
+                        addNewEducation: _addNewEducation,
+                        isEditing: true,
+                      ),
                     ),
                   ],
                 ),

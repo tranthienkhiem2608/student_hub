@@ -29,6 +29,12 @@ class _AllProjectsPageState extends State<AllProjectsPage>
     });
   }
 
+  void _handleChangeStatus() {
+    setState(() {
+      futureProjects = widget.fetchProjectDataFunction();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -112,9 +118,14 @@ class _AllProjectsPageState extends State<AllProjectsPage>
                             project.data![index].countMessages!.toString(),
                             project.data![index].countHired!.toString()
                           ],
-                          labels: ['companyprojecthired_company1'.tr(), 'companyprojecthired_company3'.tr(), 'companyprojecthired_company4'.tr()],
+                          labels: [
+                            'companyprojecthired_company1'.tr(),
+                            'companyprojecthired_company3'.tr(),
+                            'companyprojecthired_company4'.tr()
+                          ],
                           showOptionsIcon: true,
                           onProjectDeleted: _handleProjectDeleted,
+                          onChangeStatus: _handleChangeStatus,
                           user: widget.user,
                         ),
                       );

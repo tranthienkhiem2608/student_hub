@@ -80,10 +80,14 @@ class _ShowStudentProposalsWidgetState
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    widget.proposal.studentUser!.user!, style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF406AFF))
-                  ),
-                  Text(getText(), style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black)),
+                  Text(widget.proposal.studentUser!.user!,
+                      style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF406AFF))),
+                  Text(getText(),
+                      style: GoogleFonts.poppins(
+                          color: isDarkMode ? Colors.white : Colors.black)),
                 ],
               ),
             ),
@@ -94,7 +98,9 @@ class _ShowStudentProposalsWidgetState
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(widget.proposal.studentUser!.techStack!.name, style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black)),
+              Text(widget.proposal.studentUser!.techStack!.name,
+                  style: GoogleFonts.poppins(
+                      color: isDarkMode ? Colors.white : Colors.black)),
             ],
           ),
         ),
@@ -102,12 +108,11 @@ class _ShowStudentProposalsWidgetState
           padding: EdgeInsets.only(left: 5, top: 10, bottom: 10),
           child: Align(
             alignment: Alignment.centerLeft,
-            child: Text(
-              widget.proposal.coverLetter!,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black)
-            ),
+            child: Text(widget.proposal.coverLetter!,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: GoogleFonts.poppins(
+                    color: isDarkMode ? Colors.white : Colors.black)),
           ),
         ),
         widget.proposal.statusFlag != 3
@@ -151,23 +156,21 @@ class _ShowStudentProposalsWidgetState
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
+                            MaterialStateProperty.all<Color>(Color(0xFF4DBE3FF)),
                         padding: MaterialStateProperty.all<EdgeInsets>(
                             EdgeInsets.all(5)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(color: Colors.black),
                           ),
                         ),
                         elevation: MaterialStateProperty.all<double>(5),
-                        shadowColor:
-                            MaterialStateProperty.all<Color>(Colors.black),
+                       
                       ),
-                      child: Text("Message  ",
-                          style:
-                              GoogleFonts.poppins(color: Colors.black, fontSize: 16.0)),
+                      child: Text("home_home3".tr(),
+                          style: GoogleFonts.poppins(
+                              color: Color(0xFF406AFF), fontSize: 16.0)),
                     ),
                   ),
                   Container(
@@ -187,11 +190,12 @@ class _ShowStudentProposalsWidgetState
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text("Hired offer", style: GoogleFonts.poppins()),
+                                          Text("hired_page8".tr(),
+                                              style: GoogleFonts.poppins()),
                                         ],
                                       ),
-                                      content: Text(
-                                          "Do you really want to send hired offer for student to do this project?", style: GoogleFonts.poppins()),
+                                      content: Text("hired_page9".tr(),
+                                          style: GoogleFonts.poppins()),
                                       actions: <Widget>[
                                         Row(
                                           mainAxisAlignment:
@@ -212,14 +216,14 @@ class _ShowStudentProposalsWidgetState
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               10.0),
-                                                      side: BorderSide(
-                                                          color: Colors.black),
                                                     ),
                                                   ),
                                                 ),
-                                                child: Text("Cancel",
+                                                child: Text(
+                                                    "message_message3".tr(),
                                                     style: GoogleFonts.poppins(
-                                                        color: Colors.black)),
+                                                        color:
+                                                            Color(0xFF406AFF))),
                                               ),
                                             ),
                                             SizedBox(
@@ -254,7 +258,7 @@ class _ShowStudentProposalsWidgetState
                                                     ),
                                                   ),
                                                 ),
-                                                child: Text("Send",
+                                                child: Text("hired_page11".tr(),
                                                     style: GoogleFonts.poppins(
                                                         color: Colors.white)),
                                               ),
@@ -277,25 +281,24 @@ class _ShowStudentProposalsWidgetState
                                 ? MaterialStateProperty.all<Color>(
                                     Colors.greenAccent)
                                 : MaterialStateProperty.all<Color>(
-                                    Color(0xFF69cde0))),
+                                    Color(0xFF406AFF))),
                         padding: MaterialStateProperty.all<EdgeInsets>(
                             EdgeInsets.all(5)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10.0),
-                            side: BorderSide(color: Colors.black),
                           ),
                         ),
                         elevation: MaterialStateProperty.all<double>(5),
-                        shadowColor:
-                            MaterialStateProperty.all<Color>(Colors.black),
+                        
                       ),
                       child: Text(
                         widget.proposal.statusFlag == 2
-                            ? "Send hired offer"
-                            : "Hire",
-                        style: GoogleFonts.poppins(color: Colors.black, fontSize: 16.0),
+                            ? "hired_page12".tr()
+                            : "hired_page13".tr(),
+                        style: GoogleFonts.poppins(
+                            color: Colors.white, fontSize: 16.0),
                       ),
                     ),
                   ),

@@ -180,4 +180,27 @@ class ProposalViewModel {
       print(e);
     }
   }
+
+  Future<Proposal?> getProposalStudentById(int proposalId) async {
+    print('getProposalById');
+    try {
+      var response =
+          await ConnectionService().get('/api/proposal/$proposalId', {});
+      var responseDecode = jsonDecode(response);
+      if (responseDecode['result'] != null) {
+        print("Connected to the server successfully");
+        print("Connect server successful");
+        print(responseDecode['result']['student']['skillSets']);
+        Proposal proposal =
+            Proposal.fromMapProposalStudentDetail(responseDecode['result']);
+        return proposal;
+      } else {
+        print("Failed get proposal");
+        print(responseDecode);
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
 }

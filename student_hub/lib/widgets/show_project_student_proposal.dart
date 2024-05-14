@@ -9,13 +9,13 @@ import 'package:student_hub/widgets/pop_up_project_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart'; // Import the intl package
 
-class ShowProjectStudentWidget extends StatelessWidget {
+class ShowProjectStudentPropasalWidget extends StatelessWidget {
   final StudentUser userStudent;
   final Function _deleteProject;
   final Function _addNewProject;
   final bool? isEditing;
 
-  const ShowProjectStudentWidget({
+  const ShowProjectStudentPropasalWidget({
     Key? key,
     required this.userStudent,
     required Function deleteProject,
@@ -118,50 +118,6 @@ class ShowProjectStudentWidget extends StatelessWidget {
                         color: isDarkMode ? Colors.white : Color(0xFF777B8A),
                         fontSize: 14 // Màu sắc của văn bản
                         ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'popup_project7'.tr(),
-                    style: GoogleFonts.poppins(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: isDarkMode ? Colors.white : Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 10, 5),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: userStudent.experience![index].skillSet!
-                        .map((skill) => Padding(
-                              padding: const EdgeInsets.only(right: 5.0),
-                              child: Chip(
-                                label: Text(
-                                  skill.name!,
-                                  style: TextStyle(
-                                    color: Color(0xFF406AFF),
-                                  ),
-                                ),
-                                backgroundColor: Color(0xFF4DBE3FF),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      10), // Bo viền của Chip
-                                  side: BorderSide(
-                                    color: Color(0xFF4DBE3FF), // Màu của border
-                                    width: 1, // Độ dày của border
-                                  ),
-                                ),
-                              ),
-                            ))
-                        .toList(),
                   ),
                 ),
               ),
