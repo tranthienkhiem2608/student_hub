@@ -172,7 +172,7 @@ class InputProfileViewModel {
     print('Put Language');
     String url = '/api/language/updateByStudentId/$studentId';
     try {
-      showDialog(context: context, builder: (context) => LoadingUI());
+      // showDialog(context: context, builder: (context) => LoadingUI());
 
       var payload = {
         "languages": languageList
@@ -205,7 +205,7 @@ class InputProfileViewModel {
     String url = '/api/education/updateByStudentId/$studentId';
     //convert the list of education to a map
     try {
-      showDialog(context: context, builder: (context) => LoadingUI());
+      // showDialog(context: context, builder: (context) => LoadingUI());
       var payload = {
         "education": educationList
             .map((education) => {
@@ -237,7 +237,7 @@ class InputProfileViewModel {
     print('Put Experience');
     String url = '/api/experience/updateByStudentId/$studrntId';
     try {
-      showDialog(context: context, builder: (context) => LoadingUI());
+      // showDialog(context: context, builder: (context) => LoadingUI());
       var payload = {
         "experience": experienceList
             .map((experience) => {
@@ -277,7 +277,7 @@ class InputProfileViewModel {
     print('Put File CV');
     String url = '/api/profile/student';
     try {
-      showDialog(context: context, builder: (context) => LoadingUI());
+      // showDialog(context: context, builder: (context) => LoadingUI());
       // var payload = fileCV.toMapFileCV();
       if (fileCV.resume != null) {
         String urlResume = '$url/$studentId/resume';
@@ -313,7 +313,7 @@ class InputProfileViewModel {
           print(responseDecode);
         }
       }
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
     } catch (e) {
       print(e);
     }
@@ -373,7 +373,7 @@ class InputProfileViewModel {
           user.studentUser?.file?.transcript != null) {
         await putFileCv(user.studentUser!.id!, user.studentUser!.file!);
       }
-//      Navigator.of(context).pop();
+      Navigator.of(context).pop();
     } catch (e) {
       print(e);
     }

@@ -65,7 +65,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
     });
   }
 
-  void _showOptions(BuildContext context) {
+  void _showOptions(BuildContext context, int typeFlag) {
     bool isDarkMode =
         Provider.of<DarkModeProvider>(context, listen: false).isDarkMode;
     showModalBottomSheet(
@@ -176,20 +176,33 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               ),
               Divider(),
               TextButton(
+                onPressed: widget.projectCompany.typeFlag == 1
+                    ? null
+                    : () {
+                        widget.projectCompany.typeFlag = 1;
+                        // Handle start working this project
+                        ProposalViewModel(context).setStartWorking(
+                            widget.projectCompany, widget.user!);
+                      },
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.disabled))
+                        return Colors.grey;
+                      return Color(0xFF406AFF); // Use the component's default.
+                    },
+                  ),
+                ),
                 child: Align(
                   alignment: Alignment.center,
                   child: Text('companydashboard_company18'.tr(),
                       style: GoogleFonts.poppins(
-                          color: Color(0xFF406AFF),
+                          color: widget.projectCompany.typeFlag == 1
+                              ? Color(0xFF406AFF).withOpacity(0.4)
+                              : Color(0xFF406AFF),
                           fontSize: 15,
                           fontWeight: FontWeight.bold)),
                 ),
-                onPressed: () {
-                  widget.projectCompany.typeFlag = 1;
-                  // Handle start working this project
-                  ProposalViewModel(context)
-                      .setStartWorking(widget.projectCompany, widget.user!);
-                },
               ),
             ],
           );
@@ -260,7 +273,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                     ),
                     padding: EdgeInsets.only(bottom: 35),
                     onPressed: () {
-                      _showOptions(context);
+                      _showOptions(context, widget.projectCompany.typeFlag!);
                     },
                   )
                 : null,
@@ -359,13 +372,15 @@ void _confirmDeletion(BuildContext context, ShowProjectCompanyWidget widget) {
         content: Text('companydashboard_company21'.tr()),
         actions: [
           TextButton(
-            child: Text('companyprofileedit_ProfileCreation2'.tr(), style: TextStyle(color: Colors.grey)),
+            child: Text('companyprofileedit_ProfileCreation2'.tr(),
+                style: TextStyle(color: Colors.grey)),
             onPressed: () {
               Navigator.of(context).pop(); // Close dialog
             },
           ),
           TextButton(
-            child: Text('companyprofileedit_ProfileCreation3'.tr(), style: TextStyle(color: Colors.red)),
+            child: Text('companyprofileedit_ProfileCreation3'.tr(),
+                style: TextStyle(color: Colors.red)),
             onPressed: () {
               ProjectCompanyViewModel(context)
                   .deleteProject(widget.projectCompany.id!)

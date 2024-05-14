@@ -1,16 +1,16 @@
 class SkillSets {
   int? id;
-  final String? createdAt;
-  final String? updatedAt;
-  final String? deletedAt;
-  final String name;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  String? name;
 
   SkillSets({
     this.id,
     this.createdAt,
     this.updatedAt,
     this.deletedAt,
-    required this.name,
+    this.name,
   });
 
   Map<String, dynamic> toMapSkillSets() {

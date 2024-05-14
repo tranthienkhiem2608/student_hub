@@ -16,30 +16,35 @@ import 'package:student_hub/views/auth/switch_account_view.dart';
 import 'package:student_hub/views/profile_creation/company/profile_input.dart';
 import 'package:student_hub/widgets/pop_up_education_widget.dart';
 import 'package:student_hub/widgets/pop_up_project_widget.dart';
+import 'package:student_hub/widgets/show_project_student_proposal.dart';
 import 'package:student_hub/widgets/show_project_student_widget.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import 'package:student_hub/widgets/show_school_widget.dart';
 import 'package:student_hub/widgets/show_languages_widget.dart';
 import 'package:student_hub/widgets/pop_up_languages_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../view_models/input_profile_viewModel.dart';
 import '../../../widgets/pop_up_languages_edit_widget.dart';
 
-class EditProfileInputStudent extends StatefulWidget {
+class ProposalProfile extends StatefulWidget {
+  final StudentUser? studentUser;
   final User user;
-  const EditProfileInputStudent(this.user, {super.key});
+  const ProposalProfile(this.studentUser, this.user, {super.key});
 
   @override
-  _EditProfileInputStudentState createState() =>
-      _EditProfileInputStudentState();
+  _ProposalProfileState createState() => _ProposalProfileState();
 }
 
-class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
+class _ProposalProfileState extends State<ProposalProfile> {
   bool isEditing = false;
   late TextfieldTagsController<String> _textfieldTagsController;
   late double _distanceToField;
   String _selectedTechStack = '';
+  String _email = '';
+  String _resume = '';
+  String _transcript = '';
   final List<String> _selectedSkills = [];
   final List<int> _selectedSkillsId = [];
   int _selectedTechStackId = 0;
@@ -58,36 +63,39 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
     isEditing = false;
     _textfieldTagsController = TextfieldTagsController<String>();
 
-    _selectedTechStack = widget.user.studentUser?.techStack?.name ?? '';
-    _selectedTechStackId = widget.user.studentUser?.techStack?.id ?? 0;
+    _selectedTechStack = widget.studentUser!.techStack!.name ?? '';
+    _email = widget.studentUser!.email ?? '';
+    _resume = widget.studentUser!.resumeLink ?? '';
+    _transcript = widget.studentUser!.transcriptLink ?? '';
+    _selectedTechStackId = widget.studentUser!.techStack!.id ?? 0;
 
     // Initialize _selectedSkills with user's existing skillset data
     _selectedSkills.addAll(
-        widget.user.studentUser?.skillSet?.map((skill) => skill.name) ?? []);
+        widget.studentUser!.skillSet!.map((skill) => skill.name ?? '') ?? []);
     // You can also initialize _selectedSkillSet if needed
-    _selectedSkillSet.addAll(widget.user.studentUser?.skillSet ?? []);
+    _selectedSkillSet.addAll(widget.studentUser!.skillSet ?? []);
     // Other initialization code...
 
-    educationList = widget.user.studentUser?.education ?? [];
+    educationList = widget.studentUser!.education ?? [];
 
-    widget.user.studentUser?.education?.addAll([]);
+    widget.studentUser!.education!.addAll([]);
 
-    languages = widget.user.studentUser?.languages ?? [];
+    languages = widget.studentUser!.languages ?? [];
 
-    widget.user.studentUser?.experience?.addAll([]);
+    widget.studentUser!.experience!.addAll([]);
   }
 
   void _addNewProject(String projectName, DateTime startMonth,
       DateTime endMonth, String description, List<SkillSets> skills) {
     setState(() {
-      widget.user.studentUser?.experience?.add(Experience(
+      widget.studentUser!.experience?.add(Experience(
         id: widget.user.id!,
         title: projectName,
         startMonth: startMonth,
         endMonth: endMonth,
         description: description,
         skillSet: skills,
-        duration: (widget.user.studentUser!.duration!.inHours / 24).round(),
+        duration: (widget.studentUser!.duration!.inHours / 24).round(),
       ));
     });
     // Add your logic here for handling the icon press
@@ -95,7 +103,7 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
 
   void _deleteProject(String projectName) {
     setState(() {
-      widget.user.studentUser?.experience
+      widget.studentUser!.experience
           ?.removeWhere((project) => project.title == projectName);
     });
     // Add your logic here for handling the icon press
@@ -151,6 +159,20 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
           languages.removeWhere((element) => element == listLanguagesDelete[i]);
         });
       }
+    }
+  }
+
+  void _launchURL(Uri uri, bool inApp) async {
+    try {
+      if (await canLaunchUrl(uri)) {
+        if (inApp) {
+          await launchUrl(uri, mode: LaunchMode.inAppWebView);
+        } else {
+          await launchUrl(uri, mode: LaunchMode.externalApplication);
+        }
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -211,12 +233,41 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  'studentprofileinput4_ProfileEdit1'.tr(),
+                  '${widget.studentUser!.user}',
                   style: GoogleFonts.poppins(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF406AFF)),
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Khoảng cách giữa chữ "Techstack" và thông tin
+                  Expanded(
+                    child: Text(
+                      _email.isNotEmpty
+                          ? _email // Hiển thị Techstack đã chọn
+                          : "studentprofileinput4_ProfileEdit14"
+                              .tr(), // Nếu không có Techstack được chọn
+                      style: GoogleFonts.poppins(
+                        fontSize: 17,
+                        color: isDarkMode
+                            ? Color.fromARGB(255, 200, 200, 200)
+                            : Color.fromARGB(255, 126, 126, 126),
+                        fontWeight: FontWeight
+                            .normal, // or another weight like FontWeight.bold
+                        fontStyle: FontStyle.italic,
+                      ),
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow
+                          .ellipsis, // Đảm bảo văn bản không tràn ra ngoài
+                    ),
+                  ),
+                ],
               ),
             ),
             Padding(
@@ -240,7 +291,8 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                     child: Text(
                       _selectedTechStack.isNotEmpty
                           ? _selectedTechStack // Hiển thị Techstack đã chọn
-                          : "studentprofileinput4_ProfileEdit7".tr(), // Nếu không có Techstack được chọn
+                          : "studentprofileinput4_ProfileEdit7"
+                              .tr(), // Nếu không có Techstack được chọn
                       style: GoogleFonts.poppins(
                         fontSize: 15,
                         color: isDarkMode
@@ -294,7 +346,8 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                             ),
                           if (_selectedSkills.isEmpty)
                             Text(
-                              "studentprofileinput4_ProfileEdit8".tr(), // Hiển thị thông báo nếu không có Skillset nào được chọn
+                              "studentprofileinput4_ProfileEdit8"
+                                  .tr(), // Hiển thị thông báo nếu không có Skillset nào được chọn
                               style: GoogleFonts.poppins(
                                 fontSize: 15,
                                 color: isDarkMode
@@ -309,14 +362,15 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                 ],
               ),
             ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
-                  child: Align(
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "studentprofileinput4_ProfileEdit4".tr(),
+                      "studentprofileinput4_ProfileEdit9".tr(),
                       style: GoogleFonts.poppins(
                         fontSize: 17,
                         fontWeight: FontWeight.bold,
@@ -324,65 +378,83 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                       ),
                     ),
                   ),
-                ),
-                Visibility(
-                  visible: isEditing, // Hiển thị khi isEditing là true
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(210, 10, 0, 5),
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: IconButton(
-                        onPressed: () async {
-                          final result = await showDialog<Language>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return PopUpLanguagesWidget(
-                                  _addNewLanguage, languages);
-                            },
-                          );
-
-                          if (result != null) {
-                            setState(() {
-                              languages.add(result);
-                            });
-                          }
-                        },
-                        icon: const Icon(
-                          Icons.add,
-                          size: 26,
-                          color: Color(0xFF406AFF),
-                        ),
+                  SizedBox(
+                      width:
+                          10), // Khoảng cách giữa chữ "Skillset" và danh sách các Skillset
+                  Expanded(
+                      child: _resume.isNotEmpty
+                          ? () {
+                              return TextButton(
+                                onPressed: () => _launchURL(Uri.parse(_resume),
+                                    false), // Mở liên kết trong ứng dụng
+                                child: Text('View Resume'),
+                              );
+                            }()
+                          : () {
+                              return Text(
+                                // Hiển thị Techstack đã chọn
+                                "studentprofileinput4_ProfileEdit11"
+                                    .tr(), // Nếu không có Techstack được chọn
+                                style: GoogleFonts.poppins(
+                                  fontSize: 15,
+                                  color: isDarkMode
+                                      ? Color.fromARGB(255, 200, 200, 200)
+                                      : Color.fromARGB(255, 126, 126, 126),
+                                ),
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow
+                                    .ellipsis, // Đảm bảo văn bản không tràn ra ngoài
+                              );
+                            }()),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "studentprofileinput4_ProfileEdit10".tr(),
+                      style: GoogleFonts.poppins(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: isDarkMode ? Colors.white : Colors.black,
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color.fromARGB(
-                              244, 212, 221, 253), // Set border color
-                          width: 2, // Set border width
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      height: 70,
-                      child: ShowLanguagesWidget(
-                        languages: languages,
-                        isEditing:
-                            isEditing, // Truyền giá trị isEditing xuống ShowLanguagesWidget
-                        deleteLanguage:
-                            _deleteLanguage, // Truyền hàm _deleteLanguage xuống ShowLanguagesWidget
-                      ),
-                    ),
-                  ],
-                ),
+                  SizedBox(
+                      width:
+                          10), // Khoảng cách giữa chữ "Skillset" và danh sách các Skillset
+                  Expanded(
+                      child: _transcript.isNotEmpty
+                          ? () {
+                              return TextButton(
+                                onPressed: () => _launchURL(
+                                    Uri.parse(_transcript),
+                                    false), // Mở liên kết trong ứng dụng
+                                child: Text('View Transcript'),
+                              );
+                            }()
+                          : () {
+                              return Text(
+                                // Hiển thị Techstack đã chọn
+                                "studentprofileinput4_ProfileEdit12"
+                                    .tr(), // Nếu không có Techstack được chọn
+                                style: GoogleFonts.poppins(
+                                  fontSize: 15,
+                                  color: isDarkMode
+                                      ? Color.fromARGB(255, 200, 200, 200)
+                                      : Color.fromARGB(255, 126, 126, 126),
+                                ),
+                                textAlign: TextAlign.left,
+                                overflow: TextOverflow
+                                    .ellipsis, // Đảm bảo văn bản không tràn ra ngoài
+                              );
+                            }()),
+                ],
               ),
             ),
             Row(
@@ -490,8 +562,8 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
                   children: [
                     SizedBox(
                       height: 210,
-                      child: ShowProjectStudentWidget(
-                        userStudent: widget.user.studentUser!,
+                      child: ShowProjectStudentPropasalWidget(
+                        userStudent: widget.studentUser!,
                         deleteProject: _deleteProject,
                         addNewProject: _addNewProject,
                         isEditing: isEditing,
@@ -502,7 +574,6 @@ class _EditProfileInputStudentState extends State<EditProfileInputStudent> {
               ),
             ),
             SizedBox(height: 10),
-            
           ],
         ),
       ),

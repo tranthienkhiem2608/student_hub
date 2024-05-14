@@ -57,6 +57,20 @@ class Experience {
     );
   }
 
+  factory Experience.fromMapExperienceDetail(Map<String, dynamic> map) {
+    return Experience(
+      studentId: map['studentId'],
+      id: map['id'],
+      title: map['title'],
+      startMonth: parseDate("01-${map['startMonth']}"),
+      endMonth: parseDate("01-${map['endMonth']}"),
+      description: map['description'],
+      createAt: map['createAt'],
+      deletedAt: map['deletedAt'],
+      updatedAt: map['updatedAt'],
+    );
+  }
+
   static fromListMap(List<Map<String, dynamic>> experienceList) {
     return experienceList.map((e) => Experience.fromMapExperience(e)).toList();
   }

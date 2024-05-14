@@ -120,6 +120,23 @@ class Proposal {
     );
   }
 
+  factory Proposal.fromMapProposalStudentDetail(Map<String, dynamic> map) {
+    return Proposal(
+      id: map['id'],
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      projectId: map['projectId'],
+      studentId: map['studentId'],
+      coverLetter: map['coverLetter'],
+      statusFlag: map['statusFlag'],
+      disableFlag: map['disableFlag'],
+      studentUser: map['student'] == null
+          ? null
+          : StudentUser.fromMapStudentDetail(map['student']),
+    );
+  }
+
   static List<Proposal> fromListMapProposalCompany(List<dynamic> list) {
     List<Proposal> proposals = [];
     for (var item in list) {
