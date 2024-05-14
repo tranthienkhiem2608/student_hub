@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,6 +20,7 @@ class ShowProjectCompanyWidget extends StatefulWidget {
   final List<String> labels;
   final bool showOptionsIcon;
   final VoidCallback? onProjectDeleted;
+  final VoidCallback? onChangeStatus;
   final User? user;
 
   ShowProjectCompanyWidget({
@@ -26,6 +29,7 @@ class ShowProjectCompanyWidget extends StatefulWidget {
     required this.labels,
     required this.showOptionsIcon,
     this.onProjectDeleted,
+    this.onChangeStatus,
     this.user,
   });
 
@@ -141,10 +145,7 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                           fontSize: 15)),
                 ),
                 onPressed: () {
-                  widget.projectCompany.typeFlag = 2;
-                  // Handle achieve project
-                  ProposalViewModel(context)
-                      .setStartWorking(widget.projectCompany, widget.user!);
+                  _confirmProjectStatus(context, widget);
                 },
               ),
               TextButton(
@@ -212,6 +213,28 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
+
+    // Define colors based on project status
+    Color statusColor;
+    String statusText;
+    switch (widget.projectCompany.status) {
+      case 0:
+        statusColor = Colors.blue; // Working
+        statusText = 'Working';
+        break;
+      case 1:
+        statusColor = Colors.green; // Success
+        statusText = 'Success';
+        break;
+      case 2:
+        statusColor = Colors.red; // Failed
+        statusText = 'Failed';
+        break;
+      default:
+        statusColor = Colors.grey;
+        statusText = 'Unknown';
+    }
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
@@ -239,26 +262,51 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
         children: [
           ListTile(
             contentPadding: EdgeInsets.zero,
-            title: Container(
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 206, 250, 223),
-                  borderRadius: BorderRadius.circular(20.0),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 206, 250, 223),
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    margin: const EdgeInsets.fromLTRB(0, 0, 10, 10),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 8.0, vertical: 10.0),
+                    constraints: const BoxConstraints(
+                        minWidth: 0, maxWidth: double.infinity),
+                    child: Text(
+                      timeAgo(DateTime.parse(
+                          widget.projectCompany.createdAt!.toString())),
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          height: 1,
+                          fontSize: 11,
+                          color: Color.fromARGB(255, 18, 119, 52),
+                          fontWeight: FontWeight.w500),
+                    )),
+                Container(
+                  decoration: BoxDecoration(
+                    color: statusColor,
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0, vertical: 10.0),
+                  constraints: const BoxConstraints(
+                      minWidth: 0, maxWidth: double.infinity),
+                  child: Text(
+                    'Status: $statusText',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(
+                        height: 1,
+                        fontSize: 11,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500),
+                  ),
                 ),
-                margin: const EdgeInsets.fromLTRB(0, 0, 180, 10),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
-                constraints: const BoxConstraints(
-                    minWidth: 0, maxWidth: double.infinity),
-                child: Text(
-                  timeAgo(DateTime.parse(
-                      widget.projectCompany.createdAt!.toString())),
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.poppins(
-                      height: 1,
-                      fontSize: 11,
-                      color: Color.fromARGB(255, 18, 119, 52),
-                      fontWeight: FontWeight.w500),
-                )),
+              ],
+            ),
             subtitle: Text(widget.projectCompany.title!,
                 style: GoogleFonts.poppins(
                   fontSize: 17,
@@ -359,6 +407,96 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
       ),
     );
   }
+}
+
+void _confirmProjectStatus(
+    BuildContext context, ShowProjectCompanyWidget widget) {
+  bool isDarkMode =
+      Provider.of<DarkModeProvider>(context, listen: false).isDarkMode;
+
+  int? selectedStatus; // Variable to store the selected status
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return StatefulBuilder(
+        builder: (BuildContext context, setState) {
+          return AlertDialog(
+            title: Text('Project Status'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                DropdownButton<int>(
+                  hint: Text('Select Project Status'),
+                  value: selectedStatus,
+                  items: [
+                    DropdownMenuItem<int>(
+                      value: 1,
+                      child: Text('Success'),
+                    ),
+                    DropdownMenuItem<int>(
+                      value: 2,
+                      child: Text('Failed'),
+                    ),
+                  ],
+                  onChanged: (int? value) {
+                    setState(() {
+                      selectedStatus = value; // Update the selected status
+                    });
+                  },
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close dialog
+                },
+                child: Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: selectedStatus != null
+                    ? () {
+                        // Update project status here
+                        widget.projectCompany.status = selectedStatus!;
+                        widget.projectCompany.typeFlag = 2;
+                        ProposalViewModel(context).setStartWorking(
+                            widget.projectCompany, widget.user!);
+                        Navigator.of(context).pop(); // Close dialog
+
+                        // Show Success alert
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Success'),
+                              content:
+                                  Text('Project status updated successfully'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    // Call onChangeStatus callback
+                                    if (widget.onChangeStatus != null) {
+                                      widget.onChangeStatus!();
+                                    }
+                                  },
+                                  child: Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    : null,
+                child: Text('Confirm'),
+              ),
+            ],
+          );
+        },
+      );
+    },
+  );
 }
 
 void _confirmDeletion(BuildContext context, ShowProjectCompanyWidget widget) {
