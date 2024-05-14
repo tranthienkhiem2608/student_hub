@@ -270,7 +270,7 @@ class _ConversationState extends State<Conversation> {
                     ),
                     if (message.interview != null)
                       Padding(
-                        padding: const EdgeInsets.only(top: 5),
+                        padding: const EdgeInsets.only(top: 10),
                         child: Container(
                           padding: EdgeInsets.all(10),
                           constraints: BoxConstraints(
@@ -294,47 +294,112 @@ class _ConversationState extends State<Conversation> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                "${message.interview!.title}",
-                                style: GoogleFonts.poppins(
-                                  color: isDarkMode
-                                      ? Colors.white
-                                      : isMe
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      "${message.interview!.title}",
+                                      style: GoogleFonts.poppins(
+                                        color: isDarkMode
+                                            ? Color(0xFF406AFF)
+                                            : isMe
+                                                ? Color(0xFF406AFF)
+                                                : Color(0xFF406AFF),
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(
+                                      Icons.more_horiz_rounded,
+                                      color: isDarkMode
                                           ? Colors.white
                                           : Colors.black,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
+                                    ),
+                                    onPressed: () {
+                                      _showOptions(context, message.interview!);
+                                    },
+                                  ),
+                                ],
+                              ),
+                              
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: '${'schedule_schedule20'.tr()} ',
+                                      style: GoogleFonts.poppins(
+                                        color: isDarkMode
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text:
+                                          '${DateFormat('dd/MM/yyyy').format(message.interview!.startTime!)} ',
+                                      style: GoogleFonts.poppins(
+                                        color: isDarkMode
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Text(
-                                "${'interview_student3'.tr()}${message.interview!.duration}",
-                                style: GoogleFonts.poppins(
-                                  color: isDarkMode
-                                      ? Colors.white
-                                      : isMe
-                                          ? Colors.white
-                                          : Colors.black,
-                                  fontSize: 14.0,
-                                  fontStyle: FontStyle.italic,
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: '${'schedule_schedule21'.tr()} ',
+                                      style: GoogleFonts.poppins(
+                                        color: isDarkMode
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text:
+                                          '${DateFormat('hh:mm a').format(message.interview!.startTime!)} - ${DateFormat('hh:mm a').format(message.interview!.endTime!)}',
+                                      style: GoogleFonts.poppins(
+                                        color: isDarkMode
+                                            ? Colors.white
+                                            : Colors.black,
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              Text(
-                                "${'schedule_schedule13'.tr()}${DateFormat('yyyy-MM-dd').format(message.interview!.startTime!)} ${'schedule_schedule17'.tr()} ${DateFormat('hh:mm a').format(message.interview!.startTime!)}",
-                                style: GoogleFonts.poppins(
-                                    color: isDarkMode
-                                        ? Colors.white
-                                        : isMe
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: '${'interview_student3'.tr()} ',
+                                      style: GoogleFonts.poppins(
+                                        color: isDarkMode
                                             ? Colors.white
-                                            : Colors.black),
-                              ),
-                              Text(
-                                "${'schedule_schedule14'.tr()}${DateFormat('yyyy-MM-dd').format(message.interview!.endTime!)} ${'schedule_schedule17'.tr()} ${DateFormat('hh:mm a').format(message.interview!.endTime!)}",
-                                style: GoogleFonts.poppins(
-                                    color: isDarkMode
-                                        ? Colors.white
-                                        : isMe
+                                            : Colors.black,
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: '${message.interview!.duration}',
+                                      style: GoogleFonts.poppins(
+                                        color: isDarkMode
                                             ? Colors.white
-                                            : Colors.black),
+                                            : Colors.black,
+                                        fontSize: 14.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                               message.interview!.disableFlag == 0
                                   ? () {
@@ -381,18 +446,6 @@ class _ConversationState extends State<Conversation> {
                                                   color: Color(0xFF406AFF),
                                                   fontSize: 16.0),
                                             ),
-                                          ),
-                                          IconButton(
-                                            icon: Icon(
-                                              Icons.more_horiz_rounded,
-                                              color: isDarkMode
-                                                  ? Colors.white
-                                                  : Colors.black,
-                                            ),
-                                            onPressed: () {
-                                              _showOptions(
-                                                  context, message.interview!);
-                                            },
                                           ),
                                         ],
                                       );

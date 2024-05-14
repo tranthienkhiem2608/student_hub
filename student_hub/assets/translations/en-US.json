@@ -72,8 +72,9 @@
     
     "switchaccount": "Switch account  ",
     "switchaccount1": "Profiles",
-    "switchaccount2": "Settings",
+    "switchaccount2": "Dark mode",
     "switchaccount3": "Log out",
+    "switchaccount4": "Language",
 
     "videocall_chat1": "Video call",
     "videocall_chat2": "Video will be displayed here",
@@ -88,6 +89,10 @@
     "time7": "years ago",
     "time8": "months",
     "time9": "days",
+
+    "message_page_mess1": "All chats",
+    "message_page_mess2": "Schedule interview",
+    
 
     "projectlist_company1": "Welcome, You have no projects",
     "projectlist_company2": "Students are looking for:",
@@ -271,6 +276,10 @@
     "chat_chat1": "Search for chats...",
     "chat_chat2": "Recent Chats",
     "chat_chat3": "All Chats",
+    "chat_chat4": "You: ",
+
+    "alert_alert1": "New",
+    "alert_alert2": "Other",
 
     "home_home1": "Home",
     "home_home2": "Dashboard",
@@ -281,6 +290,10 @@
     "message_message2": "Schedule an interview",
     "message_message3": "Cancel",
     "message_message4": "Type your message...",
+    "message_message5": "Title",
+    "message_message6": "Catch up meeting",
+    "message_message7": "Please fill in all fields before sending the invite",
+    "message_message8": "want to schedule a meeting",
 
     "edit_company1": "Welcome to ",
     "edit_company2": "Student Hub",
@@ -302,7 +315,7 @@
     "projectfilter_project5": "Apply filters with selected value: ",
     "projectfilter_project6": "Student needed: ",
     "projectfilter_project7": "Proposals less than: ",
-    "projectfilter_project8": "Apply",
+    "projectfilter_project8": "Apply filters",
     "projectfilter_project9": "Enter number of students",
     "projectfilter_project10": "Enter maximum number of proposals",
     "projectfilter_project11": "Save project",
@@ -314,10 +327,10 @@
     "schedule_schedule1": "Schedule Interview",
     "schedule_schedule2": "Title",
     "schedule_schedule3": "Write a title for interview",
-    "schedule_schedule4": "Start Time",
+    "schedule_schedule4": "Start time",
     "schedule_schedule5": "Select Date",
     "schedule_schedule6": "Select Time",
-    "schedule_schedule7": "End Time",
+    "schedule_schedule7": "End time",
     "schedule_schedule8": "Select End Date",
     "schedule_schedule9": "Select End Time",
     "schedule_schedule10": "Duration: ",
@@ -330,6 +343,11 @@
     "schedule_schedule17": "AT",
     "schedule_schedule18": "Interview has been cancelled",
     "schedule_schedule19": "Join Interview",
+    "schedule_schedule20": "Date: ",
+    "schedule_schedule22": "No duration selected",
+    "schedule_schedule23": "Edit Invite",
+
+    
 
     "schedule_scheduledetail1": "Start time",
     "schedule_scheduledetail2": "End time",
@@ -441,6 +459,27 @@
 
     "add_account1": "Add new account",
 
+    "hire_student1": "Proposal",
+    "hire_student2": "Detail",
+    "hire_student3": "Message",
+    "hire_student4": "Hired",
+
+    "hired_page1": "3rd year student",
+    "hired_page2": "2nd year student",
+    "hired_page3": "1st year student",
+    "hired_page4": "4th year student",
+    "hired_page5": "th year student",
+    "hired_page6": "graduated",
+    "hired_page7": "Message  ",
+    "hired_page8": "Hired offer",
+    "hired_page9": "Do you really want to send hired offer for student to do this project?",
+    "hired_page10": "Cancel",
+    "hired_page11": "Send",
+    "hired_page12": "Send hired offer",
+    "hired_page13": "Hire",
+    "hired_page14": "",
+    
+
     "popup_project1": "Add project",
     "popup_project2": "Project name:",
     "popup_project3": "Enter project name",
@@ -451,6 +490,7 @@
     "popup_project8": "Add your skills",
     "popup_project9": "Project description:",
     "popup_project10": "Enter project description",
-    "popup_project11": "You already entered that"
+    "popup_project11": "You already entered that",
+    "popup_project12": "No Time Chosen"
 
 }

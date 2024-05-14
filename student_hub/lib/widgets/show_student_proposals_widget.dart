@@ -1,10 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/education.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/view_models/proposal_viewModel.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class ShowStudentProposalsWidget extends StatefulWidget {
   Proposal proposal;
@@ -44,31 +48,32 @@ class _ShowStudentProposalsWidgetState
           (closestEducation.endYear! - currentYear);
       switch (timeYear) {
         case 1:
-          return '3rd year student';
+          return 'hired_page1'.tr();
         case 2:
-          return '2nd year student';
+          return 'hired_page2'.tr();
         case 3:
-          return '1st year student';
+          return 'hired_page3'.tr();
         case 0:
-          return '4th year student';
+          return 'hired_page4'.tr();
         default:
-          return '${(closestEducation.endYear! - closestEducation.startYear!) - (closestEducation.endYear! - currentYear)}th year student';
+          return '${'hired_page14'.tr()}${(closestEducation.endYear! - closestEducation.startYear!) - (closestEducation.endYear! - currentYear)}${'hired_page5'.tr()}';
       }
     } else {
-      return 'graduated';
+      return 'hired_page6'.tr();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Column(
       children: [
         Row(
           children: [
             Image.asset(
               'assets/images/user_img.png',
-              width: 80,
-              height: 80,
+              width: 70,
+              height: 70,
             ),
             Padding(
               padding: EdgeInsets.only(left: 10),
@@ -76,9 +81,9 @@ class _ShowStudentProposalsWidgetState
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.proposal.studentUser!.user!,
+                    widget.proposal.studentUser!.user!, style: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xFF406AFF))
                   ),
-                  Text(getText()),
+                  Text(getText(), style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black)),
                 ],
               ),
             ),
@@ -89,8 +94,7 @@ class _ShowStudentProposalsWidgetState
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(widget.proposal.studentUser!.techStack!.name),
-              Text(widget.proposal.studentUser!.techStack!.name),
+              Text(widget.proposal.studentUser!.techStack!.name, style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black)),
             ],
           ),
         ),
@@ -102,6 +106,7 @@ class _ShowStudentProposalsWidgetState
               widget.proposal.coverLetter!,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black)
             ),
           ),
         ),
@@ -162,7 +167,7 @@ class _ShowStudentProposalsWidgetState
                       ),
                       child: Text("Message  ",
                           style:
-                              TextStyle(color: Colors.black, fontSize: 16.0)),
+                              GoogleFonts.poppins(color: Colors.black, fontSize: 16.0)),
                     ),
                   ),
                   Container(
@@ -178,15 +183,15 @@ class _ShowStudentProposalsWidgetState
                                   context: context,
                                   builder: (BuildContext context) {
                                     return AlertDialog(
-                                      title: const Row(
+                                      title: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text("Hired offer"),
+                                          Text("Hired offer", style: GoogleFonts.poppins()),
                                         ],
                                       ),
                                       content: Text(
-                                          "Do you really want to send hired offer for student to do this project?"),
+                                          "Do you really want to send hired offer for student to do this project?", style: GoogleFonts.poppins()),
                                       actions: <Widget>[
                                         Row(
                                           mainAxisAlignment:
@@ -212,8 +217,8 @@ class _ShowStudentProposalsWidgetState
                                                     ),
                                                   ),
                                                 ),
-                                                child: const Text("Cancel",
-                                                    style: TextStyle(
+                                                child: Text("Cancel",
+                                                    style: GoogleFonts.poppins(
                                                         color: Colors.black)),
                                               ),
                                             ),
@@ -249,8 +254,8 @@ class _ShowStudentProposalsWidgetState
                                                     ),
                                                   ),
                                                 ),
-                                                child: const Text("Send",
-                                                    style: TextStyle(
+                                                child: Text("Send",
+                                                    style: GoogleFonts.poppins(
                                                         color: Colors.white)),
                                               ),
                                             ),
@@ -290,7 +295,7 @@ class _ShowStudentProposalsWidgetState
                         widget.proposal.statusFlag == 2
                             ? "Send hired offer"
                             : "Hire",
-                        style: TextStyle(color: Colors.black, fontSize: 16.0),
+                        style: GoogleFonts.poppins(color: Colors.black, fontSize: 16.0),
                       ),
                     ),
                   ),

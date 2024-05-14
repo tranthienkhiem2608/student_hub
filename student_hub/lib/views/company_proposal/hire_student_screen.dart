@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -71,15 +72,15 @@ class _HireStudentScreenState extends State<HireStudentScreen>
               labelColor: Color(0xFF406AFF),
               dividerColor: isDarkMode
                   ? const Color.fromARGB(255, 47, 47, 47)
-                  : Colors.white,
+                  : Color.fromARGB(255, 219, 219, 219),
               labelStyle: GoogleFonts.poppins(
                   fontSize: 13, fontWeight: FontWeight.bold),
               unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
               tabs: [
-                Tab(text: 'Proposals'),
-                Tab(text: 'Details'),
-                Tab(text: 'Messages'),
-                Tab(text: 'Hired'),
+                Tab(text: 'hire_student1'.tr()),
+                Tab(text: 'hire_student2'.tr()),
+                Tab(text: 'hire_student3'.tr()),
+                Tab(text: 'hire_student4'.tr()),
               ],
             ),
             Expanded(

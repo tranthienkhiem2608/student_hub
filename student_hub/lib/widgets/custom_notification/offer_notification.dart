@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -21,21 +22,21 @@ class _OfferNotifyState extends State<OfferNotify> {
     final Duration diff = DateTime.now().difference(date);
 
     if (diff.inSeconds <= 0) {
-      return 'Just now';
+      return 'time0'.tr();
     } else if (diff.inSeconds < 60 && diff.inSeconds > 0) {
-      return '${diff.inSeconds}s';
+      return '${diff.inSeconds} ${'time1'.tr()}';
     } else if (diff.inMinutes < 60) {
-      return '${diff.inMinutes}mn';
+      return '${diff.inMinutes} ${'time2'.tr()}';
     } else if (diff.inHours < 24) {
-      return '${diff.inHours}h';
+      return '${diff.inHours} ${'time3'.tr()}';
     } else if (diff.inDays < 7) {
-      return '${diff.inDays}d';
+      return '${diff.inDays} ${'time4'.tr()}';
     } else if (diff.inDays < 30) {
-      return '${(diff.inDays / 7).round()}w';
+      return '${(diff.inDays / 7).round()} ${'time5'.tr()}';
     } else if (diff.inDays < 365) {
-      return '${(diff.inDays / 30).round()}m';
+      return '${(diff.inDays / 30).round()} ${'time6'.tr()}';
     } else {
-      return '${(diff.inDays / 365).round()}y';
+      return '${(diff.inDays / 365).round()} ${'time4'.tr()}';
     }
   }
 
@@ -44,21 +45,21 @@ class _OfferNotifyState extends State<OfferNotify> {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Container(
       color:
-          widget.notify.notifyFlag == "0" ? Colors.blue.withOpacity(0.3) : null,
+          widget.notify.notifyFlag == "0" ? const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3) : null,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
         child: Column(
           children: <Widget>[
             Row(
               children: <Widget>[
-                CircleAvatar(
-                    radius: 25,
-                    backgroundColor: isDarkMode ? Colors.white : Colors.black,
-                    child: Icon(
-                      Icons.work_outlined,
-                      color: isDarkMode ? Colors.black : Colors.white,
-                      size: 40,
-                    )),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 26.0), // Adjust the bottom padding to move the icon up
+                  child: Icon(
+                    Icons.work,
+                    color:Color.fromARGB(255, 131, 255, 109),
+                    size: 30,
+                  ),
+                ),
                 SizedBox(width: 10),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.7,

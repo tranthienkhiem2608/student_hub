@@ -70,6 +70,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
+    
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -88,26 +89,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
         backgroundColor:
             isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
         actions: <Widget>[
-          IconButton(
-          icon: Icon(Icons.language, color: Color.fromARGB(255, 0, 0, 0)),
-          onPressed: () {
-            LocalizationChecker.changeLanguage(context);
-            
-          }, // Gọi hàm khi nút được nhấn
-        ),
-          IconButton(
-            icon: Icon(
-              isDarkMode
-                  ? Icons.light_mode
-                  : Icons
-                      .dark_mode, // Thay đổi biểu tượng dựa vào trạng thái chế độ
-              color: isDarkMode ? Colors.white : Colors.black,
-            ),
-            onPressed: () {
-              Provider.of<DarkModeProvider>(context, listen: false)
-                  .toggleDarkMode();
-            }, // Gọi hàm khi nút được nhấn
-          ),
+          
         ],
       ),
       backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
@@ -247,22 +229,89 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                 ),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: TextButton.icon(
-                    onPressed: () {
-                      // ControllerRoute(context)
-                      //       .navigateToEditProfileInputStudent(widget.user);
-                    },
-                    icon: Image.asset(
-                      'assets/icons/setting.jpg', // Đường dẫn của hình ảnh
-                      color: isDarkMode ? Colors.white : Colors.black,
-                      width: 28.0, // Chiều rộng của biểu tượng (nếu cần)
-                      height: 28.0, // Chiều cao của biểu tượng (nếu cần)
-                    ),
-                    label: Text('switchaccount2'.tr(),
-                        style: GoogleFonts.poppins(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(5, 0, 10,
+                        0), // Điều chỉnh giá trị padding theo nhu cầu của bạn
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/icons/theme.png', // Đường dẫn của hình ảnh
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          width: 40.0, // Chiều rộng của biểu tượng (nếu cần)
+                          height: 40.0, // Chiều cao của biểu tượng (nếu cần)
+                        ),
+                        SizedBox(
+                            width:
+                                4.0), // Khoảng cách giữa biểu tượng và văn bản
+                        Text(
+                          'switchaccount2'.tr(),
+                          style: GoogleFonts.poppins(
                             color: isDarkMode ? Colors.white : Colors.black,
                             fontSize: 20.0,
-                            fontWeight: FontWeight.w600)),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Spacer(),
+                        Switch(
+                          value: isDarkMode, // Trạng thái bật/tắt
+                          onChanged: (bool value) {
+                            Provider.of<DarkModeProvider>(context,
+                                    listen: false)
+                                .toggleDarkMode();
+                          },
+                          activeColor: Color(0xFF406AFF), // Màu khi bật
+                          inactiveThumbColor: Colors.grey, // Màu khi tắt
+                          inactiveTrackColor: const Color.fromARGB(
+                              255, 255, 255, 255), // Màu nền khi tắt
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Divider(), // Set the padding you want
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(10, 0, 10,
+                        0), // Điều chỉnh giá trị padding theo nhu cầu của bạn
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'assets/icons/language.png', // Đường dẫn của hình ảnh
+                          color: isDarkMode ? Colors.white : Colors.black,
+                          width: 30.0, // Chiều rộng của biểu tượng (nếu cần)
+                          height: 30.0, // Chiều cao của biểu tượng (nếu cần)
+                        ),
+                        SizedBox(
+                            width:
+                                8.0), // Khoảng cách giữa biểu tượng và văn bản
+                        Text(
+                          'switchaccount4'.tr(),
+                          style: GoogleFonts.poppins(
+                            color: isDarkMode ? Colors.white : Colors.black,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Spacer(),
+                        Switch(
+                          value: context.locale.languageCode ==
+                              'en', // Trạng thái bật/tắt
+                          onChanged: (bool value) {
+                            LocalizationChecker.changeLanguage(context);
+                          },
+                          activeColor: Color(0xFF406AFF), // Màu khi bật
+                          inactiveThumbColor: Colors.grey, // Màu khi tắt
+                          inactiveTrackColor: isDarkMode
+                              ? Color.fromARGB(255, 90, 90, 90)
+                              : Colors.white, // Màu nền khi tắt
+                              
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const Padding(

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -126,10 +127,13 @@ class _MessageProposalPageState extends State<MessageProposalPage>
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
+
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return SingleChildScrollView(
               child: Container(
+                color: isDarkMode ? Color(0xFF212121) : Colors.white,
                 constraints: BoxConstraints(
                   minHeight: MediaQuery.of(context).size.height * 0.3,
                 ),
@@ -138,15 +142,21 @@ class _MessageProposalPageState extends State<MessageProposalPage>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
+                      style: GoogleFonts.poppins(
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       controller: _searchController,
                       decoration: InputDecoration(
-                        hintText: 'Search for chats...',
-                        prefixIcon: Icon(Icons.search),
+                        hintText: 'chat_chat1'.tr(),
+                        hintStyle: GoogleFonts.poppins(
+                          color: isDarkMode ? Colors.white : Colors.black,
+                        ),
+                        prefixIcon: Icon(Icons.search, color: isDarkMode ? Colors.white : Colors.black,),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
-                      onChanged: (newValue) {
+                      onChanged: (newValue) { 
                         setState(() {
                           filterUsers(newValue);
                           updateSuggestions(newValue);
@@ -176,10 +186,16 @@ class _MessageProposalPageState extends State<MessageProposalPage>
                                       color: Colors.lightBlue, width: 1.0),
                                   // Customize color and width
                                 ),
-                                leading: const CircleAvatar(
-                                  radius: 25,
-                                  backgroundImage: AssetImage(
-                                      'assets/images/avatar_default_img.png'),
+                                leading: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.transparent,
+                                  child: Image.asset(
+                                    'assets/icons/company_account.png',
+                                    width: 50, // New width for the image
+                                    height: 60, // New height for the image
+                                    fit: BoxFit
+                                        .cover, // Adjusts the image to fill the space
+                                  ),
                                 ),
                                 title: Text(user.sender!.fullname!),
                                 onTap: () {
@@ -252,7 +268,7 @@ class _MessageProposalPageState extends State<MessageProposalPage>
                       child: TextField(
                         enabled: false,
                         decoration: InputDecoration(
-                          hintText: 'Search for chats...',
+                          hintText: 'chat_chat1'.tr(),
                           hintStyle: GoogleFonts.poppins(
                             color: isDarkMode
                                 ? Color.fromARGB(255, 98, 98, 98)

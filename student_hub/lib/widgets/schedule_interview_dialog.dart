@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -156,7 +157,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
             children: <Widget>[
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Schedule an interview",
+                child: Text("message_message2".tr(),
                     style: GoogleFonts.poppins(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -165,7 +166,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
               SizedBox(height: 10),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Title",
+                child: Text("message_message5".tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -180,7 +181,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                 cursorColor: Color(0xFF406AFF),
                 decoration: InputDecoration(
                   focusColor: Color(0xFF406AFF),
-                  hintText: 'Catch up meeting',
+                  hintText: 'message_message6'.tr(),
                   hintStyle: GoogleFonts.poppins(
                       fontSize: 13,
                       color: isDarkMode
@@ -195,7 +196,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
               SizedBox(height: 20),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text("Start Time",
+                child: Text("schedule_schedule4".tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -206,7 +207,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                 children: <Widget>[
                   Text(
                     _selectedDateStart == null
-                        ? 'No Date Chosen'
+                        ? 'popup_project5'.tr()
                         : DateFormat.yMd().format(_selectedDateStart!),
                     style: GoogleFonts.poppins(
                       fontSize: 13,
@@ -224,7 +225,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                   ),
                   Text(
                     _selectedTimeStart == null
-                        ? 'No Time Chosen'
+                        ? 'popup_project12'.tr()
                         : _selectedTimeStart?.format(context) ?? '',
                     style: GoogleFonts.poppins(
                       fontSize: 13,
@@ -246,7 +247,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
               SizedBox(height: 10),
               Align(
                 alignment: Alignment.centerLeft,
-                child: Text("End Time",
+                child: Text("schedule_schedule7".tr(),
                     style: GoogleFonts.poppins(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -257,7 +258,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                 children: <Widget>[
                   Text(
                     _selectedDateEnd == null
-                        ? 'No Date Chosen'
+                        ? 'popup_project5'.tr()
                         : DateFormat.yMd().format(_selectedDateEnd!),
                     style: GoogleFonts.poppins(
                       fontSize: 13,
@@ -275,7 +276,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                   ),
                   Text(
                     _selectedTimeEnd == null
-                        ? 'No Time Chosen'
+                        ? 'popup_project12'.tr()
                         : _selectedTimeEnd?.format(context) ?? '',
                     style: GoogleFonts.poppins(
                       fontSize: 13,
@@ -300,8 +301,8 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                           _selectedTimeStart != null &&
                           _selectedDateEnd != null &&
                           _selectedTimeEnd != null
-                      ? 'Duration: ${calculateDuration(_selectedDateStart!, _selectedTimeStart!, _selectedDateEnd!, _selectedTimeEnd!)}'
-                      : 'No duration selected',
+                      ? '${'schedule_schedule10'.tr()}${calculateDuration(_selectedDateStart!, _selectedTimeStart!, _selectedDateEnd!, _selectedTimeEnd!)}'
+                      : 'schedule_schedule22'.tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     color: isDarkMode
@@ -327,7 +328,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                         ),
                       ),
                     ),
-                    child: Text("Cancel",
+                    child: Text("companyprofileedit_ProfileCreation2".tr(),
                         style: GoogleFonts.poppins(color: Color(0xFF406AFF))),
                   ),
                   ElevatedButton(
@@ -343,8 +344,8 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                           builder: (context) {
                             return AlertDialog(
                               title: Text('Error'),
-                              content: const Text(
-                                  'Please fill in all fields before sending the invite'),
+                              content: Text(
+                                  'message_message7'.tr()),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
@@ -388,7 +389,7 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                               widget.interview = Interview(
                                 title: _titleController.text,
                                 content:
-                                    "${widget.user.fullname} want to schedule a meeting",
+                                    "${widget.user.fullname} ${'message_message8'.tr()}",
                                 startTime: DateTime(
                                   _selectedDateStart!.year,
                                   _selectedDateStart!.month,
@@ -428,9 +429,9 @@ class _ScheduleInterviewDialogState extends State<ScheduleInterviewDialog> {
                       ),
                     ),
                     child: widget.interview == null
-                        ? Text("Send Invite",
+                        ? Text("schedule_schedule16".tr(),
                             style: GoogleFonts.poppins(color: Colors.white))
-                        : Text("Edit Invite",
+                        : Text("schedule_schedule23".tr(),
                             style: GoogleFonts.poppins(color: Colors.white)),
                   ),
                 ],

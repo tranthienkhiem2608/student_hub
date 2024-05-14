@@ -106,10 +106,16 @@ class _AllChatsState extends State<AllChats> {
                     margin: const EdgeInsets.only(top: 20),
                     child: Row(
                       children: [
-                        const CircleAvatar(
-                          radius: 28,
-                          backgroundImage: AssetImage(
-                              'assets/images/avatar_default_img.png'),
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.transparent,
+                          child: Image.asset(
+                            'assets/icons/company_account.png',
+                            width: 50, // New width for the image
+                            height: 60, // New height for the image
+                            fit: BoxFit
+                                .cover, // Adjusts the image to fill the space
+                          ),
                         ),
                         SizedBox(
                           width: 10,
@@ -168,7 +174,8 @@ class _AllChatsState extends State<AllChats> {
                               Text(
                                 allChat.project!.title!,
                                 style: GoogleFonts.poppins(
-                                  color: MyTheme.bodyText2.color,
+                                  color: Color(0xFF406AFF),
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                               Text(
@@ -179,7 +186,7 @@ class _AllChatsState extends State<AllChats> {
                                 style: GoogleFonts.poppins(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 151, 151, 151),
+                                  color: Color.fromARGB(255, 133, 133, 133),
                                 ),
                               ),
                             ],
@@ -216,13 +223,19 @@ class _AllChatsState extends State<AllChats> {
                     margin: const EdgeInsets.only(top: 20),
                     child: Row(
                       children: [
-                        const CircleAvatar(
-                          radius: 28,
-                          backgroundImage: AssetImage(
-                              'assets/images/avatar_default_img.png'),
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Colors.transparent,
+                          child: Image.asset(
+                            'assets/icons/company_account.png',
+                            width: 50, // New width for the image
+                            height: 60, // New height for the image
+                            fit: BoxFit
+                                .cover, // Adjusts the image to fill the space
+                          ),
                         ),
                         const SizedBox(
-                          width: 20,
+                          width: 10,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -241,19 +254,24 @@ class _AllChatsState extends State<AllChats> {
                             children: [
                               Text(
                                 allChat.receiver!.fullname!,
-                                style: MyTheme.heading2.copyWith(
+                                style: GoogleFonts.poppins(
                                   fontSize: 18,
+                                  color: isDarkMode
+                                      ? Colors.white
+                                      : Colors.black,
                                 ),
                               ),
                               Text(
                                 allChat.project!.title!,
-                                style: MyTheme.bodyText1.copyWith(
+                                style: GoogleFonts.poppins(
                                   color: MyTheme.bodyText2.color,
                                 ),
                               ),
                               Text(
-                                'You: ${allChat.content!.split(' ').take(3).join(' ') + (allChat.content!.split(' ').length > 3 ? '...' : '')}',
-                                style: MyTheme.bodyText1,
+                                '${'chat_chat4'.tr()}${allChat.content!.split(' ').take(3).join(' ') + (allChat.content!.split(' ').length > 3 ? '...' : '')}',
+                                style: GoogleFonts.poppins(color: isDarkMode
+                                      ? Color.fromARGB(255, 185, 185, 185)
+                                      : Colors.black,),
                               ),
                             ],
                           ),

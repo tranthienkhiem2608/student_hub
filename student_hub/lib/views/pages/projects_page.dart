@@ -222,6 +222,9 @@ class _ProjectsPageState extends State<ProjectsPage> {
                             50.0), // Adjust the border radius as needed
                       ),
                       child: TextField(
+                        style: GoogleFonts.poppins(
+                          color: isDarkMode ? Colors.white : Colors.black,
+                        ), 
                         controller: _searchController,
                         onChanged: (newValue) {
                           _searchController.text = newValue;

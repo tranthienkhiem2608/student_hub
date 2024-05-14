@@ -178,10 +178,16 @@ class _MessagePageState extends State<MessagePage>
                                       color: Colors.lightBlue, width: 1.0),
                                   // Customize color and width
                                 ),
-                                leading: const CircleAvatar(
-                                  radius: 25,
-                                  backgroundImage: AssetImage(
-                                      'assets/images/avatar_default_img.png'),
+                                leading: CircleAvatar(
+                                  radius: 30,
+                                  backgroundColor: Colors.transparent,
+                                  child: Image.asset(
+                                    'assets/icons/company_account.png',
+                                    width: 50, // New width for the image
+                                    height: 60, // New height for the image
+                                    fit: BoxFit
+                                        .cover, // Adjusts the image to fill the space
+                                  ),
                                 ),
                                 title: Text(user.sender!.fullname!),
                                 onTap: () {
@@ -232,17 +238,18 @@ class _MessagePageState extends State<MessagePage>
         body: Column(
           children: <Widget>[
             TabBar(
+              
               indicatorColor: Color(0xFF406AFF),
               labelColor: Color(0xFF406AFF),
               dividerColor: isDarkMode
                   ? const Color.fromARGB(255, 47, 47, 47)
-                  : Colors.white,
+                  : const Color.fromARGB(255, 219, 219, 219),
               labelStyle: GoogleFonts.poppins(
-                  fontSize: 13, fontWeight: FontWeight.bold),
+                  fontSize: 14, fontWeight: FontWeight.bold),
               unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
               tabs: [
-                Tab(text: 'All Chats'),
-                Tab(text: 'Schedule interview'),
+                Tab(text: 'message_page_mess1'.tr()),
+                Tab(text: 'message_page_mess2'.tr()),
               ],
             ),
             Expanded(

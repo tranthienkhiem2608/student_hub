@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -104,10 +105,10 @@ class _AlertPageState extends State<AlertPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                      'New',
+                      'alert_alert1'.tr(),
                       style: GoogleFonts.poppins(
                           color: Color(0xFF406AFF),
-                          fontSize: 20.0,
+                          fontSize: 18.0,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -118,10 +119,10 @@ class _AlertPageState extends State<AlertPage> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                      'Other',
+                      'alert_alert2'.tr(),
                       style: GoogleFonts.poppins(
                           color: Color(0xFF406AFF),
-                          fontSize: 20.0,
+                          fontSize: 18.0,
                           fontWeight: FontWeight.bold),
                     ),
                   ),

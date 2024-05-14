@@ -71,8 +71,9 @@
     
     "switchaccount": "Chuyển tài khoản  ",
     "switchaccount1": "Tài khoản",
-    "switchaccount2": "Cài đặt",
+    "switchaccount2": "Chế độ tối",
     "switchaccount3": "Đăng xuất",
+    "switchaccount4": "Ngôn ngữ",
 
     "videocall_chat1": "Gọi video",
     "videocall_chat2": "Video sẽ được hiển thị ở đây",
@@ -87,6 +88,9 @@
     "time7": "năm trước",
     "time8": "tháng",
     "time9": "ngày",
+
+    "message_page_mess1": "Tất cả tin nhắn",
+    "message_page_mess2": "Lịch phỏng vấn",
 
     "projectlist_company1": "Xin chào, bạn chưa có dự án",
     "projectlist_company2": "Sinh viên quan tâm đến:",
@@ -272,6 +276,10 @@
     "chat_chat1": "Tìm kiếm tin nhắn...",
     "chat_chat2": "Gần đây",
     "chat_chat3": "Tất cả",
+    "chat_chat4": "Bạn: ",
+
+    "alert_alert1": "Mới",
+    "alert_alert2": "Khác",
 
     "home_home1": "Trang chủ",
     "home_home2": "Thống kê",
@@ -282,6 +290,12 @@
     "message_message2": "Lịch phỏng vấn",
     "message_message3": "Hủy",
     "message_message4": "Nhập tin nhắn...",
+    "message_message5": "Chủ đề",
+    "message_message6": "Bắt cuộc họp",
+    "message_message7": "Vui lòng điền vào tất cả các trường",
+    "message_message8": "muốn lên lịch họp",
+    "schedule_schedule23": "Chỉnh sửa",
+
 
     "edit_company1": "Chào mừng đến ",
     "edit_company2": "Student Hub",
@@ -301,8 +315,8 @@
     "projectfilter_project3": "Đề xuất ít hơn",
     "projectfilter_project4": "Xóa bộ lọc",
     "projectfilter_project5": "Áp dụng các bộ lọc với giá trị đã chọn: ",
-    "projectfilter_project6": "Cần sinh viên: ",
-    "projectfilter_project7": "Đề xuất ít hơn: ",
+    "projectfilter_project6": "Số lượng sinh viên: ",
+    "projectfilter_project7": "Số lời đề nghị tối đa: ",
     "projectfilter_project8": "Áp dụng",
     "projectfilter_project9": "Nhập số lượng sinh viên",
     "projectfilter_project10": "Nhập số lượng đề xuất tối đa",
@@ -321,7 +335,7 @@
     "schedule_schedule7": "Thời gian kết thúc",
     "schedule_schedule8": "Chọn ngày kết thúc",
     "schedule_schedule9": "Chọn thời gian kết thúc",
-    "schedule_schedule10": "Khoảng thời gian: ",
+    "schedule_schedule10": "Thời lượng: ",
     "schedule_schedule11": "Hủy",
     "schedule_schedule12": "Tiêu đề: ",
     "schedule_schedule13": "Bắt đầu: ",
@@ -331,6 +345,10 @@
     "schedule_schedule17": "lúc",
     "schedule_schedule18": "Phỏng vấn đã bị hủy",   
     "schedule_schedule19": "Tham gia",
+    "schedule_schedule20": "Ngày: ",
+    "schedule_schedule21": "Thời gian: ",
+    "schedule_schedule22": "Chưa được chọn",
+    
 
     "schedule_scheduledetail1": "Thời gian bắt đầu",
     "schedule_scheduledetail2": "Thời gian kết thúc",
@@ -438,6 +456,27 @@
 
     "add_account1": "Thêm tài khoản",
 
+    "hire_student1": "Đề nghị",
+    "hire_student2": "Chi tiết",
+    "hire_student3": "Tin nhắn",
+    "hire_student4": "Đã tuyển",
+
+    
+    "hired_page1": "Sinh viên năm 3",
+    "hired_page2": "Sinh viên năm 2",
+    "hired_page3": "Sinh viên năm 1",
+    "hired_page4": "Sinh viên năm 4",
+    "hired_page5": "",
+    "hired_page6": "Đã tốt nghiệp",
+    "hired_page7": "Tin nhắn",
+    "hired_page8": "Đề nghị tuyển dụng",
+    "hired_page9": "Bạn có thực sự muốn gửi đề nghị tuyển dụng cho sinh viên để thực hiện dự án này không?",
+    "hired_page10": "Hủy",
+    "hired_page11": "Gửi",
+    "hired_page12": "Gửi đề nghị",
+    "hired_page13": "Tuyển",
+    "hired_page14": "Sinh viên năm ",
+
     "popup_project1": "Thêm dự án",
     "popup_project2": "Tên dự án:",
     "popup_project3": "Nhập tên dự án",
@@ -448,7 +487,8 @@
     "popup_project8": "Thêm kỹ năng...",
     "popup_project9": "Mô tả dự án:",
     "popup_project10": "Nhập mô tả dự án...",
-    "popup_project11": "Bạn đã nhập thông tin này"
+    "popup_project11": "Bạn đã nhập thông tin này",
+    "popup_project12": "Chưa được chọn"
 
 
 }

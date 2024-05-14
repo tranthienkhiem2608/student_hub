@@ -179,10 +179,14 @@ class _ChatRoomState extends State<ChatRoom> {
             isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
         title: Row(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 30,
-              backgroundImage: AssetImage(
-                'assets/images/avatar_default_img.png',
+              backgroundColor: Colors.transparent,
+              child: Image.asset(
+                'assets/icons/company_account.png',
+                width: 50, // New width for the image
+                height: 60, // New height for the image
+                fit: BoxFit.cover, // Adjusts the image to fill the space
               ),
             ),
             const SizedBox(

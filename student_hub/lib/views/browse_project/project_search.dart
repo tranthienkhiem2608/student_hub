@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/constant/project_duration.dart';
 import 'package:student_hub/models/model/project_company.dart';
@@ -10,6 +11,7 @@ import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/project_company_viewModel.dart';
 import 'package:student_hub/view_models/proposal_viewModel.dart';
 import 'package:student_hub/views/browse_project/project_detail.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class SearchProject extends StatefulWidget {
   final List<ProjectCompany> searchResults;
@@ -94,7 +96,6 @@ class _SearchProjectState extends State<SearchProject> {
         proposals.any((proposal) => proposal.projectId == project.id));
     return projectTmp;
   }
-
 
   @override
   void initState() {
@@ -208,7 +209,10 @@ class _SearchProjectState extends State<SearchProject> {
   }
 
   void showFilterBottomSheet(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context, listen: false).isDarkMode;
+
     showModalBottomSheet(
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
@@ -237,6 +241,7 @@ class _SearchProjectState extends State<SearchProject> {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
                 StatefulBuilder(
@@ -246,7 +251,7 @@ class _SearchProjectState extends State<SearchProject> {
                         RadioListTile(
                           title: Text(
                             'projectdetail_student5'.tr(),
-                            style: GoogleFonts.poppins(fontSize: 15),
+                            style: GoogleFonts.poppins(fontSize: 15, color: isDarkMode ? Colors.white : Colors.black,),
                           ),
                           value: 'less_than_one_month',
                           groupValue: projectLength,
@@ -266,8 +271,8 @@ class _SearchProjectState extends State<SearchProject> {
                           activeColor: Color(0xFF406AFF),
                         ),
                         RadioListTile(
-                          title: Text('projectdetail_student6'.tr(),
-                              style: GoogleFonts.poppins(fontSize: 15)),
+                          title: Text('projectlist_company6'.tr(),
+                              style: GoogleFonts.poppins(fontSize: 15, color: isDarkMode ? Colors.white : Colors.black,)),
                           value: 'one_to_three_months',
                           groupValue: projectLength,
                           onChanged: (value) {
@@ -286,8 +291,8 @@ class _SearchProjectState extends State<SearchProject> {
                           activeColor: Color(0xFF406AFF),
                         ),
                         RadioListTile(
-                          title: Text('projectdetail_student7'.tr(),
-                              style: GoogleFonts.poppins(fontSize: 15)),
+                          title: Text('projectlist_company7'.tr(),
+                              style: GoogleFonts.poppins(fontSize: 15, color: isDarkMode ? Colors.white : Colors.black,)),
                           value: 'three_to_six_months',
                           groupValue: projectLength,
                           onChanged: (value) {
@@ -306,8 +311,8 @@ class _SearchProjectState extends State<SearchProject> {
                           activeColor: Color(0xFF406AFF),
                         ),
                         RadioListTile(
-                          title: Text('projectdetail_student8'.tr(),
-                              style: GoogleFonts.poppins(fontSize: 15)),
+                          title: Text('projectlist_company8'.tr(),
+                              style: GoogleFonts.poppins(fontSize: 15, color: isDarkMode ? Colors.white : Colors.black,)),
                           value: 'more_than_six_months',
                           groupValue: projectLength,
                           onChanged: (value) {
@@ -335,12 +340,13 @@ class _SearchProjectState extends State<SearchProject> {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
                 TextFormField(
                   decoration: InputDecoration(
                     hintText: 'projectfilter_project9'.tr(),
-                    hintStyle: GoogleFonts.poppins(fontSize: 14),
+                    hintStyle: GoogleFonts.poppins(fontSize: 14, color: isDarkMode ? Color.fromARGB(255, 177, 177, 177) : Color.fromARGB(255, 149, 149, 149),),
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -357,12 +363,13 @@ class _SearchProjectState extends State<SearchProject> {
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
+                    color: isDarkMode ? Colors.white : Colors.black,
                   ),
                 ),
                 TextFormField(
                   decoration: InputDecoration(
                     hintText: 'projectfilter_project10'.tr(),
-                    hintStyle: GoogleFonts.poppins(fontSize: 14),
+                    hintStyle: GoogleFonts.poppins(fontSize: 14, color: isDarkMode ? Color.fromARGB(255, 177, 177, 177) : Color.fromARGB(255, 149, 149, 149),),
                   ),
                   onChanged: (value) {
                     setState(() {
@@ -390,7 +397,7 @@ class _SearchProjectState extends State<SearchProject> {
                         ),
                       ),
                       child: Text(
-                        "projectfilter_project11".tr(),
+                        "projectfilter_project4".tr(),
                         style: GoogleFonts.poppins(
                             color: Color(0xFF406AFF), fontSize: 16.0),
                       ),
@@ -409,9 +416,9 @@ class _SearchProjectState extends State<SearchProject> {
                         ),
                       ),
                       child: Text(
-                        "projectpost4_project12".tr(),
+                        "projectfilter_project8".tr(),
                         style: GoogleFonts.poppins(
-                            color: Colors.white, fontSize: 16.0),
+                            color: Colors.white, fontSize: 16.0,),
                       ),
                     ),
                   ],
@@ -426,15 +433,25 @@ class _SearchProjectState extends State<SearchProject> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          color: isDarkMode ? Colors.white : Color(0xFF242526),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text('Student Hub',
             style: GoogleFonts.poppins(
                 // Apply the Poppins font
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: isDarkMode ? Colors.white : Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor:
+            isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
         actions: <Widget>[],
       ),
       body: Column(
@@ -443,6 +460,9 @@ class _SearchProjectState extends State<SearchProject> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
             child: TextField(
+              style: GoogleFonts.poppins(
+                color: isDarkMode ? Colors.white : Colors.black,
+              ),
               controller: _searchQuery,
               onChanged: (value) {
                 setState(() {
@@ -456,12 +476,23 @@ class _SearchProjectState extends State<SearchProject> {
               },
               decoration: InputDecoration(
                 hintText: 'projectlist_project3'.tr(),
-                prefixIcon: Icon(Icons.search),
+                hintStyle: GoogleFonts.poppins(
+                  color: isDarkMode
+                      ? Color.fromARGB(255, 98, 98, 98)
+                      : Colors.black,
+                ),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: isDarkMode ? Colors.white : Colors.black,
+                ),
                 suffixIcon: IconButton(
                   onPressed: () {
                     showFilterBottomSheet(context);
                   },
-                  icon: Icon(Icons.filter_list),
+                  icon: Icon(
+                    Icons.filter_list,
+                    color: isDarkMode ? Colors.white : Colors.black,
+                  ),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
@@ -485,15 +516,20 @@ class _SearchProjectState extends State<SearchProject> {
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           padding: const EdgeInsets.fromLTRB(15, 0, 10, 5),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color:
+                                isDarkMode ? Color(0xFF2f2f2f) : Colors.white,
                             border: Border.all(
-                              color: Color.fromARGB(255, 228, 228, 233),
+                              color: isDarkMode
+                                  ? Color.fromARGB(255, 60, 60, 60)
+                                  : Color.fromARGB(255, 228, 228, 233),
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(20.0),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withOpacity(0.25),
+                                color: isDarkMode
+                                    ? Color(0xFF212121)
+                                    : Colors.grey.withOpacity(0.25),
                                 spreadRadius: 1,
                                 blurRadius: 6,
                                 offset:
@@ -604,13 +640,19 @@ class _SearchProjectState extends State<SearchProject> {
                                 Text(
                                   'projectlist_company2'.tr(),
                                   style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.bold,
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black),
                                 ),
                                 Text(
                                   project.description?.isNotEmpty ?? false
                                       ? project.description!.split('\n').first
                                       : '',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: GoogleFonts.poppins(
+                                      color: isDarkMode
+                                          ? Colors.white
+                                          : Colors.black),
                                 ),
 
                                 const SizedBox(height: 15),
@@ -625,7 +667,11 @@ class _SearchProjectState extends State<SearchProject> {
                                     Text(
                                       '${_getProjectDurationText(ProjectDuration.values[project.projectScopeFlag ?? 0])}',
                                       style: GoogleFonts.poppins(
-                                          height: 1.0, fontSize: 12),
+                                          height: 1.0,
+                                          fontSize: 12,
+                                          color: isDarkMode
+                                              ? Colors.white
+                                              : Colors.black),
                                     ),
                                   ],
                                 ),
@@ -641,7 +687,11 @@ class _SearchProjectState extends State<SearchProject> {
                                     Text(
                                       '${project.numberOfStudents} ${'projectlist_company3'.tr()}',
                                       style: GoogleFonts.poppins(
-                                          height: 1.0, fontSize: 12),
+                                          height: 1.0,
+                                          fontSize: 12,
+                                          color: isDarkMode
+                                              ? Colors.white
+                                              : Colors.black),
                                     ),
                                   ],
                                 ),
@@ -657,7 +707,11 @@ class _SearchProjectState extends State<SearchProject> {
                                     Text(
                                       '${project.proposals != null ? project.proposals : 0} ${'projectlist_company4'.tr()}',
                                       style: GoogleFonts.poppins(
-                                          height: 1.0, fontSize: 12),
+                                          height: 1.0,
+                                          fontSize: 12,
+                                          color: isDarkMode
+                                              ? Colors.white
+                                              : Colors.black),
                                     ),
                                   ],
                                 ),

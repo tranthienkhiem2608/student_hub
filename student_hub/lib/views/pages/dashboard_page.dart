@@ -111,7 +111,7 @@ class _DashboardPageState extends State<DashboardPage> {
             unselectedLabelColor: isDarkMode ? Colors.white : Colors.black,
             dividerColor: isDarkMode
                 ? const Color.fromARGB(255, 47, 47, 47)
-                : Colors.white,
+                : const Color.fromARGB(255, 216, 216, 216),
             tabs: [
               Tab(text: 'companydashboard_company4'.tr()),
               Tab(text: 'studentdashboard_student3'.tr()),
