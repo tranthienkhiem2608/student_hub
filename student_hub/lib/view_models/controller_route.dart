@@ -192,12 +192,13 @@ class ControllerRoute {
   }
 
   // navigate to edit project page
-  void navigateToEditProject(ProjectCompany project) {
+  void navigateToEditProject(ProjectCompany project, User user) {
     Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => EditProject(
                 project: project,
+                user: user,
               )),
     );
   }

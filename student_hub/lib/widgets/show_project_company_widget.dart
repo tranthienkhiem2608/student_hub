@@ -181,8 +181,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 ),
                 onPressed: () {
                   // Handle edit posting
-                  ControllerRoute(context)
-                      .navigateToEditProject(widget.projectCompany);
+                  ControllerRoute(context).navigateToEditProject(
+                      widget.projectCompany, widget.user!);
                 },
               ),
               TextButton(
