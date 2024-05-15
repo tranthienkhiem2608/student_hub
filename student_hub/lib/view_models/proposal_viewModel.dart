@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
+import 'package:student_hub/models/model/language.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/users.dart';
@@ -193,6 +194,17 @@ class ProposalViewModel {
         print(responseDecode['result']['student']['skillSets']);
         Proposal proposal =
             Proposal.fromMapProposalStudentDetail(responseDecode['result']);
+        var responseLanguage = await ConnectionService()
+            .get('/api/language/getByStudentId/${proposal.studentId}', {});
+        var responseLanguageDecode = jsonDecode(responseLanguage);
+        if (responseLanguageDecode['result'] != null) {
+          print("Connected to the server successfully");
+          print("Connect server successful");
+          print(responseLanguageDecode['result']);
+          proposal.studentUser!.languages = Language.fromListProposalLanguage(
+              responseLanguageDecode['result']);
+        }
+        print(proposal);
         return proposal;
       } else {
         print("Failed get proposal");

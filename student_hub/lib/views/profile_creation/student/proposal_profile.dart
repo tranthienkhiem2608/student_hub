@@ -457,6 +457,83 @@ class _ProposalProfileState extends State<ProposalProfile> {
                 ],
               ),
             ),
+            SizedBox(height: 10),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "studentprofileinput4_ProfileEdit4".tr(),
+                      style: GoogleFonts.poppins(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: isEditing, // Hiển thị khi isEditing là true
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(210, 10, 0, 5),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        onPressed: () async {
+                          final result = await showDialog<Language>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return PopUpLanguagesWidget(
+                                  _addNewLanguage, languages);
+                            },
+                          );
+
+                          if (result != null) {
+                            setState(() {
+                              languages.add(result);
+                            });
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.add,
+                          size: 26,
+                          color: Color(0xFF406AFF),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color.fromARGB(
+                              244, 212, 221, 253), // Set border color
+                          width: 2, // Set border width
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      height: 70,
+                      child: ShowLanguagesWidget(
+                        languages: languages,
+                        isEditing:
+                            isEditing, // Truyền giá trị isEditing xuống ShowLanguagesWidget
+                        deleteLanguage:
+                            _deleteLanguage, // Truyền hàm _deleteLanguage xuống ShowLanguagesWidget
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Row(
               children: [
                 Padding(
