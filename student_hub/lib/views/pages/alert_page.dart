@@ -101,43 +101,13 @@ class _AlertPageState extends State<AlertPage> {
                   ? DateTime.parse(notifications[index - 1].createAt!)
                   : null;
 
-              Widget label;
-              if (DateTime.now().difference(createdAt) <=
-                  const Duration(hours: 4)) {
-                label = Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      'alert_alert1'.tr(),
-                      style: GoogleFonts.poppins(
-                          color: Color(0xFF406AFF),
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                );
-              } else {
-                label = Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                      'alert_alert2'.tr(),
-                      style: GoogleFonts.poppins(
-                          color: Color(0xFF406AFF),
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                );
-              }
+              
 
               return Column(
                 children: <Widget>[
                   if (index == 0 ||
                       (index > 0 && previousCreatedAt!.day != createdAt.day))
-                    label,
+                    
                   GestureDetector(
                     onTap: () async {
                       (notify.typeNotifyFlag == "1" ||

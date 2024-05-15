@@ -42,10 +42,10 @@ class _MessagesNotifyState extends State<MessagesNotify> {
     return Container(
       color: isDarkMode
           ? widget.notify.notifyFlag == "0"
-              ? Color.fromARGB(255, 82, 82, 82).withOpacity(0.3)
+              ? Color.fromARGB(255, 171, 216, 255).withOpacity(0.2)
               : null
           : widget.notify.notifyFlag == "0"
-              ? Color.fromARGB(255, 255, 255, 255).withOpacity(0.3)
+              ? Color.fromARGB(255, 171, 216, 255).withOpacity(0.2)
               : null,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),

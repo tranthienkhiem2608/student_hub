@@ -45,7 +45,7 @@ class _OfferNotifyState extends State<OfferNotify> {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Container(
       color:
-          widget.notify.notifyFlag == "0" ? const Color.fromARGB(255, 255, 255, 255).withOpacity(0.3) : null,
+          widget.notify.notifyFlag == "0" ? Color.fromARGB(255, 171, 216, 255).withOpacity(0.2) : null,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
         child: Column(
