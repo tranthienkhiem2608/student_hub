@@ -2,9 +2,9 @@ name: Dart
 
 on:
   push:
-    branches: [ "main/student-hub" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "main/student-hub" ]
+    branches: [ "main" ]
 
 jobs:
   build:
