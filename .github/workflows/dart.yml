@@ -2,24 +2,34 @@ name: Dart
 
 on:
   push:
-    branches: main
+    branches: [ "main/student-hub" ]
   pull_request:
-    branches: main
+    branches: [ "main/student-hub" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clone repository
-        uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v2
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: 3.19.0
+
       - name: Disable Flutter CLI animations
         run: flutter config --no-cli-animations
-      - run: flutter pub get
-      - run: flutter test
-      - run: flutter build apk
-      - run: flutter build appbundle
+
+      - name: Flutter pub add
+        run: flutter pub add
+
+      - name: Flutter test
+        run: flutter test
+
+      - name: Flutter build APK
+        run: flutter build apk
+
+      - name: Flutter build appbundle
+        run: flutter build appbundle
