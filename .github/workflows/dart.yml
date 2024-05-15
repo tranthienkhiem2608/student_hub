@@ -14,6 +14,9 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
+      - name: Change directory to student_hub
+        run: cd student_hub
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -22,8 +25,8 @@ jobs:
       - name: Disable Flutter CLI animations
         run: flutter config --no-cli-animations
 
-      - name: Flutter pub add
-        run: flutter pub add
+      - name: Flutter pub get
+        run: flutter pub get
 
       - name: Flutter test
         run: flutter test
