@@ -13,26 +13,39 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v2
-
+      
+      # Change directory to the student_hub directory
       - name: Change directory to student_hub
         run: cd student_hub
 
+      # Set up Flutter in the student_hub directory
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: 3.19.0
+        working-directory: student_hub
 
+      # Disable Flutter CLI animations in the student_hub directory
       - name: Disable Flutter CLI animations
         run: flutter config --no-cli-animations
+        working-directory: student_hub
 
+      # Run flutter pub get in the student_hub directory
       - name: Flutter pub get
         run: flutter pub get
+        working-directory: student_hub
 
+      # Run flutter test in the student_hub directory
       - name: Flutter test
         run: flutter test
+        working-directory: student_hub
 
+      # Run flutter build APK in the student_hub directory
       - name: Flutter build APK
         run: flutter build apk
+        working-directory: student_hub
 
+      # Run flutter build appbundle in the student_hub directory
       - name: Flutter build appbundle
         run: flutter build appbundle
+        working-directory: student_hub
