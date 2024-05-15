@@ -301,10 +301,10 @@ class _ConversationState extends State<Conversation> {
                                       "${message.interview!.title}",
                                       style: GoogleFonts.poppins(
                                         color: isDarkMode
-                                            ? Color(0xFF406AFF)
+                                            ? Color.fromARGB(255, 255, 255, 255)
                                             : isMe
-                                                ? Color(0xFF406AFF)
-                                                : Color(0xFF406AFF),
+                                                ? Color.fromARGB(255, 0, 0, 0)
+                                                : Color.fromARGB(255, 255, 255, 255),
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold,
                                       ),

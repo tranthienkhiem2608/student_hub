@@ -59,7 +59,7 @@ class _AlertPageState extends State<AlertPage> {
           notifications.sort((a, b) => b.createAt!.compareTo(a.createAt!));
         });
 
-        LocalNotificationService.showNotification(data['notification']);
+        // LocalNotificationService.showNotification(data['notification']);
       }
     });
     timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());

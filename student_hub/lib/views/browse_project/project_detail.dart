@@ -61,7 +61,8 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
           )
         ],
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+      child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,6 +259,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
           ],
         ),
       ),
+    ),
     );
   }
 }

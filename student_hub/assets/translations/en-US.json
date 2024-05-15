@@ -4,7 +4,7 @@
     "home_title3": "StudentHub is a university marketplace to connect high-skilled student and company on a real-world project",
 
     "company_auth1": "Sign up as Company",
-    "company_auth2": "Company Name",
+    "company_auth2": "Company name",
     "company_auth3": "Company Email",
     "company_auth4": "Password",
     "company_auth5": "I agree to the terms and conditions of Student Hub",
@@ -122,7 +122,7 @@
     "companydashboard_company16": "Edit Posting",
     "companydashboard_company17": "Remove Posting",
     "companydashboard_company18": "Start working this project",
-    "companydashboard_company19": "Archieve project",
+    "companydashboard_company19": "Close project",
     "companydashboard_company20": "Confirm Deletion",
     "companydashboard_company21": "Are you sure you want to delete this project?",
     "companydashboard_company22": "Error deleting project.",
@@ -164,8 +164,8 @@
     "companyprofileinput_ProfileCreation6": "10-99 employees",
     "companyprofileinput_ProfileCreation7": "100-1000 employees",
     "companyprofileinput_ProfileCreation8": "More than 1000 employees",
-    "companyprofileinput_ProfileCreation9": "Your company name",
-    "companyprofileinput_ProfileCreation10": "Your company website",
+    "companyprofileinput_ProfileCreation9": "Company name",
+    "companyprofileinput_ProfileCreation10": "Company website",
     "companyprofileinput_ProfileCreation11": "Description",
     "companyprofileinput_ProfileCreation12": "Continue",
 

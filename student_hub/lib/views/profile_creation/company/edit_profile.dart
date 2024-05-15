@@ -4,10 +4,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/constant/project_profile.dart';
 import 'package:student_hub/models/model/company_profile.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/input_profile_viewModel.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class EditProfile extends StatefulWidget {
   EditProfile({super.key, required this.user});
@@ -23,32 +25,25 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios),
+        color: isDarkMode ? Colors.white : Color(0xFF242526),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       title: Text('Student Hub',
           style: GoogleFonts.poppins(
               // Apply the Poppins font
-              color: Color.fromARGB(255, 0, 0, 0),
+              color: isDarkMode ? Colors.white : Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor:
+          isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
       actions: <Widget>[
-        IconButton(
-          icon: Container(
-            // Add a Container as the parent
-            padding: const EdgeInsets.all(8.0), // Padding for spacing
-            decoration: BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 255),
-              shape: BoxShape.circle,
-            ),
-            child: ColorFiltered(
-              colorFilter: ColorFilter.mode(
-                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
-              child: Image.asset('assets/icons/user_ic.png',
-                  width: 25, height: 25),
-            ),
-          ),
-          onPressed: () {},
-        )
+        
       ],
     );
   }
@@ -150,9 +145,10 @@ class _EditProfileState extends State<EditProfile>
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
         appBar: const _AppBar(),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -182,7 +178,9 @@ class _EditProfileState extends State<EditProfile>
                             style: GoogleFonts.poppins(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black, // Màu chữ mặc định
+                              color: isDarkMode
+                                  ? Colors.white
+                                  : Colors.black, // Màu chữ mặc định
                             ),
                             children: [
                               TextSpan(
@@ -217,42 +215,51 @@ class _EditProfileState extends State<EditProfile>
                   )),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: TextField(
-                      controller: _companyNameController,
-                      readOnly: !_isEditing,
-                      cursorColor: Color(0xFF406AFF),
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.all(0.0),
-                        labelStyle: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.w400,
+                    child: Column(children: <Widget>[
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text('companyprofileinput_ProfileCreation9'.tr(), style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,),),
+                      ),
+                      TextField(
+                        style: GoogleFonts.poppins(
+                          color: isDarkMode ? Colors.white : Colors.black,
                         ),
-                        hintStyle: GoogleFonts.poppins(
-                          color: Color(0xFF777B8A),
-                          fontSize: 13.5,
-                        ),
-                        prefixIcon: const Icon(
-                          Iconsax.building,
-                          color: Colors.black,
-                          size: 18,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color(0xFF4BEC0C7), width: 0.8),
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        floatingLabelStyle: GoogleFonts.poppins(
-                          color: Colors.black,
-                          fontSize: 18.0,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color(0xFF4BEC0C7), width: 1),
-                          borderRadius: BorderRadius.circular(10.0),
+                        controller: _companyNameController,
+                        readOnly: !_isEditing,
+                        cursorColor: Color(0xFF406AFF),
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(0.0),
+                          labelStyle: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          hintStyle: GoogleFonts.poppins(
+                            color: Color(0xFF777B8A),
+                            fontSize: 13.5,
+                          ),
+                          prefixIcon: Icon(
+                            Iconsax.building,
+                            color: isDarkMode ? Colors.white : Colors.black,
+                            size: 18,
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color(0xFF4BEC0C7), width: 0.8),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          floatingLabelStyle: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 18.0,
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color(0xFF4BEC0C7), width: 1),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
                         ),
                       ),
-                    ),
+                    ]),
                   ),
                 ),
                 const SizedBox(
@@ -272,8 +279,12 @@ class _EditProfileState extends State<EditProfile>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(
-                            height: 5), // Spacing between label and TextField
+                            height: 5),
+                            Text('companyprofileinput_ProfileCreation10'.tr(), style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,),), // Spacing between label and TextField
                         TextField(
+                          style: GoogleFonts.poppins(
+                            color: isDarkMode ? Colors.white : Colors.black,
+                          ),
                           controller: _websiteController,
                           readOnly: !_isEditing,
                           cursorColor: Color(0xFF406AFF),
@@ -284,9 +295,9 @@ class _EditProfileState extends State<EditProfile>
                               fontSize: 14.0,
                               fontWeight: FontWeight.w400,
                             ),
-                            prefixIcon: const Icon(
+                            prefixIcon: Icon(
                               Iconsax.link,
-                              color: Colors.black,
+                              color: isDarkMode ? Colors.white : Colors.black,
                               size: 18,
                             ),
                             enabledBorder: OutlineInputBorder(
@@ -326,9 +337,17 @@ class _EditProfileState extends State<EditProfile>
                   ),
                   child: FadeTransition(
                     opacity: _fadeAnimation,
-                    child: ConstrainedBox(
+                    
+                    child: Column(children: <Widget>[
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text('companyprofileinput_ProfileCreation11'.tr(), style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,),),
+                      ), ConstrainedBox(
                       constraints: BoxConstraints(maxHeight: 100),
                       child: TextField(
+                        style: GoogleFonts.poppins(
+                          color: isDarkMode ? Colors.white : Colors.black,
+                        ),
                         controller: _descriptionController,
                         readOnly: !_isEditing,
                         cursorColor: Color(0xFF406AFF),
@@ -349,11 +368,11 @@ class _EditProfileState extends State<EditProfile>
                             color: Color(0xFF777B8A),
                             fontSize: 14.0,
                           ),
-                          prefixIcon: const Padding(
+                          prefixIcon: Padding(
                             padding: EdgeInsets.all(10.0),
                             child: Icon(
                               Iconsax.paperclip_2,
-                              color: Colors.black,
+                              color: isDarkMode ? Colors.white : Colors.black,
                               size: 18,
                             ),
                           ),
@@ -365,7 +384,7 @@ class _EditProfileState extends State<EditProfile>
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           floatingLabelStyle: GoogleFonts.poppins(
-                            color: Colors.black,
+                            color: const Color.fromARGB(255, 254, 254, 254),
                             fontSize: 18.0,
                           ),
                           focusedBorder: OutlineInputBorder(
@@ -377,6 +396,8 @@ class _EditProfileState extends State<EditProfile>
                           ),
                         ),
                       ),
+                    ),
+                    ],
                     ),
                   ),
                 ),
@@ -413,6 +434,9 @@ class _EditProfileState extends State<EditProfile>
                                       style: GoogleFonts.poppins(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
+                                        color: isDarkMode
+                                            ? Colors.white
+                                            : Colors.black,
                                       ),
                                     ),
                                     const SizedBox(height: 10),
@@ -424,7 +448,11 @@ class _EditProfileState extends State<EditProfile>
                                             _getSizeDescription(size
                                                 .index), // Get description based on index
                                             style: GoogleFonts.poppins(
-                                                fontSize: 14),
+                                              fontSize: 14,
+                                              color: isDarkMode
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                            ),
                                           ),
                                           dense: true,
                                           value: size,
@@ -450,13 +478,21 @@ class _EditProfileState extends State<EditProfile>
                                       style: GoogleFonts.poppins(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w600,
+                                        color: isDarkMode
+                                            ? Colors.white
+                                            : Colors.black,
                                       ),
                                     ),
                                     Text(
                                       _getSizeDescription(
                                           _companyProfiles?.size ?? 0),
                                       // Show current size description
-                                      style: GoogleFonts.poppins(fontSize: 14),
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        color: isDarkMode
+                                            ? Colors.white
+                                            : Colors.black,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -570,12 +606,16 @@ String _getSizeDescription(int sizeIndex) {
     case CompanySize.justMe:
       return 'companyprofileinput_ProfileCreation4'.tr();
     case CompanySize.small:
-      return 'companyprofileinput_ProfileCreation5'.tr(); // Adjust the text as needed
+      return 'companyprofileinput_ProfileCreation5'
+          .tr(); // Adjust the text as needed
     case CompanySize.medium:
-      return 'companyprofileinput_ProfileCreation6'.tr(); // Adjust the text as needed
+      return 'companyprofileinput_ProfileCreation6'
+          .tr(); // Adjust the text as needed
     case CompanySize.large:
-      return 'companyprofileinput_ProfileCreation7'.tr(); // Adjust the text as needed
+      return 'companyprofileinput_ProfileCreation7'
+          .tr(); // Adjust the text as needed
     case CompanySize.veryLarge:
-      return 'companyprofileinput_ProfileCreation8'.tr(); // Adjust the text as needed
+      return 'companyprofileinput_ProfileCreation8'
+          .tr(); // Adjust the text as needed
   }
 }

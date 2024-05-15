@@ -164,10 +164,10 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                   child: Text('companydashboard_company19'.tr(),
                       style: GoogleFonts.poppins(
                           color: isDarkMode
-                              ? widget.projectCompany.typeFlag == 2
+                              ? widget.projectCompany.typeFlag != 2
                                   ? Colors.white
                                   : Colors.white.withOpacity(0.4)
-                              : widget.projectCompany.typeFlag == 2
+                              : widget.projectCompany.typeFlag != 2
                                   ? Colors.black
                                   : Colors.black.withOpacity(0.4),
                           fontSize: 15)),

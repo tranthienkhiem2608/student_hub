@@ -264,14 +264,16 @@ class _AllChatsState extends State<AllChats> {
                               Text(
                                 allChat.project!.title!,
                                 style: GoogleFonts.poppins(
-                                  color: MyTheme.bodyText2.color,
+                                  color: Color(0xFF406AFF),
                                 ),
                               ),
                               Text(
                                 '${'chat_chat4'.tr()}${allChat.content!.split(' ').take(3).join(' ') + (allChat.content!.split(' ').length > 3 ? '...' : '')}',
-                                style: GoogleFonts.poppins(color: isDarkMode
-                                      ? Color.fromARGB(255, 185, 185, 185)
-                                      : Colors.black,),
+                                style: GoogleFonts.poppins(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 133, 133, 133),
+                              ),
                               ),
                             ],
                           ),
