@@ -19,7 +19,8 @@ class OfferDetail extends StatefulWidget {
 }
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
-  const _AppBar({super.key});
+  const _AppBar({super.key, required this.user});
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
         color: isDarkMode ? Colors.white : Color(0xFF242526),
         onPressed: () {
           Navigator.pop(context);
+          ControllerRoute(context).navigateToHomeScreen(false, user, 3);
         },
       ),
       title: Text('Student Hub',
@@ -108,7 +110,7 @@ class _OfferDetailState extends State<OfferDetail>
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
-        appBar: _AppBar(),
+        appBar: _AppBar(user: widget.user),
         backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
         body: Padding(
           padding: EdgeInsets.fromLTRB(16, 30, 16, 16),
