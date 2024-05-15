@@ -1,6 +1,9 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:student_hub/services/notification_services.dart';
+import 'package:student_hub/views/homescreen/error_screen.dart';
 import 'package:student_hub/views/homescreen/splash_screen.dart';
 import 'package:student_hub/views/homescreen/welcome_view.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
@@ -11,6 +14,8 @@ import 'package:permission_handler/permission_handler.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await LocalNotificationService.initialize(); // Add this line
+
   bool isDarkMode = await addAuthorizationToSocket();
   runApp(
     EasyLocalization(
@@ -47,24 +52,38 @@ class MyApp extends StatelessWidget {
         // visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: FutureBuilder(
-        // Request the camera permission when the app starts
-        future: requestCameraPermission(),
+        future: checkInternetAndCameraPermission(),
         builder: (context, snapshot) {
-          // Show the WelcomePage when permission is granted
           if (snapshot.connectionState == ConnectionState.done) {
-            return SplashScreen();
+            if (snapshot.data == true) {
+              return SplashScreen();
+            } else {
+              return ErrorScreen(); // Replace with your screen
+            }
           }
-          // Show a loading spinner while waiting for permission
           return SplashScreen();
         },
       ),
     );
   }
 
-  Future<void> requestCameraPermission() async {
+  Future<bool> checkInternetAndCameraPermission() async {
+    // Check internet connection
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      return false;
+    }
+
+    // Check camera permission
     var status = await Permission.camera.status;
     if (!status.isGranted) {
       await Permission.camera.request();
+      status = await Permission.camera.status;
+      if (!status.isGranted) {
+        return false;
+      }
     }
+
+    return true;
   }
 }

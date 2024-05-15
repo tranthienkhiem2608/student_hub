@@ -4,7 +4,10 @@ class LocalNotificationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static void initialize() async {
+  static FlutterLocalNotificationsPlugin get notificationsPlugin =>
+      _notificationsPlugin;
+
+  static Future<void> initialize() async {
     final InitializationSettings initializationSettings =
         InitializationSettings(
             android: AndroidInitializationSettings('@mipmap/ic_launcher'));

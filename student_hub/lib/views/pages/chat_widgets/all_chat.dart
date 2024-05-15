@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/app_theme.dart';
 import 'package:student_hub/models/model/message.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/services/notification_services.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/view_models/messages_viewModel.dart';
 import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
@@ -65,6 +66,7 @@ class _AllChatsState extends State<AllChats> {
             }
           }
         });
+        LocalNotificationService.showNotification(data['notification']);
       }
     });
   }
@@ -256,9 +258,8 @@ class _AllChatsState extends State<AllChats> {
                                 allChat.receiver!.fullname!,
                                 style: GoogleFonts.poppins(
                                   fontSize: 18,
-                                  color: isDarkMode
-                                      ? Colors.white
-                                      : Colors.black,
+                                  color:
+                                      isDarkMode ? Colors.white : Colors.black,
                                 ),
                               ),
                               Text(
@@ -273,7 +274,7 @@ class _AllChatsState extends State<AllChats> {
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
                                   color: Color.fromARGB(255, 133, 133, 133),
-                              ),
+                                ),
                               ),
                             ],
                           ),
