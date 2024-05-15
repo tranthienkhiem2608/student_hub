@@ -37,7 +37,7 @@ class ControllerRoute {
   void navigateToSwitchAccountView(User user) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SwitchAccountView(user)),
+      MaterialPageRoute(builder: (context) => SwitchAccountView(user, null)),
     );
   }
 

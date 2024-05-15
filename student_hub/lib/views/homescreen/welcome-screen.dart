@@ -119,7 +119,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        SwitchAccountView(companyUser),
+                        SwitchAccountView(companyUser, null),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       var begin = const Offset(1.0, 0.0);
@@ -260,8 +260,8 @@ class _Content extends StatelessWidget {
           )),
           child: FadeTransition(
             opacity: fadeAnimation,
-            child:
-                _AnimatedButton(text: 'welcome_welcomecompany3'.tr(), companyUser: companyUser),
+            child: _AnimatedButton(
+                text: 'welcome_welcomecompany3'.tr(), companyUser: companyUser),
           ),
         ),
 

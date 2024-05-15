@@ -35,7 +35,8 @@ class HomePage extends StatefulWidget {
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   final User? user;
-  const _AppBar({Key? key, this.user}) : super(key: key);
+  int? selectedIndex = 0;
+  _AppBar({Key? key, this.user, this.selectedIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +70,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SwitchAccountView(user!)));
+                    builder: (context) =>
+                        SwitchAccountView(user!, selectedIndex!)));
           },
         )
       ],
@@ -113,8 +115,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-
-
   @override
   void dispose() {
     super.dispose();
@@ -125,7 +125,8 @@ class _HomePageState extends State<HomePage> {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
       backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
-      appBar: _AppBar(user: widget.user!),
+      appBar: _AppBar(
+          user: widget.user!, selectedIndex: _navController.selectedIndex),
       body: PageView(
         controller: _navController.controller,
         children: _pages,

@@ -680,7 +680,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => SwitchAccountView(user!)));
+                  builder: (context) => SwitchAccountView(user!, null)));
         },
       ),
       title: const Text('Student Hub',

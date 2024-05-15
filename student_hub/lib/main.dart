@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:student_hub/views/homescreen/splash_screen.dart';
 import 'package:student_hub/views/homescreen/welcome_view.dart';
 import 'package:student_hub/widgets/theme/dark_mode.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -26,7 +27,8 @@ void main() async {
 
 Future<bool> addAuthorizationToSocket() async {
   final prefs = await SharedPreferences.getInstance();
-  bool isDarkMode = prefs.containsKey('isDarkMode') ? prefs.getBool('isDarkMode')! : false;
+  bool isDarkMode =
+      prefs.containsKey('isDarkMode') ? prefs.getBool('isDarkMode')! : false;
   print("Darkmode: $isDarkMode");
   return isDarkMode;
 }
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
       title: "Student Hub",
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        // visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: FutureBuilder(
         // Request the camera permission when the app starts
@@ -50,10 +52,10 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot) {
           // Show the WelcomePage when permission is granted
           if (snapshot.connectionState == ConnectionState.done) {
-            return WelcomePage();
+            return SplashScreen();
           }
           // Show a loading spinner while waiting for permission
-          return CircularProgressIndicator();
+          return SplashScreen();
         },
       ),
     );
