@@ -66,6 +66,7 @@ dependencies:
   lottie: ^3.1.0
   animated_splash_screen: ^1.3.0
   flutter_local_notifications: ^9.1.2
+  
 
 
 
@@ -88,7 +89,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/welcome_img.png"
+  image_path: "assets/icons/logoicon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
