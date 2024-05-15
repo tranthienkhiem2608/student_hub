@@ -14,7 +14,9 @@ import 'package:student_hub/widgets/theme/localization_checker.dart';
 
 class SwitchAccountView extends StatefulWidget {
   final User user;
-  const SwitchAccountView(this.user, {Key? key}) : super(key: key);
+  int? selectedIndex;
+  SwitchAccountView(this.user, this.selectedIndex, {Key? key})
+      : super(key: key);
 
   @override
   _SwitchAccountViewState createState() => _SwitchAccountViewState();
@@ -70,14 +72,17 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
-    
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           color: isDarkMode ? Colors.white : Color(0xFF242526),
           onPressed: () {
-            Navigator.pop(context);
+            widget.selectedIndex == null
+                ? Navigator.pop(context)
+                : ControllerRoute(context).navigateToHomeScreen(
+                    false, widget.user, widget.selectedIndex!);
           },
         ),
         title: Text('Student Hub',
@@ -88,9 +93,7 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                 fontWeight: FontWeight.bold)),
         backgroundColor:
             isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
-        actions: <Widget>[
-          
-        ],
+        actions: <Widget>[],
       ),
       backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
       body: Column(
@@ -308,7 +311,6 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                           inactiveTrackColor: isDarkMode
                               ? Color.fromARGB(255, 90, 90, 90)
                               : Colors.white, // Màu nền khi tắt
-                              
                         ),
                       ],
                     ),

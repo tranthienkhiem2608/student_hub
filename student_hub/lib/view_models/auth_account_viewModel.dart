@@ -21,7 +21,7 @@ class AuthAccountViewModel {
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => SwitchAccountView(user)),
+      MaterialPageRoute(builder: (context) => SwitchAccountView(user, null)),
     );
     prefs.getInt('role') == 0
         ? ControllerRoute(context).navigateToHomeScreen(false, user, 1)
@@ -43,6 +43,71 @@ class AuthAccountViewModel {
             ),
           );
         });
+  }
+
+  Future<void> getAuthMe() async {
+    var responseUser = await ConnectionService().get('/api/auth/me', {});
+    var responseUserMap = jsonDecode(responseUser);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (responseUserMap['result'] != null) {
+      print('User Response');
+      print(responseUserMap['result']);
+      User userResponse = User.fromMapUser(responseUserMap['result']);
+      print(userResponse.id);
+      print(userResponse.fullname);
+      print(userResponse.role);
+      print(userResponse.role?[0]);
+      print(userResponse.companyUser?.id);
+
+      // Navigator.of(context).pop();
+      // int role = int.parse(userResponse.role?[0]);
+      int role = userResponse.role?[0];
+      print('length: ${userResponse.role?.length}');
+      prefs.setInt('role', role);
+
+      if (userResponse.role?.length == 1) {
+        if (role == 1) {
+          userResponse.companyUser == null
+              ? ControllerRoute(context)
+                  .navigateToProfileInputCompany(userResponse)
+              : ControllerRoute(context)
+                  .navigateToHomeScreen(false, userResponse, 1);
+        } else if (role == 0) {
+          print('USER RESPONSE');
+
+          print(userResponse.studentUser?.id);
+          Navigator.of(context).pop();
+          userResponse.studentUser == null
+              ? ControllerRoute(context)
+                  .navigateToProfileInputStudent1(userResponse)
+              : ControllerRoute(context)
+                  .navigateToHomeScreen(false, userResponse, 1);
+        }
+      } else {
+        // ControllerRoute(context).navigateToHomeScreen(false, userResponse);
+        print('Switch Account');
+        // prefs.setInt('role', 1);
+        if (role == 1) {
+          print('Switch Account1');
+
+          Navigator.of(context).pop();
+          userResponse.companyUser == null
+              ? ControllerRoute(context)
+                  .navigateToProfileInputCompany(userResponse)
+              : ControllerRoute(context)
+                  .navigateToHomeScreen(false, userResponse, 1);
+        } else if (role == 0) {
+          print('Switch Account2');
+
+          userResponse.studentUser == null
+              ? ControllerRoute(context)
+                  .navigateToProfileInputStudent1(userResponse)
+              : ControllerRoute(context)
+                  .navigateToHomeScreen(false, userResponse, 1);
+        }
+      }
+    }
   }
 
   Future<void> loginAccount(bool stageNav, User user) async {

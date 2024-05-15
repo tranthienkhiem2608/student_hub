@@ -64,7 +64,6 @@ class _WelcomePageState extends State<WelcomePage>
   }
 }
 
-
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   final AnimationController animationController;
 
@@ -73,6 +72,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: Text('Student Hub',
           style: GoogleFonts.poppins(
               // Apply the Poppins font
@@ -85,7 +85,10 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
           icon: Icon(Icons.language, color: Color.fromARGB(255, 0, 0, 0)),
           onPressed: () {
             LocalizationChecker.changeLanguage(context);
-            
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => WelcomePage()),
+            );
           }, // Gọi hàm khi nút được nhấn
         ),
         IconButton(
@@ -224,12 +227,6 @@ class _Content extends StatelessWidget {
                       // Handle button press
                       ControllerRoute(context)
                           .navigateToLoginView(); //role company
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => const VideoConferencePage(
-                      //           conferenceID: 'conferenceID')),
-                      // );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF406AFF),

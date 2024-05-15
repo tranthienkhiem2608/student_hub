@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/services/notification_services.dart';
 import 'package:student_hub/services/socket_services.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/view_models/messages_viewModel.dart';
@@ -57,6 +58,8 @@ class _AlertPageState extends State<AlertPage> {
           notifications.add(newNotify);
           notifications.sort((a, b) => b.createAt!.compareTo(a.createAt!));
         });
+
+        LocalNotificationService.showNotification(data['notification']);
       }
     });
     timer = Timer.periodic(const Duration(seconds: 5), (timer) => connect());

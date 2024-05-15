@@ -137,16 +137,41 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                 },
               ),
               TextButton(
+                onPressed: widget.projectCompany.typeFlag == 2
+                    ? null
+                    : () {
+                        int typeStatus =
+                            widget.projectCompany.typeFlag == 0 ? 2 : 1;
+                        widget.projectCompany.typeFlag = 2;
+                        widget.projectCompany.status = typeStatus;
+                        // Handle start working this project
+                        ProposalViewModel(context).setStartWorking(
+                            widget.projectCompany, widget.user!);
+                      },
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.disabled))
+                        return Colors.grey;
+                      return isDarkMode
+                          ? Colors.white
+                          : Colors.black; // Use the component's default.
+                    },
+                  ),
+                ),
                 child: Align(
                   alignment: Alignment.center,
                   child: Text('companydashboard_company19'.tr(),
                       style: GoogleFonts.poppins(
-                          color: isDarkMode ? Colors.white : Colors.black,
+                          color: isDarkMode
+                              ? widget.projectCompany.typeFlag == 2
+                                  ? Colors.white
+                                  : Colors.white.withOpacity(0.4)
+                              : widget.projectCompany.typeFlag == 2
+                                  ? Colors.black
+                                  : Colors.black.withOpacity(0.4),
                           fontSize: 15)),
                 ),
-                onPressed: () {
-                  _confirmProjectStatus(context, widget);
-                },
               ),
               TextButton(
                 child: Align(
@@ -177,7 +202,8 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
               ),
               Divider(),
               TextButton(
-                onPressed: widget.projectCompany.typeFlag == 1
+                onPressed: (widget.projectCompany.typeFlag == 1 ||
+                        widget.projectCompany.typeFlag == 2)
                     ? null
                     : () {
                         widget.projectCompany.typeFlag = 1;
@@ -218,10 +244,6 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
     Color statusColor;
     String statusText;
     switch (widget.projectCompany.status) {
-      case 0:
-        statusColor = Colors.blue; // Working
-        statusText = 'status1'.tr();
-        break;
       case 1:
         statusColor = Colors.green; // Success
         statusText = 'status2'.tr();
@@ -286,25 +308,44 @@ class _ShowProjectCompanyWidgetState extends State<ShowProjectCompanyWidget> {
                           color: Color.fromARGB(255, 18, 119, 52),
                           fontWeight: FontWeight.w500),
                     )),
-                Container(
-                  decoration: BoxDecoration(
-                    color: statusColor,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0, vertical: 10.0),
-                  constraints: const BoxConstraints(
-                      minWidth: 0, maxWidth: double.infinity),
-                  child: Text(
-                    '$statusText',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.poppins(
-                        height: 1,
-                        fontSize: 11,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500),
-                  ),
+                Icon(
+                  widget.projectCompany.typeFlag == 0
+                      ? Icons.fiber_new_outlined
+                      : widget.projectCompany.typeFlag == 1
+                          ? Icons.work
+                          : Icons.archive_outlined,
+                  color: widget.projectCompany.typeFlag == 0
+                      ? Colors.blue
+                      : widget.projectCompany.typeFlag == 1
+                          ? Colors.orange
+                          : Colors.grey,
+                  size: 30.0,
                 ),
+                widget.projectCompany.typeFlag == 2
+                    ? () {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: statusColor,
+                            borderRadius: BorderRadius.circular(20.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 10.0),
+                          constraints: const BoxConstraints(
+                              minWidth: 0, maxWidth: double.infinity),
+                          child: Text(
+                            '$statusText',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.poppins(
+                                height: 1,
+                                fontSize: 11,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        );
+                      }()
+                    : () {
+                        return Container();
+                      }()
               ],
             ),
             subtitle: Text(widget.projectCompany.title!,

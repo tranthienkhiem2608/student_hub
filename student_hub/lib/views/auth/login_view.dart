@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart'; // Import Google Fonts
 import 'package:iconsax/iconsax.dart';
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/view_models/controller_route.dart';
+import 'package:student_hub/views/homescreen/welcome_view.dart';
 
 import '../../models/model/users.dart';
 
@@ -29,6 +30,16 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
               color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios),
+        color: Color(0xFF242526),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => WelcomePage()),
+          );
+        },
+      ),
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
