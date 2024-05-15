@@ -278,19 +278,18 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 10,
-                        0), // Điều chỉnh giá trị padding theo nhu cầu của bạn
+                    padding: EdgeInsets.fromLTRB(
+                        10, 0, 10, 0), // Adjust the padding as needed
                     child: Row(
                       children: [
                         Image.asset(
-                          'assets/icons/language.png', // Đường dẫn của hình ảnh
+                          'assets/icons/language.png', // Path to the image
                           color: isDarkMode ? Colors.white : Colors.black,
-                          width: 30.0, // Chiều rộng của biểu tượng (nếu cần)
-                          height: 30.0, // Chiều cao của biểu tượng (nếu cần)
+                          width: 30.0, // Width of the icon (if needed)
+                          height: 30.0, // Height of the icon (if needed)
                         ),
                         SizedBox(
-                            width:
-                                8.0), // Khoảng cách giữa biểu tượng và văn bản
+                            width: 8.0), // Space between the icon and the text
                         Text(
                           'switchaccount4'.tr(),
                           style: GoogleFonts.poppins(
@@ -300,17 +299,36 @@ class _SwitchAccountViewState extends State<SwitchAccountView> {
                           ),
                         ),
                         Spacer(),
-                        Switch(
-                          value: context.locale.languageCode ==
-                              'en', // Trạng thái bật/tắt
-                          onChanged: (bool value) {
-                            LocalizationChecker.changeLanguage(context);
+                        DropdownButton<String>(
+                          value: context
+                              .locale.languageCode, // Current selected language
+                          
+                          dropdownColor: isDarkMode
+                              ? Color.fromARGB(255, 46, 46, 48)
+                              : Colors.white,
+                          underline: Container(
+                            height: 2,
+                            color: Color(0xFF406AFF),
+                          ),
+                          onChanged: (String? newValue) {
+                            if (newValue != null) {
+                              LocalizationChecker.changeLanguage(context);
+                            }
                           },
-                          activeColor: Color(0xFF406AFF), // Màu khi bật
-                          inactiveThumbColor: Colors.grey, // Màu khi tắt
-                          inactiveTrackColor: isDarkMode
-                              ? Color.fromARGB(255, 90, 90, 90)
-                              : Colors.white, // Màu nền khi tắt
+                          items: <String>['en', 'vi']
+                              .map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value == 'en' ? 'language1'.tr() : 'language16'.tr(),
+                                style: GoogleFonts.poppins(
+                                  color:
+                                      isDarkMode ? Colors.white : Colors.black,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            );
+                          }).toList(),
                         ),
                       ],
                     ),

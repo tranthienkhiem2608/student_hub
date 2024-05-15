@@ -1,5 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
@@ -42,20 +43,20 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 200,
-                height: 200,
+                width: 250,
+                height: 250,
                 child: LottieBuilder.asset(
-                    "assets/lottie/Animation - 1715721976074.json"),
+                    "assets/lottie/Animation - 1715775810912.json"),
               ),
-              const Text('Student Hub',
-                  style: TextStyle(
-                      fontSize: 30, color: Color.fromARGB(255, 12, 220, 235))),
+              Text('Student Hub',
+                  style: GoogleFonts.poppins(
+                      fontSize: 25, color: Color(0xFF406AFF), fontWeight: FontWeight.bold)),
             ],
           ),
         ),
         nextScreen: const SplashScreen(),
         splashIconSize: 400,
-        backgroundColor: const Color(0xFF69cde0).withOpacity(0.5),
+        backgroundColor: Colors.white,
       ),
     );
   }

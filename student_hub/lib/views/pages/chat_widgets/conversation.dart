@@ -304,7 +304,8 @@ class _ConversationState extends State<Conversation> {
                                             ? Color.fromARGB(255, 255, 255, 255)
                                             : isMe
                                                 ? Color.fromARGB(255, 0, 0, 0)
-                                                : Color.fromARGB(255, 255, 255, 255),
+                                                : Color.fromARGB(255, 0, 0, 0),
+                                            
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.bold,
                                       ),
