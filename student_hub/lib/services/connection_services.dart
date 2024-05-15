@@ -1,15 +1,16 @@
+// ignore_for_file: deprecated_member_use
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io' show Platform;
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
+
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_hub/models/model/users.dart';
 
-final String _baseUrl =
-    Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://localhost:4400';
+// final String _baseUrl =
+//     Platform.isAndroid ? 'http://10.0.2.2:4400' : 'http://localhost:4400';
 
-// const String _baseUrl = 'https://api.studenthub.dev';
+const String _baseUrl = 'https://api.studenthub.dev';
 // _baseUrl for local server
 
 class ConnectionService {
@@ -43,11 +44,11 @@ class ConnectionService {
     String? token = prefs.getString('token');
     print('Token: $token');
     var headers = {
+      'accept': '*/*', // 'application/json
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
     };
-    if (token != null) {
-      headers['Authorization'] = 'Bearer $token';
-    }
+
     var body = json.encode(payload);
     var response = await http.post(url, headers: headers, body: body);
     if (response.statusCode == 200 || response.statusCode == 201) {
@@ -57,6 +58,31 @@ class ConnectionService {
       print("Connect server failed");
       print(json.decode(response.body));
       return response.body;
+    }
+  }
+
+  Future<dynamic> postAuth(String api, dynamic payload) async {
+    try {
+      var url = Uri.parse(_baseUrl + api);
+      print(url);
+      var headers = {
+        'accept': '*/*', // 'application/json
+        'Content-Type': 'application/json',
+      };
+
+      var body = json.encode(payload);
+      print(body);
+      var response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print("Connect server successful");
+        return response.body;
+      } else {
+        print("Connect server failed");
+        print(json.decode(response.body));
+        return response.body;
+      }
+    } catch (e) {
+      print('Error: $e');
     }
   }
 
@@ -119,26 +145,59 @@ class ConnectionService {
     }
   }
 
-  Future<dynamic> putFile(String api, String filename) async {
+  Future<dynamic> patch(String api, dynamic object) async {
+    var url = Uri.parse(_baseUrl + api);
+    var payload = json.encode(object);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+    var response = await client.patch(url, headers: headers, body: payload);
+    if (response.statusCode == 200) {
+      print("Connect server successful");
+      return response.body;
+    } else {
+      print("Connect server failed");
+      return response.body;
+      //throw exception and catch it in UI
+    }
+  }
+
+  Future<dynamic> putFile(String api, String filePath) async {
     var url = Uri.parse(_baseUrl + api);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     var headers = {
       'Authorization': 'Bearer $token',
+      'accept': '*/*', // 'application/json
       'Content-Type': 'multipart/form-data',
     };
+
     var request = http.MultipartRequest('PUT', url);
     request.headers.addAll(headers);
-    request.files.add(await http.MultipartFile.fromPath('file', filename));
+    request.files.add(await http.MultipartFile.fromPath('file', filePath));
+
     var streamedResponse = await request.send();
-    final response = await http.Response.fromStream(streamedResponse);
+    var response = await http.Response.fromStream(streamedResponse);
+
     if (response.statusCode == 200) {
       print("Connect server successful");
-      return response;
+      try {
+        return response.body;
+      } catch (e) {
+        print('Error parsing JSON: $e');
+        return response.body;
+      }
     } else {
       print("Connect server failed");
-      return response;
-      //throw exception and catch it in UI
+      try {
+        return response.body;
+      } catch (e) {
+        print('Error parsing JSON: $e');
+        return response.body;
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
-import 'package:student_hub/models/student_user.dart';
+import 'package:student_hub/models/not_use/student_user.dart';
 
-class StudentRegistered{
+class StudentRegistered {
   StudentUser student;
   String levelStudent;
   String introductionStudent;
@@ -35,8 +35,7 @@ class StudentRegistered{
       introductionStudent: map['introductionStudent'],
       statusStudent: map['statusStudent'],
       isMessage: map['isMessage'],
-      isHireOfferSent: map['isHireOfferSent']?? false, // Add this field
+      isHireOfferSent: map['isHireOfferSent'] ?? false, // Add this field
     );
   }
-
 }

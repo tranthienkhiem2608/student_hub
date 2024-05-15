@@ -1,11 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:student_hub/models/model/file_cv.dart';
 import 'package:student_hub/models/model/language.dart';
-import 'package:student_hub/models/model/proposal.dart';
 import 'package:student_hub/models/model/skillSets.dart';
 import 'package:student_hub/models/model/techStack.dart';
 import 'package:student_hub/models/model/education.dart';
-import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/models/model/experience.dart';
 
 class StudentUser {
@@ -17,12 +14,15 @@ class StudentUser {
   int? techStackId;
   FileCV? file;
   String? user;
+  String? email;
   TechStack? techStack;
   List<dynamic>? proposals; // cần thêm model proposal
   List<Education>? education;
   List<Language>? languages;
   List<Experience>? experience;
   List<SkillSets>? skillSet;
+  final String? resumeLink;
+  final String? transcriptLink;
 
   StudentUser({
     this.id,
@@ -33,12 +33,15 @@ class StudentUser {
     this.techStackId,
     this.file,
     this.user,
+    this.email,
     this.techStack,
     this.proposals,
     this.education,
     this.languages,
     this.experience,
     this.skillSet,
+    this.resumeLink,
+    this.transcriptLink,
   });
   Duration? get duration => experience?.fold(
         Duration.zero,
@@ -101,10 +104,84 @@ class StudentUser {
         transcript: map['transcript'],
       ),
       user: map['user']['fullname'],
+      email: map['user']['email'],
       techStack: TechStack.fromMapTechStack(map['techStack']),
       education: map['educations'] != null
           ? List<Education>.from(
               map['educations'].map((e) => Education.fromMapEducation(e)))
+          : null,
+      languages: map['languages'] != null
+          ? List<Language>.from(
+              map['languages'].map((e) => Language.fromMapLanguage(e)))
+          : null,
+      experience: map['experiences'] != null
+          ? List<Experience>.from(
+              map['experiences'].map((e) => Experience.fromMapExperience(e)))
+          : null,
+      skillSet: map['skillSets'] != null
+          ? List<SkillSets>.from(
+              map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e)))
+          : null,
+    );
+  }
+
+  factory StudentUser.fromMapStudentDetail(Map<String, dynamic> map) {
+    return StudentUser(
+      id: map['id'],
+      createAt: map['createAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      userId: map['userId'],
+      techStackId: map['techStackId'],
+      file: FileCV(
+        resume: map['resume'],
+        transcript: map['transcript'],
+      ),
+      user: map['user']['fullname'],
+      email: map['user']['email'],
+      techStack: TechStack.fromMapTechStack(map['techStack']),
+      education: List<Education>.from(
+          map['educations'].map((e) => Education.fromMapEducation(e))),
+      // languages: List<Language>.from(
+      //     map['languages'].map((e) => Language.fromMapLanguage(e))),
+      experience: List<Experience>.from(
+          map['experiences'].map((e) => Experience.fromMapExperienceDetail(e))),
+      skillSet: List<SkillSets>.from(
+          map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e))),
+      resumeLink: map['resumeLink'],
+      transcriptLink: map['transcriptLink'],
+    );
+  }
+
+  factory StudentUser.fromMapStudentProposalNotify(Map<String, dynamic> map) {
+    return StudentUser(
+      id: map['id'],
+      createAt: map['createAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      userId: map['userId'],
+      techStackId: map['techStackId'],
+      file: FileCV(
+        resume: map['resume'],
+        transcript: map['transcript'],
+      ),
+      user: map['user'] == null ? null : map['user']['fullname'],
+      techStack: TechStack.fromMapTechStack(map['techStack']),
+      education: map['educations'] != null
+          ? List<Education>.from(
+              map['educations'].map((e) => Education.fromMapEducation(e)))
+          : null,
+      skillSet: map['skillSets'] != null
+          ? List<SkillSets>.from(
+              map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e)))
+          : null,
+      languages: map['languages'] != null
+          ? List<Language>.from(
+              map['languages'].map((e) => Language.fromMapLanguage(e)))
+          : null,
+      experience: map['experiences'] != null
+          ? List<Experience>.from(
+              map['experiences'].map((e) => Experience.fromMapExperience(e)))
           : null,
     );
   }

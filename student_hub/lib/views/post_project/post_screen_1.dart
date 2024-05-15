@@ -1,14 +1,17 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/views/post_project/post_screen_2.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class PostScreen1 extends HookWidget {
   const PostScreen1(this.user, {super.key});
@@ -16,6 +19,7 @@ class PostScreen1 extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     final projectName = useState('');
     final activeIndex = useState(0);
 
@@ -43,26 +47,35 @@ class PostScreen1 extends HookWidget {
     }, []);
 
     return Scaffold(
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
         appBar: AppBar(
+          leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          color: isDarkMode ? Colors.white : Color(0xFF242526),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
           title: Text('Student Hub',
               style: GoogleFonts.poppins(
                   // Apply the Poppins font
-                  color: Color.fromARGB(255, 0, 0, 0),
+                  color: isDarkMode ? Colors.white : Colors.black,
                   fontSize: 20,
                   fontWeight: FontWeight.bold)),
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor:
+              isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
           actions: <Widget>[
             IconButton(
               icon: Container(
                 // Add a Container as the parent
                 padding: const EdgeInsets.all(8.0), // Padding for spacing
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 255, 255),
                   shape: BoxShape.circle,
                 ),
                 child: ColorFiltered(
                   colorFilter: ColorFilter.mode(
-                      Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                      isDarkMode ? Colors.white : Colors.black,
+                      BlendMode.srcIn),
                   child: Image.asset('assets/icons/user_ic.png',
                       width: 25, height: 25),
                 ),
@@ -71,7 +84,6 @@ class PostScreen1 extends HookWidget {
             )
           ],
         ),
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -100,13 +112,16 @@ class PostScreen1 extends HookWidget {
                             ),
                             children: [
                               TextSpan(
-                                text: '1 /4  ',
+                                text: 'projectpost1_project1'.tr(),
                                 style: GoogleFonts.poppins(
                                     color: Color(
                                         0xFF406AFF)), // Thay đổi màu cho phần này
                               ),
                               TextSpan(
-                                text: "Let's start with a strong title",
+                                text: "projectpost1_project2".tr(),
+                                style: GoogleFonts.poppins(
+                                  color: isDarkMode ? Colors.white : Colors.black,
+                                )
                               ),
                             ],
                           ),
@@ -137,9 +152,9 @@ class PostScreen1 extends HookWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              "This helps your post stand out to the right students. It's the first thing they'll see, so make it impressive!",
+                              "projectpost1_project3".tr(),
                               style: GoogleFonts.poppins(
-                                color: Color.fromARGB(255, 103, 107, 119),
+                                color: isDarkMode ? const Color.fromARGB(255, 209, 209, 209) : Color.fromARGB(255, 103, 107, 119),
                                 fontSize: 14.0,
                                 fontWeight: FontWeight.normal,
                               ),
@@ -170,6 +185,9 @@ class PostScreen1 extends HookWidget {
                   child: FadeTransition(
                     opacity: fadeAnimation,
                     child: TextField(
+                      style: GoogleFonts.poppins(
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       onChanged: (value) {
                         projectName.value = value;
                       },
@@ -179,24 +197,23 @@ class PostScreen1 extends HookWidget {
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                             vertical: 20.0), // Điều chỉnh khoảng cách nội dung
-                        hintText: 'Your Title Name!',
-                        
+                        hintText: 'projectpost1_project5'.tr(),
+
                         hintStyle: GoogleFonts.poppins(
-                          color: Colors.grey,
+                          color: isDarkMode ? Color.fromARGB(255, 171, 171, 171) : Colors.grey,
                           fontSize: 15.0,
                         ),
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.only(
-                              bottom: 95.0),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(bottom: 95.0),
                           child: Icon(
                             Iconsax.paperclip_2,
-                            color: Colors.black,
+                            color: isDarkMode ? Colors.white : Colors.black,
                             size: 18,
                           ),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFF777B8A), width: 2),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF777B8A), width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: const TextStyle(
@@ -204,8 +221,8 @@ class PostScreen1 extends HookWidget {
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFF777B8A), width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF777B8A), width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -232,7 +249,7 @@ class PostScreen1 extends HookWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "Example title:",
+                          "projectpost1_project6".tr(),
                           style: GoogleFonts.poppins(
                             color: Color(0xFF406AFF),
                             fontSize: 17.0,
@@ -277,11 +294,11 @@ class PostScreen1 extends HookWidget {
                                   fontWeight: FontWeight.normal,
                                 ),
                                 children: [
-                                  TextSpan(text: "• "), // Bullet point
+                                  TextSpan(text: "• ", style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,)), // Bullet point
                                   TextSpan(
                                       text:
-                                          "Build responsive WordPress site with booking/payment functionality",
-                                      style: GoogleFonts.poppins(fontSize: 15)),
+                                          "projectpost1_project7".tr(),
+                                      style: GoogleFonts.poppins(fontSize: 15, color: isDarkMode ? Colors.white : Colors.black,)),
                                 ],
                               ),
                             ),
@@ -325,12 +342,13 @@ class PostScreen1 extends HookWidget {
                                   fontWeight: FontWeight.normal,
                                 ),
                                 children: [
-                                  TextSpan(text: "• "), // Bullet point
+                                  TextSpan(text: "• ", style: GoogleFonts.poppins(color: isDarkMode ? Colors.white : Colors.black,)), // Bullet point
                                   TextSpan(
                                       text:
-                                          "Facebook ad specialist need for product launch",
+                                          "projectpost1_project8".tr(),
                                       style: GoogleFonts.poppins(
                                         fontSize: 15,
+                                        color: isDarkMode ? Colors.white : Colors.black,
                                       )),
                                 ],
                               ),
@@ -381,9 +399,8 @@ class PostScreen1 extends HookWidget {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Text(
-                            "Next",
+                            "projectpost1_project9".tr(),
                             style: GoogleFonts.poppins(
-                                // Thay đổi TextStyle này
                                 color: Colors.white,
                                 fontSize: 16.0),
                           ),

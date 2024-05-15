@@ -30,9 +30,14 @@ class Proposal {
 
   Map<String, dynamic> toMapProposal() {
     return {
-      'id': id,
       'projectId': projectId,
       'studentId': studentId,
+      'coverLetter': coverLetter,
+    };
+  }
+
+  Map<String, dynamic> toMapProposalOffer() {
+    return {
       'coverLetter': coverLetter,
       'statusFlag': statusFlag,
       'disableFlag': disableFlag,
@@ -83,6 +88,55 @@ class Proposal {
       studentUser: StudentUser.fromMapStudentProposal(map['student']),
     );
   }
+
+  factory Proposal.fromMapProposalStudentUserShow(Map<String, dynamic> map) {
+    return Proposal(
+      id: map['id'],
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      projectId: map['projectId'],
+      studentId: map['studentId'],
+      coverLetter: map['coverLetter'],
+      statusFlag: map['statusFlag'],
+      disableFlag: map['disableFlag'],
+      projectCompany: ProjectCompany.fromMapProposalProject(map['project']),
+    );
+  }
+
+  factory Proposal.fromMapNotify(Map<String, dynamic> map) {
+    return Proposal(
+      id: map['id'],
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      projectId: map['projectId'],
+      studentId: map['studentId'],
+      coverLetter: map['coverLetter'],
+      statusFlag: map['statusFlag'],
+      disableFlag: map['disableFlag'],
+      studentUser: StudentUser.fromMapStudentProposalNotify(map['student']),
+      projectCompany: ProjectCompany.fromMapProposalNotify(map['project']),
+    );
+  }
+
+  factory Proposal.fromMapProposalStudentDetail(Map<String, dynamic> map) {
+    return Proposal(
+      id: map['id'],
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      projectId: map['projectId'],
+      studentId: map['studentId'],
+      coverLetter: map['coverLetter'],
+      statusFlag: map['statusFlag'],
+      disableFlag: map['disableFlag'],
+      studentUser: map['student'] == null
+          ? null
+          : StudentUser.fromMapStudentDetail(map['student']),
+    );
+  }
+
   static List<Proposal> fromListMapProposalCompany(List<dynamic> list) {
     List<Proposal> proposals = [];
     for (var item in list) {
@@ -95,6 +149,14 @@ class Proposal {
     List<Proposal> proposals = [];
     for (var item in list) {
       proposals.add(Proposal.fromMapProposalStudentUser(item));
+    }
+    return proposals;
+  }
+
+  static List<Proposal> fromListMapProposalStudentShow(List<dynamic> list) {
+    List<Proposal> proposals = [];
+    for (var item in list) {
+      proposals.add(Proposal.fromMapProposalStudentUserShow(item));
     }
     return proposals;
   }

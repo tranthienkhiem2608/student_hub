@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:student_hub/models/company_user.dart';
+
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:quickalert/quickalert.dart';
 
@@ -21,11 +21,11 @@ class AuthAccountViewModel {
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => SwitchAccountView(user)),
+      MaterialPageRoute(builder: (context) => SwitchAccountView(user, null)),
     );
     prefs.getInt('role') == 0
-        ? ControllerRoute(context).navigateToHomeScreen(true, user)
-        : ControllerRoute(context).navigateToHomeScreen(false, user);
+        ? ControllerRoute(context).navigateToHomeScreen(false, user, 1)
+        : ControllerRoute(context).navigateToHomeScreen(false, user, 1);
   }
 
   Future<void> showAccountList(User accounts) async {
@@ -45,16 +45,83 @@ class AuthAccountViewModel {
         });
   }
 
+  Future<void> getAuthMe() async {
+    var responseUser = await ConnectionService().get('/api/auth/me', {});
+    var responseUserMap = jsonDecode(responseUser);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (responseUserMap['result'] != null) {
+      print('User Response');
+      print(responseUserMap['result']);
+      User userResponse = User.fromMapUser(responseUserMap['result']);
+      print(userResponse.id);
+      print(userResponse.fullname);
+      print(userResponse.role);
+      print(userResponse.role?[0]);
+      print(userResponse.companyUser?.id);
+
+      // Navigator.of(context).pop();
+      // int role = int.parse(userResponse.role?[0]);
+      int role = userResponse.role?[0];
+      print('length: ${userResponse.role?.length}');
+      prefs.setInt('role', role);
+
+      if (userResponse.role?.length == 1) {
+        if (role == 1) {
+          userResponse.companyUser == null
+              ? ControllerRoute(context)
+                  .navigateToProfileInputCompany(userResponse)
+              : ControllerRoute(context)
+                  .navigateToHomeScreen(false, userResponse, 1);
+        } else if (role == 0) {
+          print('USER RESPONSE');
+
+          print(userResponse.studentUser?.id);
+          Navigator.of(context).pop();
+          userResponse.studentUser == null
+              ? ControllerRoute(context)
+                  .navigateToProfileInputStudent1(userResponse)
+              : ControllerRoute(context)
+                  .navigateToHomeScreen(false, userResponse, 1);
+        }
+      } else {
+        // ControllerRoute(context).navigateToHomeScreen(false, userResponse);
+        print('Switch Account');
+        // prefs.setInt('role', 1);
+        if (role == 1) {
+          print('Switch Account1');
+
+          Navigator.of(context).pop();
+          userResponse.companyUser == null
+              ? ControllerRoute(context)
+                  .navigateToProfileInputCompany(userResponse)
+              : ControllerRoute(context)
+                  .navigateToHomeScreen(false, userResponse, 1);
+        } else if (role == 0) {
+          print('Switch Account2');
+
+          userResponse.studentUser == null
+              ? ControllerRoute(context)
+                  .navigateToProfileInputStudent1(userResponse)
+              : ControllerRoute(context)
+                  .navigateToHomeScreen(false, userResponse, 1);
+        }
+      }
+    }
+  }
+
   Future<void> loginAccount(bool stageNav, User user) async {
     print('Login Account');
-    var payload = user.toMapUser();
+
     // Call a method to reload the page
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
+      var payload = user.toMapUserLogin();
+      print(payload);
       var response =
-          await ConnectionService().post('/api/auth/sign-in', payload);
+          await ConnectionService().postAuth('/api/auth/sign-in', payload);
       var responseDecode = jsonDecode(response);
-      print(responseDecode);
+      print("token $responseDecode");
       if (responseDecode['result'] != null) {
         print("Connected to the server successfully");
         // print('ERROR: ' + responseDecode['errorDetails']);
@@ -65,6 +132,7 @@ class AuthAccountViewModel {
         if (stageNav == false) {
           return;
         }
+        print('Stage Nav: $stageNav');
         var responseUser = await ConnectionService().get('/api/auth/me', {});
         var responseUserMap = jsonDecode(responseUser);
 
@@ -82,15 +150,15 @@ class AuthAccountViewModel {
           // int role = int.parse(userResponse.role?[0]);
           int role = userResponse.role?[0];
           print('length: ${userResponse.role?.length}');
+          prefs.setInt('role', role);
 
           if (userResponse.role?.length == 1) {
-            prefs.setInt('role', role);
             if (role == 1) {
               userResponse.companyUser == null
                   ? ControllerRoute(context)
                       .navigateToProfileInputCompany(userResponse)
                   : ControllerRoute(context)
-                      .navigateToHomeScreen(false, userResponse);
+                      .navigateToHomeScreen(false, userResponse, 1);
             } else if (role == 0) {
               print('USER RESPONSE');
 
@@ -100,9 +168,7 @@ class AuthAccountViewModel {
                   ? ControllerRoute(context)
                       .navigateToProfileInputStudent1(userResponse)
                   : ControllerRoute(context)
-                      .navigateToHomeScreen(true, userResponse);
-              // ControllerRoute(context)
-              //     .navigateToProfileInputStudent3(userResponse);
+                      .navigateToHomeScreen(false, userResponse, 1);
             }
           } else {
             // ControllerRoute(context).navigateToHomeScreen(false, userResponse);
@@ -116,17 +182,15 @@ class AuthAccountViewModel {
                   ? ControllerRoute(context)
                       .navigateToProfileInputCompany(userResponse)
                   : ControllerRoute(context)
-                      .navigateToHomeScreen(false, userResponse);
+                      .navigateToHomeScreen(false, userResponse, 1);
             } else if (role == 0) {
               print('Switch Account2');
 
               userResponse.studentUser == null
                   ? ControllerRoute(context)
                       .navigateToProfileInputStudent1(userResponse)
-                  // : ControllerRoute(context)
-                  //     .navigateToProfileInputStudent3(userResponse);
                   : ControllerRoute(context)
-                      .navigateToHomeScreen(true, userResponse);
+                      .navigateToHomeScreen(false, userResponse, 1);
             }
           }
         }
@@ -138,8 +202,13 @@ class AuthAccountViewModel {
 
         QuickAlert.show(
             context: context,
-            type: QuickAlertType.error,
-            text: responseDecode['errorDetails'].toString());
+            type: QuickAlertType.warning,
+            text: responseDecode['errorDetails']
+                .toString()
+                .replaceAll('[', '')
+                .replaceAll(']', '')
+                .replaceFirstMapped(
+                    RegExp(r'^\w'), (match) => match.group(0)!.toUpperCase()));
       }
     } catch (e) {
       print(e);
@@ -153,7 +222,7 @@ class AuthAccountViewModel {
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
       var response =
-          await ConnectionService().post('/api/auth/sign-up', payload);
+          await ConnectionService().postAuth('/api/auth/sign-up', payload);
       var responseDecode = jsonDecode(response);
       if (responseDecode['result'] != null) {
         print("Connected to the server successfully");
@@ -165,8 +234,15 @@ class AuthAccountViewModel {
         print("Failed to connect to the server");
         print("Connect server failed");
         Navigator.of(context).pop();
-        print(responseDecode['errorDetails']);
-        return response;
+        QuickAlert.show(
+            context: context,
+            type: QuickAlertType.warning,
+            text: responseDecode['errorDetails']
+                .toString()
+                .replaceAll('[', '')
+                .replaceAll(']', '')
+                .replaceFirstMapped(
+                    RegExp(r'^\w'), (match) => match.group(0)!.toUpperCase()));
       }
     } catch (e) {
       print(e);
@@ -179,8 +255,6 @@ class AuthAccountViewModel {
     try {
       showDialog(context: context, builder: (context) => LoadingUI());
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      var token = prefs.get('token');
-      var payload = {'authorization': token};
       var response = await ConnectionService().postLogout('/api/auth/logout');
       var responseDecode = jsonDecode(response);
       if (responseDecode != null) {
@@ -314,7 +388,7 @@ class AuthAccountViewModel {
     } else if (role == 0) {
       user.studentUser == null
           ? ControllerRoute(context).navigateToProfileInputStudent1(user)
-          : ControllerRoute(context).navigateToEditProfileInputCompany(user);
+          : ControllerRoute(context).navigateToEditProfileInputStudent(user);
     }
   }
 

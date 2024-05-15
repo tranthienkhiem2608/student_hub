@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:student_hub/components/encrypt.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
 import 'package:student_hub/view_models/controller_route.dart';
@@ -154,7 +151,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                       children: [
                         Text.rich(
                           TextSpan(
-                            text: 'Sign up as ',
+                            text: 'student_auth0'.tr(),
                             style: GoogleFonts.poppins(
                               color: Colors.black,
                               fontSize: 24.0,
@@ -163,8 +160,8 @@ class _SignUpInfoState extends State<SignUpInfo>
                             children: <TextSpan>[
                               TextSpan(
                                 text: widget.typeUser == 0
-                                    ? 'Student'
-                                    : 'Company',
+                                    ? 'student_auth1'.tr()
+                                    : 'student_auth2'.tr(),
                                 style: TextStyle(
                                   color: Color(0xFF406AFF), // Màu xanh
                                 ),
@@ -198,8 +195,8 @@ class _SignUpInfoState extends State<SignUpInfo>
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding:
-                              const EdgeInsets.symmetric(vertical: 18.0),
-                        hintText: 'Your full name',
+                            const EdgeInsets.symmetric(vertical: 18.0),
+                        hintText: 'student_auth3'.tr(),
                         labelStyle: GoogleFonts.poppins(
                           // Thay đổi TextStyle này
                           color: Colors.black,
@@ -261,15 +258,15 @@ class _SignUpInfoState extends State<SignUpInfo>
                           _emailController, // Controller for email input // Update workEmailNotifier when text changes
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
-                       contentPadding:
-                              const EdgeInsets.symmetric(vertical: 18.0),
+                        contentPadding:
+                            const EdgeInsets.symmetric(vertical: 18.0),
                         errorText: _showEmailError ? 'Invalid Email' : null,
                         errorStyle: TextStyle(color: Colors.red),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.red, width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
-                        hintText: 'Your work email!',
+                        hintText: 'student_auth4'.tr(),
                         hintStyle: GoogleFonts.poppins(
                           // Thay đổi TextStyle này
                           color: Colors.grey,
@@ -326,8 +323,8 @@ class _SignUpInfoState extends State<SignUpInfo>
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
                         contentPadding:
-                              const EdgeInsets.symmetric(vertical: 18.0),
-                        hintText: 'Password',
+                            const EdgeInsets.symmetric(vertical: 18.0),
+                        hintText: 'student_auth5'.tr(),
                         hintStyle: GoogleFonts.poppins(
                           // Thay đổi TextStyle này
                           color: Colors.grey,
@@ -400,11 +397,11 @@ class _SignUpInfoState extends State<SignUpInfo>
                               checkboxNotifier.value = value;
                             });
                           },
-                          activeColor:
-                              Color(0xFF406AFF), // Đặt màu xanh cho nút checkbox
+                          activeColor: Color(
+                              0xFF406AFF), // Đặt màu xanh cho nút checkbox
                         ),
                         Text(
-                          'Yes, I understand and agree to StudentHub',
+                          'student_auth6'.tr(),
                           style: GoogleFonts.poppins(
                             // Thay đổi TextStyle này
                             color: Color.fromARGB(255, 77, 80, 90),
@@ -492,7 +489,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: Text(
-                                "Create account",
+                                "student_auth7".tr(),
                                 style: GoogleFonts.poppins(
                                   // Thay đổi TextStyle này
                                   color: Colors.white,
@@ -526,7 +523,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Looking for a project? ',
+                          '${'student_auth8'.tr()} ${widget.typeUser == 1 ? 'student_auth12'.tr() : 'student_auth13'.tr()}',
                           style: GoogleFonts.poppins(
                             // Thay đổi TextStyle này
                             color: Colors.black,
@@ -536,7 +533,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                         InkWell(
                           onTap: handleChangeTypeUser,
                           child: Text(
-                            'Apply as ${widget.typeUser == 1 ? 'student' : 'company'}',
+                            '${'student_auth9'.tr()} ${widget.typeUser == 1 ? 'student_auth10'.tr() : 'student_auth11'.tr()}',
                             style: GoogleFonts.poppins(
                               // Thay đổi TextStyle này
                               color: Color(0xFF406AFF),

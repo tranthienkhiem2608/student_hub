@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -10,9 +11,7 @@ import 'package:student_hub/models/model/file_cv.dart';
 // import 'package:quickalert/widgets/quickalert_dialog.dart';
 // import 'package:student_hub/views/profile_creation/student/home_view.dart';
 
-import 'package:student_hub/models/model/student_user.dart';
 import 'package:student_hub/models/model/users.dart';
-import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/view_models/input_profile_viewModel.dart';
 
 class StudentProfileDragCv extends StatefulWidget {
@@ -106,46 +105,58 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 30, 20, 5),
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  "CV & Transcript",
+                  "studentprofileinput3_ProfileCreation2".tr(),
                   style: GoogleFonts.poppins(
-                    fontSize: 18,
+                    fontSize: 23,
+                    color: Color(0xFF406AFF),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
               child: Text(
-                "Tell us about your self and you will be on your way connect with real-world project",
+                "settingscreen_ProfileCreation10".tr(),
                 style: GoogleFonts.poppins(
-                  fontSize: 16,
+                  fontSize: 14,
+                  color: Color(0xFF777B8A),
                   fontWeight: FontWeight.normal,
                 ),
-                textAlign: TextAlign.left,
+                textAlign: TextAlign.center,
               ),
             ),
             // Resume/CV(*)
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
-              child: Text(
-                "Resume/CV(*)",
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 5),
+              child: RichText(
+                text: TextSpan(
+                  style: GoogleFonts.poppins(
+                    // Style for overall text
+                    color: Color(0xFF406AFF),
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  children: [
+                    TextSpan(text: "studentprofileinput3_ProfileCreation8".tr()), // Bullet point
+                    TextSpan(
+                        text: " (*)",
+                        style: GoogleFonts.poppins(
+                          fontSize: 15,
+                          color: Color.fromARGB(255, 255, 46, 91),
+                        )),
+                  ],
                 ),
-                textAlign: TextAlign.left,
               ),
             ),
 
             if (!kIsWeb)
               buildUploadArea(
-                  title:
-                      'Drag and drop your Resume/CV here or\nSelect your file',
+                  title: 'studentprofileinput3_ProfileCreation9'.tr(),
                   onTap: _selectCvFile), // Call with _selectCvFile
 
             if (_cvFile != null)
@@ -153,7 +164,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                 padding: const EdgeInsets.all(1.0),
                 child: Column(
                   children: [
-                    Text('Selected CV File: ${_cvPlatformFile!.name}'),
+                    Text('${'studentprofileinput3_ProfileCreation10'.tr()}${_cvPlatformFile!.name}'),
                   ],
                 ),
               ),
@@ -161,19 +172,30 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
             // upload Transcript(*)
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 15, 20, 5),
-              child: Text(
-                "Transcript(*)",
-                style: GoogleFonts.poppins(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+              child: RichText(
+                text: TextSpan(
+                  style: GoogleFonts.poppins(
+                    // Style for overall text
+                    color: Color(0xFF406AFF),
+                    fontSize: 17.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  children: [
+                    TextSpan(text: "studentprofileinput3_ProfileCreation4".tr()), // Bullet point
+                    TextSpan(
+                        text: " (*)",
+                        style: GoogleFonts.poppins(
+                          fontSize: 15,
+                          color: Color.fromARGB(255, 255, 46, 91),
+                        )),
+                  ],
                 ),
-                textAlign: TextAlign.left,
               ),
             ),
             if (!kIsWeb)
               buildUploadArea(
                   title:
-                      'Drag and drop your Transcript here or\nSelect your file',
+                      'studentprofileinput3_ProfileCreation11'.tr(),
                   onTap:
                       _selectTranscriptFile), // Call with _selectTranscriptFile
 
@@ -183,18 +205,17 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                 child: Column(
                   children: [
                     Text(
-                        'Selected Transcript File: ${_transcriptPlatformFile!.name}'),
+                        '${'studentprofileinput3_ProfileCreation12'.tr()}${_transcriptPlatformFile!.name}'),
                   ],
                 ),
               ),
             // Next Button
+            SizedBox(height: 10), // Add space between the text and the button
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    // 1. Simulate some processing (if needed)
-                    // You would perform your upload logic or other tasks here.// Example delay
                     fileCV = FileCV(
                       transcript: _transcriptPlatformFile?.path,
                       resume: _cvPlatformFile?.path,
@@ -203,21 +224,19 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                     print(
                         "CV: ${widget.studentUser.studentUser?.file?.resume}");
                     print(
-                        "Transcript: ${widget.studentUser.studentUser?.file?.transcript}");
-                    // InputProfileViewModel(context)
-                    //     .inputProfileStudent(widget.studentUser);
-                    // 3. Navigate to HomePage
+                        "${'studentprofileinput3_ProfileCreation4'.tr()}: ${widget.studentUser.studentUser?.file?.transcript}");
+                    InputProfileViewModel(context)
+                        .inputProfileStudent(widget.studentUser);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10, horizontal: 35),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                  ),
-                  child: const Text(
-                    "Next",
+                      backgroundColor: Color(0xFF406AFF),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 13, horizontal: 40),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      )),
+                  child: Text(
+                    "studentprofileinput1_ProfileCreation4".tr(),
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
@@ -234,37 +253,49 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
       onTap: () => onTap(),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-        child: DottedBorder(
-          child: Container(
-            width: double.infinity,
-            height: 160,
-            child: Stack(
-              children: [
-                Center(
-                  child: Image.asset(
-                    'assets/images/upload_img.png',
-                    width: 150,
-                    height: 150,
-                    color: const Color.fromARGB(255, 255, 255, 255)
-                        .withOpacity(0.8), // Mờ hình ảnh
-                    colorBlendMode: BlendMode.srcOver, // Áp dụng hiệu ứng mờ
-                  ),
-                ),
-                Positioned.fill(
-                  child: Center(
+        child: Stack(
+          children: [
+            DottedBorder(
+              borderType: BorderType.RRect,
+              radius: Radius.circular(12),
+              strokeWidth: 2,
+              color: Color(0xFF406AFF),
+              dashPattern: [8, 4],
+              child: Container(
+                width: double.infinity,
+                height: 200,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                        15, 80, 15, 0), // Thêm khoảng cách dưới ở đây
                     child: Text(
                       title,
                       textAlign: TextAlign.center,
                       style: GoogleFonts.poppins(
                         fontSize: 16,
+                        color: Color(0xFF777B8A),
                         fontWeight: FontWeight.normal,
                       ),
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+            Positioned.fill(
+              top: 20,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Image.asset(
+                  'assets/images/upload_img.jpg',
+                  width: 100, // Rộng bằng kích thước của Container
+                  height: 100, // Cố định chiều cao
+                  color:
+                      const Color.fromARGB(255, 255, 255, 255).withOpacity(0.2),
+                  colorBlendMode: BlendMode.srcOver,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -277,21 +308,31 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Student Hub',
-          style: TextStyle(
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
               color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
-          icon: SizedBox(
-            width: 25,
-            height: 25,
-            child: Image.asset('assets/icons/user_ic.png'),
+          icon: Container(
+            // Add a Container as the parent
+            padding: const EdgeInsets.all(8.0), // Padding for spacing
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              shape: BoxShape.circle,
+            ),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              child: Image.asset('assets/icons/user_ic.png',
+                  width: 25, height: 25),
+            ),
           ),
           onPressed: () {},
-        ),
+        )
       ],
     );
   }

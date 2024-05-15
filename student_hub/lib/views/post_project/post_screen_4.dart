@@ -1,10 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
 
 import 'package:student_hub/view_models/project_company_viewModel.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class PostScreen4 extends StatefulWidget {
   const PostScreen4({
@@ -23,26 +26,34 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios),
+        color: isDarkMode ? Colors.white : Color(0xFF242526),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       title: Text('Student Hub',
           style: GoogleFonts.poppins(
               // Apply the Poppins font
-              color: Color.fromARGB(255, 0, 0, 0),
+              color: isDarkMode ? Colors.white : Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor:
+          isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
       actions: <Widget>[
         IconButton(
           icon: Container(
             // Add a Container as the parent
             padding: const EdgeInsets.all(8.0), // Padding for spacing
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 255),
               shape: BoxShape.circle,
             ),
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                  isDarkMode ? Colors.white : Colors.black, BlendMode.srcIn),
               child: Image.asset('assets/icons/user_ic.png',
                   width: 25, height: 25),
             ),
@@ -97,27 +108,36 @@ class _PostScreen4State extends State<PostScreen4>
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          color: isDarkMode ? Colors.white : Color(0xFF242526),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Text('Student Hub',
             style: GoogleFonts.poppins(
                 // Apply the Poppins font
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: isDarkMode ? Colors.white : Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor:
+            isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
         actions: <Widget>[
           IconButton(
             icon: Container(
               // Add a Container as the parent
               padding: const EdgeInsets.all(8.0), // Padding for spacing
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 255, 255, 255),
                 shape: BoxShape.circle,
               ),
               child: ColorFiltered(
                 colorFilter: ColorFilter.mode(
-                    Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                    isDarkMode ? Colors.white : Colors.black, BlendMode.srcIn),
                 child: Image.asset('assets/icons/user_ic.png',
                     width: 25, height: 25),
               ),
@@ -141,12 +161,15 @@ class _PostScreen4State extends State<PostScreen4>
                 ),
                 children: [
                   TextSpan(
-                    text: '4 /4  ',
+                    text: 'projectpost4_project1'.tr(),
                     style: GoogleFonts.poppins(
                         color: Color(0xFF406AFF)), // Thay đổi màu cho phần này
                   ),
                   TextSpan(
-                    text: "Project details",
+                    text: "projectpost4_project2".tr(),
+                    style: GoogleFonts.poppins(
+                                  color: isDarkMode ? Colors.white : Colors.black,
+                                )
                   ),
                 ],
               ),
@@ -162,10 +185,10 @@ class _PostScreen4State extends State<PostScreen4>
                 ),
                 children: [
                   TextSpan(
-                    text: 'Project name: ',
+                    text: 'projectpost4_project3'.tr(),
                     style: GoogleFonts.poppins(
                         fontWeight:
-                            FontWeight.bold), // Thay đổi màu cho phần này
+                            FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,), // Thay đổi màu cho phần này
                   ),
                   TextSpan(
                     text: widget.project.title,
@@ -181,13 +204,13 @@ class _PostScreen4State extends State<PostScreen4>
                 Row(
                   children: [
                     SizedBox(width: 15),
-                    Icon(Icons.search), // Add an Icon widget here
+                    Icon(Icons.search, color: isDarkMode ? Colors.white : Colors.black,), // Add an Icon widget here
                     SizedBox(height: 10), // Add spacing between icon and text
                     SizedBox(width: 12), // Add spacing between icon and text
                     Text(
-                      'Student are looking for:',
+                      'projectpost3_project3'.tr(),
                       style: GoogleFonts.poppins(
-                          fontSize: 16, fontWeight: FontWeight.bold),
+                          fontSize: 16, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
                     ),
                   ],
                 ),
@@ -204,14 +227,14 @@ class _PostScreen4State extends State<PostScreen4>
                             margin: EdgeInsets.only(top: 8, right: 10),
                             width: 4,
                             height: 9,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.black,
+                              color: isDarkMode ? Colors.white : Colors.black,
                             ),
                           ),
                           Expanded(
                               child: Text(item,
-                                  style: GoogleFonts.poppins(fontSize: 15.5))),
+                                  style: GoogleFonts.poppins(fontSize: 15.5, color: isDarkMode ? Colors.white : Colors.black,))),
                         ],
                       ),
                     );
@@ -225,18 +248,18 @@ class _PostScreen4State extends State<PostScreen4>
                 margin: const EdgeInsets.only(bottom: 10, right: 5),
                 width: 20, // Adjust the width for the larger icon
                 height: 20, // Adjust the height for the larger icon
-                child: Icon(Icons.watch_later_outlined, size: 25),
+                child: Icon(Icons.watch_later_outlined, size: 25, color: isDarkMode ? Colors.white : Colors.black,),
               ),
               title: Text(
-                'Project scope:',
+                'projectpost4_project4'.tr(),
                 style: GoogleFonts.poppins(
-                    fontSize: 16, fontWeight: FontWeight.bold),
+                    fontSize: 16, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
               ),
               subtitle: Text(
                 widget.project.projectScopeFlag == 0
                     ? '1-3 months'
                     : '3-6 months',
-                style: GoogleFonts.poppins(fontSize: 15.5),
+                style: GoogleFonts.poppins(fontSize: 15.5, color: isDarkMode ? Colors.white : Colors.black,),
               ),
             ),
             SizedBox(height: 10),
@@ -245,16 +268,16 @@ class _PostScreen4State extends State<PostScreen4>
                 margin: const EdgeInsets.only(bottom: 10, right: 5),
                 width: 20, // Adjust the width for the larger icon
                 height: 20, // Adjust the height for the larger icon
-                child: Icon(Icons.people_alt_outlined, size: 25),
+                child: Icon(Icons.people_alt_outlined, size: 25, color: isDarkMode ? Colors.white : Colors.black,),
               ),
               title: Text(
-                'Student required:',
+                'projectpost4_project5'.tr(),
                 style: GoogleFonts.poppins(
-                    fontSize: 16, fontWeight: FontWeight.bold),
+                    fontSize: 16, fontWeight: FontWeight.bold, color: isDarkMode ? Colors.white : Colors.black,),
               ),
               subtitle: Text(
-                '${widget.project.numberOfStudents} students',
-                style: GoogleFonts.poppins(fontSize: 15.5),
+                '${widget.project.numberOfStudents} ${'projectpost4_project6'.tr()}',
+                style: GoogleFonts.poppins(fontSize: 15.5, color: isDarkMode ? Colors.white : Colors.black,),
               ),
             ),
             SizedBox(height: 25),
@@ -289,7 +312,7 @@ class _PostScreen4State extends State<PostScreen4>
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Text(
-                        "Post job",
+                        "projectpost4_project9".tr(),
                         style: GoogleFonts.poppins(
                             // Thay đổi TextStyle này
                             color: Colors.white,

@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:student_hub/models/model/notification.dart';
+import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/views/auth/chooserole_view.dart';
 import 'package:student_hub/views/auth/forgort_password_view.dart';
+import 'package:student_hub/views/browse_project/offer_detail.dart';
+import 'package:student_hub/views/company_proposal/hire_student_screen.dart';
+import 'package:student_hub/views/pages/chat_screen/chat_room.dart';
+import 'package:student_hub/views/pages/message_page.dart';
+import 'package:student_hub/views/pages/project_detail/detail_page.dart';
+import 'package:student_hub/views/pages/project_detail/hired_page.dart';
+import 'package:student_hub/views/pages/project_detail/proposals_page.dart';
+import 'package:student_hub/views/pages/chat_screen/video_conference_page.dart';
+import 'package:student_hub/views/post_project/edit_project.dart';
 import 'package:student_hub/views/profile_creation/company/edit_profile.dart';
+import 'package:student_hub/views/profile_creation/student/edit_profile_student.dart';
 import 'package:student_hub/views/profile_creation/student/home_view.dart';
 import 'package:student_hub/views/profile_creation/student/profile_input_student1.dart';
 import 'package:student_hub/views/profile_creation/student/profile_input_student2.dart';
@@ -25,7 +37,7 @@ class ControllerRoute {
   void navigateToSwitchAccountView(User user) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SwitchAccountView(user)),
+      MaterialPageRoute(builder: (context) => SwitchAccountView(user, null)),
     );
   }
 
@@ -60,7 +72,7 @@ class ControllerRoute {
   void navigateToEditProfileInputCompany(User user) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => EditProfile()),
+      MaterialPageRoute(builder: (context) => EditProfile(user: user)),
     );
   }
 
@@ -84,6 +96,14 @@ class ControllerRoute {
       context,
       MaterialPageRoute(
           builder: (context) => StudentProfileDragCv(studentUser)),
+    );
+  }
+
+  void navigateToEditProfileInputStudent(User studentUser) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => EditProfileInputStudent(studentUser)),
     );
   }
 
@@ -116,23 +136,81 @@ class ControllerRoute {
     );
   }
 
-  void navigateToHomeScreen(bool? showAlert, User? user) async {
+  void navigateToHomeScreen(
+      bool? showAlert, User? user, int? pageDefault) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     int? role = prefs.getInt('role');
-    if (role == 0) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage(showAlert: true, user: user)),
-      );
-    } else if (role == 1) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage(showAlert: false, user: user)),
-      );
-    }
+    print(role);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => HomePage(
+                showAlert: showAlert!,
+                user: user,
+                pageDefault: pageDefault,
+              )),
+    );
   }
 
-  void toSwitchAccountView(User user) {}
+  void navigateToChatRoom(int senderId, int receiverId, int projectId,
+      String senderName, String receiverName, User user, int flagCheck) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ChatRoom(
+                senderId: senderId,
+                receiverId: receiverId,
+                projectId: projectId,
+                senderName: senderName,
+                receiverName: receiverName,
+                user: user,
+                flagCheck: flagCheck,
+              )),
+    );
+  }
+
+  void navigateToTabHireStudentScreen(
+      ProjectCompany projectCompany, User user, int tabIndex) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => HireStudentScreen(
+                projectCompany: projectCompany,
+                user: user,
+                initialTabIndex: tabIndex,
+              )),
+    );
+  }
+
+  void navigateToVideoRoom(User user, String meetingCode) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              VideoConferencePage(conferenceID: meetingCode, user: user)),
+    );
+  }
+
+  // navigate to edit project page
+  void navigateToEditProject(ProjectCompany project, User user) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => EditProject(
+                project: project,
+                user: user,
+              )),
+    );
+  }
+
+  void navigateToOfferDetail(Notify notify, User user) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => OfferDetail(
+                notifyOffer: notify,
+                user: user,
+              )),
+    );
+  }
 }

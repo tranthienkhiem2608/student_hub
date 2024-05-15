@@ -6,7 +6,7 @@ import '../views/auth/switch_account_view.dart';
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   bool isShowBackButton = false;
   User? user;
-  CustomAppBar(this.isShowBackButton,{Key? key}) : super(key: key);
+  CustomAppBar(this.isShowBackButton, {Key? key}) : super(key: key);
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -61,7 +61,7 @@ class _CustomAppBarState extends State<CustomAppBar>
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                    SwitchAccountView(widget.user!),
+                        SwitchAccountView(widget.user!, null),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       var begin = const Offset(1.0, 0.0);

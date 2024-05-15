@@ -1,5 +1,3 @@
-import 'package:student_hub/models/model/company_user.dart';
-import 'package:student_hub/models/model/project_scope.dart';
 import 'package:student_hub/models/model/proposal.dart';
 
 class ProjectCompany {
@@ -18,6 +16,7 @@ class ProjectCompany {
   int? countMessages;
   int? countHired;
   bool isFavorite;
+  int? status;
 
   ProjectCompany({
     this.id,
@@ -35,6 +34,7 @@ class ProjectCompany {
     this.countMessages,
     this.countHired,
     this.isFavorite = false,
+    this.status,
   });
 
   Map<String, dynamic> toMapProjectCompany() {
@@ -45,6 +45,7 @@ class ProjectCompany {
       'description': description,
       'typeFlag': typeFlag,
       'numberOfStudents': numberOfStudents,
+      'status': status ?? 0,
     };
   }
 
@@ -60,6 +61,7 @@ class ProjectCompany {
       description: map['description'],
       numberOfStudents: map['numberOfStudents'],
       typeFlag: map['typeFlag'],
+      status: map['status'],
       proposals: Proposal.fromListMapProposalCompany(map['proposals']),
       countProposal: map['countProposals'],
       countMessages: map['countMessages'],
@@ -78,7 +80,7 @@ class ProjectCompany {
 
   factory ProjectCompany.fromMapAllProject(Map<String, dynamic> map) {
     return ProjectCompany(
-      id: map['projectId'],
+      id: map['id'],
       createdAt: map['createdAt'],
       updatedAt: map['updatedAt'],
       deletedAt: map['deletedAt'],
@@ -88,7 +90,7 @@ class ProjectCompany {
       description: map['description'],
       numberOfStudents: map['numberOfStudents'],
       typeFlag: map['typeFlag'],
-      countProposal: map['countProposals'],
+      countProposal: map['countProposals'] ?? 0,
       isFavorite: map['isFavorite'] ?? false,
     );
   }
@@ -97,6 +99,46 @@ class ProjectCompany {
     List<ProjectCompany> projects = [];
     for (var project in list) {
       projects.add(ProjectCompany.fromMapAllProject(project));
+    }
+    return projects;
+  }
+
+  factory ProjectCompany.fromMapProposalProject(Map<String, dynamic> map) {
+    return ProjectCompany(
+      id: map['id'],
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      companyId: map['companyId'],
+      projectScopeFlag: map['projectScopeFlag'],
+      title: map['title'],
+      description: map['description'],
+      numberOfStudents: map['numberOfStudents'],
+      typeFlag: map['typeFlag'],
+      countProposal: map['countProposals'] ?? 0,
+    );
+  }
+
+  factory ProjectCompany.fromMapProposalNotify(Map<String, dynamic> map) {
+    return ProjectCompany(
+      id: map['id'],
+      createdAt: map['createdAt'],
+      updatedAt: map['updatedAt'],
+      deletedAt: map['deletedAt'],
+      companyId: map['companyId'],
+      projectScopeFlag: map['projectScopeFlag'],
+      title: map['title'],
+      description: map['description'],
+      numberOfStudents: map['numberOfStudents'],
+      typeFlag: map['typeFlag'],
+      status: map['status'] ?? 0,
+    );
+  }
+
+  static List<ProjectCompany> fromListMapProposalProject(List<dynamic> list) {
+    List<ProjectCompany> projects = [];
+    for (var project in list) {
+      projects.add(ProjectCompany.fromMapProposalProject(project));
     }
     return projects;
   }

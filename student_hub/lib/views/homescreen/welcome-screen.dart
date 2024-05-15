@@ -1,8 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/view_models/controller_route.dart';
 import 'package:student_hub/views/auth/switch_account_view.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class WelcomeScreen extends StatefulWidget {
   final User companyUser;
@@ -46,9 +49,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
       appBar: _AppBar(_animationController, widget.companyUser),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
       body: SafeArea(
         child: _Body(
             animationController: _animationController,
@@ -74,20 +78,37 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AppBar(
-      automaticallyImplyLeading: false,
-      title: const Text('Student Hub',
-          style: TextStyle(
-              color: Color.fromARGB(255, 0, 0, 0),
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios),
+        color: isDarkMode ? Colors.white : Color(0xFF242526),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
+              color: isDarkMode ? Colors.white : Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor:
+          isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
       actions: <Widget>[
         IconButton(
-            icon: SizedBox(
-              width: 25,
-              height: 25,
-              child: Image.asset('assets/icons/user_ic.png'),
+            icon: Container(
+              // Add a Container as the parent
+              padding: const EdgeInsets.all(8.0), // Padding for spacing
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+              ),
+              child: ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                    isDarkMode ? Colors.white : Colors.black, BlendMode.srcIn),
+                child: Image.asset('assets/icons/user_ic.png',
+                    width: 25, height: 25),
+              ),
             ),
             onPressed: () {
               animationController.stop();
@@ -98,7 +119,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                   context,
                   PageRouteBuilder(
                     pageBuilder: (context, animation, secondaryAnimation) =>
-                        SwitchAccountView(companyUser),
+                        SwitchAccountView(companyUser, null),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
                       var begin = const Offset(1.0, 0.0);
@@ -123,7 +144,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
                   animationController.forward();
                 });
               });
-            }),
+            })
       ],
     );
   }
@@ -239,8 +260,8 @@ class _Content extends StatelessWidget {
           )),
           child: FadeTransition(
             opacity: fadeAnimation,
-            child:
-                _AnimatedButton(text: 'Get started!', companyUser: companyUser),
+            child: _AnimatedButton(
+                text: 'welcome_welcomecompany3'.tr(), companyUser: companyUser),
           ),
         ),
 
@@ -268,15 +289,39 @@ class _AnimatedText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(15, 30, 20, 5),
+      padding: const EdgeInsets.fromLTRB(15, 80, 20, 5),
       child: Align(
         alignment: Alignment.topCenter,
-        child: Text(
-          "Welcome, ${companyUser.fullname!}!",
-          style: GoogleFonts.poppins(
-            fontSize: 19,
-            fontWeight: FontWeight.bold,
+        child: RichText(
+          text: TextSpan(
+            style: GoogleFonts.poppins(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.black, // Màu của phần còn lại của văn bản
+            ),
+            children: [
+              TextSpan(
+                text: "welcome_welcomecompany2".tr(),
+                style: GoogleFonts.poppins(
+                  color: isDarkMode ? Colors.white : Colors.black,
+                ),
+              ),
+              TextSpan(
+                text: "${companyUser.fullname}",
+                style: GoogleFonts.poppins(
+                  color: Color(0xFF406AFF),
+                  fontWeight: FontWeight.bold, // Màu của phần được đổi
+                ),
+              ),
+              TextSpan(
+                text: " !",
+                style: GoogleFonts.poppins(
+                  color: isDarkMode ? Colors.white : Colors.black,
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -289,15 +334,17 @@ class _DescriptionText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+      padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Let's start with your first project post!",
+          "welcome_welcomecompany1".tr(),
           style: GoogleFonts.poppins(
             fontSize: 16,
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.w400,
+            color: isDarkMode ? Colors.white : Colors.black,
           ),
           textAlign: TextAlign.center,
         ),
@@ -320,10 +367,10 @@ class _AnimatedButton extends StatelessWidget {
       height: 50, // Set the height to your desired size
       child: ElevatedButton(
         onPressed: () {
-          ControllerRoute(context).navigateToHomeScreen(false, companyUser);
+          ControllerRoute(context).navigateToHomeScreen(false, companyUser, 1);
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: Color(0xFF406AFF),
           padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
@@ -342,7 +389,7 @@ class AnimationImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+      padding: const EdgeInsets.fromLTRB(20, 90, 20, 5),
       child: Align(
         alignment: Alignment.topCenter,
         child: Image.asset(

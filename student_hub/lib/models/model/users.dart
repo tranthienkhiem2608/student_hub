@@ -29,6 +29,10 @@ class User {
         'student': studentUser?.toMapStudentUser(),
         'company': companyUser?.toMapCompanyUser(),
       };
+  Map<String, dynamic> toMapUserLogin() => {
+        'email': email,
+        'password': password,
+      };
 
   factory User.fromMapUser(Map<String, dynamic> map) => User(
         id: map['id'],
@@ -46,5 +50,15 @@ class User {
 
   factory User.fromMapUserForCompany(Map<String, dynamic> map) => User(
         companyUser: CompanyUser.fromMapCompanyUser(map['result']),
+      );
+
+  factory User.fromMapUserChat(Map<String, dynamic> map) => User(
+        id: map['id'],
+        fullname: map['fullname'],
+      );
+  factory User.fromMapUserNotify(Map<String, dynamic> map) => User(
+        id: map['id'],
+        fullname: map['fullname'],
+        email: map['email'],
       );
 }

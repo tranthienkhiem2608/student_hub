@@ -1,21 +1,28 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'package:student_hub/models/model/users.dart';
+import 'package:student_hub/services/socket_services.dart';
 import 'package:student_hub/view_models/nav_bottom_controller.dart';
 import 'package:student_hub/views/auth/switch_account_view.dart';
 import 'package:student_hub/views/pages/alert_page.dart';
 import 'package:student_hub/views/pages/dashboard_page.dart';
 import 'package:student_hub/views/pages/message_page.dart';
 import 'package:student_hub/views/pages/projects_page.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class HomePage extends StatefulWidget {
   final User? user;
   final bool showAlert;
+  final int? pageDefault;
 
-  const HomePage({this.showAlert = false, this.user, Key? key})
+  const HomePage(
+      {this.showAlert = false, this.user, this.pageDefault, Key? key})
       : super(key: key);
 
   // void functionInitialize({bool? shoAlert, CompanyUser? userCompany, StudentUser? userStudent, Key? key}) {
@@ -28,31 +35,33 @@ class HomePage extends StatefulWidget {
 
 class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   final User? user;
-  const _AppBar({Key? key, this.user}) : super(key: key);
+  int? selectedIndex = 0;
+  _AppBar({Key? key, this.user, this.selectedIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AppBar(
       automaticallyImplyLeading: false,
       title: Text('Student Hub',
           style: GoogleFonts.poppins(
               // Apply the Poppins font
-              color: Color.fromARGB(255, 0, 0, 0),
+              color: isDarkMode ? Colors.white : Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor:
+          isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
       actions: <Widget>[
         IconButton(
           icon: Container(
             // Add a Container as the parent
             padding: const EdgeInsets.all(8.0), // Padding for spacing
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 255),
               shape: BoxShape.circle,
             ),
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                  isDarkMode ? Colors.white : Colors.black, BlendMode.srcIn),
               child: Image.asset('assets/icons/user_ic.png',
                   width: 25, height: 25),
             ),
@@ -61,7 +70,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SwitchAccountView(user!)));
+                    builder: (context) =>
+                        SwitchAccountView(user!, selectedIndex!)));
           },
         )
       ],
@@ -74,17 +84,22 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
 class _HomePageState extends State<HomePage> {
   late List<Widget> _pages;
-  final BottomNavController _navController = BottomNavController();
+  late BottomNavController _navController;
 
   @override
   void initState() {
     super.initState();
+    _navController = BottomNavController(pageDefault: widget.pageDefault!);
 
     _pages = [
-      const ProjectsPage(),
+      ProjectsPage(widget.user!),
       DashboardPage(widget.user!),
-      const MessagePage(),
-      AlertPage(),
+      MessagePage(
+        null,
+        widget.user,
+        checkFlag: 0,
+      ),
+      AlertPage(widget.user),
     ];
     if (widget.showAlert == true) {
       Future.delayed(Duration.zero, () {
@@ -94,8 +109,6 @@ class _HomePageState extends State<HomePage> {
           text:
               'Welcome to StudentHub, a marketplace to connect Student <> Real-world projects',
           title: 'Welcome',
-          // showConfirmBtn: true,
-          // customAsset: 'assets/alerts/success.gif',
           confirmBtnText: 'Next',
         );
       });
@@ -103,9 +116,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
-      appBar: _AppBar(user: widget.user!),
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
+      appBar: _AppBar(
+          user: widget.user!, selectedIndex: _navController.selectedIndex),
       body: PageView(
         controller: _navController.controller,
         children: _pages,
@@ -117,7 +138,9 @@ class _HomePageState extends State<HomePage> {
         child: Container(
           height: 70,
           decoration: BoxDecoration(
-            color: const Color(0xFF406AFF),
+            color: isDarkMode
+                ? Color.fromARGB(255, 20, 20, 20)
+                : Color(0xFF406AFF),
             borderRadius: BorderRadius.circular(32),
           ),
           child: Padding(
@@ -128,48 +151,48 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.transparent,
               activeColor: Color(0xFF406AFF),
               iconSize: 24,
-              tabBackgroundColor: Color.fromARGB(244, 255, 255, 255),
+              tabBackgroundColor: isDarkMode ? Color(0xFF2f2f2f) : Colors.white,
               tabs: [
                 GButton(
                   icon: Icons.home_rounded,
-                  text: 'Home',
+                  text: 'home_home1'.tr(),
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
-                    color: Color(0xFF406AFF), // Màu chữ
+                    color: isDarkMode ? Colors.white : Color(0xFF406AFF),
                     fontWeight: FontWeight.w500,
                   ),
                   iconColor: Colors.white,
                 ),
                 GButton(
                   icon: Icons.space_dashboard_rounded,
-                  text: 'Dashboard',
+                  text: 'home_home2'.tr(),
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
-                    color: Color(0xFF406AFF),
+                    color: isDarkMode ? Colors.white : Color(0xFF406AFF),
                     fontWeight: FontWeight.w500, // Màu chữ
                   ),
                   iconColor: Colors.white,
                 ),
                 GButton(
                   icon: Icons.message_rounded,
-                  text: 'Message',
+                  text: 'home_home3'.tr(),
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
-                    color: Color(0xFF406AFF), // Màu chữ
+                    color: isDarkMode ? Colors.white : Color(0xFF406AFF),
                     fontWeight: FontWeight.w500,
                   ),
                   iconColor: Colors.white,
                 ),
                 GButton(
                   icon: Icons.notifications_rounded,
-                  text: 'Alert',
+                  text: 'home_home4'.tr(),
                   textStyle: GoogleFonts.poppins(
                     // Sử dụng GoogleFonts.poppins()
                     fontSize: 14, // Kích thước chữ
-                    color: Color(0xFF406AFF), // Màu chữ
+                    color: isDarkMode ? Colors.white : Color(0xFF406AFF),
                     fontWeight: FontWeight.w500,
                   ),
                   iconColor: Colors.white,

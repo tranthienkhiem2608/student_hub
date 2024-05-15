@@ -1,7 +1,6 @@
-import 'package:student_hub/models/user.dart';
+import 'package:student_hub/models/not_use/user.dart';
 
 class CompanyUser {
-
   final User user;
   final String companyName;
   final String companyWebsite;
@@ -18,23 +17,18 @@ class CompanyUser {
     required this.isLogin,
   });
 
-
-
- Map<String, dynamic> toMapCompanyUser() {
-  return {
-    'fullName': user.fullName,
-    'email': user.email,
-    'password': user.password,
-    'typeUser': user.typeUser,
-    'companyName': companyName,
-    'companyWebsite': companyWebsite,
-    'companyDescription': companyDescription,
-    'numberOfEmployees': numberOfEmployees,
-  };
-
-}
-
-
+  Map<String, dynamic> toMapCompanyUser() {
+    return {
+      'fullName': user.fullName,
+      'email': user.email,
+      'password': user.password,
+      'typeUser': user.typeUser,
+      'companyName': companyName,
+      'companyWebsite': companyWebsite,
+      'companyDescription': companyDescription,
+      'numberOfEmployees': numberOfEmployees,
+    };
+  }
 }
 // CompanyUser userDemo = CompanyUser(
 //   fullName: 'John Doe',
@@ -58,8 +52,7 @@ List<CompanyUser> accounts = [
       companyWebsite: 'www.doeenterprises.com',
       companyDescription: 'We specialize in all things Doe.',
       numberOfEmployees: '2-9 employees',
-      isLogin: false
-  ),
+      isLogin: false),
   CompanyUser(
       user: User(
         fullName: 'Jane Doe',
@@ -71,8 +64,7 @@ List<CompanyUser> accounts = [
       companyWebsite: 'www.abeerprises.com',
       companyDescription: 'We specialize in all things jane.',
       numberOfEmployees: '2-9 employees',
-      isLogin: true
-  ),
+      isLogin: true),
   CompanyUser(
       user: User(
         fullName: 'Lucy Luc',
@@ -84,7 +76,5 @@ List<CompanyUser> accounts = [
       companyWebsite: 'www.lucrprises.com',
       companyDescription: 'We specialize in all things Luc.',
       numberOfEmployees: '10-99 employees',
-      isLogin: false
-  )
-
+      isLogin: false)
 ];

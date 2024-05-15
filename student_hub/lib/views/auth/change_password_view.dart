@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,21 +18,31 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Student Hub',
-          style: TextStyle(
+      title: Text('Student Hub',
+          style: GoogleFonts.poppins(
+              // Apply the Poppins font
               color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: const Color(0xFFBEEEF7),
+      backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
-          icon: SizedBox(
-            width: 25,
-            height: 25,
-            child: Image.asset('assets/icons/user_ic.png'),
+          icon: Container(
+            // Add a Container as the parent
+            padding: const EdgeInsets.all(8.0), // Padding for spacing
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 255, 255),
+              shape: BoxShape.circle,
+            ),
+            child: ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              child: Image.asset('assets/icons/user_ic.png',
+                  width: 25, height: 25),
+            ),
           ),
           onPressed: () {},
-        ),
+        )
       ],
     );
   }
@@ -53,22 +64,22 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const _AppBar(),
-      backgroundColor: Color(0xFFF2F5FC), // Set the background color here
+      backgroundColor: Colors.white, // Set the background color here
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
           child: Column(children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(right: 20.0, bottom: 10.0),
+              padding: const EdgeInsets.only(right: 20.0, bottom: 5.0),
               child: Align(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.center,
                 child: // Replace with your image
                     Text(
-                  "Create new password",
+                  "changepassword_auth1".tr(),
                   style: GoogleFonts.poppins(
-                    fontSize: 30,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black, // Set the color here
+                    color: Color(0xFF406AFF), // Set the color here
                   ),
                   textAlign: TextAlign.start,
                 ),
@@ -79,13 +90,13 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  "Your new password must be different from previous used password.",
+                  "changepassword_auth2".tr(),
                   style: GoogleFonts.poppins(
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.normal,
-                    color: Colors.black.withOpacity(0.7), // Set the color here
+                    color: Colors.black.withOpacity(0.5), // Set the color here
                   ),
-                  textAlign: TextAlign.start,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
@@ -94,7 +105,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Password",
+                  "changepassword_auth3".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -107,29 +118,27 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
               onChanged: (value) => oldPasswordNotifier.value =
                   value, // Update oldPasswordNotifier when text changes
               obscureText: _obscurePassword, // Use the visibility variable
-              cursorColor: Colors.black,
+              cursorColor: Color(0xFF406AFF),
               decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(0.0),
-                hintText: 'Enter your old password',
-                hintStyle: const TextStyle(
-                  color: Colors.grey,
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20),
+                hintText: 'changepassword_auth4'.tr(),
+                hintStyle: GoogleFonts.poppins(
+                  color: Color(0xFF777B8A),
                   fontSize: 14.0,
                 ),
-                prefixIcon: const Icon(
-                  Iconsax.key,
-                  color: Colors.black,
-                  size: 18,
-                ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
+                  borderSide:
+                      const BorderSide(color: Color(0xFF4BEC0C7), width: 0.8),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                floatingLabelStyle: const TextStyle(
+                floatingLabelStyle: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: 18.0,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.black, width: 1.5),
+                  borderSide:
+                      const BorderSide(color: Color(0xFF4BEC0C7), width: 1),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 suffixIcon: IconButton(
@@ -144,13 +153,19 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                   },
                 ),
               ),
+              // Remove the duplicate obscureText argument
+              // Remove this line: obscureText: true,
+              style: GoogleFonts.poppins(
+                color: Colors.black, // Màu của văn bản ẩn
+                fontSize: 14.0, // Cỡ chữ của văn bản ẩn
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 5.0, left: 5.0),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "New Password",
+                  "changepassword_auth5".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -167,41 +182,39 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                 });
               }, // Update oldPasswordNotifier when text changes
               obscureText: _obscurePassword, // Use the visibility variable
-              cursorColor: Colors.black,
+              cursorColor: Color(0xFF406AFF),
               decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(0.0),
-                errorText: _showPassError ? 'Both password must match' : null,
-                errorStyle: const TextStyle(color: Colors.red),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20),
+                errorText: _showPassError ? 'changepassword_auth6'.tr() : null,
+                errorStyle: GoogleFonts.poppins(color: Colors.red),
                 focusedErrorBorder: OutlineInputBorder(
                   // Change this
-                  borderSide: const BorderSide(color: Colors.red, width: 1.5),
+                  borderSide: BorderSide(color: Colors.red, width: 1.5),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                hintText: 'Enter your new password',
-                hintStyle: const TextStyle(
-                  color: Colors.grey,
+                hintText: 'changepassword_auth7'.tr(),
+                hintStyle: GoogleFonts.poppins(
+                  color: Color(0xFF777B8A),
                   fontSize: 14.0,
                 ),
-                labelStyle: const TextStyle(
+                labelStyle: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: 14.0,
                   fontWeight: FontWeight.w400,
                 ),
-                prefixIcon: const Icon(
-                  Iconsax.key,
-                  color: Colors.black,
-                  size: 18,
-                ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
+                  borderSide:
+                      const BorderSide(color: Color(0xFF4BEC0C7), width: 0.8),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                floatingLabelStyle: const TextStyle(
+                floatingLabelStyle: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: 18.0,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.black, width: 1.5),
+                  borderSide:
+                      const BorderSide(color: Color(0xFF4BEC0C7), width: 1),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 suffixIcon: IconButton(
@@ -216,13 +229,17 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                   },
                 ),
               ),
+              style: GoogleFonts.poppins(
+                color: Colors.black, // Màu của văn bản ẩn
+                fontSize: 14.0, // Cỡ chữ của văn bản ẩn
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20.0, bottom: 5.0, left: 5.0),
               child: Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "Confirm Password",
+                  "changepassword_auth8".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
@@ -239,41 +256,39 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                 });
               }, // Update oldPasswordNotifier when text changes
               obscureText: _obscurePassword, // Use the visibility variable
-              cursorColor: Colors.black,
+              cursorColor: Color(0xFF406AFF),
               decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(0.0),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20),
                 errorText: _showPassError ? 'Both password must match' : null,
-                errorStyle: const TextStyle(color: Colors.red),
+                errorStyle: GoogleFonts.poppins(color: Colors.red),
                 focusedErrorBorder: OutlineInputBorder(
                   // Change this
-                  borderSide: const BorderSide(color: Colors.red, width: 1.5),
+                  borderSide: BorderSide(color: Colors.red, width: 1.5),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                hintText: 'Confirm your new password',
-                hintStyle: const TextStyle(
-                  color: Colors.grey,
+                hintText: 'changepassword_auth9'.tr(),
+                hintStyle: GoogleFonts.poppins(
+                  color: Color(0xFF777B8A),
                   fontSize: 14.0,
                 ),
-                labelStyle: const TextStyle(
+                labelStyle: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: 14.0,
                   fontWeight: FontWeight.w400,
                 ),
-                prefixIcon: const Icon(
-                  Iconsax.key,
-                  color: Colors.black,
-                  size: 18,
-                ),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.black, width: 2),
+                  borderSide:
+                      const BorderSide(color: Color(0xFF4BEC0C7), width: 0.8),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                floatingLabelStyle: const TextStyle(
+                floatingLabelStyle: GoogleFonts.poppins(
                   color: Colors.black,
                   fontSize: 18.0,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.black, width: 1.5),
+                  borderSide:
+                      const BorderSide(color: Color(0xFF4BEC0C7), width: 1),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 suffixIcon: IconButton(
@@ -288,9 +303,13 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                   },
                 ),
               ),
+              style: GoogleFonts.poppins(
+                color: Colors.black, // Màu của văn bản ẩn
+                fontSize: 15.0, // Cỡ chữ của văn bản ẩn
+              ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(top: 50.0),
               child: Container(
                 width: 400,
                 height: 50,
@@ -312,7 +331,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                               newPasswordNotifier.value);
                         }
                       : null,
-                  color: Color(0xFF408cff).withOpacity(0.7),
+                  color: Color(0xFF406AFF),
                   disabledColor: Colors.grey.shade500,
                   padding:
                       const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
@@ -321,9 +340,9 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                   ),
 
                   child: Text(
-                    "Reset password",
-                    style: TextStyle(
-                        color: Colors.black.withOpacity(1), fontSize: 16.0),
+                    "changepassword_auth10".tr(),
+                    style: GoogleFonts.poppins(
+                        color: Colors.white, fontSize: 16.0),
                   ),
                   // Replace with your icon
                 ),

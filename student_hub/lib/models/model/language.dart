@@ -1,5 +1,3 @@
-import 'package:student_hub/models/model/student_user.dart';
-
 class Language {
   final int? studentId;
   final int? id;
@@ -40,6 +38,10 @@ class Language {
   }
 
   static fromListMap(List<Map<String, dynamic>> languages) {
+    return languages.map((e) => Language.fromMapLanguage(e)).toList();
+  }
+
+  static fromListProposalLanguage(List<dynamic> languages) {
     return languages.map((e) => Language.fromMapLanguage(e)).toList();
   }
 }

@@ -30,7 +30,7 @@ class MyTheme {
       fontSize: 14,
       letterSpacing: 1.2,
       fontWeight: FontWeight.w500);
-      
+
   static final TextStyle bodyText2 = TextStyle(
       color: Color.fromARGB(255, 127, 240, 132),
       fontSize: 14,

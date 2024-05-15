@@ -1,16 +1,16 @@
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:student_hub/constant/project_duration.dart';
-import 'package:student_hub/models/company_user.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/project_company.dart';
 import 'package:student_hub/models/model/users.dart';
-import 'package:student_hub/view_models/controller_route.dart';
-import 'package:student_hub/views/post_project/post_screen_3.dart';
 import 'package:bulleted_list/bulleted_list.dart';
 import 'package:student_hub/views/post_project/post_screen_4.dart';
+
+import '../../widgets/theme/dark_mode.dart';
 
 class PostScreen3 extends StatefulWidget {
   const PostScreen3({
@@ -30,26 +30,34 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios),
+        color: isDarkMode ? Colors.white : Color(0xFF242526),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       title: Text('Student Hub',
           style: GoogleFonts.poppins(
               // Apply the Poppins font
-              color: Color.fromARGB(255, 0, 0, 0),
+              color: isDarkMode ? Colors.white : Colors.black,
               fontSize: 20,
               fontWeight: FontWeight.bold)),
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor:
+          isDarkMode ? Color.fromARGB(255, 28, 28, 29) : Colors.white,
       actions: <Widget>[
         IconButton(
           icon: Container(
             // Add a Container as the parent
             padding: const EdgeInsets.all(8.0), // Padding for spacing
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 255, 255, 255),
               shape: BoxShape.circle,
             ),
             child: ColorFiltered(
               colorFilter: ColorFilter.mode(
-                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+                  isDarkMode ? Colors.white : Colors.black, BlendMode.srcIn),
               child: Image.asset('assets/icons/user_ic.png',
                   width: 25, height: 25),
             ),
@@ -114,9 +122,10 @@ class _PostScreen3State extends State<PostScreen3>
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return Scaffold(
+        backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
         appBar: const _AppBar(),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -151,14 +160,18 @@ class _PostScreen3State extends State<PostScreen3>
                             ),
                             children: [
                               TextSpan(
-                                text: '3 /4  ',
+                                text: 'projectpost3_project1'.tr(),
                                 style: GoogleFonts.poppins(
                                     color: Color(
                                         0xFF406AFF)), // Thay đổi màu cho phần này
                               ),
                               TextSpan(
-                                text: "Provide project description",
-                              ),
+                                  text: "projectpost3_project2".tr(),
+                                  style: GoogleFonts.poppins(
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : Colors.black,
+                                  )),
                             ],
                           ),
                         ),
@@ -190,25 +203,26 @@ class _PostScreen3State extends State<PostScreen3>
                         // Add Column to contain heading and list
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Students are looking for: ',
+                          Text('projectpost3_project3'.tr(),
                               style: GoogleFonts.poppins(
                                 fontSize: 16.5,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.black,
+                                color: isDarkMode ? Colors.white : Colors.black,
                               )),
                           SizedBox(
                               height: 6), // Spacing between heading and list
                           BulletedList(
-                            bulletColor: Colors.black,
+                            bulletColor:
+                                isDarkMode ? Colors.white : Colors.black,
                             style: GoogleFonts.poppins(
-                              color: Colors.black,
+                              color: isDarkMode ? Colors.white : Colors.black,
                               fontSize: 15.0,
                               fontWeight: FontWeight.normal,
                             ),
                             listItems: [
-                              'Clear expectation about your project or deliverables',
-                              'The skills required for your project',
-                              'Detail about your project',
+                              'projectpost3_project4'.tr(),
+                              'projectpost3_project5'.tr(),
+                              'projectpost3_project6'.tr(),
                             ],
                           ),
                         ],
@@ -243,11 +257,12 @@ class _PostScreen3State extends State<PostScreen3>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Describe your project',
+                                'projectpost3_project7'.tr(),
                                 style: GoogleFonts.poppins(
                                   fontSize: 16.5,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black,
+                                  color:
+                                      isDarkMode ? Colors.white : Colors.black,
                                 ),
                               ),
                               SizedBox(height: 10),
@@ -275,6 +290,9 @@ class _PostScreen3State extends State<PostScreen3>
                   child: FadeTransition(
                     opacity: _fadeAnimation,
                     child: TextField(
+                      style: GoogleFonts.poppins(
+                        color: isDarkMode ? Colors.white : Colors.black,
+                      ),
                       onChanged: (value) {
                         setState(() {
                           // Update state on changes
@@ -289,18 +307,23 @@ class _PostScreen3State extends State<PostScreen3>
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(
                             10.0), // Add padding within the box
-                        hintText: 'Describe your project...',
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.only(
-                              bottom: 95.0),
-                          child: Icon(
-                            Iconsax.paperclip_2,
-                            color: Colors.black,
-                            size: 18,
-                          )),
+                        hintText: 'projectpost3_project8'.tr(),
+                        hintStyle: GoogleFonts.poppins(
+                          color: isDarkMode
+                              ? Color.fromARGB(255, 171, 171, 171)
+                              : Colors.grey,
+                          fontSize: 15.0,
+                        ),
+                        prefixIcon: Padding(
+                            padding: EdgeInsets.only(bottom: 95.0),
+                            child: Icon(
+                              Iconsax.paperclip_2,
+                              color: isDarkMode ? Colors.white : Colors.black,
+                              size: 18,
+                            )),
                         enabledBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFF777B8A), width: 2),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF777B8A), width: 2),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         floatingLabelStyle: const TextStyle(
@@ -308,8 +331,8 @@ class _PostScreen3State extends State<PostScreen3>
                           fontSize: 18.0,
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: Color(0xFF777B8A), width: 1.5),
+                          borderSide: const BorderSide(
+                              color: Color(0xFF777B8A), width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
@@ -357,7 +380,7 @@ class _PostScreen3State extends State<PostScreen3>
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Text(
-                            "Next",
+                            "projectpost3_project9".tr(),
                             style: GoogleFonts.poppins(
                                 // Thay đổi TextStyle này
                                 color: Colors.white,

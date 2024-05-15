@@ -1,9 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:student_hub/views/auth/login_view.dart';
-import 'package:student_hub/views/auth/signup_info_view.dart';
-import 'package:student_hub/views/auth/switch_account_view.dart';
 import 'package:student_hub/view_models/controller_route.dart';
+import 'package:student_hub/views/pages/chat_screen/video_conference_page.dart';
+import 'package:student_hub/widgets/theme/localization_checker.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -72,6 +72,7 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      automaticallyImplyLeading: false,
       title: Text('Student Hub',
           style: GoogleFonts.poppins(
               // Apply the Poppins font
@@ -81,6 +82,16 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       actions: <Widget>[
         IconButton(
+          icon: Icon(Icons.language, color: Color.fromARGB(255, 0, 0, 0)),
+          onPressed: () {
+            LocalizationChecker.changeLanguage(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => WelcomePage()),
+            );
+          }, // Gọi hàm khi nút được nhấn
+        ),
+        IconButton(
           icon: Container(
             // Add a Container as the parent
             padding: const EdgeInsets.all(8.0), // Padding for spacing
@@ -89,7 +100,8 @@ class _AppBar extends StatelessWidget implements PreferredSizeWidget {
               shape: BoxShape.circle,
             ),
             child: ColorFiltered(
-              colorFilter: ColorFilter.mode(Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(
+                  Color.fromARGB(255, 0, 0, 0), BlendMode.srcIn),
               child: Image.asset('assets/icons/user_ic.png',
                   width: 25, height: 25),
             ),
@@ -225,7 +237,7 @@ class _Content extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text('Company',
+                        Text('accountSwitchPage_ProfileCreation1'.tr(),
                             style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -267,7 +279,7 @@ class _Content extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text('Student',
+                        Text('accountSwitchPage_ProfileCreation2'.tr(),
                             style: GoogleFonts.poppins(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -305,8 +317,9 @@ class _AnimatedText extends StatelessWidget {
       child: Align(
         alignment: Alignment.center, // Change: Center alignment horizontally
         child: Text(
-          "Build your product with high-skilled students",
-          style: GoogleFonts.poppins(
+          'home_title1'.tr(),
+          style: TextStyle(
+            fontFamily: 'Poppins',
             fontSize: 24.5,
             fontWeight: FontWeight.bold,
           ),
@@ -327,8 +340,9 @@ class _DescriptionText extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "Find and onboard best-skilled student for your product. Student works to gain experience & skills from real-world projects",
-          style: GoogleFonts.poppins(
+          "home_title2".tr(),
+          style: TextStyle(
+            fontFamily: 'Poppins',
             fontSize: 14,
             fontWeight: FontWeight.normal,
             color: Color(0xFF777B8A),
@@ -350,8 +364,9 @@ class _DescriptionSecondText extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: Text(
-          "StudentHub is university market place to connect high-skilled student and company on a real-world project",
-          style: GoogleFonts.poppins(
+          "home_title3".tr(),
+          style: TextStyle(
+            fontFamily: 'Poppins',
             fontSize: 12,
             fontWeight: FontWeight.normal,
             color: Color.fromARGB(

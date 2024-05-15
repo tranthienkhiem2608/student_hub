@@ -1,5 +1,4 @@
 import 'package:student_hub/models/model/skillSets.dart';
-import 'package:student_hub/models/model/student_user.dart';
 import 'package:intl/intl.dart';
 
 class Experience {
@@ -28,12 +27,6 @@ class Experience {
     this.updatedAt,
     this.duration,
   });
-  // Duration get duration {
-  //   if (startMonth != null && endMonth != null) {
-  //     return endMonth!.difference(startMonth!);
-  //   }
-  //   return Duration();
-  // }
 
   Map<String, dynamic> toMapExperience() {
     return {
@@ -53,9 +46,24 @@ class Experience {
       studentId: map['studentId'],
       id: map['id'],
       title: map['title'],
-      startMonth: map['startDate'],
-      endMonth: map['endDate'],
-      skillSet: map['skillSet'],
+      startMonth: parseDate("01-${map['startMonth']}"),
+      endMonth: parseDate("01-${map['endMonth']}"),
+      skillSet: List<SkillSets>.from(
+          map['skillSets'].map((e) => SkillSets.fromMapSkillSets(e))),
+      description: map['description'],
+      createAt: map['createAt'],
+      deletedAt: map['deletedAt'],
+      updatedAt: map['updatedAt'],
+    );
+  }
+
+  factory Experience.fromMapExperienceDetail(Map<String, dynamic> map) {
+    return Experience(
+      studentId: map['studentId'],
+      id: map['id'],
+      title: map['title'],
+      startMonth: parseDate("01-${map['startMonth']}"),
+      endMonth: parseDate("01-${map['endMonth']}"),
       description: map['description'],
       createAt: map['createAt'],
       deletedAt: map['deletedAt'],
@@ -66,6 +74,12 @@ class Experience {
   static fromListMap(List<Map<String, dynamic>> experienceList) {
     return experienceList.map((e) => Experience.fromMapExperience(e)).toList();
   }
+}
+
+DateTime parseDate(String date) {
+  List<String> parts = date.split('-');
+  String reformatted = '${parts[2]}-${parts[1]}-${parts[0]}';
+  return DateTime.parse(reformatted);
 }
 
 // String dateString = '01-2024'; // Replace with your actual date string

@@ -1,7 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:student_hub/models/model/language.dart';
+import 'package:student_hub/widgets/theme/dark_mode.dart';
 
 class PopUpLanguagesWidget extends StatefulWidget {
   final Function _addTask;
@@ -33,32 +36,33 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
   }
 
   final List<String> languages = [
-    'English',
-    'French',
-    'Spanish',
-    'German',
-    'Italian',
-    'Portuguese',
-    'Russian',
-    'Chinese',
-    'Japanese',
-    'Korean',
-    'Arabic',
-    'Hindi',
-    'Bengali',
-    'Urdu',
-    'Turkish',
-    'Vietnamese',
+    'language1'.tr(),
+    'language2'.tr(),
+    'language3'.tr(),
+    'language4'.tr(),
+    'language5'.tr(),
+    'language6'.tr(),
+    'language7'.tr(),
+    'language8'.tr(),
+    'language9'.tr(),
+    'language10'.tr(),
+    'language11'.tr(),
+    'language12'.tr(),
+    'language13'.tr(),
+    'language14'.tr(),
+    'language15'.tr(),
+    'language16'.tr()
     // Add more languages here
   ];
 
-  final List<String> _levels = ['Native', 'Intermediate', 'Basic', 'Advanced'];
+  final List<String> _levels = ['level4'.tr(), 'level2'.tr(), 'level1'.tr(), 'level3'.tr()];
   bool showError = false;
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
     return AlertDialog(
-      backgroundColor: Color.fromARGB(244, 255, 255, 255),
-      title: Text('Add language',
+      backgroundColor: isDarkMode ? Color(0xFF212121) : Colors.white,
+      title: Text('popup_language1'.tr(),
           style: GoogleFonts.poppins(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -73,13 +77,15 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
               CrossAxisAlignment.start, // Để căn chỉnh văn bản theo chiều ngang
           children: [
             Padding(
-              padding:
-                  const EdgeInsets.only(top: 20), // Khoảng cách dưới cùng
+              padding: const EdgeInsets.only(top: 20), // Khoảng cách dưới cùng
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text('Select Language',
-                    style:
-                        GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold)),
+                child: Text('popup_language2'.tr(),
+                    style: GoogleFonts.poppins(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    )),
               ),
             ),
             SizedBox(height: 10),
@@ -89,7 +95,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
               compareFn: (item, selectedItem) => item == selectedItem,
               dropdownBuilder: (context, selectedItem) {
                 return Text(
-                  selectedItem ?? "Select Language",
+                  selectedItem ?? "popup_language2".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     color: Colors.grey,
@@ -101,7 +107,7 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
                   _selectedLanguage = newValue ?? "null";
                 });
               },
-              popupProps: const PopupProps.menu(
+              popupProps: PopupProps.menu(
                 isFilterOnline: true,
                 showSearchBox: true,
                 showSelectedItems: true,
@@ -114,8 +120,10 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
                 searchFieldProps: TextFieldProps(
                   cursorColor: Color(0xFF406AFF),
                   decoration: InputDecoration(
-                    labelText: "Search Language",
-                    hintText: "Search Language",
+                    hintText: "popup_language6".tr(),
+                    hintStyle: GoogleFonts.poppins(
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
@@ -123,15 +131,24 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
             SizedBox(height: 30),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text('Select Level',
-                  style:
-                        GoogleFonts.poppins(fontSize: 16, fontWeight: FontWeight.bold)),
+              child: Text('popup_language3'.tr(),
+                  style: GoogleFonts.poppins(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: isDarkMode ? Colors.white : Colors.black,
+                  )),
             ),
             Column(
               children: _levels.map((String level) {
                 return ListTile(
                   contentPadding: EdgeInsets.zero,
-                  title: Text(level, style: GoogleFonts.poppins(fontSize: 15)),
+                  title: Text(
+                    level,
+                    style: GoogleFonts.poppins(
+                      fontSize: 15,
+                      color: isDarkMode ? Colors.white : Colors.black,
+                    ),
+                  ),
                   leading: Radio<String>(
                     value: level,
                     groupValue: _selectedLevel,
@@ -140,17 +157,28 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
                         _selectedLevel = value ?? "null";
                       });
                     },
+                    overlayColor:
+                        MaterialStateProperty.all<Color>(Color(0xFF406AFF)),
                     activeColor: Color(0xFF406AFF),
+                    fillColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                      if (states.contains(MaterialState.selected)) {
+                        return Color(0xFF406AFF); // Màu khi radio được chọn
+                      }
+                      return isDarkMode
+                          ? Colors.white
+                          : Colors.black; // Màu khi radio không được chọn
+                    }),
                   ),
                 );
               }).toList(),
             ),
             if (showError == true)
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Make sure to fill all the fields',
-                  style: TextStyle(
+                  'popup_language7'.tr(),
+                  style: GoogleFonts.poppins(
                     color: Colors.red,
                     fontSize: 14.0,
                     fontStyle: FontStyle.italic,
@@ -166,7 +194,9 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
           style: TextButton.styleFrom(
             backgroundColor: Color.fromARGB(244, 213, 222, 255),
           ),
-            child: Text('Cancel', style: GoogleFonts.poppins(color: Color(0xFF406AFF), fontWeight: FontWeight.w500)),
+          child: Text('popup_language5'.tr(),
+              style: GoogleFonts.poppins(
+                  color: Color(0xFF406AFF), fontWeight: FontWeight.w500)),
           onPressed: () {
             Navigator.of(context).pop();
             _selectedLanguage = "null";
@@ -177,7 +207,9 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
           style: TextButton.styleFrom(
             backgroundColor: Color(0xFF406AFF),
           ),
-            child: Text('OK', style: GoogleFonts.poppins(color: Colors.white, fontWeight: FontWeight.w500)),
+          child: Text('popup_language4'.tr(),
+              style: GoogleFonts.poppins(
+                  color: Colors.white, fontWeight: FontWeight.w500)),
           onPressed: () {
             // Handle the OK button press
             //check existing language
@@ -199,31 +231,43 @@ class _PopUpLanguagesWidgetState extends State<PopUpLanguagesWidget> {
 }
 
 Widget _customItemBuilder(BuildContext context, String item, bool isSelected) {
-  return Padding(
-      padding: const EdgeInsets.fromLTRB(5, 15, 5, 15),
-      child: Column(
-        children: [
-          Text(
-            item,
-            style: TextStyle(
-              color: isSelected ? Color(0xFF406AFF) : Colors.black,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
-          const Divider(
-            color: Color(0xFF777B8A),
-            thickness: 0.2,
-          ),
-        ],
-      ));
+  bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
+  return Container(
+      color: isDarkMode ? Color(0xFF2f2f2f) : Colors.white,
+      child: Padding(
+          padding: const EdgeInsets.fromLTRB(5, 15, 5, 15),
+          child: Column(
+            children: [
+              Text(
+                item,
+                style: GoogleFonts.poppins(
+                  color: isDarkMode
+                      ? isSelected
+                          ? Color(0xFF406AFF)
+                          : Colors.white
+                      : isSelected
+                          ? Color(0xFF406AFF)
+                          : Colors.black,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+              const Divider(
+                color: Color(0xFF777B8A),
+                thickness: 0.2,
+              ),
+            ],
+          )));
 }
 
 Widget _customLoadingBuilder(BuildContext context, String item) {
-  return const Center(
-    child: CircularProgressIndicator(
-      color: Color(0xFF406AFF),
-    ),
-  );
+  bool isDarkMode = Provider.of<DarkModeProvider>(context).isDarkMode;
+  return Container(
+      color: isDarkMode ? Color(0xFF2f2f2f) : Colors.white,
+      child: Center(
+        child: CircularProgressIndicator(
+          color: Color(0xFF406AFF),
+        ),
+      ));
 }
 
 Future<List<String>> getData(String? filter, List<String> languages) async {

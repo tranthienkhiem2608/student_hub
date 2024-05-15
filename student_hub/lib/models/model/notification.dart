@@ -1,48 +1,82 @@
-import 'package:student_hub/models/user.dart';
+import 'package:student_hub/models/model/proposal.dart';
+import 'package:student_hub/models/model/users.dart';
 import 'package:student_hub/models/model/message.dart';
+import 'package:student_hub/models/model/interview.dart';
+import 'package:student_hub/models/model/meetingRoom.dart';
 
-class Notification {
-  int id;
-  int notifyFlag;
-  String title;
-  User receiverId;
-  User senderId;
-  Message messageId;
-  String content;
+class Notify {
+  int? id;
+  String? createAt;
+  String? updateAt;
+  String? deletedAt;
+  String? notifyFlag;
+  String? typeNotifyFlag;
+  String? title;
+  User? receiver;
+  User? sender;
+  Message? message;
+  String? content;
+  Interview? interview;
+  MeetingRoom? meetingRoom;
+  Proposal? proposal;
 
-  Notification({
-    required this.id,
-    required this.notifyFlag,
-    required this.title,
-    required this.receiverId,
-    required this.senderId,
-    required this.messageId,
-    required this.content,
-  });
+  Notify(
+      {this.id,
+      this.createAt,
+      this.updateAt,
+      this.deletedAt,
+      this.notifyFlag,
+      this.typeNotifyFlag,
+      this.title,
+      this.receiver,
+      this.sender,
+      this.message,
+      this.content,
+      this.interview,
+      this.meetingRoom,
+      this.proposal});
 
-  Map<String, dynamic> toMapNotification() {
+  Map<String, dynamic> toMapNotify() {
     return {
       'id': id,
       'notifyFlag': notifyFlag,
       'title': title,
-      'receiverId': receiverId.toMapUser(),
-      'senderId': senderId.toMapUser(),
-      'messageId': messageId.toMapMessage(),
+      'receiver': receiver!.toMapUser(),
+      'sender': sender!.toMapUser(),
+      'message': message!.toMapSendMessage(),
       'content': content,
     };
   }
 
-  factory Notification.fromMapNotification(Map<String, dynamic> map) {
-    return Notification(
-      id: map['id'],
-      notifyFlag: map['notifyFlag'],
-      title: map['title'],
-      receiverId: User.fromMapUser(map['receiverId']),
-      senderId: User.fromMapUser(map['senderId']),
-      messageId: Message.fromMapMessage(map['messageId']),
-      content: map['content'],
-    );
+  factory Notify.fromMapNotify(Map<String, dynamic> map) {
+    return Notify(
+        id: map['id'],
+        createAt: map['createdAt'],
+        updateAt: map['updatedAt'],
+        deletedAt: map['deletedAt'],
+        notifyFlag: map['notifyFlag'],
+        typeNotifyFlag: map['typeNotifyFlag'],
+        title: map['title'],
+        content: map['content'],
+        receiver: User.fromMapUserNotify(map['receiver']),
+        sender: User.fromMapUserNotify(map['sender']),
+        message:
+            map['message'] == null ? null : Message.fromMapNote(map['message']),
+        proposal: map['proposal'] == null
+            ? null
+            : Proposal.fromMapNotify(map['proposal']));
   }
 
+  static List<Notify> fromMapListNotify(List<dynamic> list) {
+    List<Notify> notifications = [];
+    for (var notification in list) {
+      notifications.add(Notify.fromMapNotify(notification));
+    }
+    return notifications;
+  }
 
+  factory Notify.fromMapNoteLastMessage(Map<String, dynamic> map) {
+    return Notify(
+        id: map['id'], notifyFlag: map['notifyFlag'], meetingRoom: null);
+  }
 }

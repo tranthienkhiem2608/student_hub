@@ -1,7 +1,3 @@
-import 'dart:ffi';
-
-import 'package:student_hub/models/model/users.dart';
-
 class CompanyUser {
   final int? id;
   final String? createAt;
@@ -9,7 +5,7 @@ class CompanyUser {
   final String? deletedAt;
   final int? userID;
   final String? companyName;
-  final int? size;
+  int? size;
   final String? website;
   final String? description;
 

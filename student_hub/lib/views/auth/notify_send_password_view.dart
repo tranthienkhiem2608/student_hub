@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:student_hub/view_models/auth_account_viewModel.dart';
@@ -14,7 +15,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF2F5FC), // Set the background color here
+      backgroundColor: Colors.white, // Set the background color here
       body: Column(children: <Widget>[
         Padding(
           padding: const EdgeInsets.fromLTRB(30, 120, 30, 10),
@@ -22,8 +23,8 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
             alignment: Alignment.topCenter,
             child: Image.asset(
               'assets/images/check_mail_img.png',
-              width: 300,
-              height: 300,
+              width: 350,
+              height: 350,
             ),
           ),
         ),
@@ -33,11 +34,11 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
               Align(
             alignment: Alignment.topCenter,
             child: Text(
-              "Check your mail",
+              "forgotpassword_auth8".tr(),
               style: GoogleFonts.poppins(
                 fontSize: 30,
                 fontWeight: FontWeight.bold,
-                color: Colors.lightBlue, // Set the color here
+                color: Color(0xFF406AFF), // Set the color here
               ),
               textAlign: TextAlign.center,
             ),
@@ -48,11 +49,11 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
           child: Align(
             alignment: Alignment.topCenter,
             child: Text(
-              "We have sent a password recover instructions to your mail.",
+              "forgotpassword_auth9".tr(),
               style: GoogleFonts.poppins(
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
-                color: Colors.black.withOpacity(0.7), // Set the color here
+                color: Colors.black.withOpacity(0.5),
               ),
               textAlign: TextAlign.center,
             ),
@@ -69,7 +70,7 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
             },
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(
-                  Color(0xFF408cff).withOpacity(0.7)),
+                  Color(0xFF406AFF)),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15.0),
@@ -90,10 +91,10 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Did not receive the email? ',
+                  'forgotpassword_auth10'.tr(),
                   style: TextStyle(
-                      color: Colors.grey.shade600,
-                      fontSize: 15.0,
+                      color: Colors.grey,
+                      fontSize: 16.0,
                       fontWeight: FontWeight.w400),
                 ),
                 TextButton(
@@ -101,10 +102,10 @@ class _NotifySendPasswordState extends State<NotifySendPassword> {
                     // Handle resend action here
                     AuthAccountViewModel(context).forgotPassword(widget.email);
                   },
-                  child: const Text('Resend.',
+                  child: Text('forgotpassword_auth11'.tr(),
                       style: TextStyle(
-                          color: Colors.blue,
-                          fontSize: 14.0,
+                          color: Color(0xFF406AFF),
+                          fontSize: 16.0,
                           fontWeight: FontWeight.bold)),
                 )
               ],
