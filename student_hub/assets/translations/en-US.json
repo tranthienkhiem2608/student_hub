@@ -183,11 +183,21 @@
     "settingscreen_ProfileCreation3": "Dark Mode",
     "settingscreen_ProfileCreation4": "Light Mode",
     "settingscreen_ProfileCreation5": "Language:",
+    "settingscreen_ProfileCreation6": "Level",
+    "settingscreen_ProfileCreation7": "School:",
+    "settingscreen_ProfileCreation8": "Start:",
+    "settingscreen_ProfileCreation9": "End:",
+    "settingscreen_ProfileCreation10": "Tell us about your self and you will be on your way connect with real-world project",
+    "settingscreen_ProfileCreation11": "chosen techstack",
+    "settingscreen_ProfileCreation12": "Search techstack",
+
 
     "studentprofileinput1_ProfileCreation1": "Tell us about yourself and you will be on your way connect with real-world project",
     "studentprofileinput1_ProfileCreation2": "Techstack",
     "studentprofileinput1_ProfileCreation3": "Select your main techstack",
     "studentprofileinput1_ProfileCreation4": "Next",
+    "studentprofileinput1_ProfileCreation5": "Select techstack",
+    "studentprofileinput1_ProfileCreation6": "Experiences",
 
     "studentprofileinput2_ProfileCreation1": "Intelligent Taxi Dispatching system",
     "studentprofileinput2_ProfileCreation2": "09/2020 - 12/2020, 4 months",
@@ -201,6 +211,11 @@
     "studentprofileinput3_ProfileCreation5": "Continue",
     "studentprofileinput3_ProfileCreation6": "Choose File or Drag File In",
     "studentprofileinput3_ProfileCreation7": "Change File",
+    "studentprofileinput3_ProfileCreation8": "Resume/CV",
+    "studentprofileinput3_ProfileCreation9": "Drag & drop your Resume/CV here or select your file",
+    "studentprofileinput3_ProfileCreation10": "Selected CV File: ",
+    "studentprofileinput3_ProfileCreation11": "Drag & drop your Transcript here or select your file",
+    "studentprofileinput3_ProfileCreation12": "Selected Transcript File: ",
 
     "studentprofileinput4_ProfileEdit1": "Your profile",
     "studentprofileinput4_ProfileEdit2": "Techstack",

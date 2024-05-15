@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -108,7 +109,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Text(
-                  "CV & Transcript",
+                  "studentprofileinput3_ProfileCreation2".tr(),
                   style: GoogleFonts.poppins(
                     fontSize: 23,
                     color: Color(0xFF406AFF),
@@ -120,7 +121,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
               child: Text(
-                "Tell us about your self and you will be on your way connect with real-world project",
+                "settingscreen_ProfileCreation10".tr(),
                 style: GoogleFonts.poppins(
                   fontSize: 14,
                   color: Color(0xFF777B8A),
@@ -141,7 +142,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                     fontWeight: FontWeight.bold,
                   ),
                   children: [
-                    TextSpan(text: "Resume/CV"), // Bullet point
+                    TextSpan(text: "studentprofileinput3_ProfileCreation8".tr()), // Bullet point
                     TextSpan(
                         text: " (*)",
                         style: GoogleFonts.poppins(
@@ -155,7 +156,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
 
             if (!kIsWeb)
               buildUploadArea(
-                  title: 'Drag & drop your Resume/CV here or select your file',
+                  title: 'studentprofileinput3_ProfileCreation9'.tr(),
                   onTap: _selectCvFile), // Call with _selectCvFile
 
             if (_cvFile != null)
@@ -163,7 +164,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                 padding: const EdgeInsets.all(1.0),
                 child: Column(
                   children: [
-                    Text('Selected CV File: ${_cvPlatformFile!.name}'),
+                    Text('${'studentprofileinput3_ProfileCreation10'.tr()}${_cvPlatformFile!.name}'),
                   ],
                 ),
               ),
@@ -180,7 +181,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                     fontWeight: FontWeight.bold,
                   ),
                   children: [
-                    TextSpan(text: "Transcript"), // Bullet point
+                    TextSpan(text: "studentprofileinput3_ProfileCreation4".tr()), // Bullet point
                     TextSpan(
                         text: " (*)",
                         style: GoogleFonts.poppins(
@@ -194,7 +195,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
             if (!kIsWeb)
               buildUploadArea(
                   title:
-                      'Drag & drop your Transcript here \n or select your file',
+                      'studentprofileinput3_ProfileCreation11'.tr(),
                   onTap:
                       _selectTranscriptFile), // Call with _selectTranscriptFile
 
@@ -204,7 +205,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                 child: Column(
                   children: [
                     Text(
-                        'Selected Transcript File: ${_transcriptPlatformFile!.name}'),
+                        '${'studentprofileinput3_ProfileCreation12'.tr()}${_transcriptPlatformFile!.name}'),
                   ],
                 ),
               ),
@@ -223,7 +224,7 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                     print(
                         "CV: ${widget.studentUser.studentUser?.file?.resume}");
                     print(
-                        "Transcript: ${widget.studentUser.studentUser?.file?.transcript}");
+                        "${'studentprofileinput3_ProfileCreation4'.tr()}: ${widget.studentUser.studentUser?.file?.transcript}");
                     InputProfileViewModel(context)
                         .inputProfileStudent(widget.studentUser);
                   },
@@ -234,8 +235,8 @@ class _StudentProfileDragCvState extends State<StudentProfileDragCv> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10.0),
                       )),
-                  child: const Text(
-                    "Next",
+                  child: Text(
+                    "studentprofileinput1_ProfileCreation4".tr(),
                     style: TextStyle(color: Colors.white, fontSize: 16.0),
                   ),
                 ),
