@@ -115,8 +115,7 @@ class ProjectCompany {
       description: map['description'],
       numberOfStudents: map['numberOfStudents'],
       typeFlag: map['typeFlag'],
-      countProposal:
-          map['countProposals'] == null ? 0 : int.parse(map['countProposals']),
+      countProposal: map['countProposals'] ?? 0,
     );
   }
 

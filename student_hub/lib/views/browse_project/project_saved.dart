@@ -47,6 +47,7 @@ class _FavoriteProjectsPageState extends State<FavoriteProjectsPage> {
           color: isDarkMode ? Colors.white : Color(0xFF242526),
           onPressed: () {
             Navigator.pop(context);
+            ControllerRoute(context).navigateToHomeScreen(false, widget.user, 0);
           },
         ),
         title: Text('Student Hub',
