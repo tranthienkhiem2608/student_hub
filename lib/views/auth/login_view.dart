@@ -247,8 +247,11 @@ class _LoginPageState extends State<LoginPage>
                       onChanged: (value) {
                         email.value = value;
                       },
+                      keyboardType: TextInputType
+                          .emailAddress, // Set keyboard type for email input
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
+                        labelText: 'Email'.tr(),
                         contentPadding:
                             const EdgeInsets.symmetric(vertical: 18.0),
                         hintText: 'login_auth5'.tr(),
@@ -307,6 +310,7 @@ class _LoginPageState extends State<LoginPage>
                       obscureText: _obscurePassword,
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
+                        labelText: 'Password',
                         contentPadding:
                             const EdgeInsets.symmetric(vertical: 18.0),
                         hintText: 'login_auth6'.tr(),

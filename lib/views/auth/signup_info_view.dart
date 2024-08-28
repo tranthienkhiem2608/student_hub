@@ -194,6 +194,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                           value, // Update fullNameNotifier when text changes
                       cursorColor: Colors.black,
                       decoration: InputDecoration(
+                        labelText: "Full Name",
                         contentPadding:
                             const EdgeInsets.symmetric(vertical: 18.0),
                         hintText: 'student_auth3'.tr(),
@@ -257,6 +258,8 @@ class _SignUpInfoState extends State<SignUpInfo>
                       controller:
                           _emailController, // Controller for email input // Update workEmailNotifier when text changes
                       cursorColor: Colors.black,
+                      keyboardType: TextInputType
+                          .emailAddress, // Set keyboard type for email input
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(vertical: 18.0),
@@ -266,6 +269,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                           borderSide: BorderSide(color: Colors.red, width: 1.5),
                           borderRadius: BorderRadius.circular(10.0),
                         ),
+                        labelText: 'Work Email',
                         hintText: 'student_auth4'.tr(),
                         hintStyle: GoogleFonts.poppins(
                           // Thay đổi TextStyle này
@@ -324,6 +328,7 @@ class _SignUpInfoState extends State<SignUpInfo>
                       decoration: InputDecoration(
                         contentPadding:
                             const EdgeInsets.symmetric(vertical: 18.0),
+                        labelText: 'Password',
                         hintText: 'student_auth5'.tr(),
                         hintStyle: GoogleFonts.poppins(
                           // Thay đổi TextStyle này
